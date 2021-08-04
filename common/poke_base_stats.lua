@@ -1,6 +1,8 @@
 local M = {}
 
-M[0] = {
+--List of all pokemon by pokedex ID.
+
+M[1] = {
 	["name"] = "bulbasaur"
 }
 
