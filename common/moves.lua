@@ -10,10 +10,10 @@ effects[0]["param1"] = 100
 effects[0]["param2"] = 1
 
 M[1] = {
-	["name"] = "tackle"
-	["effects"] = effects
-	["cooldown"] = 0
-	["default"] = true
+	["name"] = "tackle",
+	["effects"] = effects,
+	["cooldown"] = 0,
+	["default"] = true,
 	["type"] = 1
 }
 

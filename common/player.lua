@@ -10,8 +10,12 @@ moves[0]["level"] = 0
 
 M["pokemon"][0] = {
 	["pokedex"] = 1,
+	["name"] = "bulbasaur",
 	["learned_moves"] = moves,
-	["move1"] = 0
+	["move1"] = 0, --this is the index from the pokemon's learned_moves.
+	["move2"] = 0,
+	["move3"] = 0,
+	["move4"] = 0
 }
 
 --List of all of the player's runes.
