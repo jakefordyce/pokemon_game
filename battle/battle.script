@@ -28,7 +28,7 @@ function on_input(self, action_id, action)
 	-- print(pbs[1].name .. "moveid: ".. pbs[1].moves[0].id)
 	
 	if action_id == hash("touch") and action.pressed then
-		print('touched')
+		--print('touched')
 		msg.post("gui", "display_mon", {mon = player.pokemon[0]})
 	end
 end

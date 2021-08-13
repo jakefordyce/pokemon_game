@@ -14,7 +14,11 @@ M[1] = {
 	["effects"] = effects,
 	["cooldown"] = 0,
 	["default"] = true,
-	["type"] = 1
+	["type"] = 1,
+	description = function(moveLevel)
+		damage = 100 + (moveLevel * 5)
+		return "Deals "..damage.."% of Attack to target enemy."
+	end
 }
 
 
