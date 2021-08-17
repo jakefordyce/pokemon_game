@@ -30,6 +30,7 @@ function on_input(self, action_id, action)
 	if action_id == hash("touch") and action.pressed then
 		--print('touched')
 		msg.post("gui", "display_mon", {mon = player.pokemon[0]})
+		-- how to change sprites - msg.post("player_mon_1#sprite", "play_animation", { id = hash("ivysaur_back_original") })
 	end
 end
 
