@@ -1,9 +1,9 @@
 images {
-  image: "/assets/battle_sprites/bulbasaur_back_original.png"
+  image: "/assets/battle_sprites/back/bulbasaur_back_original.png"
   sprite_trim_mode: SPRITE_TRIM_MODE_OFF
 }
 images {
-  image: "/assets/battle_sprites/ivysaur_back_original.png"
+  image: "/assets/battle_sprites/back/ivysaur_back_original.png"
   sprite_trim_mode: SPRITE_TRIM_MODE_OFF
 }
 margin: 0
