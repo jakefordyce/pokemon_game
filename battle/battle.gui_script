@@ -1,3 +1,5 @@
+local game_state = require "common/game_state"
+
 function init(self)
 	msg.post(".", "acquire_input_focus")
 end
@@ -25,6 +27,9 @@ function on_message(self, message_id, message, sender)
 		gui.set_text(gui.get_node("Move2"), moves[message.mon.learned_moves[message.mon.move2].id].name)
 		gui.set_text(gui.get_node("Move3"), moves[message.mon.learned_moves[message.mon.move3].id].name)
 		gui.set_text(gui.get_node("Move4"), moves[message.mon.learned_moves[message.mon.move4].id].name)
+		local new_size = vmath.vector3(50, 10, 0)
+		gui.set_size(gui.get_node("player_mon1_health"), new_size)
+		--https://defold.com/ref/stable/gui/#gui.set_size:node-size
 	end
 	if message_id == hash("display_move_desc") then
 		gui.set_text(gui.get_node("move_description"), message.desc)
@@ -33,11 +38,10 @@ end
 
 -- Learn more: https://defold.com/manuals/input/
 function on_input(self, action_id, action)
-	local player = require "common/player"
 	local moves = require "common/moves"
 	if(action_id == hash("touch") and action.released == true) then
 		if(gui.pick_node(gui.get_node("Move1"),action.x,action.y)) then
-			mon =  player.pokemon[0] -- TODO: change to use current mon
+			mon =  game_state.pokemon[0] -- TODO: change to use current mon
 			level = mon.learned_moves[mon.move1].level
 			gui.set_text(gui.get_node("move_description"), moves[mon.learned_moves[mon.move1].id].description(level))
 		end

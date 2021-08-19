@@ -1,3 +1,7 @@
+local game_state = require "common/game_state"
+local playermon1 = {}
+local enemymon1 = {}
+
 function init(self)
 	-- Learn more: https://defold.com/manuals/script/
 	
@@ -14,22 +18,25 @@ function update(self, dt)
 	-- Learn more: https://defold.com/manuals/script/
 end
 
+-- Learn more: https://defold.com/manuals/message-passing/
 function on_message(self, message_id, message, sender)
-	-- Learn more: https://defold.com/manuals/message-passing/
+	if message_id == hash("load_player_mon_data") then
+		
+	end
+	
 
 end
 
 -- Learn more: https://defold.com/manuals/input/
 function on_input(self, action_id, action)
-	-- local pbs = require "common/poke_base_stats"
-	local player = require "common/player"
+	-- local pbs = require "common/poke_base_stats"	
 	
-	-- print(player.runes[0].slot)
+	-- print(game_state.runes[0].slot)
 	-- print(pbs[1].name .. "moveid: ".. pbs[1].moves[0].id)
 	
 	if action_id == hash("touch") and action.pressed then
 		--print('touched')
-		msg.post("gui", "display_mon", {mon = player.pokemon[0]})
+		msg.post("gui", "display_mon", {mon = game_state.pokemon[0]})
 		-- how to change sprites - msg.post("player_mon_1#sprite", "play_animation", { id = hash("ivysaur_back_original") })
 	end
 end
@@ -37,4 +44,8 @@ end
 function on_reload(self)
 	-- Add reload-handling code here
 	-- Learn more: https://defold.com/manuals/hot-reload/
+end
+
+function load_player_mon_data(self)
+	local battle_info = require "common/battle_info"
 end
