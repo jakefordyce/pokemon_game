@@ -2,6 +2,15 @@ local M = {}
 
 --List of all pokemon by pokedex ID.
 
+function M.stat_by_level(pokedex, stat, level)
+	calc_stat = (5 + (M[pokedex][stat] * level * 0.01) * 2)
+	if stat=="hp" then
+		calc_stat = calc_stat * 20
+	end
+	
+	return calc_stat
+end
+
 moves = {}
 moves[0] = {["level"] = 1, ["id"] = 1}
 
