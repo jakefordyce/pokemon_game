@@ -19,6 +19,7 @@ local function generate_stats(mon)
 	mon.defense = pbs.stat_by_level(mon.pokedex, "defense", mon.level)
 	mon.spattack = pbs.stat_by_level(mon.pokedex, "spattack", mon.level)
 	mon.spdefense = pbs.stat_by_level(mon.pokedex, "spdefense", mon.level)
+	mon.speed = pbs[mon.pokedex].speed
 	mon.acc = 0
 	mon.res = 0
 	mon.crit_chance = pbs.base_crit_chance

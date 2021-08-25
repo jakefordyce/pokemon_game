@@ -1,12 +1,14 @@
 local game_state = require "common/game_state"
 local encounters = require "common/encounters"
-local playermon1 = {}
-local enemymon1 = {}
+local player_mon1 = {}
+local enemy_mon1 = {}
+local selected_move = {}
 
 function init(self)
 	-- Learn more: https://defold.com/manuals/script/
 	msg.post(".", "acquire_input_focus")
 	load_data_for_battle()
+	find_next_turn()
 end
 
 function final(self)
@@ -21,15 +23,23 @@ end
 
 -- Learn more: https://defold.com/manuals/message-passing/
 function on_message(self, message_id, message, sender)
-	if message_id == hash("load_data_for_battle") then
-		
+	if message_id == hash("move_selected") then
+		selected_move = message.move
+	end
+	if message_id == hash("target_selected") then
+		if(selected_move.targetting == message.targetting) then
+			--valid target, execute the move and then end the turn.
+			--also hide target icons
+			find_next_turn()
+		end
 	end
 end
 
 -- Learn more: https://defold.com/manuals/input/
 function on_input(self, action_id, action)
 	if action_id == hash("touch") and action.pressed then
-		msg.post("gui", "display_mon", {mon = playermon1})
+		--msg.post("gui", "display_mon", {mon = player_mon1}) -- for when it is the player turn.
+		msg.post("gui", "update_hp", {target="player_mon1", current=player_mon1.currenthp, max=player_mon1.hp})
 		-- how to change sprites - msg.post("player_mon_1#sprite", "play_animation", { id = hash("ivysaur_back_original") })
 	end
 end
@@ -45,12 +55,40 @@ function load_data_for_battle()
 end
 
 function load_player_mon_data()
-	playermon1 = game_state.pokemon[game_state.player_mon1]
-	playermon1.currenthp = playermon1.hp
+	player_mon1 = game_state.pokemon[game_state.player_mon1]
+	player_mon1.currenthp = player_mon1.hp
+	player_mon1.turn = 0
 end
 
 function load_enemy_data()
 	encounters.load_trainer_data(0)
-	enemymon1 = game_state.enemy_mon1
-	enemymon1.currenthp = enemymon1.hp
+	enemy_mon1 = game_state.enemy_mon1
+	enemy_mon1.currenthp = enemy_mon1.hp
+	enemy_mon1.turn = 0
+end
+
+function start_player_turn(turn_mon)
+	msg.post("gui", "display_mon", {mon = turn_mon})
+end
+
+function start_enemy_turn(turn_mon)
+	find_next_turn()
+end
+
+function find_next_turn()
+	if player_mon1.turn > 1000 then
+		player_mon1.turn = player_mon1.turn - 1000
+		start_player_turn(player_mon1)
+	elseif enemy_mon1.turn > 1000 then
+		enemy_mon1.turn = enemy_mon1.turn - 1000
+		start_enemy_turn(enemy_mon1)
+	else
+		increment_turn()
+	end
+end
+
+function increment_turn()
+	player_mon1.turn = player_mon1.turn + player_mon1.speed
+	enemy_mon1.turn = enemy_mon1.turn + enemy_mon1.speed
+	find_next_turn()
 end

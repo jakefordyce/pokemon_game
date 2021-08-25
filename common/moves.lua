@@ -15,6 +15,7 @@ M[1] = {
 	cooldown = 0,
 	default = true,
 	type = 1,
+	targetting = 1,
 	description = function(moveLevel)
 		damage = 100 + (moveLevel * 5)
 		return "Attacks 1 enemy for "..damage.."% of Attack."
