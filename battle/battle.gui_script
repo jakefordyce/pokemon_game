@@ -46,8 +46,13 @@ function on_input(self, action_id, action)
 			mon =  game_state.pokemon[0] -- TODO: change to use current mon
 			level = mon.learned_moves[mon.move1].level
 			gui.set_text(gui.get_node("move_description"), moves[mon.learned_moves[mon.move1].id].description(level))
-			display_target_icons(mon.move1)
-			msg.post("battle", "move_selected" {move = mon.move1})
+			msg.post("battle", "move_selected", {move = mon.move1})
+		end
+		if(gui.pick_node(gui.get_node("player_mon1"),action.x,action.y)) then
+			msg.post("battle", "target_selected", {target = "player_mon1"})
+		end
+		if(gui.pick_node(gui.get_node("enemy_mon1"),action.x,action.y)) then
+			msg.post("battle", "target_selected", {target = "enemy_mon1"})
 		end
 	end
 end
@@ -56,8 +61,4 @@ function on_reload(self)
 	-- Add reload-handling code here
 	-- Learn more: https://defold.com/manuals/hot-reload/
 	-- Remove this function if not needed
-end
-
-function display_target_icons(move)
-
 end
