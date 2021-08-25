@@ -1,7 +1,6 @@
 local M = {}
 
---List of all pokemon by pokedex ID.
-
+-- this should only be used for hp, attack, defense, spattack, spdefense
 function M.stat_by_level(pokedex, stat, level)
 	calc_stat = (5 + (M[pokedex][stat] * level * 0.01) * 2)
 	if stat=="hp" then
@@ -11,6 +10,10 @@ function M.stat_by_level(pokedex, stat, level)
 	return calc_stat
 end
 
+M.base_crit_chance = 5
+M.base_crit_damage = 100
+
+--List of all pokemon by pokedex ID.
 moves = {}
 moves[0] = {["level"] = 1, ["id"] = 1}
 
