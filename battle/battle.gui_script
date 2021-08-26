@@ -32,9 +32,21 @@ function on_message(self, message_id, message, sender)
 		gui.set_text(gui.get_node("move_description"), message.desc)
 	end
 	if message_id == hash("update_hp") then
-		--https://defold.com/ref/stable/gui/#gui.set_size:node-size
-		new_size = vmath.vector3((message.current / message.max * 100), 10, 0)
+		local current_hp = message.current
+		if current_hp > message.max then
+			current_hp = message.max
+		end
+		new_size = vmath.vector3((current_hp / message.max * 100), 10, 0)
 		gui.set_size(gui.get_node(message.target.."_health"), new_size)
+	end
+	if message_id == hash("update_turn") then
+		--https://defold.com/ref/stable/gui/#gui.set_size:node-size
+		local current_turn = message.current
+		if current_turn > message.max then
+			current_turn = message.max
+		end
+		new_size = vmath.vector3((current_turn / message.max * 100), 10, 0)
+		gui.set_size(gui.get_node(message.target.."_turn"), new_size)
 	end
 end
 

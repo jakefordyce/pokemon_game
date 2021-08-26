@@ -6,9 +6,9 @@ local enemy_mon1 = {}
 local selected_move = {}
 local spawned_target_icons = {}
 local current_turn_mon = {}
+local combatants = {}
 
 function init(self)
-	-- Learn more: https://defold.com/manuals/script/
 	msg.post(".", "acquire_input_focus")
 	load_data_for_battle()
 	find_next_turn()
@@ -34,7 +34,12 @@ function on_message(self, message_id, message, sender)
 	if message_id == hash("target_selected") then
 		if(target_is_valid(message.target)) then
 			--valid target, execute the move and then end the turn.
+			for index, effect in ipairs(selected_move.effects) do
+				handle_move_effects(effect, message.target, current_turn_mon)
+			end
 			go.delete_all(spawned_target_icons)
+			print(current_turn_mon.reference)
+			msg.post("gui", "update_turn", {target=current_turn_mon.reference, current=current_turn_mon.turn, max=1000})
 			find_next_turn()
 		end
 	end
@@ -44,7 +49,7 @@ end
 function on_input(self, action_id, action)
 	if action_id == hash("touch") and action.pressed then
 		--msg.post("gui", "display_mon", {mon = player_mon1}) -- for when it is the player turn.
-		--msg.post("gui", "update_hp", {target="player_mon1", current=player_mon1.currenthp, max=player_mon1.hp})
+		-- msg.post("gui", "update_hp", {target="player_mon1", current=player_mon1.currenthp, max=player_mon1.hp})
 		-- how to change sprites - msg.post("player_mon_1#sprite", "play_animation", { id = hash("ivysaur_back_original") })
 	end
 end
@@ -52,6 +57,26 @@ end
 function on_reload(self)
 	-- Add reload-handling code here
 	-- Learn more: https://defold.com/manuals/hot-reload/
+end
+
+function handle_move_effects(effect, target, move_user)
+	if effect.id == 1 then
+		local defender = combatants[target]
+		local power = effect.param1 * move_user[effect.param2] / 100
+		local damage = calc_damage(power, defender.defense)
+		damage_defender(defender, damage)
+	end
+end
+
+function damage_defender(defender, damage)
+	defender.currenthp = defender.currenthp - damage
+	-- prompt damage numbers to appear on screen
+	msg.post("gui", "update_hp", {target=defender.reference, current=defender.currenthp, max=defender.hp})
+	-- check if dead
+end
+
+function calc_damage(power, defense)
+	return math.ceil((200 / (200 + defense) * power))
 end
 
 function load_data_for_battle()
@@ -64,6 +89,7 @@ function load_player_mon_data()
 	player_mon1.currenthp = player_mon1.hp
 	player_mon1.turn = 0
 	player_mon1.reference = "player_mon1"
+	combatants["player_mon1"] = player_mon1
 end
 
 function load_enemy_data()
@@ -71,6 +97,8 @@ function load_enemy_data()
 	enemy_mon1 = game_state.enemy_mon1
 	enemy_mon1.currenthp = enemy_mon1.hp
 	enemy_mon1.turn = 0
+	enemy_mon1.reference = "enemy_mon1"
+	combatants["enemy_mon1"] = enemy_mon1
 end
 
 function start_player_turn(turn_mon)
@@ -96,7 +124,9 @@ end
 
 function increment_turn()
 	player_mon1.turn = player_mon1.turn + player_mon1.speed
+	msg.post("gui", "update_turn", {target="player_mon1", current=player_mon1.turn, max=1000})
 	enemy_mon1.turn = enemy_mon1.turn + enemy_mon1.speed
+	msg.post("gui", "update_turn", {target="enemy_mon1", current=enemy_mon1.turn, max=1000})
 	find_next_turn()
 end
 
@@ -106,7 +136,12 @@ function display_targetting_icons()
 		p.y = p.y + 50
 		local icon = factory.create("#target_icon_factory",p)
 		table.insert(spawned_target_icons, icon)
-	end	
+	elseif(selected_move.targetting == 1) then
+		local p = go.get_position("enemy_mon_1")
+		p.y = p.y + 50
+		local icon = factory.create("#target_icon_factory",p)
+		table.insert(spawned_target_icons, icon)
+	end
 end
 
 function target_is_valid(target)
@@ -114,7 +149,7 @@ function target_is_valid(target)
 		return true
 	elseif(selected_move.targetting == 1 and string.match(target, "^enemy")) then
 		return true
-	elseif(selected_move.targetting == 2 and string.match(target, "^player") then
+	elseif(selected_move.targetting == 2 and string.match(target, "^player")) then
 		return true
 	else
 		return false

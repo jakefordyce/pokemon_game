@@ -3,11 +3,11 @@ local M = {}
 --List of all of the available moves
 
 meffects = {}
-meffects[0] = {}
-meffects[0].id = 1
-meffects[0].target = 1
-meffects[0].param1 = 100
-meffects[0].param2 = 1
+meffects[1] = {}
+meffects[1].id = 1
+meffects[1].target = 1
+meffects[1].param1 = 100
+meffects[1].param2 = "attack"
 
 M[1] = {
 	name = "tackle",
