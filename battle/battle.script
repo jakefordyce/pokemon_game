@@ -2,10 +2,13 @@ local game_state = require "common/game_state"
 local encounters = require "common/encounters"
 local moves = require "common/moves"
 local player_mon1 = {}
+local player_mon2 = nil
+local player_mon3 = nil
+local player_mon4 = nil
 local enemy_mon1 = {}
 local selected_move = {}
 local spawned_target_icons = {}
-local current_turn_mon = {}
+local current_turn_mon = nil
 local combatants = {}
 
 function init(self)
@@ -27,8 +30,7 @@ end
 -- Learn more: https://defold.com/manuals/message-passing/
 function on_message(self, message_id, message, sender)
 	if message_id == hash("move_selected") then
-		selected_move = moves[current_turn_mon.learned_moves[message.move].id]
-		--print(moves[current_turn_mon.learned_moves[message.move].id])
+		selected_move = moves[current_turn_mon.known_moves[message.move].id]
 		display_targetting_icons()
 	end
 	if message_id == hash("target_selected") then
@@ -38,8 +40,6 @@ function on_message(self, message_id, message, sender)
 				handle_move_effects(effect, message.target, current_turn_mon)
 			end
 			go.delete_all(spawned_target_icons)
-			print(current_turn_mon.reference)
-			msg.post("gui", "update_turn", {target=current_turn_mon.reference, current=current_turn_mon.turn, max=1000})
 			find_next_turn()
 		end
 	end
@@ -70,6 +70,9 @@ end
 
 function damage_defender(defender, damage)
 	defender.currenthp = defender.currenthp - damage
+	if defender.currenthp <= 0 then
+		defender.currenthp = 0
+	end
 	-- prompt damage numbers to appear on screen
 	msg.post("gui", "update_hp", {target=defender.reference, current=defender.currenthp, max=defender.hp})
 	-- check if dead
@@ -89,15 +92,24 @@ function load_player_mon_data()
 	player_mon1.currenthp = player_mon1.hp
 	player_mon1.turn = 0
 	player_mon1.reference = "player_mon1"
+	player_mon1.move1cd = 0
+	player_mon1.move2cd = 0
+	player_mon1.move3cd = 0
+	player_mon1.move4cd = 0
 	combatants["player_mon1"] = player_mon1
 end
 
 function load_enemy_data()
 	encounters.load_trainer_data(0)
+	--TODO: copy stats?
 	enemy_mon1 = game_state.enemy_mon1
 	enemy_mon1.currenthp = enemy_mon1.hp
 	enemy_mon1.turn = 0
 	enemy_mon1.reference = "enemy_mon1"
+	enemy_mon1.move1cd = 0
+	enemy_mon1.move2cd = 0
+	enemy_mon1.move3cd = 0
+	enemy_mon1.move4cd = 0
 	combatants["enemy_mon1"] = enemy_mon1
 end
 
@@ -106,16 +118,57 @@ function start_player_turn(turn_mon)
 end
 
 function start_enemy_turn(turn_mon)
+	choose_enemy_move()
 	find_next_turn()
 end
 
+function choose_enemy_move()
+	is_move_chosen = false
+	math.randomseed(os.clock())
+	local target = ""
+	while is_move_chosen == false do
+		random_move = math.random(1,4) -- choose a move at random
+		-- see if the move is off cooldown
+		if(current_turn_mon["move"..random_move.."cd"] == 0) then
+			selected_move = moves[current_turn_mon.known_moves[current_turn_mon["move"..random_move]].id]
+			is_move_chosen = true
+		end
+	end
+
+	is_target_chosen = false
+	local target_chosen
+	if selected_move.targetting == 0 then
+		target = current_turn_mon.reference
+	elseif selected_move.targetting == 1 then
+		while is_target_chosen == false do
+			target_chosen = math.random(1,4)
+			if(combatants["player_mon"..target_chosen] ~= nil) then
+				target = combatants["player_mon"..target_chosen].reference
+				is_target_chosen = true
+			end
+		end
+	elseif selected_move.targetting == 2 then
+		local target_chosen = math.random(1,4)
+		target = combatants["enemy_mon"..target_chosen].reference
+	end
+	
+	
+	for index, effect in ipairs(selected_move.effects) do
+		handle_move_effects(effect, target, current_turn_mon)
+	end
+end
+
 function find_next_turn()
+	if current_turn_mon ~= nil then
+		msg.post("gui", "update_turn", {target=current_turn_mon.reference, current=current_turn_mon.turn, max=1000})
+	end
 	if player_mon1.turn > 1000 then
 		player_mon1.turn = player_mon1.turn - 1000
 		current_turn_mon = player_mon1
 		start_player_turn(player_mon1)
 	elseif enemy_mon1.turn > 1000 then
 		enemy_mon1.turn = enemy_mon1.turn - 1000
+		current_turn_mon = enemy_mon1
 		start_enemy_turn(enemy_mon1)
 	else
 		increment_turn()

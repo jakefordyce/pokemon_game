@@ -23,10 +23,10 @@ function on_message(self, message_id, message, sender)
 	-- Remove this function if not needed
 	if message_id == hash("display_mon") then
 		gui.set_text(gui.get_node("current_mon_name"), message.mon.name)
-		gui.set_text(gui.get_node("Move1"), moves[message.mon.learned_moves[message.mon.move1].id].name)
-		gui.set_text(gui.get_node("Move2"), moves[message.mon.learned_moves[message.mon.move2].id].name)
-		gui.set_text(gui.get_node("Move3"), moves[message.mon.learned_moves[message.mon.move3].id].name)
-		gui.set_text(gui.get_node("Move4"), moves[message.mon.learned_moves[message.mon.move4].id].name)
+		gui.set_text(gui.get_node("Move1"), moves[message.mon.known_moves[message.mon.move1].id].name)
+		gui.set_text(gui.get_node("Move2"), moves[message.mon.known_moves[message.mon.move2].id].name)
+		gui.set_text(gui.get_node("Move3"), moves[message.mon.known_moves[message.mon.move3].id].name)
+		gui.set_text(gui.get_node("Move4"), moves[message.mon.known_moves[message.mon.move4].id].name)
 	end
 	if message_id == hash("display_move_desc") then
 		gui.set_text(gui.get_node("move_description"), message.desc)
@@ -56,8 +56,8 @@ function on_input(self, action_id, action)
 	if(action_id == hash("touch") and action.released == true) then
 		if(gui.pick_node(gui.get_node("Move1"),action.x,action.y)) then
 			mon =  game_state.pokemon[0] -- TODO: change to use current mon
-			level = mon.learned_moves[mon.move1].level
-			gui.set_text(gui.get_node("move_description"), moves[mon.learned_moves[mon.move1].id].description(level))
+			level = mon.known_moves[mon.move1].level
+			gui.set_text(gui.get_node("move_description"), moves[mon.known_moves[mon.move1].id].description(level))
 			msg.post("battle", "move_selected", {move = mon.move1})
 		end
 		if(gui.pick_node(gui.get_node("player_mon1"),action.x,action.y)) then

@@ -15,7 +15,7 @@ M.base_crit_damage = 100
 
 --List of all pokemon by pokedex ID.
 moves = {}
-moves[0] = {["level"] = 1, ["id"] = 1}
+moves[1] = {["level"] = 1, ["id"] = 1}
 
 M[1] = {
 	["name"] = "bulbasaur",
@@ -29,7 +29,7 @@ M[1] = {
 }
 
 moves = {}
-moves[0] = {["level"] = 1, ["id"] = 1}
+moves[1] = {["level"] = 1, ["id"] = 1}
 
 M[2] = {
 	["name"] = "charmander",
