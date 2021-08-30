@@ -37,12 +37,12 @@ function on_message(self, message_id, message, sender)
 		if(target_is_valid(message.target)) then
 			--valid target, execute the move and then end the turn.
 			msg.post("gui", "set_battle_text", {text = ""..current_turn_mon.name.." used "..selected_move.name.."!"})
-			go.delete_all(spawned_target_icons)
+			go.delete(spawned_target_icons)
 			for index, effect in ipairs(selected_move.effects) do
 				handle_move_effects(effect, message.target, current_turn_mon)
 			end
 			msg.post("gui", "hide_mon_display")
-			go.delete_all(spawned_turn_markers)
+			go.delete(spawned_turn_markers)
 			find_next_turn()
 		end
 	end
@@ -99,6 +99,7 @@ function load_player_mon_data()
 	player_mon1.move2cd = 0
 	player_mon1.move3cd = 0
 	player_mon1.move4cd = 0
+	msg.post("player_mon_1#sprite", "play_animation", { id = hash(player_mon1.name.."_back_original") })
 	combatants["player_mon1"] = player_mon1
 end
 
@@ -113,6 +114,7 @@ function load_enemy_data()
 	enemy_mon1.move2cd = 0
 	enemy_mon1.move3cd = 0
 	enemy_mon1.move4cd = 0
+	msg.post("enemy_mon_1#sprite", "play_animation", { id = hash(enemy_mon1.name.."_front_original") })
 	combatants["enemy_mon1"] = enemy_mon1
 end
 
@@ -131,10 +133,8 @@ function start_enemy_turn(turn_mon)
 	p.z = p.z - 1
 	local turn_marker = factory.create("#turn_marker_factory",p, nil, nil, 1.5)
 	table.insert(spawned_turn_markers, turn_marker)
-	timer.delay(2, false, choose_enemy_move)
+	timer.delay(1, false, choose_enemy_move)
 	timer.delay(2, false, find_next_turn)
-	--choose_enemy_move()
-	--find_next_turn()
 end
 
 function choose_enemy_move()
@@ -166,14 +166,13 @@ function choose_enemy_move()
 		local target_chosen = math.random(1,4)
 		target = combatants["enemy_mon"..target_chosen].reference
 	end
-	print(current_turn_mon.name)
-	print(selected_move.name)
+	
 	msg.post("gui", "set_battle_text", {text = "Enemy "..current_turn_mon.name.." used "..selected_move.name.."!"})
 	
 	for index, effect in ipairs(selected_move.effects) do
 		handle_move_effects(effect, target, current_turn_mon)
 	end
-	go.delete_all(spawned_turn_markers)
+	go.delete(spawned_turn_markers)
 end
 
 function find_next_turn()
