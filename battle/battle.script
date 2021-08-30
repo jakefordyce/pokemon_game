@@ -8,6 +8,7 @@ local player_mon4 = nil
 local enemy_mon1 = {}
 local selected_move = {}
 local spawned_target_icons = {}
+local spawned_turn_markers = {}
 local current_turn_mon = nil
 local combatants = {}
 
@@ -41,6 +42,7 @@ function on_message(self, message_id, message, sender)
 				handle_move_effects(effect, message.target, current_turn_mon)
 			end
 			msg.post("gui", "hide_mon_display")
+			go.delete_all(spawned_turn_markers)
 			find_next_turn()
 		end
 	end
@@ -116,9 +118,19 @@ end
 
 function start_player_turn(turn_mon)
 	msg.post("gui", "display_mon", {mon = turn_mon})
+	local p = go.get_position("player_mon_1")
+	p.y = p.y - 60
+	p.z = p.z - 1
+	local turn_marker = factory.create("#turn_marker_factory",p, nil, nil, 2.0)
+	table.insert(spawned_turn_markers, turn_marker)
 end
 
 function start_enemy_turn(turn_mon)
+	local p = go.get_position("enemy_mon_1")
+	p.y = p.y - 60
+	p.z = p.z - 1
+	local turn_marker = factory.create("#turn_marker_factory",p, nil, nil, 1.5)
+	table.insert(spawned_turn_markers, turn_marker)
 	timer.delay(2, false, choose_enemy_move)
 	timer.delay(2, false, find_next_turn)
 	--choose_enemy_move()
@@ -161,6 +173,7 @@ function choose_enemy_move()
 	for index, effect in ipairs(selected_move.effects) do
 		handle_move_effects(effect, target, current_turn_mon)
 	end
+	go.delete_all(spawned_turn_markers)
 end
 
 function find_next_turn()
