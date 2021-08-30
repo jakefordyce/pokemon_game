@@ -15,6 +15,7 @@ trainers[0].mon1 = {
 }
 
 local function generate_stats(mon)
+	mon.name = pbs[mon.pokedex].name
 	mon.hp = pbs.stat_by_level(mon.pokedex, "hp", mon.level)
 	mon.attack = pbs.stat_by_level(mon.pokedex, "attack", mon.level)
 	mon.defense = pbs.stat_by_level(mon.pokedex, "defense", mon.level)

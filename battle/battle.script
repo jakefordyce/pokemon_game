@@ -23,8 +23,7 @@ function final(self)
 end
 
 function update(self, dt)
-	-- Add update code here
-	-- Learn more: https://defold.com/manuals/script/
+	
 end
 
 -- Learn more: https://defold.com/manuals/message-passing/
@@ -36,10 +35,12 @@ function on_message(self, message_id, message, sender)
 	if message_id == hash("target_selected") then
 		if(target_is_valid(message.target)) then
 			--valid target, execute the move and then end the turn.
+			msg.post("gui", "set_battle_text", {text = ""..current_turn_mon.name.." used "..selected_move.name.."!"})
+			go.delete_all(spawned_target_icons)
 			for index, effect in ipairs(selected_move.effects) do
 				handle_move_effects(effect, message.target, current_turn_mon)
 			end
-			go.delete_all(spawned_target_icons)
+			msg.post("gui", "hide_mon_display")
 			find_next_turn()
 		end
 	end
@@ -118,8 +119,10 @@ function start_player_turn(turn_mon)
 end
 
 function start_enemy_turn(turn_mon)
-	choose_enemy_move()
-	find_next_turn()
+	timer.delay(2, false, choose_enemy_move)
+	timer.delay(2, false, find_next_turn)
+	--choose_enemy_move()
+	--find_next_turn()
 end
 
 function choose_enemy_move()
@@ -151,7 +154,9 @@ function choose_enemy_move()
 		local target_chosen = math.random(1,4)
 		target = combatants["enemy_mon"..target_chosen].reference
 	end
-	
+	print(current_turn_mon.name)
+	print(selected_move.name)
+	msg.post("gui", "set_battle_text", {text = "Enemy "..current_turn_mon.name.." used "..selected_move.name.."!"})
 	
 	for index, effect in ipairs(selected_move.effects) do
 		handle_move_effects(effect, target, current_turn_mon)
@@ -171,7 +176,7 @@ function find_next_turn()
 		current_turn_mon = enemy_mon1
 		start_enemy_turn(enemy_mon1)
 	else
-		increment_turn()
+		timer.delay(.1, false, increment_turn)
 	end
 end
 

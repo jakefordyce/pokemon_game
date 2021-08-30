@@ -23,10 +23,22 @@ function on_message(self, message_id, message, sender)
 	-- Remove this function if not needed
 	if message_id == hash("display_mon") then
 		gui.set_text(gui.get_node("current_mon_name"), message.mon.name)
+		gui.set_enabled(gui.get_node("Move1"), true)
+		gui.set_enabled(gui.get_node("Move2"), true)
+		gui.set_enabled(gui.get_node("Move3"), true)
+		gui.set_enabled(gui.get_node("Move4"), true)
 		gui.set_text(gui.get_node("Move1"), moves[message.mon.known_moves[message.mon.move1].id].name)
 		gui.set_text(gui.get_node("Move2"), moves[message.mon.known_moves[message.mon.move2].id].name)
 		gui.set_text(gui.get_node("Move3"), moves[message.mon.known_moves[message.mon.move3].id].name)
 		gui.set_text(gui.get_node("Move4"), moves[message.mon.known_moves[message.mon.move4].id].name)
+	end
+	if message_id == hash("hide_mon_display") then
+		gui.set_text(gui.get_node("current_mon_name"), "")
+		gui.set_text(gui.get_node("move_description"), "")
+		gui.set_enabled(gui.get_node("Move1"), false)
+		gui.set_enabled(gui.get_node("Move2"), false)
+		gui.set_enabled(gui.get_node("Move3"), false)
+		gui.set_enabled(gui.get_node("Move4"), false)
 	end
 	if message_id == hash("display_move_desc") then
 		gui.set_text(gui.get_node("move_description"), message.desc)
@@ -47,6 +59,10 @@ function on_message(self, message_id, message, sender)
 		end
 		new_size = vmath.vector3((current_turn / message.max * 100), 10, 0)
 		gui.set_size(gui.get_node(message.target.."_turn"), new_size)
+	end
+	if message_id == hash("set_battle_text") then
+		gui.set_text(gui.get_node("battle_text"), message.text)
+		timer.delay(1, false, remove_battle_text)
 	end
 end
 
@@ -73,4 +89,8 @@ function on_reload(self)
 	-- Add reload-handling code here
 	-- Learn more: https://defold.com/manuals/hot-reload/
 	-- Remove this function if not needed
+end
+
+function remove_battle_text()
+	gui.set_text(gui.get_node("battle_text"),"")
 end
