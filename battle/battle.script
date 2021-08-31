@@ -37,12 +37,14 @@ function on_message(self, message_id, message, sender)
 		if(target_is_valid(message.target)) then
 			--valid target, execute the move and then end the turn.
 			msg.post("gui", "set_battle_text", {text = ""..current_turn_mon.name.." used "..selected_move.name.."!"})
-			go.delete(spawned_target_icons)
+			--go.delete(spawned_target_icons)
+			clear_gos(spawned_target_icons)
 			for index, effect in ipairs(selected_move.effects) do
 				handle_move_effects(effect, message.target, current_turn_mon)
 			end
 			msg.post("gui", "hide_mon_display")
-			go.delete(spawned_turn_markers)
+			--go.delete(spawned_turn_markers)
+			clear_gos(spawned_turn_markers)
 			find_next_turn()
 		end
 	end
@@ -60,6 +62,16 @@ end
 function on_reload(self)
 	-- Add reload-handling code here
 	-- Learn more: https://defold.com/manuals/hot-reload/
+end
+
+function clear_gos(id_table)
+	for i, v in ipairs(id_table) do
+		go.delete(v)
+		id_table[i] = nil
+	end
+	for i, v in ipairs(id_table) do
+		print(v)
+	end
 end
 
 function handle_move_effects(effect, target, move_user)
@@ -172,7 +184,8 @@ function choose_enemy_move()
 	for index, effect in ipairs(selected_move.effects) do
 		handle_move_effects(effect, target, current_turn_mon)
 	end
-	go.delete(spawned_turn_markers)
+	--go.delete(spawned_turn_markers)
+	clear_gos(spawned_turn_markers)
 end
 
 function find_next_turn()
