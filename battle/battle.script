@@ -15,7 +15,7 @@ local combatants = {}
 function init(self)
 	msg.post(".", "acquire_input_focus")
 	load_data_for_battle()
-	find_next_turn()
+	msg.post(".", "find_next_turn")
 end
 
 function final(self)
@@ -36,17 +36,31 @@ function on_message(self, message_id, message, sender)
 	if message_id == hash("target_selected") then
 		if(target_is_valid(message.target)) then
 			--valid target, execute the move and then end the turn.
-			msg.post("gui", "set_battle_text", {text = ""..current_turn_mon.name.." used "..selected_move.name.."!"})
-			--go.delete(spawned_target_icons)
 			clear_gos(spawned_target_icons)
-			for index, effect in ipairs(selected_move.effects) do
-				handle_move_effects(effect, message.target, current_turn_mon)
-			end
 			msg.post("gui", "hide_mon_display")
-			--go.delete(spawned_turn_markers)
-			clear_gos(spawned_turn_markers)
-			find_next_turn()
+			start_handling_move(message.target)
+			timer.delay(1, false, function() msg.post(".", "end_turn") end)
 		end
+	end
+	if message_id == hash("find_next_turn") then
+		if current_turn_mon ~= nil then
+			msg.post("gui", "update_turn", {target=current_turn_mon.reference, current=current_turn_mon.turn, max=1000})
+		end
+		if player_mon1.turn > 1000 then
+			player_mon1.turn = player_mon1.turn - 1000
+			current_turn_mon = player_mon1
+			start_player_turn(player_mon1)
+		elseif enemy_mon1.turn > 1000 then
+			enemy_mon1.turn = enemy_mon1.turn - 1000
+			current_turn_mon = enemy_mon1
+			start_enemy_turn(enemy_mon1)
+		else
+			timer.delay(.1, false, increment_turn)
+		end
+	end
+	if message_id == hash("end_turn") then
+		clear_gos(spawned_turn_markers)
+		msg.post(".", "find_next_turn")
 	end
 end
 
@@ -64,13 +78,14 @@ function on_reload(self)
 	-- Learn more: https://defold.com/manuals/hot-reload/
 end
 
-function clear_gos(id_table)
-	for i, v in ipairs(id_table) do
-		go.delete(v)
-		id_table[i] = nil
+function start_handling_move(target)
+	local battle_text = ""
+	if string.match(current_turn_mon.reference, "^enemy") then
+		battle_text = "Enemy "
 	end
-	for i, v in ipairs(id_table) do
-		print(v)
+	msg.post("gui", "set_battle_text", {text = battle_text..current_turn_mon.name.." used "..selected_move.name.."!"})
+	for index, effect in ipairs(selected_move.effects) do
+		handle_move_effects(effect, target, current_turn_mon)
 	end
 end
 
@@ -102,34 +117,6 @@ function load_data_for_battle()
 	load_enemy_data()
 end
 
-function load_player_mon_data()
-	player_mon1 = game_state.pokemon[game_state.player_mon1]
-	player_mon1.currenthp = player_mon1.hp
-	player_mon1.turn = 0
-	player_mon1.reference = "player_mon1"
-	player_mon1.move1cd = 0
-	player_mon1.move2cd = 0
-	player_mon1.move3cd = 0
-	player_mon1.move4cd = 0
-	msg.post("player_mon_1#sprite", "play_animation", { id = hash(player_mon1.name.."_back_original") })
-	combatants["player_mon1"] = player_mon1
-end
-
-function load_enemy_data()
-	encounters.load_trainer_data(0)
-	--TODO: copy stats?
-	enemy_mon1 = game_state.enemy_mon1
-	enemy_mon1.currenthp = enemy_mon1.hp
-	enemy_mon1.turn = 0
-	enemy_mon1.reference = "enemy_mon1"
-	enemy_mon1.move1cd = 0
-	enemy_mon1.move2cd = 0
-	enemy_mon1.move3cd = 0
-	enemy_mon1.move4cd = 0
-	msg.post("enemy_mon_1#sprite", "play_animation", { id = hash(enemy_mon1.name.."_front_original") })
-	combatants["enemy_mon1"] = enemy_mon1
-end
-
 function start_player_turn(turn_mon)
 	msg.post("gui", "display_mon", {mon = turn_mon})
 	local p = go.get_position("player_mon_1")
@@ -146,7 +133,7 @@ function start_enemy_turn(turn_mon)
 	local turn_marker = factory.create("#turn_marker_factory",p, nil, nil, 1.5)
 	table.insert(spawned_turn_markers, turn_marker)
 	timer.delay(1, false, choose_enemy_move)
-	timer.delay(2, false, find_next_turn)
+	timer.delay(2, false, function() msg.post(".", "end_turn") end)
 end
 
 function choose_enemy_move()
@@ -179,30 +166,7 @@ function choose_enemy_move()
 		target = combatants["enemy_mon"..target_chosen].reference
 	end
 	
-	msg.post("gui", "set_battle_text", {text = "Enemy "..current_turn_mon.name.." used "..selected_move.name.."!"})
-	
-	for index, effect in ipairs(selected_move.effects) do
-		handle_move_effects(effect, target, current_turn_mon)
-	end
-	--go.delete(spawned_turn_markers)
-	clear_gos(spawned_turn_markers)
-end
-
-function find_next_turn()
-	if current_turn_mon ~= nil then
-		msg.post("gui", "update_turn", {target=current_turn_mon.reference, current=current_turn_mon.turn, max=1000})
-	end
-	if player_mon1.turn > 1000 then
-		player_mon1.turn = player_mon1.turn - 1000
-		current_turn_mon = player_mon1
-		start_player_turn(player_mon1)
-	elseif enemy_mon1.turn > 1000 then
-		enemy_mon1.turn = enemy_mon1.turn - 1000
-		current_turn_mon = enemy_mon1
-		start_enemy_turn(enemy_mon1)
-	else
-		timer.delay(.1, false, increment_turn)
-	end
+	start_handling_move(target)
 end
 
 function increment_turn()
@@ -210,7 +174,36 @@ function increment_turn()
 	msg.post("gui", "update_turn", {target="player_mon1", current=player_mon1.turn, max=1000})
 	enemy_mon1.turn = enemy_mon1.turn + enemy_mon1.speed
 	msg.post("gui", "update_turn", {target="enemy_mon1", current=enemy_mon1.turn, max=1000})
-	find_next_turn()
+	msg.post(".", "find_next_turn")
+end
+
+
+function load_player_mon_data()
+	player_mon1 = game_state.pokemon[game_state.player_mon1]
+	player_mon1.currenthp = player_mon1.hp
+	player_mon1.turn = 0
+	player_mon1.reference = "player_mon1"
+	player_mon1.move1cd = 0
+	player_mon1.move2cd = 0
+	player_mon1.move3cd = 0
+	player_mon1.move4cd = 0
+	msg.post("player_mon_1#sprite", "play_animation", { id = hash(player_mon1.name.."_back_original") })
+	combatants["player_mon1"] = player_mon1
+end
+
+function load_enemy_data()
+	encounters.load_trainer_data(0)
+	--TODO: copy stats?
+	enemy_mon1 = game_state.enemy_mon1
+	enemy_mon1.currenthp = enemy_mon1.hp
+	enemy_mon1.turn = 0
+	enemy_mon1.reference = "enemy_mon1"
+	enemy_mon1.move1cd = 0
+	enemy_mon1.move2cd = 0
+	enemy_mon1.move3cd = 0
+	enemy_mon1.move4cd = 0
+	msg.post("enemy_mon_1#sprite", "play_animation", { id = hash(enemy_mon1.name.."_front_original") })
+	combatants["enemy_mon1"] = enemy_mon1
 end
 
 function display_targetting_icons()
@@ -236,5 +229,15 @@ function target_is_valid(target)
 		return true
 	else
 		return false
+	end
+end
+
+function clear_gos(id_table)
+	for i, v in ipairs(id_table) do
+		go.delete(v)
+		id_table[i] = nil
+	end
+	for i, v in ipairs(id_table) do
+		print(v)
 	end
 end

@@ -2,6 +2,7 @@ local game_state = require "common/game_state"
 
 function init(self)
 	msg.post(".", "acquire_input_focus")
+	msg.post(".", "hide_mon_display")
 end
 
 function final(self)
