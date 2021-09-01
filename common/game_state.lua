@@ -22,6 +22,10 @@ moves[0] = {
 	id = 1,
 	level = 0
 }
+moves[1] = {
+	id = 2,
+	level = 0
+}
 
 M.pokemon[0] = {
 	pokedex = 1,
@@ -30,7 +34,7 @@ M.pokemon[0] = {
 	name = "bulbasaur",
 	known_moves = moves,
 	move1 = 0, --this is the index from the pokemon's learned_moves.
-	move2 = 0,
+	move2 = 1,
 	move3 = 0,
 	move4 = 0,
 	rune1 = 0, --this is the index from M.runes.

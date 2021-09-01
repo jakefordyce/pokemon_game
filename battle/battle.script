@@ -90,12 +90,44 @@ function start_handling_move(target)
 end
 
 function handle_move_effects(effect, target, move_user)
-	if effect.id == 1 then
+	if effect.id == 1 then --deal damage
 		local defender = combatants[target]
-		local power = effect.param1 * move_user[effect.param2] / 100
+		stat = move_user[effect.param2]
+		if mon_has_buff_debuff_type(move_user, 2) then
+			stat = stat / 2
+		end	
+		local power = effect.param1 * stat / 100
 		local damage = calc_damage(power, defender.defense)
 		damage_defender(defender, damage)
 	end
+	if effect.id == 2 then --reduce attack
+		local defender = combatants[target]
+		local duration = effect.param2
+		apply_debuff(defender, 2, duration)
+	end
+end
+
+function apply_debuff(defender, debuff_type, duration)
+	debuff = {}
+	debuff.duration = duration
+	debuff.category = 2
+	debuff.type = debuff_type
+	p = go.get_position(defender.reference)
+	p.y = p.y + 125
+	p.x = p.x - 10
+	debuff_go = factory.create("#buff_debuff_factory",p, nil, nil)
+	debuff.go_id = debuff_go
+	table.insert(defender.buffs_debuffs, debuff)
+end
+
+function mon_has_buff_debuff_type(mon, buff_debuff_type)
+	has_buff_debuff = false
+	for i, bd in ipairs(mon.buffs_debuffs) do
+		if bd.type == buff_debuff_type then
+			has_buff_debuff = true
+		end
+	end
+	return has_buff_debuff
 end
 
 function damage_defender(defender, damage)
@@ -119,7 +151,7 @@ end
 
 function start_player_turn(turn_mon)
 	msg.post("gui", "display_mon", {mon = turn_mon})
-	local p = go.get_position("player_mon_1")
+	local p = go.get_position("player_mon1")
 	p.y = p.y - 60
 	p.z = p.z - 1
 	local turn_marker = factory.create("#turn_marker_factory",p, nil, nil, 2.0)
@@ -127,7 +159,7 @@ function start_player_turn(turn_mon)
 end
 
 function start_enemy_turn(turn_mon)
-	local p = go.get_position("enemy_mon_1")
+	local p = go.get_position("enemy_mon1")
 	p.y = p.y - 60
 	p.z = p.z - 1
 	local turn_marker = factory.create("#turn_marker_factory",p, nil, nil, 1.5)
@@ -187,7 +219,8 @@ function load_player_mon_data()
 	player_mon1.move2cd = 0
 	player_mon1.move3cd = 0
 	player_mon1.move4cd = 0
-	msg.post("player_mon_1#sprite", "play_animation", { id = hash(player_mon1.name.."_back_original") })
+	player_mon1.buffs_debuffs = {}
+	msg.post("player_mon1#sprite", "play_animation", { id = hash(player_mon1.name.."_back_original") })
 	combatants["player_mon1"] = player_mon1
 end
 
@@ -202,18 +235,19 @@ function load_enemy_data()
 	enemy_mon1.move2cd = 0
 	enemy_mon1.move3cd = 0
 	enemy_mon1.move4cd = 0
-	msg.post("enemy_mon_1#sprite", "play_animation", { id = hash(enemy_mon1.name.."_front_original") })
+	enemy_mon1.buffs_debuffs = {}
+	msg.post("enemy_mon1#sprite", "play_animation", { id = hash(enemy_mon1.name.."_front_original") })
 	combatants["enemy_mon1"] = enemy_mon1
 end
 
 function display_targetting_icons()
 	if(selected_move.targetting == 0 or selected_move.targetting == 2) then
-		local p = go.get_position("player_mon_1")
+		local p = go.get_position("player_mon1")
 		p.y = p.y + 50
 		local icon = factory.create("#target_icon_factory",p)
 		table.insert(spawned_target_icons, icon)
 	elseif(selected_move.targetting == 1) then
-		local p = go.get_position("enemy_mon_1")
+		local p = go.get_position("enemy_mon1")
 		p.y = p.y + 50
 		local icon = factory.create("#target_icon_factory",p)
 		table.insert(spawned_target_icons, icon)
