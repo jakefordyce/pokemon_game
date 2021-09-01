@@ -115,7 +115,7 @@ function apply_debuff(defender, debuff_type, duration)
 	p = go.get_position(defender.reference)
 	p.y = p.y + 125
 	p.x = p.x - 10
-	debuff_go = factory.create("#buff_debuff_factory",p, nil, nil)
+	debuff_go = factory.create("#buff_debuff_factory",p, nil, {})
 	debuff.go_id = debuff_go
 	table.insert(defender.buffs_debuffs, debuff)
 end
@@ -132,6 +132,12 @@ end
 
 function damage_defender(defender, damage)
 	defender.currenthp = defender.currenthp - damage
+
+	p = go.get_position(defender.reference)
+	p.y = p.y - 60
+	damage_text = factory.create("#effect_text_factory",p, nil)
+	msg.post(damage_text, "set_values", {label_text=""..damage, label_color="grey"})
+	
 	if defender.currenthp <= 0 then
 		defender.currenthp = 0
 	end
