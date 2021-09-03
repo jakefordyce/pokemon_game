@@ -3,8 +3,44 @@ instances {
   id: "player"
   prototype: "/adventure/player.go"
   position {
-    x: 99.0
-    y: 179.0
+    x: 261.0
+    y: 665.0
+    z: 0.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale3 {
+    x: 2.0
+    y: 2.0
+    z: 1.0
+  }
+}
+scale_along_z: 0
+embedded_instances {
+  id: "adventure"
+  data: "components {\n"
+  "  id: \"adventure\"\n"
+  "  component: \"/adventure/adventure.script\"\n"
+  "  position {\n"
+  "    x: 0.0\n"
+  "    y: 0.0\n"
+  "    z: 0.0\n"
+  "  }\n"
+  "  rotation {\n"
+  "    x: 0.0\n"
+  "    y: 0.0\n"
+  "    z: 0.0\n"
+  "    w: 1.0\n"
+  "  }\n"
+  "}\n"
+  ""
+  position {
+    x: 0.0
+    y: 0.0
     z: 0.0
   }
   rotation {
@@ -19,12 +55,51 @@ instances {
     z: 1.0
   }
 }
-scale_along_z: 0
 embedded_instances {
-  id: "adventure"
+  id: "dpad"
+  data: "embedded_components {\n"
+  "  id: \"sprite\"\n"
+  "  type: \"sprite\"\n"
+  "  data: \"tile_set: \\\"/adventure/controls.atlas\\\"\\n"
+  "default_animation: \\\"dpad\\\"\\n"
+  "material: \\\"/builtins/materials/sprite.material\\\"\\n"
+  "blend_mode: BLEND_MODE_ALPHA\\n"
+  "\"\n"
+  "  position {\n"
+  "    x: 0.0\n"
+  "    y: 0.0\n"
+  "    z: 0.0\n"
+  "  }\n"
+  "  rotation {\n"
+  "    x: 0.0\n"
+  "    y: 0.0\n"
+  "    z: 0.0\n"
+  "    w: 1.0\n"
+  "  }\n"
+  "}\n"
+  ""
+  position {
+    x: 108.0
+    y: 228.0
+    z: 0.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale3 {
+    x: 2.0
+    y: 2.0
+    z: 1.0
+  }
+}
+embedded_instances {
+  id: "gui"
   data: "components {\n"
   "  id: \"adventure\"\n"
-  "  component: \"/adventure/adventure.script\"\n"
+  "  component: \"/adventure/adventure.gui\"\n"
   "  position {\n"
   "    x: 0.0\n"
   "    y: 0.0\n"
