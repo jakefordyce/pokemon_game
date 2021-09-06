@@ -925,6 +925,6 @@ animations {
   flip_horizontal: 0
   flip_vertical: 0
 }
-extrude_borders: 0
+extrude_borders: 1
 inner_padding: 0
 sprite_trim_mode: SPRITE_TRIM_MODE_OFF

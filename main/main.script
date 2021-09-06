@@ -1,8 +1,8 @@
 local game_state = require "common/game_state"
 
 local function load_adventure(self)
-	msg.post("loader#oaks_lab", "load")
-	msg.post("loader#oaks_lab", "enable")
+	msg.post("loader#route1", "load")
+	msg.post("loader#route1", "enable")
 end
 
 local function load_battle(self)
