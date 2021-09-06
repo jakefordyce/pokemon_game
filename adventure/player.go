@@ -43,6 +43,7 @@ embedded_components {
   "restitution: 0.0\n"
   "group: \"player\"\n"
   "mask: \"default\"\n"
+  "mask: \"tall_grass\"\n"
   "embedded_collision_shape {\n"
   "  shapes {\n"
   "    shape_type: TYPE_BOX\n"

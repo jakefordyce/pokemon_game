@@ -6,6 +6,7 @@ local function load_adventure(self)
 end
 
 local function load_battle(self)
+	msg.post("loader#route1", "unload")
 	msg.post("loader#battle", "load")
 	msg.post("loader#battle", "enable")
 end
@@ -13,7 +14,9 @@ end
 function init(self)
 	msg.post("@render:", "use_fixed_fit_projection", { near = -1, far = 1 })
 	msg.post(".", "acquire_input_focus")
-	load_adventure(self)
+	--load_adventure(self)
+	load_battle(self)
+	--print(msg.url())
 end
 
 function on_input(self, action_id, action)

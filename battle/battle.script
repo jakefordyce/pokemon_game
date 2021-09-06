@@ -134,7 +134,7 @@ function damage_defender(defender, damage)
 	defender.currenthp = defender.currenthp - damage
 
 	p = go.get_position(defender.reference)
-	p.y = p.y - 60
+	--p.y = p.y - 60
 	damage_text = factory.create("#effect_text_factory",p, nil)
 	msg.post(damage_text, "set_values", {label_text=""..damage, label_color="grey"})
 	

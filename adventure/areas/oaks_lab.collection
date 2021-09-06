@@ -1,4 +1,4 @@
-name: "default"
+name: "oaks_lab"
 collection_instances {
   id: "adventure"
   collection: "/adventure/adventure.collection"
