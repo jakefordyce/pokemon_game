@@ -17,9 +17,10 @@ function update(self, dt)
 end
 
 function on_message(self, message_id, message, sender)
-	-- Add message-handling code here
-	-- Learn more: https://defold.com/manuals/message-passing/
-	-- Remove this function if not needed
+	if message_id == hash("reset") then
+		go.set_parent(nil)
+		go.set_position(vmath.vector3(0, 0, 0))
+	end
 end
 
 function on_input(self, action_id, action)

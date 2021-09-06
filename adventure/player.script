@@ -58,6 +58,7 @@ function on_message(self, message_id, message, sender)
 	-- Handle collision
 	if message_id == hash("contact_point_response") then
 		if message.other_group == hash("tall_grass") then
+			msg.post("camera", "reset")
 			msg.post("main:/loader#main", "load_battle")
 		else
 			-- Get the info needed to move out of collision. We might
