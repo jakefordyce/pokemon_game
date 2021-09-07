@@ -3,6 +3,7 @@ local speed = 150
 function init(self)
 	msg.post(".", "acquire_input_focus")
 	self.dir = vmath.vector3()
+	self.last_dir = vmath.vector3()
 	self.current_anim = nil
 	-- correction vector
 	self.correction = vmath.vector3()
@@ -21,16 +22,29 @@ function update(self, dt)
 	local p = go.get_position()
 	go.set_position(p + self.dir * speed * dt)
 
-	local anim = hash("idle_down")
 
+	if self.last_dir.x > 0 then
+		anim = hash("idle_right")
+	elseif self.last_dir.x < 0 then
+		anim = hash("idle_left")
+	elseif self.last_dir.y > 0 then
+		anim = hash("idle_up")
+	else
+		anim = hash("idle_down")
+	end
+	
 	if self.dir.x > 0 then
 		anim = hash("walk_right")
+		self.last_dir = self.dir
 	elseif self.dir.x < 0 then
 		anim = hash("walk_left")
+		self.last_dir = self.dir
 	elseif self.dir.y > 0 then
 		anim = hash("walk_up")
+		self.last_dir = self.dir
 	elseif self.dir.y < 0 then
 		anim = hash("walk_down")
+		self.last_dir = self.dir
 	end
 
 	if anim ~= self.current_anim then
@@ -55,7 +69,7 @@ function on_message(self, message_id, message, sender)
 	elseif message_id == hash("button_right") then
 		self.dir.x = 1
 	end
-	-- Handle collision
+	-- Handle collisions
 	if message_id == hash("contact_point_response") then
 		if message.other_group == hash("tall_grass") then
 			msg.post("camera", "reset")
@@ -64,7 +78,7 @@ function on_message(self, message_id, message, sender)
 			target = go.get(msg.url(nil, message.other_id, "door"), "target_area")
 			msg.post("camera", "reset")
 			msg.post("main:/loader#main", "load_area", {target_area = target})
-		else
+		else --something solid
 			-- Get the info needed to move out of collision. We might
 			-- get several contact points back and have to calculate
 			-- how to move out of all of them by accumulating a
