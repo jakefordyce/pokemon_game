@@ -60,6 +60,10 @@ function on_message(self, message_id, message, sender)
 		if message.other_group == hash("tall_grass") then
 			msg.post("camera", "reset")
 			msg.post("main:/loader#main", "load_battle")
+		elseif message.other_group == hash("door") then
+			target = go.get(msg.url(nil, message.other_id, "door"), "target_area")
+			msg.post("camera", "reset")
+			msg.post("main:/loader#main", "load_area", {target_area = target})
 		else
 			-- Get the info needed to move out of collision. We might
 			-- get several contact points back and have to calculate

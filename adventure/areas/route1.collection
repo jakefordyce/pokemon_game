@@ -1,4 +1,24 @@
 name: "route1"
+instances {
+  id: "door"
+  prototype: "/adventure/door.go"
+  position {
+    x: 273.0
+    y: 575.0
+    z: 0.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale3 {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+}
 collection_instances {
   id: "adventure"
   collection: "/adventure/adventure.collection"

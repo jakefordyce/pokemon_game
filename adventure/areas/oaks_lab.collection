@@ -1,4 +1,32 @@
 name: "oaks_lab"
+instances {
+  id: "door"
+  prototype: "/adventure/door.go"
+  position {
+    x: 259.0
+    y: 613.0
+    z: 0.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  component_properties {
+    id: "door"
+    properties {
+      id: "target_area"
+      value: "2.0"
+      type: PROPERTY_TYPE_NUMBER
+    }
+  }
+  scale3 {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+}
 collection_instances {
   id: "adventure"
   collection: "/adventure/adventure.collection"

@@ -29,4 +29,9 @@ function on_message(self, message_id, message, sender)
 	if message_id == hash("load_battle") then
 		load_battle(self)
 	end
+	if message_id == hash("load_area") then
+		msg.post("loader#route1", "unload")
+		msg.post("loader#oaks_lab", "load")
+		msg.post("loader#oaks_lab", "enable")
+	end
 end
