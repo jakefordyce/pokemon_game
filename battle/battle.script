@@ -115,7 +115,7 @@ function apply_debuff(defender, debuff_type, duration)
 	p = go.get_position(defender.reference)
 	p.y = p.y + 125
 	p.x = p.x - 10
-	debuff_go = factory.create("#buff_debuff_factory",p, nil, {})
+	debuff_go = factory.create("#buff_debuff_factory",p, nil, {duration = duration})
 	debuff.go_id = debuff_go
 	table.insert(defender.buffs_debuffs, debuff)
 end
