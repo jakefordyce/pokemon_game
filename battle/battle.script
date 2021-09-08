@@ -134,8 +134,6 @@ function damage_defender(defender, damage)
 	defender.currenthp = defender.currenthp - damage
 
 	p = go.get_position(defender.reference)
-	--p.y = p.y - 60
-	print(p)
 	damage_text = factory.create("#effect_text_factory",p, nil)
 	msg.post(damage_text, "set_values", {label_text=""..damage, label_color="grey"})
 	
@@ -145,6 +143,11 @@ function damage_defender(defender, damage)
 	-- prompt damage numbers to appear on screen
 	msg.post("gui", "update_hp", {target=defender.reference, current=defender.currenthp, max=defender.hp})
 	-- check if dead
+
+	--TODO: check all instead of just one. Possibly find a better place for this check?
+	if defender.currenthp <= 0 then
+		msg.post("main:/loader#main", "end_battle")
+	end
 end
 
 function calc_damage(power, defense)

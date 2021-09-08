@@ -1,4 +1,5 @@
 local speed = 150
+local game_state = require "common/game_state"
 
 function init(self)
 	msg.post(".", "acquire_input_focus")
@@ -72,9 +73,13 @@ function on_message(self, message_id, message, sender)
 	-- Handle collisions
 	if message_id == hash("contact_point_response") then
 		if message.other_group == hash("tall_grass") then
+			p = go.get_position()
+			game_state.position_x = p.x
+			game_state.position_y = p.y
 			msg.post("camera", "reset")
 			msg.post("main:/loader#main", "load_battle")
 		elseif message.other_group == hash("door") then
+			--TODO: also load position info
 			target = go.get(msg.url(nil, message.other_id, "door"), "target_area")
 			msg.post("camera", "reset")
 			msg.post("main:/loader#main", "load_area", {target_area = target})
