@@ -16,7 +16,7 @@ M.enemy_mon4 = nil
 --PLAYER INFO--
 M.position_x = 263
 M.position_y = 761
-M.current_area = "oaks_lab"
+M.current_area = 1
 
 --List of all of the player's pokemon.
 M.pokemon = {}

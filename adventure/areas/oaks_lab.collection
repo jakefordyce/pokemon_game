@@ -20,6 +20,16 @@ instances {
       value: "2.0"
       type: PROPERTY_TYPE_NUMBER
     }
+    properties {
+      id: "target_x"
+      value: "371.0"
+      type: PROPERTY_TYPE_NUMBER
+    }
+    properties {
+      id: "target_y"
+      value: "644.0"
+      type: PROPERTY_TYPE_NUMBER
+    }
   }
   scale3 {
     x: 1.0

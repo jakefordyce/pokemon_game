@@ -1,4 +1,6 @@
 go.property("target_area", 1)
+go.property("target_x", 263)
+go.property("target_y", 665)
 
 function init(self)
 	-- Add initialization code here

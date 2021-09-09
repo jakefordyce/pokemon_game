@@ -8,6 +8,10 @@ function init(self)
 	self.current_anim = nil
 	-- correction vector
 	self.correction = vmath.vector3()
+	position = vmath.vector3()
+	position.x = game_state.position_x
+	position.y = game_state.position_y
+	go.set_position(position)
 end
 
 function final(self)
@@ -81,8 +85,12 @@ function on_message(self, message_id, message, sender)
 		elseif message.other_group == hash("door") then
 			--TODO: also load position info
 			target = go.get(msg.url(nil, message.other_id, "door"), "target_area")
+			game_state.position_x = go.get(msg.url(nil, message.other_id, "door"), "target_x")
+			game_state.position_y = go.get(msg.url(nil, message.other_id, "door"), "target_y")
+			previous = game_state.current_area
+			game_state.current_area = target
 			msg.post("camera", "reset")
-			msg.post("main:/loader#main", "load_area", {target_area = target})
+			msg.post("main:/loader#main", "load_area", {previous_area = previous})
 		else --something solid
 			-- Get the info needed to move out of collision. We might
 			-- get several contact points back and have to calculate

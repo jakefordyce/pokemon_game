@@ -1,12 +1,16 @@
 local game_state = require "common/game_state"
+local area_names = require "common/area_names"
 
-local function load_adventure(self)
-	msg.post("loader#route1", "load")
-	msg.post("loader#route1", "enable")
+local function load_current_area(previous_area)
+	if previous_area ~= nil then
+		msg.post("loader#"..previous_area, "unload")
+	end
+	msg.post("loader#"..area_names[game_state.current_area], "load")
+	msg.post("loader#"..area_names[game_state.current_area], "enable")
 end
 
 local function load_battle(self)
-	msg.post("loader#route1", "unload")
+	msg.post("loader#"..area_names[game_state.current_area], "unload")
 	msg.post("loader#battle", "load")
 	msg.post("loader#battle", "enable")
 end
@@ -14,8 +18,7 @@ end
 function init(self)
 	msg.post("@render:", "use_fixed_fit_projection", { near = -1, far = 1 })
 	msg.post(".", "acquire_input_focus")
-	load_adventure(self)
-	--load_battle(self)
+	load_current_area(nil)
 	--print(msg.url())
 end
 
@@ -30,13 +33,9 @@ function on_message(self, message_id, message, sender)
 		load_battle(self)
 	end
 	if message_id == hash("end_battle") then
-		msg.post("loader#battle", "unload")
-		msg.post("loader#"..game_state.current_area, "load")
-		msg.post("loader#"..game_state.current_area, "enable")
+		load_current_area("battle")
 	end
 	if message_id == hash("load_area") then
-		msg.post("loader#route1", "unload")
-		msg.post("loader#oaks_lab", "load")
-		msg.post("loader#oaks_lab", "enable")
+		load_current_area(area_names[message.previous_area])
 	end
 end
