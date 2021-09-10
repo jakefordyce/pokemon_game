@@ -29,10 +29,32 @@ M[1] = {
 	["moves"] = moves
 }
 
+M[2] = {
+	["name"] = "ivysaur",
+	["hp"] = 105,
+	["attack"] = 90,
+	["defense"] = 90,
+	["spattack"] = 105,
+	["spdefense"] = 90,
+	["speed"] = 100,
+	["moves"] = moves
+}
+
+M[3] = {
+	["name"] = "venusaur",
+	["hp"] = 120,
+	["attack"] = 100,
+	["defense"] = 100,
+	["spattack"] = 120,
+	["spdefense"] = 100,
+	["speed"] = 100,
+	["moves"] = moves
+}
+
 moves = {}
 moves[1] = {["level"] = 1, ["id"] = 1}
 
-M[2] = {
+M[4] = {
 	["name"] = "charmander",
 	["hp"] = 80,
 	["attack"] = 90,

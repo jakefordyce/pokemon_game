@@ -1,10 +1,13 @@
-local spawned_pokedex_icons = {}
+go.property("pokedex", 1)
 local pbs = require "common/poke_base_stats"
 
 function init(self)
 	-- Add initialization code here
 	-- Learn more: https://defold.com/manuals/script/
 	-- Remove this function if not needed
+	--print(self.pokedex)
+	--print(pbs[self.pokedex].name)
+	msg.post("#sprite", "play_animation", { id = hash(pbs[self.pokedex].name.."_front_original") })
 end
 
 function final(self)
@@ -20,9 +23,9 @@ function update(self, dt)
 end
 
 function on_message(self, message_id, message, sender)
-	if message_id == hash("display_pokedex") then
-		display_pokedex_grid()
-	end
+	-- Add message-handling code here
+	-- Learn more: https://defold.com/manuals/message-passing/
+	-- Remove this function if not needed
 end
 
 function on_input(self, action_id, action)
@@ -41,28 +44,4 @@ function on_reload(self)
 	-- Add reload-handling code here
 	-- Learn more: https://defold.com/manuals/hot-reload/
 	-- Remove this function if not needed
-end
-
-function display_pokedex_grid()
-	local p = vmath.vector3()
-	p.y = 1100
-	p.x = 0
-
-	for i, poke in ipairs(pbs) do
-		local icon = factory.create("#pokedex_icon_factory",p, nil, {pokedex = i})
-		table.insert(spawned_pokedex_icons, icon)
-
-		p.x = p.x + 70
-	end
-	
-end
-
-function clear_gos(id_table)
-	for i, v in ipairs(id_table) do
-		go.delete(v)
-		id_table[i] = nil
-	end
-	for i, v in ipairs(id_table) do
-		print(v)
-	end
 end
