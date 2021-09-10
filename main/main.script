@@ -1,30 +1,19 @@
 local game_state = require "common/game_state"
 local area_names = require "common/area_names"
 
-local function load_current_area(previous_area)
-	if previous_area ~= nil then
-		msg.post("loader#"..previous_area, "unload")
+
+local function load_screen(new_screen, old_screen)
+	if old_screen ~= nil then
+		msg.post("loader#"..old_screen, "unload")
 	end
-	msg.post("loader#"..area_names[game_state.current_area], "load")
-	msg.post("loader#"..area_names[game_state.current_area], "enable")
-end
-
-local function load_battle(self)
-	msg.post("loader#"..area_names[game_state.current_area], "unload")
-	msg.post("loader#battle", "load")
-	msg.post("loader#battle", "enable")
-end
-
-local function load_menu(self)
-	msg.post("loader#"..area_names[game_state.current_area], "unload")
-	msg.post("loader#menu", "load")
-	msg.post("loader#menu", "enable")
+	msg.post("loader#"..new_screen, "load")
+	msg.post("loader#"..new_screen, "enable")
 end
 
 function init(self)
 	msg.post("@render:", "use_fixed_fit_projection", { near = -1, far = 1 })
 	msg.post(".", "acquire_input_focus")
-	load_current_area(nil)
+	load_screen(area_names[game_state.current_area], nil)
 	--print(msg.url())
 end
 
@@ -36,15 +25,18 @@ end
 
 function on_message(self, message_id, message, sender)
 	if message_id == hash("load_battle") then
-		load_battle(self)
+		load_screen("battle", area_names[game_state.current_area])
 	end
 	if message_id == hash("end_battle") then
-		load_current_area("battle")
+		load_screen(area_names[game_state.current_area], "battle")
 	end
 	if message_id == hash("load_area") then
-		load_current_area(area_names[message.previous_area])
+		load_screen(area_names[game_state.current_area], area_names[message.previous_area])
 	end
 	if message_id == hash("load_menu") then
-		load_menu(self)
+		load_screen("menu", area_names[game_state.current_area])
 	end	
+	if message_id == hash("close_menu") then
+		load_screen(area_names[game_state.current_area], "menu")
+	end
 end
