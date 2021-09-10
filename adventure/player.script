@@ -8,6 +8,7 @@ function init(self)
 	self.current_anim = nil
 	-- correction vector
 	self.correction = vmath.vector3()
+	
 	position = vmath.vector3()
 	position.x = game_state.position_x
 	position.y = game_state.position_y
@@ -74,6 +75,14 @@ function on_message(self, message_id, message, sender)
 	elseif message_id == hash("button_right") then
 		self.dir.x = 1
 	end
+
+	if message_id == hash("open_menu") then
+		p = go.get_position()
+		game_state.position_x = p.x
+		game_state.position_y = p.y
+		msg.post("main:/loader#main", "load_menu")
+	end
+
 	-- Handle collisions
 	if message_id == hash("contact_point_response") then
 		if message.other_group == hash("tall_grass") then
@@ -111,6 +120,7 @@ function on_message(self, message_id, message, sender)
 			end
 		end
 	end
+	
 end
 
 function on_input(self, action_id, action)

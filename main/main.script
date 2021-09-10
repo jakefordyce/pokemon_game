@@ -15,6 +15,12 @@ local function load_battle(self)
 	msg.post("loader#battle", "enable")
 end
 
+local function load_menu(self)
+	msg.post("loader#"..area_names[game_state.current_area], "unload")
+	msg.post("loader#menu", "load")
+	msg.post("loader#menu", "enable")
+end
+
 function init(self)
 	msg.post("@render:", "use_fixed_fit_projection", { near = -1, far = 1 })
 	msg.post(".", "acquire_input_focus")
@@ -38,4 +44,7 @@ function on_message(self, message_id, message, sender)
 	if message_id == hash("load_area") then
 		load_current_area(area_names[message.previous_area])
 	end
+	if message_id == hash("load_menu") then
+		load_menu(self)
+	end	
 end
