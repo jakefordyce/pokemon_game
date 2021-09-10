@@ -65,5 +65,60 @@ M[4] = {
 	["moves"] = moves
 }
 
+M[5] = {
+	["name"] = "charmeleon",
+	["hp"] = 90,
+	["attack"] = 105,
+	["defense"] = 90,
+	["spattack"] = 105,
+	["spdefense"] = 90,
+	["speed"] = 100,
+	["moves"] = moves
+}
+
+M[6] = {
+	["name"] = "charizard",
+	["hp"] = 100,
+	["attack"] = 120,
+	["defense"] = 100,
+	["spattack"] = 120,
+	["spdefense"] = 100,
+	["speed"] = 100,
+	["moves"] = moves
+}
+
+M[7] = {
+	["name"] = "squirtle",
+	["hp"] = 80,
+	["attack"] = 80,
+	["defense"] = 90,
+	["spattack"] = 90,
+	["spdefense"] = 80,
+	["speed"] = 100,
+	["moves"] = moves
+}
+
+M[8] = {
+	["name"] = "wartortle",
+	["hp"] = 90,
+	["attack"] = 90,
+	["defense"] = 105,
+	["spattack"] = 105,
+	["spdefense"] = 90,
+	["speed"] = 100,
+	["moves"] = moves
+}
+
+M[9] = {
+	["name"] = "blastoise",
+	["hp"] = 100,
+	["attack"] = 100,
+	["defense"] = 120,
+	["spattack"] = 120,
+	["spdefense"] = 100,
+	["speed"] = 100,
+	["moves"] = moves
+}
+
 
 return M
