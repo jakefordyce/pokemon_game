@@ -23,9 +23,14 @@ end
 
 function on_input(self, action_id, action)
 	if(action_id == hash("touch") and action.released == true) then
-		if(gui.pick_node(gui.get_node("exit_button"),action.x,action.y)) then
+		if(gui.pick_node(gui.get_node("exit_button"),action.x,action.y) and node_enabled(gui.get_node("exit_button"))) then
 			print("exit_button")
 			msg.post("main:/loader#main", "close_menu")
+		end
+		if(gui.pick_node(gui.get_node("pokedex_button"),action.x,action.y) and node_enabled(gui.get_node("pokedex_button"))) then
+			print("pokedex_button")
+			gui.set_enabled(gui.get_node("main"), false)
+			msg.post("menu", "display_pokedex")
 		end
 	end
 end
@@ -34,4 +39,13 @@ function on_reload(self)
 	-- Add reload-handling code here
 	-- Learn more: https://defold.com/manuals/hot-reload/
 	-- Remove this function if not needed
+end
+
+function node_enabled(node)
+	local parent = gui.get_parent(node)
+	local enabled = gui.is_enabled(node)
+	if parent then
+		return enabled and gui.is_enabled(parent)
+	end
+	return enabled
 end
