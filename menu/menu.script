@@ -45,7 +45,7 @@ end
 
 function display_pokedex_grid()
 	local p = vmath.vector3()
-	p.y = 1100
+	p.y = 1000
 	p.x = 0
 
 	for i, poke in ipairs(pbs) do

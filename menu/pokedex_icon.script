@@ -25,7 +25,7 @@ end
 
 function on_message(self, message_id, message, sender)
 	if message_id ==  hash("clicked") then
-		print("clicked "..pbs[self.pokedex].name)
+		msg.post("gui", "display_pokedex_details", { mon = pbs[self.pokedex] })
 	end
 end
 
