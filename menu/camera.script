@@ -1,0 +1,56 @@
+function init(self)
+	msg.post(".", "acquire_camera_focus")
+	msg.post(".", "acquire_input_focus")
+	go.set_parent(".", go.get_id("menu"))
+	go.set_position(vmath.vector3(0, 0, 0))
+end
+
+function final(self)
+	-- Add finalization code here
+	-- Learn more: https://defold.com/manuals/script/
+	-- Remove this function if not needed
+end
+
+function update(self, dt)
+	-- Add update code here
+	-- Learn more: https://defold.com/manuals/script/
+	-- Remove this function if not needed
+end
+
+function on_message(self, message_id, message, sender)
+	if message_id == hash("reset") then
+		go.set_parent(nil)
+		go.set_position(vmath.vector3(0, 0, 0))
+	end
+end
+
+function on_input(self, action_id, action)
+	if action.pressed then
+		self.drag = true
+		self.camera_pos = go.get_position()
+		self.pressed_pos = vmath.vector3(self.camera_pos.x, action.y, 0)
+		self.pressed_time = socket.gettime()
+	elseif action.released then
+		self.drag = false
+	end
+
+	if self.drag then
+		--local mouse_pos = vmath.vector3(action.x, action.y, 0)
+		local pos = self.camera_pos + self.pressed_pos - vmath.vector3(self.camera_pos.x, action.y, 0)
+		go.set_position(limit(self, pos))
+	end
+end
+
+function on_reload(self)
+	-- Add reload-handling code here
+	-- Learn more: https://defold.com/manuals/hot-reload/
+	-- Remove this function if not needed
+end
+
+function limit(self, pos)
+	local top = 100 -- how far up you can scroll
+	local bottom = 0
+	pos.y = math.min(pos.y, top)
+	pos.y = math.max(pos.y, bottom)
+	return pos
+end
