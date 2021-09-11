@@ -80,6 +80,7 @@ function on_message(self, message_id, message, sender)
 		p = go.get_position()
 		game_state.position_x = p.x
 		game_state.position_y = p.y
+		msg.post("camera", "reset")
 		msg.post("main:/loader#main", "load_menu")
 	end
 
