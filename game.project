@@ -1,6 +1,6 @@
 [project]
 title = Pokemon
-dependencies#0 = https://github.com/britzl/defold-input/archive/master.zip
+dependencies = 
 
 [bootstrap]
 main_collection = /main/main.collectionc

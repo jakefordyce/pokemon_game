@@ -3,6 +3,8 @@ local pbs = require "common/poke_base_stats"
 
 function init(self)
 	msg.post(".", "acquire_input_focus")
+	self.current_pos = go.get_position()
+	self.pressed_pos = go.get_position()
 end
 
 function final(self)
@@ -19,12 +21,17 @@ end
 
 function on_input(self, action_id, action)
 	if action.pressed then
-		self.drag = true
+		self.drag = true		
 		self.current_pos = go.get_position()
 		self.pressed_pos = vmath.vector3(self.current_pos.x, action.y, 0)
-		--self.pressed_time = socket.gettime()
 	elseif action.released then
 		self.drag = false
+		released_pos = vmath.vector3(self.current_pos.x, action.y, 0)
+		drag_distance = vmath.length(released_pos - self.pressed_pos)
+		if drag_distance < 20 then
+			p = vmath.vector3(action.x, action.y, 0)
+			factory.create("#cursor_factory",p)
+		end
 	end
 
 	if self.drag then
@@ -34,9 +41,6 @@ function on_input(self, action_id, action)
 end
 
 function on_reload(self)
-	-- Add reload-handling code here
-	-- Learn more: https://defold.com/manuals/hot-reload/
-	-- Remove this function if not needed
 end
 
 function display_pokedex_grid()
@@ -55,8 +59,8 @@ function display_pokedex_grid()
 end
 
 function limit(self, pos)
-	local top = 0 
-	local bottom = -100
+	local top = 100 
+	local bottom = 0
 	pos.y = math.min(pos.y, top)
 	pos.y = math.max(pos.y, bottom)
 	return pos
