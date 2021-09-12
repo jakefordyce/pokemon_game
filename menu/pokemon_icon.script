@@ -1,0 +1,27 @@
+go.property("pokedex", 1)
+local pbs = require "common/poke_base_stats"
+
+function init(self)
+	msg.post("#sprite", "play_animation", { id = hash(pbs[self.pokedex].name.."_front_original") })
+end
+
+function final(self)
+end
+
+function update(self, dt)
+end
+
+function on_message(self, message_id, message, sender)
+	if message_id == hash("contact_point_response") then
+		if message.other_group == hash("cursor") then
+			print("pokemon selected")
+			--msg.post("gui", "display_pokedex_details", { mon = pbs[self.pokedex] })
+		end
+	end
+end
+
+function on_input(self, action_id, action)
+end
+
+function on_reload(self)
+end

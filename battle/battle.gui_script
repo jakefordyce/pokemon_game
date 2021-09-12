@@ -72,13 +72,13 @@ function on_input(self, action_id, action)
 	local moves = require "common/moves"
 	if(action_id == hash("touch") and action.released == true) then
 		if(gui.pick_node(gui.get_node("Move1"),action.x,action.y)) then
-			mon =  game_state.pokemon[0] -- TODO: change to use current mon
+			mon =  game_state.pokemon[1] -- TODO: change to use current mon
 			level = mon.known_moves[mon.move1].level
 			gui.set_text(gui.get_node("move_description"), moves[mon.known_moves[mon.move1].id].description(level))
 			msg.post("battle", "move_selected", {move = mon.move1})
 		end
 		if(gui.pick_node(gui.get_node("Move2"),action.x,action.y)) then
-			mon =  game_state.pokemon[0] -- TODO: change to use current mon
+			mon =  game_state.pokemon[1] -- TODO: change to use current mon
 			level = mon.known_moves[mon.move2].level
 			gui.set_text(gui.get_node("move_description"), moves[mon.known_moves[mon.move2].id].description(level))
 			msg.post("battle", "move_selected", {move = mon.move2})

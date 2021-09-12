@@ -26,18 +26,15 @@ function on_input(self, action_id, action)
 	if(action_id == hash("touch") and action.pressed == true) then
 		if(gui.pick_node(gui.get_node("exit_button"),action.x,action.y) and node_enabled(gui.get_node("exit_button"))) then
 			return true
-			--print("exit_button")
-			--msg.post("main:/loader#main", "close_menu")
 		end
 		if(gui.pick_node(gui.get_node("pokedex_button"),action.x,action.y) and node_enabled(gui.get_node("pokedex_button"))) then
 			return true
-			--gui.set_enabled(gui.get_node("main"), false)
-			--msg.post("menu", "display_pokedex")
+		end
+		if(gui.pick_node(gui.get_node("pokemon_button"),action.x,action.y) and node_enabled(gui.get_node("pokemon_button"))) then
+			return true
 		end
 		if(gui.pick_node(gui.get_node("details_exit_button"),action.x,action.y) and node_enabled(gui.get_node("details_exit_button"))) then
 			return true
-			--gui.set_enabled(gui.get_node("details_panel"), false)
-			--return true
 		end
 	end
 	if(action_id == hash("touch") and action.released == true) then
@@ -48,6 +45,12 @@ function on_input(self, action_id, action)
 		if(gui.pick_node(gui.get_node("pokedex_button"),action.x,action.y) and node_enabled(gui.get_node("pokedex_button"))) then
 			gui.set_enabled(gui.get_node("main"), false)
 			msg.post("menu", "display_pokedex")
+			return true
+		end
+		if(gui.pick_node(gui.get_node("pokemon_button"),action.x,action.y) and node_enabled(gui.get_node("pokemon_button"))) then
+			gui.set_enabled(gui.get_node("main"), false)
+			msg.post("menu", "display_pokemon")
+			return true
 		end
 		if(gui.pick_node(gui.get_node("details_exit_button"),action.x,action.y) and node_enabled(gui.get_node("details_exit_button"))) then
 			gui.set_enabled(gui.get_node("details_panel"), false)

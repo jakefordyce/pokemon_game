@@ -1,7 +1,7 @@
 local M = {}
 
 --BATTLE INFO--
-M.player_mon1 = 0 --this is the index of M.pokemon
+M.player_mon1 = 1 --this is the index of M.pokemon
 M.player_mon2 = nil
 M.player_mon3 = nil
 M.player_mon4 = nil
@@ -22,26 +22,26 @@ M.current_area = 1
 M.pokemon = {}
 
 moves = {}
-moves[0] = {
+moves[1] = {
 	id = 1,
 	level = 0
 }
-moves[1] = {
+moves[2] = {
 	id = 2,
 	level = 0
 }
 
-M.pokemon[0] = {
+M.pokemon[1] = {
 	pokedex = 1,
 	level = 5,
 	exp = 0,
 	name = "bulbasaur",
 	known_moves = moves,
-	move1 = 0, --this is the index from the pokemon's learned_moves.
-	move2 = 1,
-	move3 = 0,
-	move4 = 0,
-	rune1 = 0, --this is the index from M.runes.
+	move1 = 1, --this is the index from the pokemon's learned_moves.
+	move2 = 2,
+	move3 = 1,
+	move4 = 1,
+	rune1 = 1, --this is the index from M.runes.
 	rune2 = nil,
 	rune3 = nil,
 	rune4 = nil,
@@ -62,7 +62,7 @@ M.pokemon[0] = {
 --List of all of the player's runes.
 M.runes = {}
 
-M.runes[0] = {
+M.runes[1] = {
 	slot = 1,
 	level = 1,
 	rarity = 1

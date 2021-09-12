@@ -1,5 +1,7 @@
 local spawned_pokedex_icons = {}
+local spawned_pokemon_icons = {}
 local pbs = require "common/poke_base_stats"
+local game_state = require "common/game_state"
 
 function init(self)
 	msg.post(".", "acquire_input_focus")
@@ -16,6 +18,9 @@ end
 function on_message(self, message_id, message, sender)
 	if message_id == hash("display_pokedex") then
 		display_pokedex_grid()
+	end
+	if message_id == hash("display_pokemon") then
+		display_pokemon_grid()
 	end
 end
 
@@ -56,6 +61,21 @@ function display_pokedex_grid()
 		p.x = p.x + 70 --each image is 64 wide. Also adding a little extra space.
 	end
 	
+end
+
+function display_pokemon_grid()
+	local p = vmath.vector3()
+	p.y = 1000
+	p.x = 32
+
+	for i, poke in ipairs(game_state.pokemon) do
+		local icon = factory.create("#pokemon_icon_factory",p, nil, {pokedex = i})
+		go.set_parent(icon, go.get_id("menu"))
+		table.insert(spawned_pokemon_icons, icon)
+
+		p.x = p.x + 70 --each image is 64 wide. Also adding a little extra space.
+	end
+
 end
 
 function limit(self, pos)
