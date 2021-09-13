@@ -1,5 +1,6 @@
 local spawned_pokedex_icons = {}
 local spawned_pokemon_icons = {}
+local spawned_moves = {}
 local pbs = require "common/poke_base_stats"
 local game_state = require "common/game_state"
 
@@ -21,6 +22,10 @@ function on_message(self, message_id, message, sender)
 	end
 	if message_id == hash("display_pokemon") then
 		display_pokemon_grid()
+	end
+	if message_id == hash("display_pokemon_moves") then
+		clear_gos(spawned_pokemon_icons)
+		display_move_list(message.mon)
 	end
 end
 
@@ -60,7 +65,6 @@ function display_pokedex_grid()
 
 		p.x = p.x + 70 --each image is 64 wide. Also adding a little extra space.
 	end
-	
 end
 
 function display_pokemon_grid()
@@ -69,13 +73,26 @@ function display_pokemon_grid()
 	p.x = 32
 
 	for i, poke in ipairs(game_state.pokemon) do
-		local icon = factory.create("#pokemon_icon_factory",p, nil, {pokedex = i})
+		local icon = factory.create("#pokemon_icon_factory",p, nil, {mon_id = i})
 		go.set_parent(icon, go.get_id("menu"))
 		table.insert(spawned_pokemon_icons, icon)
 
 		p.x = p.x + 70 --each image is 64 wide. Also adding a little extra space.
 	end
+end
 
+function display_move_list(mon)
+	local p = vmath.vector3()
+	p.y = 900
+	p.x = 320
+
+	for i, m in ipairs(mon.known_moves) do
+		local move = factory.create("#move_factory",p, nil, {move_index = m.id})
+		go.set_parent(move, go.get_id("menu"))
+		table.insert(spawned_moves, move)
+
+		p.y = p.y - 100 --each image is 100px tall
+	end
 end
 
 function limit(self, pos)

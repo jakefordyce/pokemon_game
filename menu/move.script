@@ -1,0 +1,28 @@
+go.property("move_index", 1)
+local moves = require "common/moves"
+
+function init(self)
+	--TODO: use move level instead of 0
+	description = moves[self.move_index].description(0)
+	label.set_text("#move_description", description)
+end
+
+function final(self)
+end
+
+function update(self, dt)
+end
+
+function on_message(self, message_id, message, sender)
+	if message_id == hash("contact_point_response") then
+		if message.other_group == hash("cursor") then
+			--msg.post("gui", "display_pokemon_moves")
+		end
+	end
+end
+
+function on_input(self, action_id, action)
+end
+
+function on_reload(self)
+end

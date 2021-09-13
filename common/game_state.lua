@@ -30,6 +30,22 @@ moves[2] = {
 	id = 2,
 	level = 0
 }
+moves[3] = {
+	id = 3,
+	level = 0
+}
+moves[4] = {
+	id = 4,
+	level = 0
+}
+moves[5] = {
+	id = 5,
+	level = 0
+}
+moves[6] = {
+	id = 6,
+	level = 0
+}
 
 M.pokemon[1] = {
 	pokedex = 1,
@@ -39,8 +55,8 @@ M.pokemon[1] = {
 	known_moves = moves,
 	move1 = 1, --this is the index from the pokemon's learned_moves.
 	move2 = 2,
-	move3 = 1,
-	move4 = 1,
+	move3 = 3,
+	move4 = 4,
 	rune1 = 1, --this is the index from M.runes.
 	rune2 = nil,
 	rune3 = nil,
