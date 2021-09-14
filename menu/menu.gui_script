@@ -3,6 +3,7 @@ local moves = require "common/moves"
 function init(self)
 	msg.post(".", "acquire_input_focus")
 	gui.set_enabled(gui.get_node("details_panel"), false)
+	gui.set_enabled(gui.get_node("current_move_panel"), false)
 	gui.set_enabled(gui.get_node("move1"), false)
 	gui.set_enabled(gui.get_node("move2"), false)
 	gui.set_enabled(gui.get_node("move3"), false)
@@ -53,6 +54,9 @@ function on_input(self, action_id, action)
 		if(gui.pick_node(gui.get_node("details_exit_button"),action.x,action.y) and node_enabled(gui.get_node("details_exit_button"))) then
 			return true
 		end
+		if(gui.pick_node(gui.get_node("moves_exit_button"),action.x,action.y) and node_enabled(gui.get_node("moves_exit_button"))) then
+			return true
+		end
 		if(gui.pick_node(gui.get_node("move1"),action.x,action.y) and node_enabled(gui.get_node("move1"))) then
 			return true
 		end
@@ -76,9 +80,16 @@ function on_input(self, action_id, action)
 			gui.set_enabled(gui.get_node("details_panel"), false)
 			return true
 		end
+		if(gui.pick_node(gui.get_node("moves_exit_button"),action.x,action.y) and node_enabled(gui.get_node("moves_exit_button"))) then
+			gui.set_enabled(gui.get_node("current_move_panel"), false)
+			gui.set_enabled(gui.get_node("details_panel"), true)
+			return true
+		end
 		if(gui.pick_node(gui.get_node("move1"),action.x,action.y) and node_enabled(gui.get_node("move1"))) then
 			gui.set_enabled(gui.get_node("details_panel"), false)
-			--display current move node/s
+			gui.set_enabled(gui.get_node("current_move_panel"), true)
+			--TODO: use real level instead of 0.
+			gui.set_text(gui.get_node("current_move_description"), moves[self.current_pokemon.known_moves[self.current_pokemon.move1].id].description(0))
 			msg.post("menu", "display_pokemon_moves", {mon = self.current_pokemon})
 			return true
 		end
