@@ -31,6 +31,10 @@ function on_message(self, message_id, message, sender)
 		clear_gos(spawned_moves)
 		display_pokemon_grid()
 	end
+	if message_id == hash("return_to_main") then
+		clear_gos(spawned_pokedex_icons)
+		clear_gos(spawned_pokemon_icons)
+	end
 end
 
 function on_input(self, action_id, action)
