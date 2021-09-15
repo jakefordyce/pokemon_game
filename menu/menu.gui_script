@@ -83,6 +83,7 @@ function on_input(self, action_id, action)
 		if(gui.pick_node(gui.get_node("moves_exit_button"),action.x,action.y) and node_enabled(gui.get_node("moves_exit_button"))) then
 			gui.set_enabled(gui.get_node("current_move_panel"), false)
 			gui.set_enabled(gui.get_node("details_panel"), true)
+			msg.post("menu", "hide_pokemon_moves")
 			return true
 		end
 		if(gui.pick_node(gui.get_node("move1"),action.x,action.y) and node_enabled(gui.get_node("move1"))) then

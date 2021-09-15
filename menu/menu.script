@@ -27,6 +27,10 @@ function on_message(self, message_id, message, sender)
 		clear_gos(spawned_pokemon_icons)
 		display_move_list(message.mon)
 	end
+	if message_id == hash("hide_pokemon_moves") then
+		clear_gos(spawned_moves)
+		display_pokemon_grid()
+	end
 end
 
 function on_input(self, action_id, action)
