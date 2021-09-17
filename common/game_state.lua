@@ -69,8 +69,8 @@ M.pokemon[1] = {
 	spattack = 10,
 	spdefense = 10,
 	speed = 100,
-	acc = 0,
-	res = 0,
+	accuracy = 0,
+	resist = 0,
 	crit_chance = 5,
 	crit_damage = 50
 }
@@ -81,7 +81,26 @@ M.runes = {}
 M.runes[1] = {
 	slot = 1,
 	level = 1,
-	rarity = 1
+	rarity = 5,
+	main_stat = 1,
+	substats = {
+		{
+			stat = 9,
+			rank = 1
+		},
+		{
+			stat = 4,
+			rank = 1
+		},
+		{
+			stat = 10,
+			rank = 1
+		},
+		{
+			stat = 8,
+			rank = 1
+		}
+	}
 }
 
 return M

@@ -1,5 +1,6 @@
 local moves = require "common/moves"
 local game_state = require "common/game_state"
+local runes = require "common/runes"
 
 function init(self)
 	msg.post(".", "acquire_input_focus")
@@ -30,9 +31,21 @@ function on_message(self, message_id, message, sender)
 		--message.mon will be a record from common/game_state in the .pokemon table.
 		self.current_pokemon = message.mon
 		mon = game_state.pokemon[self.current_pokemon]
+		--rune_text = runes.description(game_state.runes[mon.rune1])
+		--print(rune_text)
 		gui.set_enabled(gui.get_node("details_panel"), true)
 		gui.set_enabled(gui.get_node("return_to_main_button"), false)
 		gui.set_text(gui.get_node("details_name"), mon.name)
+		gui.set_text(gui.get_node("details_hp"), mon.hp)
+		gui.set_text(gui.get_node("details_attack"), mon.attack)
+		gui.set_text(gui.get_node("details_spattack"), mon.spattack)
+		gui.set_text(gui.get_node("details_defense"), mon.defense)
+		gui.set_text(gui.get_node("details_spdefense"), mon.spdefense)
+		gui.set_text(gui.get_node("details_speed"), mon.speed)
+		gui.set_text(gui.get_node("details_accuracy"), mon.accuracy)
+		gui.set_text(gui.get_node("details_resist"), mon.resist)
+		gui.set_text(gui.get_node("details_crit_chance"), (mon.crit_chance.."%"))
+		gui.set_text(gui.get_node("details_crit_damage"), (mon.crit_damage.."%"))
 		gui.set_enabled(gui.get_node("move1"), true)
 		gui.set_enabled(gui.get_node("move2"), true)
 		gui.set_enabled(gui.get_node("move3"), true)
