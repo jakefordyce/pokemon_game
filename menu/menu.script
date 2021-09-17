@@ -26,7 +26,7 @@ function on_message(self, message_id, message, sender)
 		display_pokemon_grid()
 	end
 	if message_id == hash("select_pokemon") then
-		current_mon = game_state.pokemon[message.mon]
+		current_mon = message.mon
 	end
 	--this is sent from the GUI when a user selects one of their pokemon's moves.
 	if message_id == hash("display_pokemon_moves") then
@@ -41,7 +41,7 @@ function on_message(self, message_id, message, sender)
 	if message_id == hash("swap_move") then
 		msg.post(".", "hide_pokemon_moves")
 		swap_move(message.move_id)
-		msg.post("gui", "moves_exit")
+		msg.post("gui", "moves_exit", {mon = current_mon})
 	end
 	if message_id == hash("return_to_main") then
 		clear_gos(spawned_pokedex_icons)
@@ -75,19 +75,15 @@ end
 
 function swap_move(move_id)
 	selected_move = 1
-	print(move_id)
+	mon = game_state.pokemon[current_mon]
 	--we have to find which of the pokemon's known moves matches the move_id.
-	for i, m in ipairs(current_mon.known_moves) do
+	for i, m in ipairs(mon.known_moves) do
 		if m.id == move_id then
 			selected_move = i
 		end
 	end
-	print(selected_move)
-	print(current_move)
-	print(current_mon[current_move])
 	--current_move should contain move1, move2, move3, or move4
-	current_mon[current_move] = selected_move
-	print(current_mon[current_move])
+	mon[current_move] = selected_move
 end
 
 function display_pokedex_grid()
