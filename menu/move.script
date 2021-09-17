@@ -16,7 +16,7 @@ end
 function on_message(self, message_id, message, sender)
 	if message_id == hash("contact_point_response") then
 		if message.other_group == hash("cursor") then
-			--msg.post("gui", "display_pokemon_moves")
+			msg.post("menu", "swap_move", { move_id = self.move_index })
 		end
 	end
 end

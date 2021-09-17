@@ -3,6 +3,8 @@ local spawned_pokemon_icons = {}
 local spawned_moves = {}
 local pbs = require "common/poke_base_stats"
 local game_state = require "common/game_state"
+local current_mon = nil
+local current_move = "move1"
 
 function init(self)
 	msg.post(".", "acquire_input_focus")
@@ -23,13 +25,23 @@ function on_message(self, message_id, message, sender)
 	if message_id == hash("display_pokemon") then
 		display_pokemon_grid()
 	end
+	if message_id == hash("select_pokemon") then
+		current_mon = game_state.pokemon[message.mon]
+	end
+	--this is sent from the GUI when a user selects one of their pokemon's moves.
 	if message_id == hash("display_pokemon_moves") then
 		clear_gos(spawned_pokemon_icons)
 		display_move_list(message.mon)
+		current_move = message.selected_move
 	end
 	if message_id == hash("hide_pokemon_moves") then
 		clear_gos(spawned_moves)
 		display_pokemon_grid()
+	end
+	if message_id == hash("swap_move") then
+		msg.post(".", "hide_pokemon_moves")
+		swap_move(message.move_id)
+		msg.post("gui", "moves_exit")
 	end
 	if message_id == hash("return_to_main") then
 		clear_gos(spawned_pokedex_icons)
@@ -59,6 +71,23 @@ function on_input(self, action_id, action)
 end
 
 function on_reload(self)
+end
+
+function swap_move(move_id)
+	selected_move = 1
+	print(move_id)
+	--we have to find which of the pokemon's known moves matches the move_id.
+	for i, m in ipairs(current_mon.known_moves) do
+		if m.id == move_id then
+			selected_move = i
+		end
+	end
+	print(selected_move)
+	print(current_move)
+	print(current_mon[current_move])
+	--current_move should contain move1, move2, move3, or move4
+	current_mon[current_move] = selected_move
+	print(current_mon[current_move])
 end
 
 function display_pokedex_grid()
@@ -100,7 +129,7 @@ function display_move_list(mon)
 		table.insert(spawned_moves, move)
 
 		p.y = p.y - 100 --each image is 100px tall
-	end
+	end	
 end
 
 function limit(self, pos)

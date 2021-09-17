@@ -16,7 +16,8 @@ end
 function on_message(self, message_id, message, sender)
 	if message_id == hash("contact_point_response") then
 		if message.other_group == hash("cursor") then
-			msg.post("gui", "display_pokemon_details", { mon = game_state.pokemon[self.mon_id] })
+			msg.post("gui", "display_pokemon_details", { mon = self.mon_id })
+			msg.post("menu", "select_pokemon", { mon = self.mon_id } )
 		end
 	end
 end

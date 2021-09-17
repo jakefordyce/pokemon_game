@@ -24,6 +24,7 @@ embedded_components {
   "group: \"cursor\"\n"
   "mask: \"pokedex_icon\"\n"
   "mask: \"pokemon_icon\"\n"
+  "mask: \"move\"\n"
   "embedded_collision_shape {\n"
   "  shapes {\n"
   "    shape_type: TYPE_SPHERE\n"
