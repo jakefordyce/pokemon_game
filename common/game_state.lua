@@ -83,6 +83,7 @@ M.runes[1] = {
 	level = 1,
 	rarity = 5,
 	main_stat = 1,
+	equipped_id = 1, -- this is the index from M.pokemon
 	substats = {
 		{
 			stat = 9,
@@ -98,6 +99,29 @@ M.runes[1] = {
 		},
 		{
 			stat = 8,
+			rank = 1
+		}
+	}
+}
+
+M.runes[2] = {
+	slot = 2,
+	level = 1,
+	rarity = 1,
+	main_stat = 2,
+	equipped_id = nil, -- this is the index from M.pokemon
+	substats = {}
+}
+
+M.runes[3] = {
+	slot = 3,
+	level = 1,
+	rarity = 2,
+	main_stat = 3,
+	equipped_id = nil, -- this is the index from M.pokemon
+	substats = {
+		{
+			stat = 4,
 			rank = 1
 		}
 	}

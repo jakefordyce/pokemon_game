@@ -369,7 +369,7 @@ nodes {
 nodes {
   position {
     x: 320.0
-    y: 568.0
+    y: 818.0
     z: 0.0
     w: 1.0
   }
@@ -387,7 +387,7 @@ nodes {
   }
   size {
     x: 640.0
-    y: 1136.0
+    y: 636.0
     z: 0.0
     w: 1.0
   }
@@ -423,7 +423,7 @@ nodes {
 nodes {
   position {
     x: 287.0
-    y: 510.0
+    y: 284.0
     z: 0.0
     w: 1.0
   }
@@ -486,7 +486,7 @@ nodes {
 nodes {
   position {
     x: -212.0
-    y: 523.0
+    y: 297.0
     z: 0.0
     w: 1.0
   }
@@ -548,323 +548,8 @@ nodes {
 }
 nodes {
   position {
-    x: -1.0
-    y: -118.0
-    z: 0.0
-    w: 1.0
-  }
-  rotation {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-    w: 1.0
-  }
-  scale {
-    x: 2.0
-    y: 2.0
-    z: 1.0
-    w: 1.0
-  }
-  size {
-    x: 300.0
-    y: 20.0
-    z: 0.0
-    w: 1.0
-  }
-  color {
-    x: 1.0
-    y: 1.0
-    z: 1.0
-    w: 1.0
-  }
-  type: TYPE_TEXT
-  blend_mode: BLEND_MODE_ALPHA
-  text: "Moves"
-  font: "system_font"
-  id: "moves_section_header"
-  xanchor: XANCHOR_NONE
-  yanchor: YANCHOR_NONE
-  pivot: PIVOT_CENTER
-  outline {
-    x: 1.0
-    y: 1.0
-    z: 1.0
-    w: 1.0
-  }
-  shadow {
-    x: 1.0
-    y: 1.0
-    z: 1.0
-    w: 1.0
-  }
-  adjust_mode: ADJUST_MODE_FIT
-  line_break: false
-  parent: "details_panel"
-  layer: ""
-  inherit_alpha: true
-  alpha: 1.0
-  outline_alpha: 1.0
-  shadow_alpha: 1.0
-  template_node_child: false
-  text_leading: 1.0
-  text_tracking: 0.0
-}
-nodes {
-  position {
-    x: -140.0
-    y: -188.0
-    z: 0.0
-    w: 1.0
-  }
-  rotation {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-    w: 1.0
-  }
-  scale {
-    x: 1.0
-    y: 1.0
-    z: 1.0
-    w: 1.0
-  }
-  size {
-    x: 200.0
-    y: 100.0
-    z: 0.0
-    w: 1.0
-  }
-  color {
-    x: 0.8
-    y: 0.8
-    z: 0.8
-    w: 1.0
-  }
-  type: TYPE_TEXT
-  blend_mode: BLEND_MODE_ALPHA
-  text: "Move1"
-  font: "system_font"
-  id: "move1"
-  xanchor: XANCHOR_NONE
-  yanchor: YANCHOR_NONE
-  pivot: PIVOT_CENTER
-  outline {
-    x: 1.0
-    y: 1.0
-    z: 1.0
-    w: 1.0
-  }
-  shadow {
-    x: 1.0
-    y: 1.0
-    z: 1.0
-    w: 1.0
-  }
-  adjust_mode: ADJUST_MODE_FIT
-  line_break: false
-  parent: "details_panel"
-  layer: ""
-  inherit_alpha: true
-  alpha: 1.0
-  outline_alpha: 1.0
-  shadow_alpha: 1.0
-  template_node_child: false
-  text_leading: 1.0
-  text_tracking: 0.0
-}
-nodes {
-  position {
-    x: 81.0
-    y: -188.0
-    z: 0.0
-    w: 1.0
-  }
-  rotation {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-    w: 1.0
-  }
-  scale {
-    x: 1.0
-    y: 1.0
-    z: 1.0
-    w: 1.0
-  }
-  size {
-    x: 200.0
-    y: 100.0
-    z: 0.0
-    w: 1.0
-  }
-  color {
-    x: 0.8
-    y: 0.8
-    z: 0.8
-    w: 1.0
-  }
-  type: TYPE_TEXT
-  blend_mode: BLEND_MODE_ALPHA
-  text: "Move2"
-  font: "system_font"
-  id: "move2"
-  xanchor: XANCHOR_NONE
-  yanchor: YANCHOR_NONE
-  pivot: PIVOT_CENTER
-  outline {
-    x: 1.0
-    y: 1.0
-    z: 1.0
-    w: 1.0
-  }
-  shadow {
-    x: 1.0
-    y: 1.0
-    z: 1.0
-    w: 1.0
-  }
-  adjust_mode: ADJUST_MODE_FIT
-  line_break: false
-  parent: "details_panel"
-  layer: ""
-  inherit_alpha: true
-  alpha: 1.0
-  outline_alpha: 1.0
-  shadow_alpha: 1.0
-  template_node_child: false
-  text_leading: 1.0
-  text_tracking: 0.0
-}
-nodes {
-  position {
-    x: -140.0
-    y: -288.0
-    z: 0.0
-    w: 1.0
-  }
-  rotation {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-    w: 1.0
-  }
-  scale {
-    x: 1.0
-    y: 1.0
-    z: 1.0
-    w: 1.0
-  }
-  size {
-    x: 200.0
-    y: 100.0
-    z: 0.0
-    w: 1.0
-  }
-  color {
-    x: 0.8
-    y: 0.8
-    z: 0.8
-    w: 1.0
-  }
-  type: TYPE_TEXT
-  blend_mode: BLEND_MODE_ALPHA
-  text: "Move3"
-  font: "system_font"
-  id: "move3"
-  xanchor: XANCHOR_NONE
-  yanchor: YANCHOR_NONE
-  pivot: PIVOT_CENTER
-  outline {
-    x: 1.0
-    y: 1.0
-    z: 1.0
-    w: 1.0
-  }
-  shadow {
-    x: 1.0
-    y: 1.0
-    z: 1.0
-    w: 1.0
-  }
-  adjust_mode: ADJUST_MODE_FIT
-  line_break: false
-  parent: "details_panel"
-  layer: ""
-  inherit_alpha: true
-  alpha: 1.0
-  outline_alpha: 1.0
-  shadow_alpha: 1.0
-  template_node_child: false
-  text_leading: 1.0
-  text_tracking: 0.0
-}
-nodes {
-  position {
-    x: 81.0
-    y: -288.0
-    z: 0.0
-    w: 1.0
-  }
-  rotation {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-    w: 1.0
-  }
-  scale {
-    x: 1.0
-    y: 1.0
-    z: 1.0
-    w: 1.0
-  }
-  size {
-    x: 200.0
-    y: 100.0
-    z: 0.0
-    w: 1.0
-  }
-  color {
-    x: 0.8
-    y: 0.8
-    z: 0.8
-    w: 1.0
-  }
-  type: TYPE_TEXT
-  blend_mode: BLEND_MODE_ALPHA
-  text: "Move4"
-  font: "system_font"
-  id: "move4"
-  xanchor: XANCHOR_NONE
-  yanchor: YANCHOR_NONE
-  pivot: PIVOT_CENTER
-  outline {
-    x: 1.0
-    y: 1.0
-    z: 1.0
-    w: 1.0
-  }
-  shadow {
-    x: 1.0
-    y: 1.0
-    z: 1.0
-    w: 1.0
-  }
-  adjust_mode: ADJUST_MODE_FIT
-  line_break: false
-  parent: "details_panel"
-  layer: ""
-  inherit_alpha: true
-  alpha: 1.0
-  outline_alpha: 1.0
-  shadow_alpha: 1.0
-  template_node_child: false
-  text_leading: 1.0
-  text_tracking: 0.0
-}
-nodes {
-  position {
     x: -315.0
-    y: 446.0
+    y: 220.0
     z: 0.0
     w: 1.0
   }
@@ -927,7 +612,7 @@ nodes {
 nodes {
   position {
     x: -315.0
-    y: 377.0
+    y: 151.0
     z: 0.0
     w: 1.0
   }
@@ -990,7 +675,7 @@ nodes {
 nodes {
   position {
     x: -315.0
-    y: 412.0
+    y: 186.0
     z: 0.0
     w: 1.0
   }
@@ -1053,7 +738,7 @@ nodes {
 nodes {
   position {
     x: -315.0
-    y: 342.0
+    y: 116.0
     z: 0.0
     w: 1.0
   }
@@ -1116,7 +801,7 @@ nodes {
 nodes {
   position {
     x: -315.0
-    y: 306.0
+    y: 80.0
     z: 0.0
     w: 1.0
   }
@@ -1179,7 +864,7 @@ nodes {
 nodes {
   position {
     x: -315.0
-    y: 204.0
+    y: -22.0
     z: 0.0
     w: 1.0
   }
@@ -1242,7 +927,7 @@ nodes {
 nodes {
   position {
     x: -315.0
-    y: 168.0
+    y: -58.0
     z: 0.0
     w: 1.0
   }
@@ -1305,7 +990,7 @@ nodes {
 nodes {
   position {
     x: -315.0
-    y: 273.0
+    y: 47.0
     z: 0.0
     w: 1.0
   }
@@ -1368,7 +1053,7 @@ nodes {
 nodes {
   position {
     x: -315.0
-    y: 238.0
+    y: 12.0
     z: 0.0
     w: 1.0
   }
@@ -1431,7 +1116,7 @@ nodes {
 nodes {
   position {
     x: -315.0
-    y: 482.0
+    y: 256.0
     z: 0.0
     w: 1.0
   }
@@ -1494,7 +1179,7 @@ nodes {
 nodes {
   position {
     x: -151.0
-    y: 482.0
+    y: 256.0
     z: 0.0
     w: 1.0
   }
@@ -1557,7 +1242,7 @@ nodes {
 nodes {
   position {
     x: -151.0
-    y: 238.0
+    y: 12.0
     z: 0.0
     w: 1.0
   }
@@ -1620,7 +1305,7 @@ nodes {
 nodes {
   position {
     x: -151.0
-    y: 306.0
+    y: 80.0
     z: 0.0
     w: 1.0
   }
@@ -1683,7 +1368,7 @@ nodes {
 nodes {
   position {
     x: -151.0
-    y: 204.0
+    y: -22.0
     z: 0.0
     w: 1.0
   }
@@ -1746,7 +1431,7 @@ nodes {
 nodes {
   position {
     x: -151.0
-    y: 342.0
+    y: 116.0
     z: 0.0
     w: 1.0
   }
@@ -1809,7 +1494,7 @@ nodes {
 nodes {
   position {
     x: -151.0
-    y: 412.0
+    y: 186.0
     z: 0.0
     w: 1.0
   }
@@ -1872,7 +1557,7 @@ nodes {
 nodes {
   position {
     x: -151.0
-    y: 273.0
+    y: 47.0
     z: 0.0
     w: 1.0
   }
@@ -1935,7 +1620,7 @@ nodes {
 nodes {
   position {
     x: -151.0
-    y: 168.0
+    y: -58.0
     z: 0.0
     w: 1.0
   }
@@ -1998,7 +1683,7 @@ nodes {
 nodes {
   position {
     x: -151.0
-    y: 377.0
+    y: 151.0
     z: 0.0
     w: 1.0
   }
@@ -2061,7 +1746,7 @@ nodes {
 nodes {
   position {
     x: -151.0
-    y: 446.0
+    y: 220.0
     z: 0.0
     w: 1.0
   }
@@ -2124,7 +1809,7 @@ nodes {
 nodes {
   position {
     x: -271.0
-    y: 82.0
+    y: -144.0
     z: 0.0
     w: 1.0
   }
@@ -2179,7 +1864,7 @@ nodes {
 nodes {
   position {
     x: -124.0
-    y: 13.0
+    y: -213.0
     z: 0.0
     w: 1.0
   }
@@ -2234,7 +1919,7 @@ nodes {
 nodes {
   position {
     x: -198.0
-    y: 80.0
+    y: -146.0
     z: 0.0
     w: 1.0
   }
@@ -2289,7 +1974,7 @@ nodes {
 nodes {
   position {
     x: -125.0
-    y: 80.0
+    y: -146.0
     z: 0.0
     w: 1.0
   }
@@ -2344,7 +2029,7 @@ nodes {
 nodes {
   position {
     x: -269.0
-    y: 13.0
+    y: -213.0
     z: 0.0
     w: 1.0
   }
@@ -2399,7 +2084,7 @@ nodes {
 nodes {
   position {
     x: -198.0
-    y: 13.0
+    y: -213.0
     z: 0.0
     w: 1.0
   }
@@ -2454,7 +2139,7 @@ nodes {
 nodes {
   position {
     x: -199.0
-    y: 136.0
+    y: -90.0
     z: 0.0
     w: 1.0
   }
@@ -2517,7 +2202,7 @@ nodes {
 nodes {
   position {
     x: 13.0
-    y: 40.0
+    y: -170.0
     z: 0.0
     w: 1.0
   }
@@ -2547,7 +2232,7 @@ nodes {
   }
   type: TYPE_TEXT
   blend_mode: BLEND_MODE_ALPHA
-  text: "<text>"
+  text: ""
   font: "system_font"
   id: "current_rune_description"
   xanchor: XANCHOR_NONE
@@ -2568,6 +2253,439 @@ nodes {
   adjust_mode: ADJUST_MODE_FIT
   line_break: true
   parent: "details_panel"
+  layer: ""
+  inherit_alpha: true
+  alpha: 1.0
+  outline_alpha: 1.0
+  shadow_alpha: 1.0
+  template_node_child: false
+  text_leading: 1.0
+  text_tracking: 0.0
+}
+nodes {
+  position {
+    x: 214.0
+    y: -170.0
+    z: 0.0
+    w: 1.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+    w: 1.0
+  }
+  size {
+    x: 200.0
+    y: 150.0
+    z: 0.0
+    w: 1.0
+  }
+  color {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+    w: 1.0
+  }
+  type: TYPE_TEXT
+  blend_mode: BLEND_MODE_ALPHA
+  text: ""
+  font: "system_font"
+  id: "selected_rune_description"
+  xanchor: XANCHOR_NONE
+  yanchor: YANCHOR_NONE
+  pivot: PIVOT_CENTER
+  outline {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+    w: 1.0
+  }
+  shadow {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+    w: 1.0
+  }
+  adjust_mode: ADJUST_MODE_FIT
+  line_break: true
+  parent: "details_panel"
+  layer: ""
+  inherit_alpha: true
+  alpha: 1.0
+  outline_alpha: 1.0
+  shadow_alpha: 1.0
+  template_node_child: false
+  text_leading: 1.0
+  text_tracking: 0.0
+}
+nodes {
+  position {
+    x: 0.0
+    y: -567.0
+    z: 0.0
+    w: 1.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+    w: 1.0
+  }
+  size {
+    x: 640.0
+    y: 500.0
+    z: 0.0
+    w: 1.0
+  }
+  color {
+    x: 0.2
+    y: 0.2
+    z: 0.2
+    w: 1.0
+  }
+  type: TYPE_BOX
+  blend_mode: BLEND_MODE_ALPHA
+  texture: ""
+  id: "moves_panel"
+  xanchor: XANCHOR_NONE
+  yanchor: YANCHOR_NONE
+  pivot: PIVOT_CENTER
+  adjust_mode: ADJUST_MODE_FIT
+  parent: "details_panel"
+  layer: ""
+  inherit_alpha: true
+  slice9 {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 0.0
+  }
+  clipping_mode: CLIPPING_MODE_NONE
+  clipping_visible: true
+  clipping_inverted: false
+  alpha: 1.0
+  template_node_child: false
+  size_mode: SIZE_MODE_MANUAL
+}
+nodes {
+  position {
+    x: -1.0
+    y: 226.0
+    z: 0.0
+    w: 1.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale {
+    x: 2.0
+    y: 2.0
+    z: 1.0
+    w: 1.0
+  }
+  size {
+    x: 300.0
+    y: 20.0
+    z: 0.0
+    w: 1.0
+  }
+  color {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+    w: 1.0
+  }
+  type: TYPE_TEXT
+  blend_mode: BLEND_MODE_ALPHA
+  text: "Moves"
+  font: "system_font"
+  id: "moves_section_header"
+  xanchor: XANCHOR_NONE
+  yanchor: YANCHOR_NONE
+  pivot: PIVOT_CENTER
+  outline {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+    w: 1.0
+  }
+  shadow {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+    w: 1.0
+  }
+  adjust_mode: ADJUST_MODE_FIT
+  line_break: false
+  parent: "moves_panel"
+  layer: ""
+  inherit_alpha: true
+  alpha: 1.0
+  outline_alpha: 1.0
+  shadow_alpha: 1.0
+  template_node_child: false
+  text_leading: 1.0
+  text_tracking: 0.0
+}
+nodes {
+  position {
+    x: -140.0
+    y: 156.0
+    z: 0.0
+    w: 1.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+    w: 1.0
+  }
+  size {
+    x: 200.0
+    y: 100.0
+    z: 0.0
+    w: 1.0
+  }
+  color {
+    x: 0.8
+    y: 0.8
+    z: 0.8
+    w: 1.0
+  }
+  type: TYPE_TEXT
+  blend_mode: BLEND_MODE_ALPHA
+  text: "Move1"
+  font: "system_font"
+  id: "move1"
+  xanchor: XANCHOR_NONE
+  yanchor: YANCHOR_NONE
+  pivot: PIVOT_CENTER
+  outline {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+    w: 1.0
+  }
+  shadow {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+    w: 1.0
+  }
+  adjust_mode: ADJUST_MODE_FIT
+  line_break: false
+  parent: "moves_panel"
+  layer: ""
+  inherit_alpha: true
+  alpha: 1.0
+  outline_alpha: 1.0
+  shadow_alpha: 1.0
+  template_node_child: false
+  text_leading: 1.0
+  text_tracking: 0.0
+}
+nodes {
+  position {
+    x: 81.0
+    y: 156.0
+    z: 0.0
+    w: 1.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+    w: 1.0
+  }
+  size {
+    x: 200.0
+    y: 100.0
+    z: 0.0
+    w: 1.0
+  }
+  color {
+    x: 0.8
+    y: 0.8
+    z: 0.8
+    w: 1.0
+  }
+  type: TYPE_TEXT
+  blend_mode: BLEND_MODE_ALPHA
+  text: "Move2"
+  font: "system_font"
+  id: "move2"
+  xanchor: XANCHOR_NONE
+  yanchor: YANCHOR_NONE
+  pivot: PIVOT_CENTER
+  outline {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+    w: 1.0
+  }
+  shadow {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+    w: 1.0
+  }
+  adjust_mode: ADJUST_MODE_FIT
+  line_break: false
+  parent: "moves_panel"
+  layer: ""
+  inherit_alpha: true
+  alpha: 1.0
+  outline_alpha: 1.0
+  shadow_alpha: 1.0
+  template_node_child: false
+  text_leading: 1.0
+  text_tracking: 0.0
+}
+nodes {
+  position {
+    x: -140.0
+    y: 56.0
+    z: 0.0
+    w: 1.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+    w: 1.0
+  }
+  size {
+    x: 200.0
+    y: 100.0
+    z: 0.0
+    w: 1.0
+  }
+  color {
+    x: 0.8
+    y: 0.8
+    z: 0.8
+    w: 1.0
+  }
+  type: TYPE_TEXT
+  blend_mode: BLEND_MODE_ALPHA
+  text: "Move3"
+  font: "system_font"
+  id: "move3"
+  xanchor: XANCHOR_NONE
+  yanchor: YANCHOR_NONE
+  pivot: PIVOT_CENTER
+  outline {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+    w: 1.0
+  }
+  shadow {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+    w: 1.0
+  }
+  adjust_mode: ADJUST_MODE_FIT
+  line_break: false
+  parent: "moves_panel"
+  layer: ""
+  inherit_alpha: true
+  alpha: 1.0
+  outline_alpha: 1.0
+  shadow_alpha: 1.0
+  template_node_child: false
+  text_leading: 1.0
+  text_tracking: 0.0
+}
+nodes {
+  position {
+    x: 81.0
+    y: 56.0
+    z: 0.0
+    w: 1.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+    w: 1.0
+  }
+  size {
+    x: 200.0
+    y: 100.0
+    z: 0.0
+    w: 1.0
+  }
+  color {
+    x: 0.8
+    y: 0.8
+    z: 0.8
+    w: 1.0
+  }
+  type: TYPE_TEXT
+  blend_mode: BLEND_MODE_ALPHA
+  text: "Move4"
+  font: "system_font"
+  id: "move4"
+  xanchor: XANCHOR_NONE
+  yanchor: YANCHOR_NONE
+  pivot: PIVOT_CENTER
+  outline {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+    w: 1.0
+  }
+  shadow {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+    w: 1.0
+  }
+  adjust_mode: ADJUST_MODE_FIT
+  line_break: false
+  parent: "moves_panel"
   layer: ""
   inherit_alpha: true
   alpha: 1.0

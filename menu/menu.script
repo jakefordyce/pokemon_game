@@ -1,6 +1,7 @@
 local spawned_pokedex_icons = {}
 local spawned_pokemon_icons = {}
 local spawned_moves = {}
+local spawned_rune_icons = {}
 local pbs = require "common/poke_base_stats"
 local game_state = require "common/game_state"
 local current_mon = nil
@@ -33,6 +34,9 @@ function on_message(self, message_id, message, sender)
 		clear_gos(spawned_pokemon_icons)
 		display_move_list(message.mon)
 		current_move = message.selected_move
+	end
+	if message_id == hash("display_runes") then
+		display_runes_grid()
 	end
 	if message_id == hash("hide_pokemon_moves") then
 		clear_gos(spawned_moves)
@@ -126,6 +130,20 @@ function display_move_list(mon)
 
 		p.y = p.y - 100 --each image is 100px tall
 	end	
+end
+
+function display_runes_grid()
+	local p = vmath.vector3()
+	p.y = 450
+	p.x = 32
+
+	for i, poke in ipairs(game_state.runes) do
+		local icon = factory.create("#rune_icon_factory",p, nil, {rune_id = i})
+		go.set_parent(icon, go.get_id("menu"))
+		table.insert(spawned_rune_icons, icon)
+
+		p.x = p.x + 70 --each image is 64 wide. Also adding a little extra space.
+	end
 end
 
 function limit(self, pos)

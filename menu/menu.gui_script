@@ -64,6 +64,9 @@ function on_message(self, message_id, message, sender)
 		gui.set_enabled(gui.get_node("current_move_panel"), false)
 		msg.post(".", "display_pokemon_details", {mon = self.current_pokemon})
 	end
+	if message_id == hash("display_rune_details") then
+		gui.set_text(gui.get_node("selected_rune_description"),runes.description(game_state.runes[message.rune]))
+	end
 end
 
 function on_input(self, action_id, action)
@@ -138,6 +141,8 @@ function on_input(self, action_id, action)
 		if(gui.pick_node(gui.get_node("rune1"),action.x,action.y) and node_enabled(gui.get_node("rune1"))) then
 			mon = game_state.pokemon[self.current_pokemon]
 			gui.set_text(gui.get_node("current_rune_description"),runes.description(game_state.runes[mon.rune1]))
+			gui.set_enabled(gui.get_node("moves_panel"), false)
+			msg.post("menu", "display_runes")
 			return true
 		end
 	end
