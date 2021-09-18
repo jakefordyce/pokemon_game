@@ -36,7 +36,7 @@ function M.description(rune)
 		desc_text = desc_text .. "%"
 	end
 	for i, ss in ipairs(rune.substats) do
-		desc_text = "\n" .. desc_text .. M.stat_names[ss.stat].." + " .. substat_value(ss.stat, ss.rank)
+		desc_text = desc_text .. "\n" .. M.stat_names[ss.stat].." + " .. substat_value(ss.stat, ss.rank)
 		if ss.stat > 6 then
 			desc_text = desc_text .. "%"
 		end

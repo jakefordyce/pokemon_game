@@ -46,6 +46,11 @@ function on_message(self, message_id, message, sender)
 		gui.set_text(gui.get_node("details_resist"), mon.resist)
 		gui.set_text(gui.get_node("details_crit_chance"), (mon.crit_chance.."%"))
 		gui.set_text(gui.get_node("details_crit_damage"), (mon.crit_damage.."%"))
+
+		if mon.rune1 ~= nil then
+			gui.play_flipbook(gui.get_node("rune1"), "rune_1_"..game_state.runes[mon.rune1].rarity)
+		end
+		
 		gui.set_enabled(gui.get_node("move1"), true)
 		gui.set_enabled(gui.get_node("move2"), true)
 		gui.set_enabled(gui.get_node("move3"), true)
@@ -83,6 +88,9 @@ function on_input(self, action_id, action)
 			return true
 		end
 		if(gui.pick_node(gui.get_node("move1"),action.x,action.y) and node_enabled(gui.get_node("move1"))) then
+			return true
+		end
+		if(gui.pick_node(gui.get_node("rune1"),action.x,action.y) and node_enabled(gui.get_node("rune1"))) then
 			return true
 		end
 	end
@@ -125,6 +133,11 @@ function on_input(self, action_id, action)
 			pmon = game_state.pokemon[self.current_pokemon]
 			gui.set_text(gui.get_node("current_move_description"), moves[pmon.known_moves[pmon.move1].id].description(0))
 			msg.post("menu", "display_pokemon_moves", {mon = pmon, selected_move="move1"})
+			return true
+		end
+		if(gui.pick_node(gui.get_node("rune1"),action.x,action.y) and node_enabled(gui.get_node("rune1"))) then
+			mon = game_state.pokemon[self.current_pokemon]
+			gui.set_text(gui.get_node("current_rune_description"),runes.description(game_state.runes[mon.rune1]))
 			return true
 		end
 	end
