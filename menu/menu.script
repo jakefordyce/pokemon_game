@@ -6,6 +6,8 @@ local pbs = require "common/poke_base_stats"
 local game_state = require "common/game_state"
 local current_mon = nil
 local current_move = "move1"
+local current_rune = "rune1"
+local selected_rune = nil
 
 function init(self)
 	msg.post(".", "acquire_input_focus")
@@ -36,11 +38,15 @@ function on_message(self, message_id, message, sender)
 		current_move = message.selected_move
 	end
 	if message_id == hash("display_runes") then
+		current_rune = message.rune
 		display_runes_grid()
 	end
 	if message_id == hash("hide_runes") then
 		clear_gos(spawned_rune_icons)
 		display_pokemon_grid()
+	end
+	if message_id == hash("select_rune") then
+		selected_rune = message.rune
 	end
 	if message_id == hash("hide_pokemon_moves") then
 		clear_gos(spawned_moves)
@@ -50,6 +56,11 @@ function on_message(self, message_id, message, sender)
 		msg.post(".", "hide_pokemon_moves")
 		swap_move(message.move_id)
 		msg.post("gui", "moves_exit", {mon = current_mon})
+	end
+	if message_id == hash("swap_rune") then
+		msg.post(".", "hide_runes")
+		swap_rune()
+		msg.post("gui", "display_pokemon_details", {mon = current_mon})
 	end
 	if message_id == hash("return_to_main") then
 		clear_gos(spawned_pokedex_icons)
@@ -92,6 +103,13 @@ function swap_move(move_id)
 	end
 	--current_move should contain move1, move2, move3, or move4
 	mon[current_move] = selected_move
+end
+
+function swap_rune()
+	mon = game_state.pokemon[current_mon]
+	game_state.runes[mon[current_rune]].equipped_id = nil
+	mon[current_rune] = selected_rune
+	game_state.runes[selected_rune].equipped_id = current_mon
 end
 
 function display_pokedex_grid()
