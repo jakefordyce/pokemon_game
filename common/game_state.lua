@@ -127,4 +127,18 @@ M.runes[3] = {
 	}
 }
 
+M.runes[4] = {
+	slot = 1,
+	level = 1,
+	rarity = 2,
+	main_stat = 1,
+	equipped_id = nil, -- this is the index from M.pokemon
+	substats = {
+		{
+			stat = 4,
+			rank = 1
+		}
+	}
+}
+
 return M

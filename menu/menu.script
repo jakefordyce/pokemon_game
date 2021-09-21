@@ -158,13 +158,16 @@ function display_runes_grid()
 	local p = vmath.vector3()
 	p.y = 450
 	p.x = 32
+	mon = game_state.pokemon[current_mon]
 
-	for i, poke in ipairs(game_state.runes) do
-		local icon = factory.create("#rune_icon_factory",p, nil, {rune_id = i})
-		go.set_parent(icon, go.get_id("menu"))
-		table.insert(spawned_rune_icons, icon)
+	for i, rune in ipairs(game_state.runes) do
+		if rune.equipped_id == nil and rune.slot == game_state.runes[mon[current_rune]].slot then
+			local icon = factory.create("#rune_icon_factory",p, nil, {rune_id = i})
+			go.set_parent(icon, go.get_id("menu"))
+			table.insert(spawned_rune_icons, icon)
 
-		p.x = p.x + 70 --each image is 64 wide. Also adding a little extra space.
+			p.x = p.x + 70 --each image is 64 wide. Also adding a little extra space.
+		end
 	end
 end
 
