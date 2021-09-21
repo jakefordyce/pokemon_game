@@ -16,14 +16,14 @@ trainers[0].mon1 = {
 
 local function generate_stats(mon)
 	mon.name = pbs[mon.pokedex].name
-	mon.hp = 1-- pbs.stat_by_level(mon.pokedex, "hp", mon.level)
+	mon.hp =  pbs.stat_by_level(mon.pokedex, "hp", mon.level)
 	mon.attack = pbs.stat_by_level(mon.pokedex, "attack", mon.level)
 	mon.defense = pbs.stat_by_level(mon.pokedex, "defense", mon.level)
 	mon.spattack = pbs.stat_by_level(mon.pokedex, "spattack", mon.level)
 	mon.spdefense = pbs.stat_by_level(mon.pokedex, "spdefense", mon.level)
 	mon.speed = pbs[mon.pokedex].speed
-	mon.acc = 0
-	mon.res = 0
+	mon.accuracy = 0
+	mon.resist = 0
 	mon.crit_chance = pbs.base_crit_chance
 	mon.crit_damage = pbs.base_crit_damage
 end

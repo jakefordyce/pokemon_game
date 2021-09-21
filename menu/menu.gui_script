@@ -49,8 +49,10 @@ function on_message(self, message_id, message, sender)
 		gui.set_text(gui.get_node("details_crit_chance"), (mon.crit_chance.."%"))
 		gui.set_text(gui.get_node("details_crit_damage"), (mon.crit_damage.."%"))
 
-		if mon.rune1 ~= nil then
-			gui.play_flipbook(gui.get_node("rune1"), "rune_1_"..game_state.runes[mon.rune1].rarity)
+		for r = 0, 6 do
+			if mon["rune"..r] ~= nil then
+				gui.play_flipbook(gui.get_node("rune"..r), "rune_"..r.."_"..game_state.runes[mon["rune"..r]].rarity)
+			end
 		end
 		
 		gui.set_enabled(gui.get_node("move1"), true)
@@ -69,6 +71,18 @@ function on_message(self, message_id, message, sender)
 	if message_id == hash("display_rune_details") then
 		gui.set_enabled(gui.get_node("selected_rune_description"), true)
 		gui.set_text(gui.get_node("selected_rune_description"),runes.description(game_state.runes[message.rune]))
+	end
+	if message_id == hash("rune_clicked") then
+		mon = game_state.pokemon[self.current_pokemon]
+		gui.set_enabled(gui.get_node("runes_exit_button"), true)
+		if mon["rune"..message.rune] ~= nil then
+			gui.set_enabled(gui.get_node("current_rune_description"), true)
+			gui.set_text(gui.get_node("current_rune_description"),runes.description(game_state.runes[mon["rune"..message.rune]]))
+		else
+			gui.set_enabled(gui.get_node("current_rune_description"), false)
+		end
+		gui.set_enabled(gui.get_node("moves_panel"), false)
+		msg.post("menu", "display_runes", { rune = message.rune })
 	end
 end
 
@@ -100,6 +114,21 @@ function on_input(self, action_id, action)
 			return true
 		end
 		if(gui.pick_node(gui.get_node("rune1"),action.x,action.y) and node_enabled(gui.get_node("rune1"))) then
+			return true
+		end
+		if(gui.pick_node(gui.get_node("rune2"),action.x,action.y) and node_enabled(gui.get_node("rune2"))) then
+			return true
+		end
+		if(gui.pick_node(gui.get_node("rune3"),action.x,action.y) and node_enabled(gui.get_node("rune3"))) then
+			return true
+		end
+		if(gui.pick_node(gui.get_node("rune4"),action.x,action.y) and node_enabled(gui.get_node("rune4"))) then
+			return true
+		end
+		if(gui.pick_node(gui.get_node("rune5"),action.x,action.y) and node_enabled(gui.get_node("rune5"))) then
+			return true
+		end
+		if(gui.pick_node(gui.get_node("rune6"),action.x,action.y) and node_enabled(gui.get_node("rune6"))) then
 			return true
 		end
 		if(gui.pick_node(gui.get_node("swap_rune_button"),action.x,action.y) and node_enabled(gui.get_node("swap_rune_button"))) then
@@ -157,12 +186,27 @@ function on_input(self, action_id, action)
 			return true
 		end
 		if(gui.pick_node(gui.get_node("rune1"),action.x,action.y) and node_enabled(gui.get_node("rune1"))) then
-			mon = game_state.pokemon[self.current_pokemon]
-			gui.set_enabled(gui.get_node("runes_exit_button"), true)
-			gui.set_enabled(gui.get_node("current_rune_description"), true)
-			gui.set_text(gui.get_node("current_rune_description"),runes.description(game_state.runes[mon.rune1]))
-			gui.set_enabled(gui.get_node("moves_panel"), false)
-			msg.post("menu", "display_runes", { rune = "rune1" })
+			msg.post(".", "rune_clicked", {rune = 1})
+			return true
+		end
+		if(gui.pick_node(gui.get_node("rune2"),action.x,action.y) and node_enabled(gui.get_node("rune2"))) then
+			msg.post(".", "rune_clicked", {rune = 2})
+			return true
+		end
+		if(gui.pick_node(gui.get_node("rune3"),action.x,action.y) and node_enabled(gui.get_node("rune3"))) then
+			msg.post(".", "rune_clicked", {rune = 3})
+			return true
+		end
+		if(gui.pick_node(gui.get_node("rune4"),action.x,action.y) and node_enabled(gui.get_node("rune4"))) then
+			msg.post(".", "rune_clicked", {rune = 4})
+			return true
+		end
+		if(gui.pick_node(gui.get_node("rune5"),action.x,action.y) and node_enabled(gui.get_node("rune5"))) then
+			msg.post(".", "rune_clicked", {rune = 5})
+			return true
+		end
+		if(gui.pick_node(gui.get_node("rune6"),action.x,action.y) and node_enabled(gui.get_node("rune6"))) then
+			msg.post(".", "rune_clicked", {rune = 6})
 			return true
 		end
 		if(gui.pick_node(gui.get_node("swap_rune_button"),action.x,action.y) and node_enabled(gui.get_node("swap_rune_button"))) then

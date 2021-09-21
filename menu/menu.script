@@ -6,7 +6,7 @@ local pbs = require "common/poke_base_stats"
 local game_state = require "common/game_state"
 local current_mon = nil
 local current_move = "move1"
-local current_rune = "rune1"
+local current_rune = 1
 local selected_rune = nil
 
 function init(self)
@@ -38,6 +38,7 @@ function on_message(self, message_id, message, sender)
 		current_move = message.selected_move
 	end
 	if message_id == hash("display_runes") then
+		clear_gos(spawned_rune_icons)
 		current_rune = message.rune
 		display_runes_grid()
 	end
@@ -107,9 +108,12 @@ end
 
 function swap_rune()
 	mon = game_state.pokemon[current_mon]
-	game_state.runes[mon[current_rune]].equipped_id = nil
-	mon[current_rune] = selected_rune
+	if mon["rune"..current_rune] ~= nil then
+		game_state.runes[mon["rune"..current_rune]].equipped_id = nil
+	end
+	mon["rune"..current_rune] = selected_rune
 	game_state.runes[selected_rune].equipped_id = current_mon
+	game_state.calculate_pokemon_stats()
 end
 
 function display_pokedex_grid()
@@ -161,7 +165,7 @@ function display_runes_grid()
 	mon = game_state.pokemon[current_mon]
 
 	for i, rune in ipairs(game_state.runes) do
-		if rune.equipped_id == nil and rune.slot == game_state.runes[mon[current_rune]].slot then
+		if rune.equipped_id == nil and rune.slot == current_rune then
 			local icon = factory.create("#rune_icon_factory",p, nil, {rune_id = i})
 			go.set_parent(icon, go.get_id("menu"))
 			table.insert(spawned_rune_icons, icon)

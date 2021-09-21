@@ -1,3 +1,6 @@
+local pbs = require "common/poke_base_stats"
+local runes = require "common/runes"
+
 local M = {}
 
 --BATTLE INFO--
@@ -140,5 +143,45 @@ M.runes[4] = {
 		}
 	}
 }
+
+function M.calculate_pokemon_stats()
+	for i, mon in ipairs(M.pokemon) do
+		-- start at the base stats based on species and level
+		mon.hp =  pbs.stat_by_level(mon.pokedex, "hp", mon.level)
+		mon.attack = pbs.stat_by_level(mon.pokedex, "attack", mon.level)
+		mon.defense = pbs.stat_by_level(mon.pokedex, "defense", mon.level)
+		mon.spattack = pbs.stat_by_level(mon.pokedex, "spattack", mon.level)
+		mon.spdefense = pbs.stat_by_level(mon.pokedex, "spdefense", mon.level)
+		mon.speed = pbs[mon.pokedex].speed
+		mon.accuracy = 0
+		mon.resist = 0
+		mon.crit_chance = pbs.base_crit_chance
+		mon.crit_damage = pbs.base_crit_damage
+
+		-- add bonuses from runes
+		local runes_bonuses = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+
+		for r=1, 6 do
+			rune = M.runes[mon["rune"..r]]
+			if rune ~= nil then
+				runes_bonuses[rune.main_stat] = runes_bonuses[rune.main_stat] + runes.mainstat_value(rune.main_stat, rune.level)
+				for i, ss in ipairs(rune.substats) do
+					runes_bonuses[ss.stat] = runes_bonuses[ss.stat] + runes.substat_value(ss.stat, ss.rank)
+				end
+			end
+		end
+
+		mon.attack = math.ceil(mon.attack + (runes_bonuses[9] * mon.attack / 100) + runes_bonuses[1])
+		mon.spattack = math.ceil(mon.spattack + (runes_bonuses[9] * mon.spattack / 100) + runes_bonuses[1])
+		mon.hp = math.ceil(mon.hp + (runes_bonuses[10] * mon.hp / 100) + runes_bonuses[2])
+		mon.defense = math.ceil(mon.defense + (runes_bonuses[11] * mon.defense / 100) + runes_bonuses[3])
+		mon.spdefense = math.ceil(mon.spdefense + (runes_bonuses[11] * mon.spdefense / 100) + runes_bonuses[3])
+		mon.speed = mon.speed + runes_bonuses[4]
+		mon.accuracy = mon.accuracy + runes_bonuses[5]
+		mon.resist = mon.resist + runes_bonuses[6]
+		mon.crit_chance = mon.crit_chance + runes_bonuses[7]
+		mon.crit_damage = mon.crit_damage + runes_bonuses[8]
+	end
+end
 
 return M
