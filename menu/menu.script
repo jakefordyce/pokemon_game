@@ -38,6 +38,10 @@ function on_message(self, message_id, message, sender)
 	if message_id == hash("display_runes") then
 		display_runes_grid()
 	end
+	if message_id == hash("hide_runes") then
+		clear_gos(spawned_rune_icons)
+		display_pokemon_grid()
+	end
 	if message_id == hash("hide_pokemon_moves") then
 		clear_gos(spawned_moves)
 		display_pokemon_grid()
