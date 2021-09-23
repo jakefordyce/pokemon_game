@@ -3,6 +3,9 @@ local runes = require "common/runes"
 
 local M = {}
 
+--FLAGS--
+M.starters_chosen = false
+
 --BATTLE INFO--
 M.player_mon1 = 1 --this is the index of M.pokemon
 M.player_mon2 = nil
@@ -15,6 +18,11 @@ M.enemy_mon1 = {}
 M.enemy_mon2 = nil
 M.enemy_mon3 = nil
 M.enemy_mon4 = nil
+
+M.battle_type = 2
+-- 1 - wild pokemon
+-- 2 - trainer
+-- 3 - boss fight
 
 --PLAYER INFO--
 M.position_x = 263

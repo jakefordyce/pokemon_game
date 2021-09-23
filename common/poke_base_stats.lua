@@ -120,5 +120,147 @@ M[9] = {
 	["moves"] = moves
 }
 
+M[63] = {
+	["name"] = "abra",
+	["hp"] = 90,
+	["attack"] = 80,
+	["defense"] = 80,
+	["spattack"] = 90,
+	["spdefense"] = 80,
+	["speed"] = 100,
+	["moves"] = moves
+}
+
+M[66] = {
+	["name"] = "machop",
+	["hp"] = 90,
+	["attack"] = 80,
+	["defense"] = 80,
+	["spattack"] = 90,
+	["spdefense"] = 80,
+	["speed"] = 100,
+	["moves"] = moves
+}
+
+M[74] = {
+	["name"] = "geodude",
+	["hp"] = 90,
+	["attack"] = 80,
+	["defense"] = 80,
+	["spattack"] = 90,
+	["spdefense"] = 80,
+	["speed"] = 100,
+	["moves"] = moves
+}
+
+M[92] = {
+	["name"] = "gastly",
+	["hp"] = 90,
+	["attack"] = 80,
+	["defense"] = 80,
+	["spattack"] = 90,
+	["spdefense"] = 80,
+	["speed"] = 100,
+	["moves"] = moves
+}
+
+M[152] = {
+	["name"] = "chikorita",
+	["hp"] = 90,
+	["attack"] = 80,
+	["defense"] = 80,
+	["spattack"] = 90,
+	["spdefense"] = 80,
+	["speed"] = 100,
+	["moves"] = moves
+}
+
+M[155] = {
+	["name"] = "cyndaquil",
+	["hp"] = 90,
+	["attack"] = 80,
+	["defense"] = 80,
+	["spattack"] = 90,
+	["spdefense"] = 80,
+	["speed"] = 100,
+	["moves"] = moves
+}
+
+M[158] = {
+	["name"] = "totodile",
+	["hp"] = 90,
+	["attack"] = 80,
+	["defense"] = 80,
+	["spattack"] = 90,
+	["spdefense"] = 80,
+	["speed"] = 100,
+	["moves"] = moves
+}
+
+M[172] = {
+	["name"] = "pichu",
+	["hp"] = 90,
+	["attack"] = 80,
+	["defense"] = 80,
+	["spattack"] = 90,
+	["spdefense"] = 80,
+	["speed"] = 100,
+	["moves"] = moves
+}
+
+M[173] = {
+	["name"] = "cleffa",
+	["hp"] = 90,
+	["attack"] = 80,
+	["defense"] = 80,
+	["spattack"] = 90,
+	["spdefense"] = 80,
+	["speed"] = 100,
+	["moves"] = moves
+}
+
+M[228] = {
+	["name"] = "houndour",
+	["hp"] = 90,
+	["attack"] = 80,
+	["defense"] = 80,
+	["spattack"] = 90,
+	["spdefense"] = 80,
+	["speed"] = 100,
+	["moves"] = moves
+}
+
+M[280] = {
+	["name"] = "ralts",
+	["hp"] = 90,
+	["attack"] = 80,
+	["defense"] = 80,
+	["spattack"] = 90,
+	["spdefense"] = 80,
+	["speed"] = 100,
+	["moves"] = moves
+}
+
+M[304] = {
+	["name"] = "aron",
+	["hp"] = 90,
+	["attack"] = 80,
+	["defense"] = 80,
+	["spattack"] = 90,
+	["spdefense"] = 80,
+	["speed"] = 100,
+	["moves"] = moves
+}
+
+M[363] = {
+	["name"] = "spheal",
+	["hp"] = 90,
+	["attack"] = 80,
+	["defense"] = 80,
+	["spattack"] = 90,
+	["spdefense"] = 80,
+	["speed"] = 100,
+	["moves"] = moves
+}
 
 return M
