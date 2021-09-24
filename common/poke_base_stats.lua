@@ -10,6 +10,15 @@ function M.stat_by_level(pokedex, stat, level)
 	return calc_stat
 end
 
+function M.moves_by_level(pokedex, level)
+	m = {}
+	for i, m in ipairs(M[pokedex].moves) do
+		if m.level < level then
+			table.insert(m, { id = m.id, level = m.level})
+		end
+	end
+end
+
 M.base_crit_chance = 5
 M.base_crit_damage = 100
 

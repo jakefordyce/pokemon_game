@@ -1,4 +1,6 @@
 local game_state = require "common/game_state"
+local starters = require "common/starters"
+local pbs = require "common/poke_base_stats"
 
 function init(self)
 	msg.post(".", "acquire_input_focus")
@@ -12,6 +14,7 @@ function init(self)
 	for i=1,4 do
 		gui.set_enabled(gui.get_node("added"..i), false)
 	end
+	msg.post(".", "display_pokemon")
 end
 
 function final(self)
@@ -22,10 +25,11 @@ end
 
 function on_message(self, message_id, message, sender)
 	if message_id == hash("display_pokemon") then
+		print("display_pokemon")
 		if game_state.starters_chosen then
-			display_starters()
-		else
 			display_wild_mon()
+		else
+			display_starters()
 		end
 	end
 end
@@ -38,9 +42,17 @@ function on_reload(self)
 end
 
 function display_starters()
+	gui.set_text(gui.get_node("instruction_text"), "Choose your team")
+	for i=5,16 do
+		gui.set_enabled(gui.get_node("addable"..i), true)
+		gui.set_enabled(gui.get_node("addable_bg"..i), true)
+	end
+	for s=1,16 do
+		gui.play_flipbook(gui.get_node("addable"..s), pbs[starters.ids[s]].name.."_front_original")
+	end
 	
 end
 
 function display_wild_mon()
-
+	
 end

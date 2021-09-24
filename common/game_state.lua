@@ -24,6 +24,40 @@ M.battle_type = 2
 -- 2 - trainer
 -- 3 - boss fight
 
+
+--METHODS--
+function M.add_pokemon(pokedex, level)
+	new_mon = {
+		pokedex = pokedex,
+		level = level,
+		exp = 0,
+		name = pbs[pokedex].name,
+		known_moves = pbs.moves_by_level(pokedex, level),
+		move1 = 1, --this is the index from the pokemon's learned_moves.
+		move2 = nil,
+		move3 = nil,
+		move4 = nil,
+		rune1 = nil, --this is the index from M.runes.
+		rune2 = nil,
+		rune3 = nil,
+		rune4 = nil,
+		rune5 = nil,
+		rune6 = nil,
+		hp =  pbs.stat_by_level(pokedex, "hp", level),
+		attack = pbs.stat_by_level(pokedex, "attack", level),
+		defense = pbs.stat_by_level(pokedex, "defense", level),
+		spattack = pbs.stat_by_level(pokedex, "spattack", level),
+		spdefense = pbs.stat_by_level(pokedex, "spdefense", level),
+		speed = pbs[pokedex].speed,
+		accuracy = 0,
+		resist = 0,
+		crit_chance = pbs.base_crit_chance,
+		crit_damage = pbs.base_crit_damage
+	}
+	table.insert(M.pokemon, new_mon)
+	
+end
+
 --PLAYER INFO--
 M.position_x = 263
 M.position_y = 761
