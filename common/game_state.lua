@@ -24,6 +24,7 @@ M.battle_type = 2
 -- 2 - trainer
 -- 3 - boss fight
 
+M.preview_mon = {}
 
 --METHODS--
 function M.add_pokemon(pokedex, level)
@@ -56,6 +57,22 @@ function M.add_pokemon(pokedex, level)
 	}
 	table.insert(M.pokemon, new_mon)
 	
+end
+
+function M.generate_preview_mon(pokedex, level)
+	M.preview_mon.pokedex = pokedex
+	M.preview_mon.level = level
+	M.preview_mon.name = pbs[pokedex].name
+	M.preview_mon.hp =  pbs.stat_by_level(pokedex, "hp", level)
+	M.preview_mon.attack = pbs.stat_by_level(pokedex, "attack", level)
+	M.preview_mon.defense = pbs.stat_by_level(pokedex, "defense", level)
+	M.preview_mon.spattack = pbs.stat_by_level(pokedex, "spattack", level)
+	M.preview_mon.spdefense = pbs.stat_by_level(pokedex, "spdefense", level)
+	M.preview_mon.speed = pbs[pokedex].speed
+	M.preview_mon.accuracy = 0
+	M.preview_mon.resist = 0
+	M.preview_mon.crit_chance = pbs.base_crit_chance
+	M.preview_mon.crit_damage = pbs.base_crit_damage
 end
 
 --PLAYER INFO--

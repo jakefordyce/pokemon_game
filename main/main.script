@@ -41,4 +41,7 @@ function on_message(self, message_id, message, sender)
 	if message_id == hash("close_menu") then
 		load_screen(area_names[game_state.current_area], "menu")
 	end
+	if message_id == hash("close_add_mon") then
+		load_screen(area_names[game_state.current_area], "add_mon")
+	end
 end
