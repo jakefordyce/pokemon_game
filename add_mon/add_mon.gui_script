@@ -4,6 +4,8 @@ local pbs = require "common/poke_base_stats"
 local addable_mons = {}
 local selected_mons = {}
 local current_mon = {}
+local num_selected = 0
+local adding_mon = true
 
 
 function init(self)
@@ -30,7 +32,6 @@ end
 
 function on_message(self, message_id, message, sender)
 	if message_id == hash("display_pokemon") then
-		print("display_pokemon")
 		if game_state.starters_chosen then
 			display_wild_mon()
 		else
@@ -43,55 +44,112 @@ end
 function on_input(self, action_id, action)
 	if(action_id == hash("touch") and action.released == true) then
 		if(gui.pick_node(gui.get_node("done_button"),action.x,action.y) and node_enabled(gui.get_node("done_button"))) then
+			for i=1,4 do
+				if selected_mons[i] ~= nil then
+					game_state.add_pokemon(addable_mons[selected_mons[i]].pokedex, addable_mons[selected_mons[i]].level)
+				end
+			end
 			msg.post("main:/loader#main", "close_add_mon")
 		end
 		if(gui.pick_node(gui.get_node("addable1"),action.x,action.y) and node_enabled(gui.get_node("addable1"))) then
 			display_preview(1)
+			gui.set_text(gui.get_node("move_text"), "Add")
+			adding_mon = true
 		end
 		if(gui.pick_node(gui.get_node("addable2"),action.x,action.y) and node_enabled(gui.get_node("addable2"))) then
 			display_preview(2)
+			gui.set_text(gui.get_node("move_text"), "Add")
+			adding_mon = true
 		end
 		if(gui.pick_node(gui.get_node("addable3"),action.x,action.y) and node_enabled(gui.get_node("addable3"))) then
 			display_preview(3)
+			gui.set_text(gui.get_node("move_text"), "Add")
+			adding_mon = true
 		end
 		if(gui.pick_node(gui.get_node("addable4"),action.x,action.y) and node_enabled(gui.get_node("addable4"))) then
 			display_preview(4)
+			gui.set_text(gui.get_node("move_text"), "Add")
+			adding_mon = true
 		end
 		if(gui.pick_node(gui.get_node("addable5"),action.x,action.y) and node_enabled(gui.get_node("addable5"))) then
 			display_preview(5)
+			gui.set_text(gui.get_node("move_text"), "Add")
+			adding_mon = true
 		end
 		if(gui.pick_node(gui.get_node("addable6"),action.x,action.y) and node_enabled(gui.get_node("addable6"))) then
 			display_preview(6)
+			gui.set_text(gui.get_node("move_text"), "Add")
+			adding_mon = true
 		end
 		if(gui.pick_node(gui.get_node("addable7"),action.x,action.y) and node_enabled(gui.get_node("addable7"))) then
 			display_preview(7)
+			gui.set_text(gui.get_node("move_text"), "Add")
+			adding_mon = true
 		end
 		if(gui.pick_node(gui.get_node("addable8"),action.x,action.y) and node_enabled(gui.get_node("addable8"))) then
 			display_preview(8)
+			gui.set_text(gui.get_node("move_text"), "Add")
+			adding_mon = true
 		end
 		if(gui.pick_node(gui.get_node("addable9"),action.x,action.y) and node_enabled(gui.get_node("addable9"))) then
-			display_preview(1)
+			display_preview(9)
+			gui.set_text(gui.get_node("move_text"), "Add")
+			adding_mon = true
 		end
 		if(gui.pick_node(gui.get_node("addable10"),action.x,action.y) and node_enabled(gui.get_node("addable10"))) then
 			display_preview(10)
+			gui.set_text(gui.get_node("move_text"), "Add")
+			adding_mon = true
 		end
 		if(gui.pick_node(gui.get_node("addable11"),action.x,action.y) and node_enabled(gui.get_node("addable11"))) then
 			display_preview(11)
+			gui.set_text(gui.get_node("move_text"), "Add")
+			adding_mon = true
 		end
 		if(gui.pick_node(gui.get_node("addable12"),action.x,action.y) and node_enabled(gui.get_node("addable12"))) then
 			display_preview(12)
+			gui.set_text(gui.get_node("move_text"), "Add")
+			adding_mon = true
 		end
 		if(gui.pick_node(gui.get_node("addable13"),action.x,action.y) and node_enabled(gui.get_node("addable13"))) then
 			display_preview(13)
+			gui.set_text(gui.get_node("move_text"), "Add")
+			adding_mon = true
 		end
 		if(gui.pick_node(gui.get_node("addable14"),action.x,action.y) and node_enabled(gui.get_node("addable14"))) then
 			display_preview(14)
+			gui.set_text(gui.get_node("move_text"), "Add")
+			adding_mon = true
 		end
 		if(gui.pick_node(gui.get_node("addable15"),action.x,action.y) and node_enabled(gui.get_node("addable15"))) then
 			display_preview(15)
+			gui.set_text(gui.get_node("move_text"), "Add")
+			adding_mon = true
 		end
 		if(gui.pick_node(gui.get_node("addable16"),action.x,action.y) and node_enabled(gui.get_node("addable16"))) then
 			display_preview(16)
+			gui.set_text(gui.get_node("move_text"), "Add")
+			adding_mon = true
+		end
+		if(gui.pick_node(gui.get_node("added1"),action.x,action.y) and node_enabled(gui.get_node("added1"))) then
+			display_preview(selected_mons[1])
+			gui.set_text(gui.get_node("move_text"), "Remove")
+			adding_mon = false
+		end
+		if(gui.pick_node(gui.get_node("added2"),action.x,action.y) and node_enabled(gui.get_node("added2"))) then
+			display_preview(selected_mons[2])
+			gui.set_text(gui.get_node("move_text"), "Remove")
+			adding_mon = false
+		end
+		if(gui.pick_node(gui.get_node("added3"),action.x,action.y) and node_enabled(gui.get_node("added3"))) then
+			display_preview(selected_mons[3])
+			gui.set_text(gui.get_node("move_text"), "Remove")
+			adding_mon = false
+		end
+		if(gui.pick_node(gui.get_node("added4"),action.x,action.y) and node_enabled(gui.get_node("added4"))) then
+			display_preview(selected_mons[4])
+			gui.set_text(gui.get_node("move_text"), "Remove")
+			adding_mon = false
 		end
 		if(gui.pick_node(gui.get_node("move_button"),action.x,action.y) and node_enabled(gui.get_node("move_button"))) then
 			move_current()
@@ -126,11 +184,28 @@ function load_mons()
 end
 
 function move_current()
-	if addable_mons[current_mon].available then
+	if adding_mon and addable_mons[current_mon].available and num_selected < 4 then
 		addable_mons[current_mon].available = false
-		table.insert(selected_mons, current_mon)
-	else
+		mon_added = false
+		for i=1,4 do
+			if selected_mons[i] == nil and not mon_added then
+				selected_mons[i] = current_mon
+				mon_added = true
+			end
+		end
+		num_selected = num_selected + 1
+		gui.set_text(gui.get_node("move_text"), "Remove")
+		adding_mon = false
+	elseif not adding_mon then
 		addable_mons[current_mon].available = true
+		for i=1,4 do
+			if selected_mons[i] == current_mon then
+				selected_mons[i] = nil
+			end
+		end
+		num_selected = num_selected - 1
+		gui.set_text(gui.get_node("move_text"), "Add")
+		adding_mon = true
 	end
 end
 
@@ -169,6 +244,7 @@ function display_starters()
 	end
 	for s=1,16 do
 		if addable_mons[s].available then
+			gui.set_enabled(gui.get_node("addable"..s), true)
 			gui.play_flipbook(gui.get_node("addable"..s), pbs[starters.ids[s]].name.."_front_original")
 		else
 			gui.set_enabled(gui.get_node("addable"..s), false)
@@ -177,7 +253,7 @@ function display_starters()
 end
 
 function display_wild_mon()
-	gui.set_text(gui.get_node("instruction_text"), "Choose your team")
+	gui.set_text(gui.get_node("instruction_text"), "Choose Pokemon to catch")
 	for i=5,16 do
 		gui.set_enabled(gui.get_node("addable"..i), false)
 		gui.set_enabled(gui.get_node("addable_bg"..i), false)

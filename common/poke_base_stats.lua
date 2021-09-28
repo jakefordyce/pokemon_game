@@ -11,12 +11,13 @@ function M.stat_by_level(pokedex, stat, level)
 end
 
 function M.moves_by_level(pokedex, level)
-	m = {}
+	moves = {}
 	for i, m in ipairs(M[pokedex].moves) do
-		if m.level < level then
-			table.insert(m, { id = m.id, level = m.level})
+		if m.level <= level then
+			table.insert(moves, { id = m.id, level = 0})
 		end
 	end
+	return moves
 end
 
 M.base_crit_chance = 5
