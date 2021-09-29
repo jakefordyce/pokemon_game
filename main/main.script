@@ -30,7 +30,10 @@ function on_message(self, message_id, message, sender)
 		load_screen("battle", area_names[game_state.current_area])
 	end
 	if message_id == hash("end_battle") then
-		load_screen(area_names[game_state.current_area], "battle")
+		load_screen("rewards", "battle")
+	end
+	if message_id == hash("end_rewards") then
+		load_screen(area_names[game_state.current_area], "rewards")
 	end
 	if message_id == hash("load_area") then
 		load_screen(area_names[game_state.current_area], area_names[message.previous_area])

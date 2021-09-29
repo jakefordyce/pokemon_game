@@ -1,5 +1,6 @@
 local speed = 150
 local game_state = require "common/game_state"
+local encounter_tracker = 0
 
 function init(self)
 	msg.post(".", "acquire_input_focus")
@@ -90,8 +91,12 @@ function on_message(self, message_id, message, sender)
 			p = go.get_position()
 			game_state.position_x = p.x
 			game_state.position_y = p.y
-			msg.post("camera", "reset")
-			msg.post("main:/loader#main", "load_battle")
+			encounter_tracker = encounter_tracker + 1
+			if encounter_tracker > 1200 then
+				encounter_tracker = 0
+				msg.post("camera", "reset")
+				msg.post("main:/loader#main", "load_battle")
+			end
 		elseif message.other_group == hash("door") then
 			--TODO: also load position info
 			target = go.get(msg.url(nil, message.other_id, "door"), "target_area")
