@@ -5,6 +5,7 @@ local exp_gained = 0
 function init(self)
 	msg.post(".", "acquire_input_focus")
 	calc_exp()
+	check_level_ups()
 	display_mons()
 end
 
@@ -31,7 +32,6 @@ function display_mons()
 			gui.set_enabled(gui.get_node("player_mon"..i), true)
 			gui.play_flipbook(gui.get_node("player_mon"..i), pbs[game_state["player_mon"..i]].name.."_front_original")
 			gui.set_text(gui.get_node("player_mon"..i.."_exp_text"), "+"..exp_gained.."exp")
-			game_state.pokemon[game_state["player_mon"..i]].exp = game_state.pokemon[game_state["player_mon"..i]].exp + exp_gained
 			new_size = vmath.vector3((game_state.pokemon[game_state["player_mon"..i]].exp / pbs.exp_to_next_level(game_state.pokemon[game_state["player_mon"..i]].level) * 100), 10, 0)
 			gui.set_size(gui.get_node("player_mon"..i.."_exp"), new_size)
 		else
@@ -48,3 +48,16 @@ function calc_exp()
 		end
 	end
 end
+
+function check_level_ups()
+	for i=1,4 do
+		if game_state["player_mon"..i] ~= nil then
+			if game_state.mon_leveled(game_state["player_mon"..i], exp_gained) then
+				gui.set_enabled(gui.get_node("player_mon"..i.."_level_up_text"), true)
+			else
+				gui.set_enabled(gui.get_node("player_mon"..i.."_level_up_text"), false)
+			end
+		end
+	end
+end
+

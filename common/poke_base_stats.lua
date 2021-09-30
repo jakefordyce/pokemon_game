@@ -25,7 +25,8 @@ function M.exp_reward_by_level(level)
 end
 
 function M.exp_to_next_level(level)
-	return math.ceil(math.pow(1.05, (level - 1)) * (50 + level) / 50 * 200)
+	--return math.ceil(math.pow(1.05, (level - 1)) * (50 + level) / 50 * 200)
+	return math.ceil(math.pow(1.05, (level - 1)) * (50 + level) / 50 * 10) -- for testing
 end
 
 M.base_crit_chance = 5

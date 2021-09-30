@@ -75,6 +75,20 @@ function M.generate_preview_mon(pokedex, level)
 	M.preview_mon.crit_damage = pbs.base_crit_damage
 end
 
+function M.mon_leveled(mon_index, exp_gained)
+	M.pokemon[mon_index].exp = M.pokemon[mon_index].exp + exp_gained
+	exp_to_next_level = pbs.exp_to_next_level(M.pokemon[mon_index].level)
+	leveled_up = false
+	while M.pokemon[mon_index].exp >= exp_to_next_level do
+		leveled_up = true
+		M.pokemon[mon_index].level = M.pokemon[mon_index].level + 1
+		M.pokemon[mon_index].exp = M.pokemon[mon_index].exp - exp_to_next_level
+		exp_to_next_level = pbs.exp_to_next_level(M.pokemon[mon_index].level)
+	end
+
+	return leveled_up
+end
+
 --PLAYER INFO--
 M.position_x = 263
 M.position_y = 761
