@@ -49,6 +49,9 @@ function on_input(self, action_id, action)
 					game_state.add_pokemon(addable_mons[selected_mons[i]].pokedex, addable_mons[selected_mons[i]].level)
 				end
 			end
+			if game_state.starters_chosen == false then
+				game_state.starters_chosen = true
+			end
 			msg.post("main:/loader#main", "close_add_mon")
 		end
 		if(gui.pick_node(gui.get_node("addable1"),action.x,action.y) and node_enabled(gui.get_node("addable1"))) then
@@ -164,12 +167,14 @@ end
 function load_mons()
 	if game_state.starters_chosen then
 		for i=1,4 do
-			new_mon = {
-				pokedex = game_state["enemy_mon"..i].pokedex,
-				level = game_state["enemy_mon"..i].level,
-				available = true
-			}
-			table.insert(addable_mons, new_mon)
+			if game_state["enemy_mon"..i] ~= nil then
+				new_mon = {
+					pokedex = game_state["enemy_mon"..i].pokedex,
+					level = game_state["enemy_mon"..i].level,
+					available = true
+				}
+				table.insert(addable_mons, new_mon)
+			end
 		end
 	else
 		for i=1,16 do

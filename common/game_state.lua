@@ -19,7 +19,7 @@ M.enemy_mon2 = nil
 M.enemy_mon3 = nil
 M.enemy_mon4 = nil
 
-M.battle_type = 2
+M.battle_type = 1
 -- 1 - wild pokemon
 -- 2 - trainer
 -- 3 - boss fight

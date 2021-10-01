@@ -47,4 +47,12 @@ function on_message(self, message_id, message, sender)
 	if message_id == hash("close_add_mon") then
 		load_screen(area_names[game_state.current_area], "add_mon")
 	end
+	if message_id == hash("close_rewards") then
+		-- if the battle was against wild pokemon then allow the player to catch, otherwise return to adventure screen.
+		if game_state.battle_type == 1 then
+			load_screen("add_mon", "rewards")
+		else
+			load_screen(area_names[game_state.current_area], "rewards")
+		end
+	end
 end
