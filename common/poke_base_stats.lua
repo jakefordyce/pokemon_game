@@ -39,248 +39,292 @@ moves[2] = {["level"] = 1, ["id"] = 2}
 moves[3] = {["level"] = 6, ["id"] = 3}
 
 M[1] = {
-	["name"] = "bulbasaur",
-	["hp"] = 90,
-	["attack"] = 80,
-	["defense"] = 80,
-	["spattack"] = 90,
-	["spdefense"] = 80,
-	["speed"] = 100,
-	["moves"] = moves
+	name = "bulbasaur",
+	hp = 90,
+	attack = 80,
+	defense = 80,
+	spattack = 90,
+	spdefense = 80,
+	speed = 100,
+	type1 = 11,
+	type2 = 11,
+	moves = moves
 }
 
 M[2] = {
-	["name"] = "ivysaur",
-	["hp"] = 105,
-	["attack"] = 90,
-	["defense"] = 90,
-	["spattack"] = 105,
-	["spdefense"] = 90,
-	["speed"] = 100,
-	["moves"] = moves
+	name = "ivysaur",
+	hp = 90,
+	attack = 80,
+	defense = 80,
+	spattack = 90,
+	spdefense = 80,
+	speed = 100,
+	type1 = 11,
+	type2 = 11,
+	moves = moves
 }
 
 M[3] = {
-	["name"] = "venusaur",
-	["hp"] = 120,
-	["attack"] = 100,
-	["defense"] = 100,
-	["spattack"] = 120,
-	["spdefense"] = 100,
-	["speed"] = 100,
-	["moves"] = moves
+	name = "venusaur",
+	hp = 90,
+	attack = 80,
+	defense = 80,
+	spattack = 90,
+	spdefense = 80,
+	speed = 100,
+	type1 = 11,
+	type2 = 11,
+	moves = moves
 }
 
 moves = {}
 moves[1] = {["level"] = 1, ["id"] = 1}
 
 M[4] = {
-	["name"] = "charmander",
-	["hp"] = 80,
-	["attack"] = 90,
-	["defense"] = 80,
-	["spattack"] = 90,
-	["spdefense"] = 80,
-	["speed"] = 100,
-	["moves"] = moves
+	name = "charmander",
+	hp = 90,
+	attack = 80,
+	defense = 80,
+	spattack = 90,
+	spdefense = 80,
+	speed = 100,
+	type1 = 9,
+	type2 = 9,
+	moves = moves
 }
 
 M[5] = {
-	["name"] = "charmeleon",
-	["hp"] = 90,
-	["attack"] = 105,
-	["defense"] = 90,
-	["spattack"] = 105,
-	["spdefense"] = 90,
-	["speed"] = 100,
-	["moves"] = moves
+	name = "charmeleon",
+	hp = 90,
+	attack = 80,
+	defense = 80,
+	spattack = 90,
+	spdefense = 80,
+	speed = 100,
+	type1 = 9,
+	type2 = 9,
+	moves = moves
 }
 
 M[6] = {
-	["name"] = "charizard",
-	["hp"] = 100,
-	["attack"] = 120,
-	["defense"] = 100,
-	["spattack"] = 120,
-	["spdefense"] = 100,
-	["speed"] = 100,
-	["moves"] = moves
+	name = "charizard",
+	hp = 90,
+	attack = 80,
+	defense = 80,
+	spattack = 90,
+	spdefense = 80,
+	speed = 100,
+	type1 = 9,
+	type2 = 8,
+	moves = moves
 }
 
 M[7] = {
-	["name"] = "squirtle",
-	["hp"] = 80,
-	["attack"] = 80,
-	["defense"] = 90,
-	["spattack"] = 90,
-	["spdefense"] = 80,
-	["speed"] = 100,
-	["moves"] = moves
+	name = "squirtle",
+	hp = 90,
+	attack = 80,
+	defense = 80,
+	spattack = 90,
+	spdefense = 80,
+	speed = 100,
+	type1 = 10,
+	type2 = 10,
+	moves = moves
 }
 
 M[8] = {
-	["name"] = "wartortle",
-	["hp"] = 90,
-	["attack"] = 90,
-	["defense"] = 105,
-	["spattack"] = 105,
-	["spdefense"] = 90,
-	["speed"] = 100,
-	["moves"] = moves
+	name = "wartortle",
+	hp = 90,
+	attack = 80,
+	defense = 80,
+	spattack = 90,
+	spdefense = 80,
+	speed = 100,
+	type1 = 10,
+	type2 = 10,
+	moves = moves
 }
 
 M[9] = {
-	["name"] = "blastoise",
-	["hp"] = 100,
-	["attack"] = 100,
-	["defense"] = 120,
-	["spattack"] = 120,
-	["spdefense"] = 100,
-	["speed"] = 100,
-	["moves"] = moves
+	name = "blastoise",
+	hp = 90,
+	attack = 80,
+	defense = 80,
+	spattack = 90,
+	spdefense = 80,
+	speed = 100,
+	type1 = 10,
+	type2 = 10,
+	moves = moves
 }
 
 M[63] = {
-	["name"] = "abra",
-	["hp"] = 90,
-	["attack"] = 80,
-	["defense"] = 80,
-	["spattack"] = 90,
-	["spdefense"] = 80,
-	["speed"] = 100,
-	["moves"] = moves
+	name = "abra",
+	hp = 90,
+	attack = 80,
+	defense = 80,
+	spattack = 90,
+	spdefense = 80,
+	speed = 100,
+	type1 = 13,
+	type2 = 13,
+	moves = moves
 }
 
 M[66] = {
-	["name"] = "machop",
-	["hp"] = 90,
-	["attack"] = 80,
-	["defense"] = 80,
-	["spattack"] = 90,
-	["spdefense"] = 80,
-	["speed"] = 100,
-	["moves"] = moves
+	name = "machop",
+	hp = 90,
+	attack = 80,
+	defense = 80,
+	spattack = 90,
+	spdefense = 80,
+	speed = 100,
+	type1 = 2,
+	type2 = 2,
+	moves = moves
 }
 
 M[74] = {
-	["name"] = "geodude",
-	["hp"] = 90,
-	["attack"] = 80,
-	["defense"] = 80,
-	["spattack"] = 90,
-	["spdefense"] = 80,
-	["speed"] = 100,
-	["moves"] = moves
+	name = "geodude",
+	hp = 90,
+	attack = 80,
+	defense = 80,
+	spattack = 90,
+	spdefense = 80,
+	speed = 100,
+	type1 = 5,
+	type2 = 5,
+	moves = moves
 }
 
 M[92] = {
-	["name"] = "gastly",
-	["hp"] = 90,
-	["attack"] = 80,
-	["defense"] = 80,
-	["spattack"] = 90,
-	["spdefense"] = 80,
-	["speed"] = 100,
-	["moves"] = moves
+	name = "gastly",
+	hp = 90,
+	attack = 80,
+	defense = 80,
+	spattack = 90,
+	spdefense = 80,
+	speed = 100,
+	type1 = 15,
+	type2 = 4,
+	moves = moves
 }
 
 M[152] = {
-	["name"] = "chikorita",
-	["hp"] = 90,
-	["attack"] = 80,
-	["defense"] = 80,
-	["spattack"] = 90,
-	["spdefense"] = 80,
-	["speed"] = 100,
-	["moves"] = moves
+	name = "chikorita",
+	hp = 90,
+	attack = 80,
+	defense = 80,
+	spattack = 90,
+	spdefense = 80,
+	speed = 100,
+	type1 = 11,
+	type2 = 11,
+	moves = moves
 }
 
 M[155] = {
-	["name"] = "cyndaquil",
-	["hp"] = 90,
-	["attack"] = 80,
-	["defense"] = 80,
-	["spattack"] = 90,
-	["spdefense"] = 80,
-	["speed"] = 100,
-	["moves"] = moves
+	name = "cyndaquil",
+	hp = 90,
+	attack = 80,
+	defense = 80,
+	spattack = 90,
+	spdefense = 80,
+	speed = 100,
+	type1 = 9,
+	type2 = 9,
+	moves = moves
 }
 
 M[158] = {
-	["name"] = "totodile",
-	["hp"] = 90,
-	["attack"] = 80,
-	["defense"] = 80,
-	["spattack"] = 90,
-	["spdefense"] = 80,
-	["speed"] = 100,
-	["moves"] = moves
+	name = "totodile",
+	hp = 90,
+	attack = 80,
+	defense = 80,
+	spattack = 90,
+	spdefense = 80,
+	speed = 100,
+	type1 = 10,
+	type2 = 10,
+	moves = moves
 }
 
 M[172] = {
-	["name"] = "pichu",
-	["hp"] = 90,
-	["attack"] = 80,
-	["defense"] = 80,
-	["spattack"] = 90,
-	["spdefense"] = 80,
-	["speed"] = 100,
-	["moves"] = moves
+	name = "pichu",
+	hp = 90,
+	attack = 80,
+	defense = 80,
+	spattack = 90,
+	spdefense = 80,
+	speed = 100,
+	type1 = 12,
+	type2 = 12,
+	moves = moves
 }
 
 M[173] = {
-	["name"] = "cleffa",
-	["hp"] = 90,
-	["attack"] = 80,
-	["defense"] = 80,
-	["spattack"] = 90,
-	["spdefense"] = 80,
-	["speed"] = 100,
-	["moves"] = moves
+	name = "cleffa",
+	hp = 90,
+	attack = 80,
+	defense = 80,
+	spattack = 90,
+	spdefense = 80,
+	speed = 100,
+	type1 = 1,
+	type2 = 1,
+	moves = moves
 }
 
 M[228] = {
-	["name"] = "houndour",
-	["hp"] = 90,
-	["attack"] = 80,
-	["defense"] = 80,
-	["spattack"] = 90,
-	["spdefense"] = 80,
-	["speed"] = 100,
-	["moves"] = moves
+	name = "houndour",
+	hp = 90,
+	attack = 80,
+	defense = 80,
+	spattack = 90,
+	spdefense = 80,
+	speed = 100,
+	type1 = 9,
+	type2 = 15,
+	moves = moves
 }
 
 M[280] = {
-	["name"] = "ralts",
-	["hp"] = 90,
-	["attack"] = 80,
-	["defense"] = 80,
-	["spattack"] = 90,
-	["spdefense"] = 80,
-	["speed"] = 100,
-	["moves"] = moves
+	name = "ralts",
+	hp = 90,
+	attack = 80,
+	defense = 80,
+	spattack = 90,
+	spdefense = 80,
+	speed = 100,
+	type1 = 13,
+	type2 = 13,
+	moves = moves
 }
 
 M[304] = {
-	["name"] = "aron",
-	["hp"] = 90,
-	["attack"] = 80,
-	["defense"] = 80,
-	["spattack"] = 90,
-	["spdefense"] = 80,
-	["speed"] = 100,
-	["moves"] = moves
+	name = "aron",
+	hp = 90,
+	attack = 80,
+	defense = 80,
+	spattack = 90,
+	spdefense = 80,
+	speed = 100,
+	type1 = 7,
+	type2 = 5,
+	moves = moves
 }
 
 M[363] = {
-	["name"] = "spheal",
-	["hp"] = 90,
-	["attack"] = 80,
-	["defense"] = 80,
-	["spattack"] = 90,
-	["spdefense"] = 80,
-	["speed"] = 100,
-	["moves"] = moves
+	name = "spheal",
+	hp = 90,
+	attack = 80,
+	defense = 80,
+	spattack = 90,
+	spdefense = 80,
+	speed = 100,
+	type1 = 14,
+	type2 = 14,
+	moves = moves
 }
 
 return M

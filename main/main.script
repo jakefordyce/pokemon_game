@@ -26,8 +26,11 @@ function on_input(self, action_id, action)
 end
 
 function on_message(self, message_id, message, sender)
+	if message_id == hash("load_choose_team") then
+		load_screen("choose_team", area_names[game_state.current_area])
+	end
 	if message_id == hash("load_battle") then
-		load_screen("battle", area_names[game_state.current_area])
+		load_screen("battle", "choose_team")
 	end
 	if message_id == hash("end_battle") then
 		load_screen("rewards", "battle")

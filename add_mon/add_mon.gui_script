@@ -242,7 +242,7 @@ function display_preview(addable)
 end
 
 function display_starters()
-	gui.set_text(gui.get_node("instruction_text"), "Choose your team")
+	gui.set_text(gui.get_node("instruction_text"), "Choose your starters")
 	for i=5,16 do
 		gui.set_enabled(gui.get_node("addable"..i), true)
 		gui.set_enabled(gui.get_node("addable_bg"..i), true)

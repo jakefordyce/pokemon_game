@@ -92,10 +92,11 @@ function on_message(self, message_id, message, sender)
 			game_state.position_x = p.x
 			game_state.position_y = p.y
 			encounter_tracker = encounter_tracker + 1
-			if encounter_tracker > 1200 then
+			if encounter_tracker > 600 then
 				encounter_tracker = 0
 				msg.post("camera", "reset")
-				msg.post("main:/loader#main", "load_battle")
+				--msg.post("main:/loader#main", "load_battle")
+				msg.post("main:/loader#main", "load_choose_team")
 			end
 		elseif message.other_group == hash("door") then
 			--TODO: also load position info
