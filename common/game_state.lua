@@ -89,6 +89,31 @@ function M.mon_leveled(mon_index, exp_gained)
 	return leveled_up
 end
 
+function M.mon_learned_move(mon_index)
+	learned_a_move = false
+	mon = M.pokemon[mon_index]
+	-- loop through the moves that the mon can learn while leveling
+	for i, move in ipairs(pbs[mon.pokedex].moves) do
+		move_known = false
+		-- if we find a move that the mon is high enough level to learn...
+		if move.level <= mon.level then
+			-- we loop through the moves it already knows to make sure it doesn't already know the move
+			for i, known in ipairs(mon.known_moves) do
+				if known.id == move.id then
+					move_known = true
+				end
+			end
+			-- if it doesn't know the move then it learns it now
+			if move_known == false then
+				move = {id = move.id, level = 0}
+				table.insert(mon.known_moves, move)
+				learned_a_move = true
+			end
+		end
+	end
+	return learned_a_move
+end
+
 --PLAYER INFO--
 M.position_x = 263
 M.position_y = 761
@@ -106,22 +131,7 @@ moves[2] = {
 	id = 2,
 	level = 0
 }
-moves[3] = {
-	id = 3,
-	level = 0
-}
-moves[4] = {
-	id = 4,
-	level = 0
-}
-moves[5] = {
-	id = 5,
-	level = 0
-}
-moves[6] = {
-	id = 6,
-	level = 0
-}
+
 
 M.pokemon[1] = {
 	pokedex = 1,
@@ -129,10 +139,10 @@ M.pokemon[1] = {
 	exp = 0,
 	name = "bulbasaur",
 	known_moves = moves,
-	move1 = 1, --this is the index from the pokemon's learned_moves.
+	move1 = 1, --this is the index from the pokemon's known_moves.
 	move2 = 2,
-	move3 = 3,
-	move4 = 4,
+	move3 = nil,
+	move4 = nil,
 	rune1 = 1, --this is the index from M.runes.
 	rune2 = nil,
 	rune3 = nil,

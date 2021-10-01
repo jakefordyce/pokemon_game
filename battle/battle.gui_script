@@ -24,14 +24,16 @@ function on_message(self, message_id, message, sender)
 	-- Remove this function if not needed
 	if message_id == hash("display_mon") then
 		gui.set_text(gui.get_node("current_mon_name"), message.mon.name)
-		gui.set_enabled(gui.get_node("Move1"), true)
-		gui.set_enabled(gui.get_node("Move2"), true)
-		gui.set_enabled(gui.get_node("Move3"), true)
-		gui.set_enabled(gui.get_node("Move4"), true)
-		gui.set_text(gui.get_node("Move1"), moves[message.mon.known_moves[message.mon.move1].id].name)
-		gui.set_text(gui.get_node("Move2"), moves[message.mon.known_moves[message.mon.move2].id].name)
-		gui.set_text(gui.get_node("Move3"), moves[message.mon.known_moves[message.mon.move3].id].name)
-		gui.set_text(gui.get_node("Move4"), moves[message.mon.known_moves[message.mon.move4].id].name)
+		for i=1,4 do
+			if message.mon["move"..i] ~= nil then
+				gui.set_enabled(gui.get_node("Move"..i), true)
+				gui.set_text(gui.get_node("Move"..i), moves[message.mon.known_moves[message.mon["move"..i]].id].name)
+			else
+				gui.set_enabled(gui.get_node("Move"..i), false)
+			end
+		end
+		
+		
 	end
 	if message_id == hash("hide_mon_display") then
 		gui.set_text(gui.get_node("current_mon_name"), "")

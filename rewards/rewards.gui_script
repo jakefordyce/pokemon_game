@@ -57,6 +57,12 @@ function check_level_ups()
 			else
 				gui.set_enabled(gui.get_node("player_mon"..i.."_level_up_text"), false)
 			end
+			
+			if game_state.mon_learned_move(game_state["player_mon"..i]) then
+				gui.set_enabled(gui.get_node("player_mon"..i.."_learned_move"), true)
+			else
+				gui.set_enabled(gui.get_node("player_mon"..i.."_learned_move"), false)
+			end
 		end
 	end
 end

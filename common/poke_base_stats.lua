@@ -36,6 +36,7 @@ M.base_crit_damage = 100
 moves = {}
 moves[1] = {["level"] = 1, ["id"] = 1}
 moves[2] = {["level"] = 1, ["id"] = 2}
+moves[3] = {["level"] = 6, ["id"] = 3}
 
 M[1] = {
 	["name"] = "bulbasaur",
