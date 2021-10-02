@@ -26,6 +26,8 @@ local function generate_stats(mon)
 	mon.resist = 0
 	mon.crit_chance = pbs.base_crit_chance
 	mon.crit_damage = pbs.base_crit_damage
+	mon.type1 = pbs[mon.pokedex].type1
+	mon.type2 = pbs[mon.pokedex].type2
 end
 
 local function select_moves(mon)

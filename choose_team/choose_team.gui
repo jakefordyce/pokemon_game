@@ -628,7 +628,7 @@ nodes {
   type: TYPE_BOX
   blend_mode: BLEND_MODE_ALPHA
   texture: "front_sprites/bulbasaur_front_original"
-  id: "enemy_mon"
+  id: "enemy_mon3"
   xanchor: XANCHOR_NONE
   yanchor: YANCHOR_NONE
   pivot: PIVOT_CENTER
@@ -688,7 +688,7 @@ nodes {
   yanchor: YANCHOR_NONE
   pivot: PIVOT_CENTER
   adjust_mode: ADJUST_MODE_FIT
-  parent: "enemy_mon"
+  parent: "enemy_mon3"
   layer: ""
   inherit_alpha: true
   slice9 {
@@ -743,7 +743,7 @@ nodes {
   yanchor: YANCHOR_NONE
   pivot: PIVOT_CENTER
   adjust_mode: ADJUST_MODE_FIT
-  parent: "enemy_mon"
+  parent: "enemy_mon3"
   layer: ""
   inherit_alpha: true
   slice9 {
@@ -812,7 +812,7 @@ nodes {
   }
   adjust_mode: ADJUST_MODE_FIT
   line_break: false
-  parent: "enemy_mon"
+  parent: "enemy_mon3"
   layer: ""
   inherit_alpha: true
   alpha: 1.0
@@ -856,7 +856,7 @@ nodes {
   type: TYPE_BOX
   blend_mode: BLEND_MODE_ALPHA
   texture: "front_sprites/bulbasaur_front_original"
-  id: "enemy_mon3"
+  id: "enemy_mon4"
   xanchor: XANCHOR_NONE
   yanchor: YANCHOR_NONE
   pivot: PIVOT_CENTER
@@ -916,7 +916,7 @@ nodes {
   yanchor: YANCHOR_NONE
   pivot: PIVOT_CENTER
   adjust_mode: ADJUST_MODE_FIT
-  parent: "enemy_mon3"
+  parent: "enemy_mon4"
   layer: ""
   inherit_alpha: true
   slice9 {
@@ -971,7 +971,7 @@ nodes {
   yanchor: YANCHOR_NONE
   pivot: PIVOT_CENTER
   adjust_mode: ADJUST_MODE_FIT
-  parent: "enemy_mon3"
+  parent: "enemy_mon4"
   layer: ""
   inherit_alpha: true
   slice9 {
@@ -1040,7 +1040,7 @@ nodes {
   }
   adjust_mode: ADJUST_MODE_FIT
   line_break: false
-  parent: "enemy_mon3"
+  parent: "enemy_mon4"
   layer: ""
   inherit_alpha: true
   alpha: 1.0

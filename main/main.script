@@ -1,6 +1,6 @@
 local game_state = require "common/game_state"
 local area_names = require "common/area_names"
-
+local encounters = require "common/encounters"
 
 local function load_screen(new_screen, old_screen)
 	if old_screen ~= nil then
@@ -27,6 +27,7 @@ end
 
 function on_message(self, message_id, message, sender)
 	if message_id == hash("load_choose_team") then
+		generate_enemy_team()
 		load_screen("choose_team", area_names[game_state.current_area])
 	end
 	if message_id == hash("load_battle") then
@@ -57,5 +58,9 @@ function on_message(self, message_id, message, sender)
 		else
 			load_screen(area_names[game_state.current_area], "rewards")
 		end
+	end
+
+	function generate_enemy_team()
+		encounters.load_trainer_data(0)
 	end
 end

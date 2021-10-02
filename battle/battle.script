@@ -235,7 +235,6 @@ function load_player_mon_data()
 end
 
 function load_enemy_data()
-	encounters.load_trainer_data(0)
 	--TODO: copy stats?
 	enemy_mon1 = game_state.enemy_mon1
 	enemy_mon1.currenthp = enemy_mon1.hp

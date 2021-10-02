@@ -2,21 +2,21 @@ local M = {}
 
 M.names = {}
 
-M.names[1] = "Normal"
-M.names[2] = "Fighting"
-M.names[3] = "Flying"
-M.names[4] = "Poison"
-M.names[5] = "Earth"
-M.names[6] = "Bug"
-M.names[7] = "Steel"
-M.names[8] = "Dragon"
-M.names[9] = "Fire"
-M.names[10] = "Water"
-M.names[11] = "Grass"
-M.names[12] = "Electric"
-M.names[13] = "Psychic"
-M.names[14] = "Ice"
-M.names[15] = "Dark"
+M.names[1] = "normal"
+M.names[2] = "fighting"
+M.names[3] = "flying"
+M.names[4] = "poison"
+M.names[5] = "earth"
+M.names[6] = "bug"
+M.names[7] = "steel"
+M.names[8] = "dragon"
+M.names[9] = "fire"
+M.names[10] = "water"
+M.names[11] = "grass"
+M.names[12] = "electric"
+M.names[13] = "psychic"
+M.names[14] = "ice"
+M.names[15] = "dark"
 
 
 return M
