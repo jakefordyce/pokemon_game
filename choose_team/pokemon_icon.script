@@ -1,0 +1,29 @@
+go.property("mon_id", 1)
+local pbs = require "common/poke_base_stats"
+local game_state = require "common/game_state"
+
+function init(self)
+	--look up the name using the pokedex since the name in game_state could be anything.
+	msg.post("#sprite", "play_animation", { id = hash(pbs[game_state.pokemon[self.mon_id].pokedex].name.."_front_original") })
+end
+
+function final(self)
+end
+
+function update(self, dt)
+end
+
+function on_message(self, message_id, message, sender)
+	if message_id == hash("contact_point_response") then
+		if message.other_group == hash("cursor") then
+			msg.post("gui", "display_pokemon_details", { mon = self.mon_id })
+			msg.post("choose_team", "select_pokemon", { mon = self.mon_id } )
+		end
+	end
+end
+
+function on_input(self, action_id, action)
+end
+
+function on_reload(self)
+end
