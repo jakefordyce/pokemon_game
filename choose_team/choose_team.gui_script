@@ -1,6 +1,8 @@
 local game_state = require "common/game_state"
 local pbs = require "common/poke_base_stats"
 local types = require "common/poke_types"
+local selected_mons = {}
+local num_selected = 0
 
 function init(self)
 	msg.post(".", "acquire_input_focus")
@@ -14,13 +16,49 @@ function update(self, dt)
 end
 
 function on_message(self, message_id, message, sender)
+	if message_id == hash("select_pokemon") then
+		if add_mon_to_team(message.mon, sender) then
+			msg.post(sender.path, "disable")
+			display_player_mons()
+		end
+	end
 end
 
 function on_input(self, action_id, action)
-
 end
 
 function on_reload(self)
+end
+
+function add_mon_to_team(mon_id, sender)
+	if num_selected < 4 then
+		added_mon = {
+			id = mon_id,
+			sender = sender
+		}
+		mon_added = false
+		for i=1,4 do
+			if selected_mons[i] == nil and not mon_added then
+				selected_mons[i] = added_mon
+				mon_added = true
+			end
+		end
+		num_selected = num_selected + 1
+		return true
+	end
+	return false
+end
+
+function display_player_mons()
+	for s=1,4 do
+		if selected_mons[s] ~= nil then
+			gui.set_texture(gui.get_node("player_mon"..s), "back_sprites")
+			gui.play_flipbook(gui.get_node("player_mon"..s), pbs[game_state.pokemon[selected_mons[s].id].pokedex].name.."_back_original")
+		else
+			gui.set_texture(gui.get_node("player_mon"..s), "misc")
+			gui.play_flipbook(gui.get_node("player_mon"..s), "pokeball_64")
+		end
+	end
 end
 
 function display_enemies()

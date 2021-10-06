@@ -1,5 +1,7 @@
 local game_state = require "common/game_state"
 local spawned_pokemon_icons = {}
+local current_mon = nil
+
 
 function init(self)
 	display_pokemon_grid()
@@ -15,6 +17,9 @@ function update(self, dt)
 end
 
 function on_message(self, message_id, message, sender)
+	if message_id == hash("select_pokemon") then
+		current_mon = message.mon
+	end
 end
 
 function on_input(self, action_id, action)
@@ -28,7 +33,7 @@ function on_input(self, action_id, action)
 		drag_distance = vmath.length(released_pos - self.pressed_pos)
 		if drag_distance < 20 then
 			p = vmath.vector3(action.x, action.y, 0)
-			--factory.create("#cursor_factory",p)
+			factory.create("#cursor_factory",p)
 		end
 	end
 
@@ -43,7 +48,7 @@ end
 
 function display_pokemon_grid()
 	local p = vmath.vector3()
-	p.y = 600
+	p.y = 500
 	p.x = 32
 
 	for i, poke in ipairs(game_state.pokemon) do
