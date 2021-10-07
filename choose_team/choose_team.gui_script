@@ -25,9 +25,32 @@ function on_message(self, message_id, message, sender)
 end
 
 function on_input(self, action_id, action)
+	if(action_id == hash("touch") and action.released == true) then
+		if(gui.pick_node(gui.get_node("player_mon1"),action.x,action.y)) then
+			remove_mon_from_team(1)
+			display_player_mons()
+		elseif(gui.pick_node(gui.get_node("player_mon2"),action.x,action.y)) then
+			remove_mon_from_team(2)
+			display_player_mons()
+		elseif(gui.pick_node(gui.get_node("player_mon3"),action.x,action.y)) then
+			remove_mon_from_team(3)
+			display_player_mons()
+		elseif(gui.pick_node(gui.get_node("player_mon4"),action.x,action.y)) then
+			remove_mon_from_team(4)
+			display_player_mons()
+		end
+	end
 end
 
 function on_reload(self)
+end
+
+function remove_mon_from_team(player_mon_num)
+	if selected_mons[player_mon_num] ~= nil then
+		msg.post(selected_mons[player_mon_num].sender.path, "enable")
+		selected_mons[player_mon_num] = nil
+		num_selected = num_selected - 1
+	end
 end
 
 function add_mon_to_team(mon_id, sender)
