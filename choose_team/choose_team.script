@@ -1,6 +1,5 @@
 local game_state = require "common/game_state"
 local spawned_pokemon_icons = {}
-local current_mon = nil
 
 
 function init(self)
@@ -17,9 +16,6 @@ function update(self, dt)
 end
 
 function on_message(self, message_id, message, sender)
-	if message_id == hash("select_pokemon") then
-		current_mon = message.mon
-	end
 end
 
 function on_input(self, action_id, action)

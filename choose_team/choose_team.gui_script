@@ -38,6 +38,17 @@ function on_input(self, action_id, action)
 		elseif(gui.pick_node(gui.get_node("player_mon4"),action.x,action.y)) then
 			remove_mon_from_team(4)
 			display_player_mons()
+		elseif(gui.pick_node(gui.get_node("battle_button"),action.x,action.y)) then
+			team_not_empty = false
+			for i=1,4 do
+				if selected_mons[i] ~= nil then
+					game_state["player_mon"..i] = selected_mons[i].id
+					team_not_empty = true
+				end
+			end
+			if team_not_empty then
+				msg.post("main:/loader#main", "load_battle")
+			end
 		end
 	end
 end
