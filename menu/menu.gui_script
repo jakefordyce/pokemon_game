@@ -1,5 +1,6 @@
 local moves = require "common/moves"
 local game_state = require "common/game_state"
+local pbs = require "common/poke_base_stats"
 local runes = require "common/runes"
 
 function init(self)
@@ -46,6 +47,9 @@ function on_message(self, message_id, message, sender)
 		gui.set_text(gui.get_node("details_resist"), mon.resist)
 		gui.set_text(gui.get_node("details_crit_chance"), (mon.crit_chance.."%"))
 		gui.set_text(gui.get_node("details_crit_damage"), (mon.crit_damage.."%"))
+		gui.set_text(gui.get_node("details_level"), mon.level)
+		new_size = vmath.vector3((mon.exp / pbs.exp_to_next_level(mon.level) * 100), 10, 0)
+		gui.set_size(gui.get_node("details_exp"), new_size)
 
 		for r = 1, 6 do
 			if mon["rune"..r] ~= nil then
