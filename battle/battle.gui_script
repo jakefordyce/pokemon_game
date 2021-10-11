@@ -67,6 +67,9 @@ function on_message(self, message_id, message, sender)
 		gui.set_text(gui.get_node("battle_text"), message.text)
 		timer.delay(1, false, remove_battle_text)
 	end
+	if message_id == hash("disable_mon") then
+		gui.set_enabled(gui.get_node(message.mon), false)
+	end	
 end
 
 -- Learn more: https://defold.com/manuals/input/

@@ -7,6 +7,9 @@ function init(self)
 	self.current_pos = go.get_position()
 	self.pressed_pos = go.get_position()
 	msg.post(".", "acquire_input_focus")
+	for i=1,4 do
+		game_state["player_mon"..i] = nil
+	end
 end
 
 function final(self)

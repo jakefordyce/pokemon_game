@@ -50,6 +50,18 @@ function on_message(self, message_id, message, sender)
 			player_mon1.turn = player_mon1.turn - 1000
 			current_turn_mon = player_mon1
 			start_player_turn(player_mon1)
+		elseif player_mon2 ~= nil and player_mon2.turn > 1000 then
+			player_mon2.turn = player_mon2.turn - 1000
+			current_turn_mon = player_mon2
+			start_player_turn(player_mon2)
+		elseif player_mon3 ~= nil and player_mon3.turn > 1000 then
+			player_mon3.turn = player_mon3.turn - 1000
+			current_turn_mon = player_mon3
+			start_player_turn(player_mon3)
+		elseif player_mon4 ~= nil and player_mon4.turn > 1000 then
+			player_mon4.turn = player_mon4.turn - 1000
+			current_turn_mon = player_mon4
+			start_player_turn(player_mon4)
 		elseif enemy_mon1.turn > 1000 then
 			enemy_mon1.turn = enemy_mon1.turn - 1000
 			current_turn_mon = enemy_mon1
@@ -161,7 +173,7 @@ end
 
 function start_player_turn(turn_mon)
 	msg.post("gui", "display_mon", {mon = turn_mon})
-	local p = go.get_position("player_mon1")
+	local p = go.get_position(turn_mon.reference)
 	p.y = p.y - 60
 	p.z = p.z - 1
 	local turn_marker = factory.create("#turn_marker_factory",p, nil, nil, 2.0)
@@ -214,6 +226,18 @@ end
 function increment_turn()
 	player_mon1.turn = player_mon1.turn + player_mon1.speed
 	msg.post("gui", "update_turn", {target="player_mon1", current=player_mon1.turn, max=1000})
+	if player_mon2 ~= nil then
+		player_mon2.turn = player_mon2.turn + player_mon2.speed
+		msg.post("gui", "update_turn", {target="player_mon2", current=player_mon2.turn, max=1000})
+	end
+	if player_mon3 ~= nil then
+		player_mon3.turn = player_mon3.turn + player_mon3.speed
+		msg.post("gui", "update_turn", {target="player_mon3", current=player_mon3.turn, max=1000})
+	end
+	if player_mon4 ~= nil then
+		player_mon4.turn = player_mon4.turn + player_mon4.speed
+		msg.post("gui", "update_turn", {target="player_mon4", current=player_mon4.turn, max=1000})
+	end
 	enemy_mon1.turn = enemy_mon1.turn + enemy_mon1.speed
 	msg.post("gui", "update_turn", {target="enemy_mon1", current=enemy_mon1.turn, max=1000})
 	msg.post(".", "find_next_turn")
@@ -232,6 +256,57 @@ function load_player_mon_data()
 	player_mon1.buffs_debuffs = {}
 	msg.post("player_mon1#sprite", "play_animation", { id = hash(player_mon1.name.."_back_original") })
 	combatants["player_mon1"] = player_mon1
+
+	if game_state.player_mon2 ~= nil then
+		player_mon2 = game_state.pokemon[game_state.player_mon2]
+		player_mon2.currenthp = player_mon2.hp
+		player_mon2.turn = 0
+		player_mon2.reference = "player_mon2"
+		player_mon2.move1cd = 0
+		player_mon2.move2cd = 0
+		player_mon2.move3cd = 0
+		player_mon2.move4cd = 0
+		player_mon2.buffs_debuffs = {}
+		msg.post("player_mon2#sprite", "play_animation", { id = hash(player_mon2.name.."_back_original") })
+		combatants["player_mon2"] = player_mon2
+	else
+		msg.post("player_mon2", "disable")
+		msg.post("gui", "disable_mon", {mon = "player_mon2"})
+	end
+
+	if game_state.player_mon3 ~= nil then
+		player_mon3 = game_state.pokemon[game_state.player_mon3]
+		player_mon3.currenthp = player_mon3.hp
+		player_mon3.turn = 0
+		player_mon3.reference = "player_mon3"
+		player_mon3.move1cd = 0
+		player_mon3.move2cd = 0
+		player_mon3.move3cd = 0
+		player_mon3.move4cd = 0
+		player_mon3.buffs_debuffs = {}
+		msg.post("player_mon3#sprite", "play_animation", { id = hash(player_mon3.name.."_back_original") })
+		combatants["player_mon3"] = player_mon3
+	else
+		msg.post("player_mon3", "disable")
+		msg.post("gui", "disable_mon", {mon = "player_mon3"})
+	end
+
+	if game_state.player_mon4 ~= nil then
+		player_mon4 = game_state.pokemon[game_state.player_mon4]
+		player_mon4.currenthp = player_mon4.hp
+		player_mon4.turn = 0
+		player_mon4.reference = "player_mon4"
+		player_mon4.move1cd = 0
+		player_mon4.move2cd = 0
+		player_mon4.move3cd = 0
+		player_mon4.move4cd = 0
+		player_mon4.buffs_debuffs = {}
+		msg.post("player_mon4#sprite", "play_animation", { id = hash(player_mon4.name.."_back_original") })
+		combatants["player_mon4"] = player_mon4
+	else
+		msg.post("player_mon4", "disable")
+		msg.post("gui", "disable_mon", {mon = "player_mon4"})
+	end
 end
 
 function load_enemy_data()
