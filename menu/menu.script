@@ -188,7 +188,4 @@ function clear_gos(id_table)
 		go.delete(v)
 		id_table[i] = nil
 	end
-	for i, v in ipairs(id_table) do
-		print(v)
-	end
 end

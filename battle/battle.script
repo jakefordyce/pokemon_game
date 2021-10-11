@@ -181,7 +181,7 @@ function start_player_turn(turn_mon)
 end
 
 function start_enemy_turn(turn_mon)
-	local p = go.get_position("enemy_mon1")
+	local p = go.get_position(turn_mon.reference)
 	p.y = p.y - 60
 	p.z = p.z - 1
 	local turn_marker = factory.create("#turn_marker_factory",p, nil, nil, 1.5)
@@ -240,6 +240,16 @@ function increment_turn()
 	end
 	enemy_mon1.turn = enemy_mon1.turn + enemy_mon1.speed
 	msg.post("gui", "update_turn", {target="enemy_mon1", current=enemy_mon1.turn, max=1000})
+	
+	enemy_mon2.turn = enemy_mon2.turn + enemy_mon2.speed
+	msg.post("gui", "update_turn", {target="enemy_mon2", current=enemy_mon2.turn, max=1000})
+	
+	enemy_mon3.turn = enemy_mon3.turn + enemy_mon3.speed
+	msg.post("gui", "update_turn", {target="enemy_mon3", current=enemy_mon3.turn, max=1000})
+	
+	enemy_mon4.turn = enemy_mon4.turn + enemy_mon4.speed
+	msg.post("gui", "update_turn", {target="enemy_mon4", current=enemy_mon4.turn, max=1000})
+	
 	msg.post(".", "find_next_turn")
 end
 
@@ -322,19 +332,64 @@ function load_enemy_data()
 	enemy_mon1.buffs_debuffs = {}
 	msg.post("enemy_mon1#sprite", "play_animation", { id = hash(enemy_mon1.name.."_front_original") })
 	combatants["enemy_mon1"] = enemy_mon1
+
+	enemy_mon2 = game_state.enemy_mon2
+	enemy_mon2.currenthp = enemy_mon2.hp
+	enemy_mon2.turn = 0
+	enemy_mon2.reference = "enemy_mon1"
+	enemy_mon2.move1cd = 0
+	enemy_mon2.move2cd = 0
+	enemy_mon2.move3cd = 0
+	enemy_mon2.move4cd = 0
+	enemy_mon2.buffs_debuffs = {}
+	msg.post("enemy_mon2#sprite", "play_animation", { id = hash(enemy_mon2.name.."_front_original") })
+	combatants["enemy_mon2"] = enemy_mon2
+
+	enemy_mon3 = game_state.enemy_mon3
+	enemy_mon3.currenthp = enemy_mon3.hp
+	enemy_mon3.turn = 0
+	enemy_mon3.reference = "enemy_mon3"
+	enemy_mon3.move1cd = 0
+	enemy_mon3.move2cd = 0
+	enemy_mon3.move3cd = 0
+	enemy_mon3.move4cd = 0
+	enemy_mon3.buffs_debuffs = {}
+	msg.post("enemy_mon3#sprite", "play_animation", { id = hash(enemy_mon3.name.."_front_original") })
+	combatants["enemy_mon3"] = enemy_mon3
+
+	enemy_mon4 = game_state.enemy_mon4
+	enemy_mon4.currenthp = enemy_mon4.hp
+	enemy_mon4.turn = 0
+	enemy_mon4.reference = "enemy_mon4"
+	enemy_mon4.move1cd = 0
+	enemy_mon4.move2cd = 0
+	enemy_mon4.move3cd = 0
+	enemy_mon4.move4cd = 0
+	enemy_mon4.buffs_debuffs = {}
+	msg.post("enemy_mon4#sprite", "play_animation", { id = hash(enemy_mon4.name.."_front_original") })
+	combatants["enemy_mon4"] = enemy_mon4
 end
 
 function display_targetting_icons()
-	if(selected_move.targetting == 0 or selected_move.targetting == 2) then
-		local p = go.get_position("player_mon1")
+	if(selected_move.targetting == 0) then --self
+		local p = go.get_position(current_turn_mon.reference)
 		p.y = p.y + 50
 		local icon = factory.create("#target_icon_factory",p)
 		table.insert(spawned_target_icons, icon)
-	elseif(selected_move.targetting == 1) then
-		local p = go.get_position("enemy_mon1")
-		p.y = p.y + 50
-		local icon = factory.create("#target_icon_factory",p)
-		table.insert(spawned_target_icons, icon)
+	elseif(selected_move.targetting == 1) then --enemy
+		for i=1,4 do
+			local p = go.get_position("enemy_mon"..i)
+			p.y = p.y + 50
+			local icon = factory.create("#target_icon_factory",p)
+			table.insert(spawned_target_icons, icon)
+		end
+	elseif(selected_move.targetting == 2) then --ally
+		for i=1,4 do
+			local p = go.get_position("player_mon"..i)
+			p.y = p.y + 50
+			local icon = factory.create("#target_icon_factory",p)
+			table.insert(spawned_target_icons, icon)
+		end
 	end
 end
 
@@ -354,8 +409,5 @@ function clear_gos(id_table)
 	for i, v in ipairs(id_table) do
 		go.delete(v)
 		id_table[i] = nil
-	end
-	for i, v in ipairs(id_table) do
-		print(v)
 	end
 end

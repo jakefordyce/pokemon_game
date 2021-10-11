@@ -3,16 +3,10 @@ local pbs = require "common/poke_base_stats"
 local moves = require "common/moves"
 
 local M = {}
-trainers = {}
 
-trainers[0] = {}
-trainers[0].name = "Rival"
-trainers[0].mon1 = {
-	pokedex = 1,
-	rarity = 1,
-	level = 5,
-	build_style = 0
-}
+local UNCOMMON_CHANCE = 50
+local RARE_CHANCE = 20
+local MYTHIC_CHANCE = 5
 
 local function generate_stats(mon)
 	mon.name = pbs[mon.pokedex].name
@@ -30,6 +24,7 @@ local function generate_stats(mon)
 	mon.type2 = pbs[mon.pokedex].type2
 end
 
+--This loads the last (up to) 4 moves the pokemon has learned while leveling up.
 local function select_moves(mon)
 	local known_moves = {}
 	for i, m in ipairs(pbs[mon.pokedex].moves) do
@@ -59,5 +54,55 @@ function M.load_trainer_data(trainer_index)
 	generate_stats(game_state.enemy_mon1)
 	select_moves(game_state.enemy_mon1)
 end
+
+function M.load_wild_encounter(area_index, area_level)
+	math.randomseed(os.clock())
+	rarity = 1
+	for i=1,4 do
+		rarity_num = math.random(1,100)
+		if rarity_num < MYTHIC_CHANCE then
+			rarity = 4
+		elseif rarity_num < RARE_CHANCE then
+			rarity = 3
+		elseif rarity_num < UNCOMMON_CHANCE then
+			rarity = 2
+		else
+			rarity = 1
+		end
+
+		pokedex_num = math.random(1,#areas[area_index][rarity])
+		pokedex = areas[area_index][rarity][pokedex_num]
+		game_state["enemy_mon"..i] = {
+			pokedex = pokedex,
+			gear_rarity = 1,
+			level = area_level,
+			build_style = 1
+		}
+		generate_stats(game_state["enemy_mon"..i])
+		select_moves(game_state["enemy_mon"..i])
+	end
+end
+
+-- Wild Encounter Data
+areas = {}
+
+areas[1] = {
+	{1},
+	{1,4,7},
+	{63,66},
+	{92}
+}
+
+-- Trainer Data
+trainers = {}
+
+trainers[0] = {}
+trainers[0].name = "Rival"
+trainers[0].mon1 = {
+	pokedex = 1,
+	gear_rarity = 1,
+	level = 5,
+	build_style = 1
+}
 
 return M

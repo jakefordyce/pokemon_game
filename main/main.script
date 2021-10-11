@@ -61,6 +61,10 @@ function on_message(self, message_id, message, sender)
 	end
 
 	function generate_enemy_team()
-		encounters.load_trainer_data(0)
+		if game_state.battle_type == 1 then
+			encounters.load_wild_encounter(1,5)
+		else
+			encounters.load_trainer_data(0)
+		end
 	end
 end

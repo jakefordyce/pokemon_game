@@ -463,7 +463,7 @@ nodes {
   type: TYPE_BOX
   blend_mode: BLEND_MODE_ALPHA
   texture: "types/type_grass_16"
-  id: "enemy_mon1_type"
+  id: "enemy_mon2_type1"
   xanchor: XANCHOR_NONE
   yanchor: YANCHOR_NONE
   pivot: PIVOT_CENTER
@@ -518,7 +518,7 @@ nodes {
   type: TYPE_BOX
   blend_mode: BLEND_MODE_ALPHA
   texture: "types/type_grass_16"
-  id: "enemy_mon1_type3"
+  id: "enemy_mon2_type2"
   xanchor: XANCHOR_NONE
   yanchor: YANCHOR_NONE
   pivot: PIVOT_CENTER
@@ -574,7 +574,7 @@ nodes {
   blend_mode: BLEND_MODE_ALPHA
   text: "5"
   font: "system_font"
-  id: "enemy_mon1_level1"
+  id: "enemy_mon2_level"
   xanchor: XANCHOR_NONE
   yanchor: YANCHOR_NONE
   pivot: PIVOT_CENTER
@@ -691,7 +691,7 @@ nodes {
   type: TYPE_BOX
   blend_mode: BLEND_MODE_ALPHA
   texture: "types/type_grass_16"
-  id: "enemy_mon1_type4"
+  id: "enemy_mon3_type1"
   xanchor: XANCHOR_NONE
   yanchor: YANCHOR_NONE
   pivot: PIVOT_CENTER
@@ -746,7 +746,7 @@ nodes {
   type: TYPE_BOX
   blend_mode: BLEND_MODE_ALPHA
   texture: "types/type_grass_16"
-  id: "enemy_mon1_type5"
+  id: "enemy_mon3_type2"
   xanchor: XANCHOR_NONE
   yanchor: YANCHOR_NONE
   pivot: PIVOT_CENTER
@@ -802,7 +802,7 @@ nodes {
   blend_mode: BLEND_MODE_ALPHA
   text: "5"
   font: "system_font"
-  id: "enemy_mon1_level2"
+  id: "enemy_mon3_level"
   xanchor: XANCHOR_NONE
   yanchor: YANCHOR_NONE
   pivot: PIVOT_CENTER
@@ -919,7 +919,7 @@ nodes {
   type: TYPE_BOX
   blend_mode: BLEND_MODE_ALPHA
   texture: "types/type_grass_16"
-  id: "enemy_mon1_type6"
+  id: "enemy_mon4_type1"
   xanchor: XANCHOR_NONE
   yanchor: YANCHOR_NONE
   pivot: PIVOT_CENTER
@@ -974,7 +974,7 @@ nodes {
   type: TYPE_BOX
   blend_mode: BLEND_MODE_ALPHA
   texture: "types/type_grass_16"
-  id: "enemy_mon1_type7"
+  id: "enemy_mon4_type2"
   xanchor: XANCHOR_NONE
   yanchor: YANCHOR_NONE
   pivot: PIVOT_CENTER
@@ -1030,7 +1030,7 @@ nodes {
   blend_mode: BLEND_MODE_ALPHA
   text: "5"
   font: "system_font"
-  id: "enemy_mon1_level3"
+  id: "enemy_mon4_level"
   xanchor: XANCHOR_NONE
   yanchor: YANCHOR_NONE
   pivot: PIVOT_CENTER

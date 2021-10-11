@@ -265,6 +265,7 @@ function display_wild_mon()
 	end
 	for s=1,4 do
 		if game_state["enemy_mon"..s] ~= nil and addable_mons[s].available then
+			gui.set_enabled(gui.get_node("addable"..s), true)
 			gui.play_flipbook(gui.get_node("addable"..s), game_state["enemy_mon"..s].name.."_front_original")
 		else
 			gui.set_enabled(gui.get_node("addable"..s), false)
