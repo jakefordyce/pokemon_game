@@ -86,6 +86,10 @@ function M.mon_leveled(mon_index, exp_gained)
 		exp_to_next_level = pbs.exp_to_next_level(M.pokemon[mon_index].level)
 	end
 
+	if leveled_up then
+		M.calculate_pokemon_stats()
+	end
+
 	return leveled_up
 end
 

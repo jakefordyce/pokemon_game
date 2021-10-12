@@ -166,8 +166,8 @@ M[10] = {
 	spattack = 90,
 	spdefense = 80,
 	speed = 100,
-	type1 = 10,
-	type2 = 10,
+	type1 = 6,
+	type2 = 6,
 	moves = moves
 }
 
@@ -179,8 +179,8 @@ M[13] = {
 	spattack = 90,
 	spdefense = 80,
 	speed = 100,
-	type1 = 10,
-	type2 = 10,
+	type1 = 6,
+	type2 = 4,
 	moves = moves
 }
 
@@ -192,8 +192,8 @@ M[16] = {
 	spattack = 90,
 	spdefense = 80,
 	speed = 100,
-	type1 = 10,
-	type2 = 10,
+	type1 = 3,
+	type2 = 3,
 	moves = moves
 }
 
@@ -205,8 +205,8 @@ M[19] = {
 	spattack = 90,
 	spdefense = 80,
 	speed = 100,
-	type1 = 10,
-	type2 = 10,
+	type1 = 1,
+	type2 = 1,
 	moves = moves
 }
 

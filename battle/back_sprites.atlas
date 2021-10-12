@@ -67,7 +67,7 @@ images {
   sprite_trim_mode: SPRITE_TRIM_MODE_OFF
 }
 images {
-  image: "/assets/battle_sprites/back/catarpie_back_original.png"
+  image: "/assets/battle_sprites/back/caterpie_back_original.png"
   sprite_trim_mode: SPRITE_TRIM_MODE_OFF
 }
 images {
