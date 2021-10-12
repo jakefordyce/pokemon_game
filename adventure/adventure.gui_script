@@ -1,23 +1,15 @@
 function init(self)
 	msg.post(".", "acquire_input_focus")
+	gui.set_enabled(gui.get_node("dialog_panel"), false)
 end
 
 function final(self)
-	-- Add finalization code here
-	-- Learn more: https://defold.com/manuals/script/
-	-- Remove this function if not needed
 end
 
 function update(self, dt)
-	-- Add update code here
-	-- Learn more: https://defold.com/manuals/script/
-	-- Remove this function if not needed
 end
 
 function on_message(self, message_id, message, sender)
-	-- Add message-handling code here
-	-- Learn more: https://defold.com/manuals/message-passing/
-	-- Remove this function if not needed
 end
 
 function on_input(self, action_id, action)
@@ -37,11 +29,12 @@ function on_input(self, action_id, action)
 		if(gui.pick_node(gui.get_node("button_plus"),action.x,action.y)) then
 			msg.post("player", "open_menu")
 		end
+		if(gui.pick_node(gui.get_node("button_a"),action.x,action.y)) then
+			--TODO: add check for dialog and handle appropriately
+			msg.post("player", "interact")
+		end
 	end
 end
 
 function on_reload(self)
-	-- Add reload-handling code here
-	-- Learn more: https://defold.com/manuals/hot-reload/
-	-- Remove this function if not needed
 end
