@@ -56,7 +56,6 @@ function M.load_trainer_data(trainer_index)
 end
 
 function M.load_wild_encounter(area_index, area_level)
-	math.randomseed(os.clock())
 	rarity = 1
 	for i=1,4 do
 		rarity_num = math.random(1,100)

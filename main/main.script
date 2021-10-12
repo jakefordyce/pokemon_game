@@ -16,7 +16,8 @@ function init(self)
 	game_state.calculate_pokemon_stats() --TODO: move to appropriate areas.
 	--load_screen(area_names[game_state.current_area], nil)
 	load_screen("add_mon", nil)
-	--print(msg.url())
+	math.randomseed(os.time())
+	math.random(); math.random(); math.random()
 end
 
 function on_input(self, action_id, action)

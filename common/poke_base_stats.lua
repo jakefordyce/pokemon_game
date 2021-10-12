@@ -158,6 +158,58 @@ M[9] = {
 	moves = moves
 }
 
+M[10] = {
+	name = "caterpie",
+	hp = 90,
+	attack = 80,
+	defense = 80,
+	spattack = 90,
+	spdefense = 80,
+	speed = 100,
+	type1 = 10,
+	type2 = 10,
+	moves = moves
+}
+
+M[13] = {
+	name = "weedle",
+	hp = 90,
+	attack = 80,
+	defense = 80,
+	spattack = 90,
+	spdefense = 80,
+	speed = 100,
+	type1 = 10,
+	type2 = 10,
+	moves = moves
+}
+
+M[16] = {
+	name = "pidgey",
+	hp = 90,
+	attack = 80,
+	defense = 80,
+	spattack = 90,
+	spdefense = 80,
+	speed = 100,
+	type1 = 10,
+	type2 = 10,
+	moves = moves
+}
+
+M[19] = {
+	name = "rattata",
+	hp = 90,
+	attack = 80,
+	defense = 80,
+	spattack = 90,
+	spdefense = 80,
+	speed = 100,
+	type1 = 10,
+	type2 = 10,
+	moves = moves
+}
+
 M[63] = {
 	name = "abra",
 	hp = 90,
