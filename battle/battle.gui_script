@@ -1,4 +1,5 @@
 local game_state = require "common/game_state"
+local current_turn_mon = nil
 
 function init(self)
 	msg.post(".", "acquire_input_focus")
@@ -24,6 +25,7 @@ function on_message(self, message_id, message, sender)
 	-- Remove this function if not needed
 	if message_id == hash("display_mon") then
 		gui.set_text(gui.get_node("current_mon_name"), message.mon.name)
+		current_turn_mon = message.mon
 		for i=1,4 do
 			if message.mon["move"..i] ~= nil then
 				gui.set_enabled(gui.get_node("Move"..i), true)
@@ -76,13 +78,13 @@ end
 function on_input(self, action_id, action)
 	local moves = require "common/moves"
 	if(action_id == hash("touch") and action.released == true) then
-		if(gui.pick_node(gui.get_node("Move1"),action.x,action.y)) then
-			mon =  game_state.pokemon[1] -- TODO: change to use current mon
+		if(gui.pick_node(gui.get_node("Move1"),action.x,action.y)and node_enabled(gui.get_node("Move1"))) then
+			mon =  current_turn_mon
 			level = mon.known_moves[mon.move1].level
 			gui.set_text(gui.get_node("move_description"), moves[mon.known_moves[mon.move1].id].description(level))
 			msg.post("battle", "move_selected", {move = mon.move1})
-		elseif(gui.pick_node(gui.get_node("Move2"),action.x,action.y)) then
-			mon =  game_state.pokemon[1] -- TODO: change to use current mon
+		elseif(gui.pick_node(gui.get_node("Move2"),action.x,action.y) and node_enabled(gui.get_node("Move2"))) then
+			mon =  current_turn_mon
 			level = mon.known_moves[mon.move2].level
 			gui.set_text(gui.get_node("move_description"), moves[mon.known_moves[mon.move2].id].description(level))
 			msg.post("battle", "move_selected", {move = mon.move2})
@@ -114,4 +116,13 @@ end
 
 function remove_battle_text()
 	gui.set_text(gui.get_node("battle_text"),"")
+end
+
+function node_enabled(node)
+	local parent = gui.get_parent(node)
+	local enabled = gui.is_enabled(node)
+	if parent then
+		return enabled and gui.is_enabled(parent)
+	end
+	return enabled
 end
