@@ -45,6 +45,7 @@ embedded_components {
   "mask: \"default\"\n"
   "mask: \"tall_grass\"\n"
   "mask: \"door\"\n"
+  "mask: \"npc\"\n"
   "embedded_collision_shape {\n"
   "  shapes {\n"
   "    shape_type: TYPE_BOX\n"

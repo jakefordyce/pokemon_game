@@ -1,4 +1,4 @@
-tile_set: "/adventure/areas/oaks_lab.tilesource"
+tile_set: "/adventure/areas/oaks_lab/oaks_lab.tilesource"
 layers {
   id: "background"
   z: -1.0

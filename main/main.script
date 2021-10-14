@@ -15,7 +15,7 @@ function init(self)
 	msg.post(".", "acquire_input_focus")
 	game_state.calculate_pokemon_stats() --TODO: move to appropriate areas.
 	--load_screen(area_names[game_state.current_area], nil)
-	load_screen("add_mon", nil)
+	load_screen(area_names[game_state.current_area], nil)
 	math.randomseed(os.time())
 	math.random(); math.random(); math.random()
 end
@@ -48,6 +48,9 @@ function on_message(self, message_id, message, sender)
 	end	
 	if message_id == hash("close_menu") then
 		load_screen(area_names[game_state.current_area], "menu")
+	end
+	if message_id == hash("load_add_mon") then
+		load_screen("add_mon", area_names[game_state.current_area])
 	end
 	if message_id == hash("close_add_mon") then
 		load_screen(area_names[game_state.current_area], "add_mon")
