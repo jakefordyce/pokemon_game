@@ -50,12 +50,15 @@ local function select_moves(mon)
 end
 
 function M.load_trainer_data(trainer_index)
-	game_state.enemy_mon1 = trainers[trainer_index].mon1
-	generate_stats(game_state.enemy_mon1)
-	select_moves(game_state.enemy_mon1)
+	for i=1,4 do
+		game_state["enemy_mon"..i] = trainers[trainer_index]["mon"..i]
+		generate_stats(game_state["enemy_mon"..i])
+		select_moves(game_state["enemy_mon"..i])
+	end
+	
 end
 
-function M.load_wild_encounter(area_index, area_level)
+function M.load_wild_encounter(area_index)
 	rarity = 1
 	for i=1,4 do
 		rarity_num = math.random(1,100)
@@ -71,6 +74,7 @@ function M.load_wild_encounter(area_index, area_level)
 
 		pokedex_num = math.random(1,#areas[area_index][rarity])
 		pokedex = areas[area_index][rarity][pokedex_num]
+		area_level = math.random(areas[area_index].min_level, areas[area_index].max_level)
 		game_state["enemy_mon"..i] = {
 			pokedex = pokedex,
 			gear_rarity = 1,
@@ -85,20 +89,40 @@ end
 -- Wild Encounter Data
 areas = {}
 
-areas[1] = {
+areas[2] = {
 	{10,19},
 	{13,16},
 	{1,4,7,63,66},
-	{92}
+	{92},
+	min_level = 2,
+	max_level = 5
 }
 
 -- Trainer Data
 trainers = {}
 
-trainers[0] = {}
-trainers[0].name = "Rival"
-trainers[0].mon1 = {
-	pokedex = 1,
+trainers[1] = {}
+trainers[1].name = "Youngster Ben"
+trainers[1].mon1 = {
+	pokedex = 19,
+	gear_rarity = 1,
+	level = 5,
+	build_style = 1
+}
+trainers[1].mon2 = {
+	pokedex = 16,
+	gear_rarity = 1,
+	level = 5,
+	build_style = 1
+}
+trainers[1].mon3 = {
+	pokedex = 19,
+	gear_rarity = 1,
+	level = 5,
+	build_style = 1
+}
+trainers[1].mon4 = {
+	pokedex = 10,
 	gear_rarity = 1,
 	level = 5,
 	build_style = 1

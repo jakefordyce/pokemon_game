@@ -2,6 +2,10 @@ images {
   image: "/assets/adventure/npcs/oak_down_1.png"
   sprite_trim_mode: SPRITE_TRIM_MODE_OFF
 }
+images {
+  image: "/assets/adventure/npcs/youngster_down_1.png"
+  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
+}
 margin: 0
 extrude_borders: 0
 inner_padding: 0

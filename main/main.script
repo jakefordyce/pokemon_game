@@ -28,7 +28,8 @@ end
 
 function on_message(self, message_id, message, sender)
 	if message_id == hash("load_choose_team") then
-		generate_enemy_team()
+		game_state.battle_type = message.battle_type
+		generate_enemy_team(message.battle_type, message.battle_id)
 		load_screen("choose_team", area_names[game_state.current_area])
 	end
 	if message_id == hash("load_battle") then
@@ -64,11 +65,11 @@ function on_message(self, message_id, message, sender)
 		end
 	end
 
-	function generate_enemy_team()
-		if game_state.battle_type == 1 then
-			encounters.load_wild_encounter(1,5)
-		else
-			encounters.load_trainer_data(0)
+	function generate_enemy_team(battle_type, battle_id)
+		if battle_type == 1 then
+			encounters.load_wild_encounter(game_state.current_area)
+		elseif battle_type == 2 then
+			encounters.load_trainer_data(battle_id)
 		end
 	end
 end

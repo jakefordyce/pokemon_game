@@ -10,17 +10,12 @@ end
 function on_message(self, message_id, message, sender)
 	if message_id == hash("contact_point_response") then
 		if message.other_group == hash("interaction") then
-			msg.post("/adventure/gui", "load_dialog", {dialog_id = 1})
+			msg.post("/adventure/gui", "load_dialog", {dialog_id = 7})
 			go.delete(message.other_id)
 		end
-	elseif message_id == hash("choice_made") then
-		if message.choice then
-			msg.post("/adventure/gui", "load_dialog", {dialog_id = 2})
-		else
-			msg.post("/adventure/gui", "load_dialog", {dialog_id = 3})
-		end
 	elseif message_id == hash("dialog_end") then
-		msg.post("main:/loader#main", "load_add_mon")
+		msg.post("/adventure/camera", "reset")
+		msg.post("main:/loader#main", "load_choose_team", {battle_type = 2, battle_id = 1})
 	end
 end
 

@@ -110,8 +110,7 @@ function on_message(self, message_id, message, sender)
 			if encounter_tracker > 600 then
 				encounter_tracker = 0
 				msg.post("camera", "reset")
-				--msg.post("main:/loader#main", "load_battle")
-				msg.post("main:/loader#main", "load_choose_team")
+				msg.post("main:/loader#main", "load_choose_team", {battle_type = 1})
 			end
 		elseif message.other_group == hash("door") then
 			--TODO: also load position info
