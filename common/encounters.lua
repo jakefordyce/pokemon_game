@@ -74,11 +74,11 @@ function M.load_wild_encounter(area_index)
 
 		pokedex_num = math.random(1,#areas[area_index][rarity])
 		pokedex = areas[area_index][rarity][pokedex_num]
-		area_level = math.random(areas[area_index].min_level, areas[area_index].max_level)
+		mon_level = math.random(areas[area_index].min_level, areas[area_index].max_level)
 		game_state["enemy_mon"..i] = {
 			pokedex = pokedex,
 			gear_rarity = 1,
-			level = area_level,
+			level = mon_level,
 			build_style = 1
 		}
 		generate_stats(game_state["enemy_mon"..i])
