@@ -7,10 +7,6 @@ function init(self)
 	msg.post(".", "acquire_input_focus")
 	gui.set_enabled(gui.get_node("details_panel"), false)
 	gui.set_enabled(gui.get_node("current_move_panel"), false)
-	gui.set_enabled(gui.get_node("move1"), false)
-	gui.set_enabled(gui.get_node("move2"), false)
-	gui.set_enabled(gui.get_node("move3"), false)
-	gui.set_enabled(gui.get_node("move4"), false)
 	gui.set_enabled(gui.get_node("return_to_main_button"), false)
 	gui.set_enabled(gui.get_node("runes_exit_button"), false)
 	gui.set_enabled(gui.get_node("selected_rune_description"), false)
@@ -61,10 +57,9 @@ function on_message(self, message_id, message, sender)
 
 		for m = 1, 4 do
 			if mon["move"..m] ~= nil then
-				gui.set_enabled(gui.get_node("move"..m), true)
-				gui.set_text(gui.get_node("move"..m), moves[mon.known_moves[mon["move"..m]].id].name)
+				gui.set_text(gui.get_node("move"..m.."_text"), moves[mon.known_moves[mon["move"..m]].id].name)
 			else
-				gui.set_enabled(gui.get_node("move"..m), false)
+				gui.set_text(gui.get_node("move"..m.."_text"), "")
 			end
 		end
 		
@@ -116,7 +111,16 @@ function on_input(self, action_id, action)
 		if(gui.pick_node(gui.get_node("return_to_main_button"),action.x,action.y) and node_enabled(gui.get_node("return_to_main_button"))) then
 			return true
 		end
-		if(gui.pick_node(gui.get_node("move1"),action.x,action.y) and node_enabled(gui.get_node("move1"))) then
+		if(gui.pick_node(gui.get_node("move1_button"),action.x,action.y) and node_enabled(gui.get_node("move1_button"))) then
+			return true
+		end
+		if(gui.pick_node(gui.get_node("move2_button"),action.x,action.y) and node_enabled(gui.get_node("move2_button"))) then
+			return true
+		end
+		if(gui.pick_node(gui.get_node("move3_button"),action.x,action.y) and node_enabled(gui.get_node("move3_button"))) then
+			return true
+		end
+		if(gui.pick_node(gui.get_node("move4_button"),action.x,action.y) and node_enabled(gui.get_node("move4_button"))) then
 			return true
 		end
 		if(gui.pick_node(gui.get_node("rune1"),action.x,action.y) and node_enabled(gui.get_node("rune1"))) then
@@ -184,13 +188,20 @@ function on_input(self, action_id, action)
 			msg.post("menu", "return_to_main")
 			return true
 		end
-		if(gui.pick_node(gui.get_node("move1"),action.x,action.y) and node_enabled(gui.get_node("move1"))) then
-			gui.set_enabled(gui.get_node("details_panel"), false)
-			gui.set_enabled(gui.get_node("current_move_panel"), true)
-			--TODO: use real level instead of 0.
-			pmon = game_state.pokemon[self.current_pokemon]
-			gui.set_text(gui.get_node("current_move_description"), moves[pmon.known_moves[pmon.move1].id].description(0))
-			msg.post("menu", "display_pokemon_moves", {mon = pmon, selected_move="move1"})
+		if(gui.pick_node(gui.get_node("move1_button"),action.x,action.y) and node_enabled(gui.get_node("move1_button"))) then
+			move_button_clicked(self,1)
+			return true
+		end
+		if(gui.pick_node(gui.get_node("move2_button"),action.x,action.y) and node_enabled(gui.get_node("move2_button"))) then
+			move_button_clicked(self,2)
+			return true
+		end
+		if(gui.pick_node(gui.get_node("move3_button"),action.x,action.y) and node_enabled(gui.get_node("move3_button"))) then
+			move_button_clicked(self,3)
+			return true
+		end
+		if(gui.pick_node(gui.get_node("move4_button"),action.x,action.y) and node_enabled(gui.get_node("move4_button"))) then
+			move_button_clicked(self,4)
 			return true
 		end
 		if(gui.pick_node(gui.get_node("rune1"),action.x,action.y) and node_enabled(gui.get_node("rune1"))) then
@@ -229,6 +240,21 @@ end
 
 function on_reload(self)
 end
+
+function move_button_clicked(self, move_num)
+	gui.set_enabled(gui.get_node("details_panel"), false)
+	gui.set_enabled(gui.get_node("current_move_panel"), true)
+	--TODO: use real level instead of 0.
+	pmon = game_state.pokemon[self.current_pokemon]
+	if(pmon["move"..move_num] ~= nil) then
+		gui.set_text(gui.get_node("current_move_description"), moves[pmon.known_moves[pmon["move"..move_num]].id].description(0))
+	else
+		gui.set_text(gui.get_node("current_move_description"), "select a move...")
+	end
+	
+	msg.post("menu", "display_pokemon_moves", {mon = pmon, selected_move="move"..move_num})
+end
+
 
 function node_enabled(node)
 	local parent = gui.get_parent(node)

@@ -150,11 +150,19 @@ function display_move_list(mon)
 	p.x = 320
 
 	for i, m in ipairs(mon.known_moves) do
-		local move = factory.create("#move_factory",p, nil, {move_index = m.id})
-		go.set_parent(move, go.get_id("menu"))
-		table.insert(spawned_moves, move)
+		move_equipped = false
+		for e=1,4 do
+			if mon["move"..e] == m.id then
+				move_equipped = true
+			end
+		end
+		if not move_equipped then
+			local move = factory.create("#move_factory",p, nil, {move_index = m.id})
+			go.set_parent(move, go.get_id("menu"))
+			table.insert(spawned_moves, move)
 
-		p.y = p.y - 100 --each image is 100px tall
+			p.y = p.y - 100 --each image is 100px tall
+		end
 	end	
 end
 
