@@ -1335,8 +1335,8 @@ nodes {
 }
 nodes {
   position {
-    x: 185.0
-    y: -228.0
+    x: 0.0
+    y: 0.0
     z: 0.0
     w: 1.0
   }
@@ -1386,7 +1386,7 @@ nodes {
   }
   adjust_mode: ADJUST_MODE_FIT
   line_break: false
-  parent: "teams_panel"
+  parent: "run_button"
   layer: ""
   inherit_alpha: true
   alpha: 1.0

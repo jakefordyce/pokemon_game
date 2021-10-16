@@ -7,6 +7,10 @@ local num_selected = 0
 function init(self)
 	msg.post(".", "acquire_input_focus")
 	display_enemies()
+	print(game_state.battle_type)
+	if game_state.battle_type ~= 1 then
+		gui.set_enabled(gui.get_node("run_button"), false)
+	end
 end
 
 function final(self)
@@ -49,6 +53,8 @@ function on_input(self, action_id, action)
 			if team_not_empty then
 				msg.post("main:/loader#main", "load_battle")
 			end
+		elseif(gui.pick_node(gui.get_node("run_button"),action.x,action.y) and node_enabled(gui.get_node("run_button"))) then
+			msg.post("main:/loader#main", "run_away")
 		end
 	end
 end
@@ -109,4 +115,13 @@ function display_enemies()
 			gui.set_enabled(gui.get_node("enemy_mon"..i), false)
 		end
 	end
+end
+
+function node_enabled(node)
+	local parent = gui.get_parent(node)
+	local enabled = gui.is_enabled(node)
+	if parent then
+		return enabled and gui.is_enabled(parent)
+	end
+	return enabled
 end

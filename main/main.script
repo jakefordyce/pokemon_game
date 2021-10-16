@@ -41,6 +41,9 @@ function on_message(self, message_id, message, sender)
 	if message_id == hash("end_rewards") then
 		load_screen(area_names[game_state.current_area], "rewards")
 	end
+	if message_id == hash("run_away") then
+		load_screen(area_names[game_state.current_area], "choose_team")
+	end
 	if message_id == hash("load_area") then
 		load_screen(area_names[game_state.current_area], area_names[message.previous_area])
 	end
