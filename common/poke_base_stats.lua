@@ -7,7 +7,7 @@ function M.stat_by_level(pokedex, stat, level)
 		calc_stat = calc_stat * 20
 	end
 	
-	return calc_stat
+	return math.ceil(calc_stat)
 end
 
 function M.moves_by_level(pokedex, level)
