@@ -1,6 +1,7 @@
 local game_state = require "common/game_state"
 local encounters = require "common/encounters"
 local moves = require "common/moves"
+local buff_debuff_names = require "common/buff_debuff_names"
 local player_mon1 = {}
 local player_mon2 = nil
 local player_mon3 = nil
@@ -63,6 +64,18 @@ function on_message(self, message_id, message, sender)
 			enemy_mon1.turn = enemy_mon1.turn - 1000
 			current_turn_mon = enemy_mon1
 			start_enemy_turn(enemy_mon1)
+		elseif enemy_mon2.turn > 1000 then
+			enemy_mon2.turn = enemy_mon2.turn - 1000
+			current_turn_mon = enemy_mon2
+			start_enemy_turn(enemy_mon2)
+		elseif enemy_mon3.turn > 1000 then
+			enemy_mon3.turn = enemy_mon3.turn - 1000
+			current_turn_mon = enemy_mon3
+			start_enemy_turn(enemy_mon3)
+		elseif enemy_mon4.turn > 1000 then
+			enemy_mon4.turn = enemy_mon4.turn - 1000
+			current_turn_mon = enemy_mon4
+			start_enemy_turn(enemy_mon4)
 		else
 			timer.delay(.1, false, increment_turn)
 		end
@@ -97,17 +110,22 @@ function handle_move_effects(effect, target, move_user)
 	if effect.id == 1 then --deal damage
 		local defender = combatants[target]
 		stat = move_user[effect.param2]
-		if mon_has_buff_debuff_type(move_user, 2) then
+		if mon_has_buff_debuff_type(move_user, 2) and string.match(effect.param2, "^attack") then
 			stat = stat / 2
-		end	
+		elseif mon_has_buff_debuff_type(move_user, 3) and string.match(effect.param2, "^attack") then
+			stat = stat * 1.5
+		end
 		local power = effect.param1 * stat / 100
 		local damage = calc_damage(power, defender.defense)
 		damage_defender(defender, damage)
-	end
-	if effect.id == 2 then --reduce attack
+	elseif effect.id == 2 then --reduce attack
 		local defender = combatants[target]
 		local duration = effect.param2
 		apply_debuff(defender, 2, duration)
+	elseif effect.id == 3 then --increase attack
+		local defender = combatants[target]
+		local duration = effect.param2
+		apply_debuff(defender, 3, duration)
 	end
 end
 
@@ -119,7 +137,7 @@ function apply_debuff(defender, debuff_type, duration)
 	p = go.get_position(defender.reference)
 	p.y = p.y + 125
 	p.x = p.x - 10
-	debuff_go = factory.create("#buff_debuff_factory",p, nil, {duration = duration})
+	debuff_go = factory.create("#buff_debuff_factory",p, nil, {duration = duration, image = hash(buff_debuff_names[debuff_type])})
 	debuff.go_id = debuff_go
 	table.insert(defender.buffs_debuffs, debuff)
 end
@@ -188,7 +206,7 @@ function choose_enemy_move()
 	while is_move_chosen == false do
 		random_move = math.random(1,4) -- choose a move at random
 		-- see if the move is off cooldown
-		if(current_turn_mon["move"..random_move.."cd"] == 0) then
+		if(current_turn_mon["move"..random_move] ~= nil and current_turn_mon["move"..random_move.."cd"] == 0) then
 			selected_move = moves[current_turn_mon.known_moves[current_turn_mon["move"..random_move]].id]
 			is_move_chosen = true
 		end
@@ -327,7 +345,7 @@ function load_enemy_data()
 	enemy_mon2 = game_state.enemy_mon2
 	enemy_mon2.currenthp = enemy_mon2.hp
 	enemy_mon2.turn = 0
-	enemy_mon2.reference = "enemy_mon1"
+	enemy_mon2.reference = "enemy_mon2"
 	enemy_mon2.move1cd = 0
 	enemy_mon2.move2cd = 0
 	enemy_mon2.move3cd = 0

@@ -122,5 +122,25 @@ M[6] = {
 	end
 }
 
+meffects = {}
+meffects[1] = {}
+meffects[1].id = 3
+meffects[1].target = 2
+meffects[1].param1 = 75
+meffects[1].param2 = 2
+
+M[7] = {
+	name = "Howl",
+	effects = meffects,
+	cooldown = 2,
+	default = false,
+	type = 1,
+	targetting = 2,
+	description = function(moveLevel)
+		chance = 75 + (moveLevel * 5)
+		return "Howl - Has a "..chance.."% chance of increasing Attack of 1 ally."
+	end
+}
+
 
 return M
