@@ -1,6 +1,8 @@
 local speed = 150
 local game_state = require "common/game_state"
 local encounter_tracker = 0
+local prev_encounter_tracker = 0
+local clear_encounter_tracker = 0
 
 function init(self)
 	msg.post(".", "acquire_input_focus")
@@ -20,6 +22,18 @@ function final(self)
 end
 
 function update(self, dt)
+	
+	--reset the encounter tracker if the player steps out of tall grass.
+	clear_encounter_tracker = clear_encounter_tracker + 1
+	if clear_encounter_tracker > 60 then
+		if encounter_tracker == prev_encounter_tracker then
+			encounter_tracker = 0
+		end
+		prev_encounter_tracker = encounter_tracker
+		clear_encounter_tracker = 0
+	end
+
+	
 	if vmath.length_sqr(self.dir) > 1 then
 		self.dir = vmath.normalize(self.dir)
 	end
@@ -108,9 +122,13 @@ function on_message(self, message_id, message, sender)
 			game_state.position_y = p.y
 			encounter_tracker = encounter_tracker + 1
 			if encounter_tracker > 600 then
+				encounter_number = math.random(1,100)
 				encounter_tracker = 0
-				msg.post("camera", "reset")
-				msg.post("main:/loader#main", "load_choose_team", {battle_type = 1})
+				--TODO: load encounter chance from area data
+				if encounter_number <= 25 then
+					msg.post("camera", "reset")
+					msg.post("main:/loader#main", "load_choose_team", {battle_type = 1})
+				end
 			end
 		elseif message.other_group == hash("door") then
 			--TODO: also load position info
