@@ -24,6 +24,32 @@ local function generate_stats(mon)
 	mon.type2 = pbs[mon.pokedex].type2
 end
 
+local function simulate_runes(mon)
+	--main stats on first three runes
+	mon.hp = mon.hp + (mon.level * 20)
+	mon.attack = mon.attack + mon.level
+	mon.spattack = mon.spattack + mon.level
+	mon.defense = mon.defense + mon.level
+	mon.spdefense = mon.spdefense + mon.level
+	
+	--rest of stats
+	if mon.build_style == 1 then --even build no speed.
+		mon.hp = mon.hp + (mon.hp * (mon.level * (0.009)))
+		mon.attack = mon.attack + (mon.attack * (mon.level * 0.009))
+		mon.spattack = mon.spattack + (mon.spattack * (mon.level * 0.009))
+		mon.defense = mon.defense + (mon.defense * (mon.level * 0.009))
+		mon.spdefense = mon.spdefense + (mon.spdefense * (mon.level * 0.009))
+		mon.accuracy = mon.accuracy + (mon.level * 0.009)
+		mon.resist = mon.resist + (mon.level * 0.009)
+
+		mon.hp = mon.hp + (mon.hp * (mon.level * (0.001) * (mon.gear_rarity - 1)))
+		mon.attack = mon.attack + (mon.attack * (mon.level *  (0.001) * (mon.gear_rarity - 1)))
+		mon.spattack = mon.spattack + (mon.spattack * (mon.level *  (0.001) * (mon.gear_rarity - 1)))
+		mon.defense = mon.defense + (mon.defense * (mon.level *  (0.001) * (mon.gear_rarity - 1)))
+		mon.spdefense = mon.spdefense + (mon.spdefense * (mon.level *  (0.001) * (mon.gear_rarity - 1)))
+	end
+end
+
 --This loads the last (up to) 4 moves the pokemon has learned while leveling up.
 local function select_moves(mon)
 	local known_moves = {}
@@ -53,6 +79,7 @@ function M.load_trainer_data(trainer_index)
 	for i=1,4 do
 		game_state["enemy_mon"..i] = trainers[trainer_index]["mon"..i]
 		generate_stats(game_state["enemy_mon"..i])
+		simulate_runes(game_state["enemy_mon"..i])
 		select_moves(game_state["enemy_mon"..i])
 	end
 	
@@ -112,19 +139,19 @@ trainers[1].mon1 = {
 trainers[1].mon2 = {
 	pokedex = 16,
 	gear_rarity = 1,
-	level = 5,
+	level = 3,
 	build_style = 1
 }
 trainers[1].mon3 = {
 	pokedex = 19,
 	gear_rarity = 1,
-	level = 5,
+	level = 3,
 	build_style = 1
 }
 trainers[1].mon4 = {
 	pokedex = 10,
 	gear_rarity = 1,
-	level = 5,
+	level = 2,
 	build_style = 1
 }
 
