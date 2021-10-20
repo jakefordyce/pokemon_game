@@ -81,6 +81,7 @@ function on_message(self, message_id, message, sender)
 		end
 	end
 	if message_id == hash("end_turn") then
+		reduce_buff_debuff_durations(current_turn_mon, 1)
 		clear_gos(spawned_turn_markers)
 		msg.post(".", "find_next_turn")
 	end
@@ -140,6 +141,17 @@ function apply_debuff(defender, debuff_type, duration)
 	debuff_go = factory.create("#buff_debuff_factory",p, nil, {duration = duration, image = hash(buff_debuff_names[debuff_type])})
 	debuff.go_id = debuff_go
 	table.insert(defender.buffs_debuffs, debuff)
+end
+
+function reduce_buff_debuff_durations(mon, dur)
+	for i, bd in ipairs(mon.buffs_debuffs) do
+		bd.duration = bd.duration - dur
+		msg.post(bd.go_id, "update_duration", {duration = bd.duration})
+		if bd.duration < 1 then
+			go.delete(bd)
+			mon.buffs_debuffs[i] = nil
+		end
+	end
 end
 
 function mon_has_buff_debuff_type(mon, buff_debuff_type)
