@@ -33,11 +33,7 @@ function M.add_pokemon(pokedex, level)
 		level = level,
 		exp = 0,
 		name = pbs[pokedex].name,
-		known_moves = pbs.moves_by_level(pokedex, level),
-		move1 = 1, --this is the index from the pokemon's learned_moves.
-		move2 = nil,
-		move3 = nil,
-		move4 = nil,
+		known_moves = pbs.known_moves_by_level(pokedex, level),
 		rune1 = nil, --this is the index from M.runes.
 		rune2 = nil,
 		rune3 = nil,
@@ -55,6 +51,10 @@ function M.add_pokemon(pokedex, level)
 		crit_chance = pbs.base_crit_chance,
 		crit_damage = pbs.base_crit_damage
 	}
+	equipped_moves = pbs.equipped_moves_by_level(pokedex, level)
+	for i=1,4 do
+		new_mon["move"..i] = equipped_moves[i]
+	end
 	table.insert(M.pokemon, new_mon)
 	
 end

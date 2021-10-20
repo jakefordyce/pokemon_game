@@ -152,7 +152,7 @@ function display_move_list(mon)
 	for i, m in ipairs(mon.known_moves) do
 		move_equipped = false
 		for e=1,4 do
-			if mon["move"..e] == m.id then
+			if mon["move"..e] == e then
 				move_equipped = true
 			end
 		end

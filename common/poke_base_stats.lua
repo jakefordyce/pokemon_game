@@ -1,4 +1,5 @@
 local M = {}
+local common_moves = require "common/moves"
 
 -- this should only be used for hp, attack, defense, spattack, spdefense
 function M.stat_by_level(pokedex, stat, level)
@@ -10,14 +11,37 @@ function M.stat_by_level(pokedex, stat, level)
 	return math.ceil(calc_stat)
 end
 
-function M.moves_by_level(pokedex, level)
-	moves = {}
+function M.known_moves_by_level(pokedex, level)
+	known_moves = {}
 	for i, m in ipairs(M[pokedex].moves) do
 		if m.level <= level then
-			table.insert(moves, { id = m.id, level = 0})
+			table.insert(known_moves, { id = m.id, level = 0})
 		end
 	end
-	return moves
+	return known_moves
+end
+
+-- returns a table with up to 4 numbers designating the id of the known moves which are to be equipped
+function M.equipped_moves_by_level(pokedex, level)
+	known_moves = M.known_moves_by_level(pokedex, level)
+
+	equipped_moves = { nil, nil, nil, nil }
+	
+	local move_rotation = 2
+	for i, m in ipairs(known_moves) do
+		if common_moves[m.id].default == true then
+			equipped_moves[1] = i
+		else
+			equipped_moves[move_rotation] = i
+
+			move_rotation = move_rotation + 1
+			if move_rotation > 4 then
+				move_rotation = 2
+			end
+		end
+	end
+	
+	return equipped_moves
 end
 
 function M.exp_reward_by_level(level)
