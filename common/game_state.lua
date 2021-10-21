@@ -73,6 +73,8 @@ function M.generate_preview_mon(pokedex, level)
 	M.preview_mon.resist = 0
 	M.preview_mon.crit_chance = pbs.base_crit_chance
 	M.preview_mon.crit_damage = pbs.base_crit_damage
+	M.preview_mon.type1 = pbs[pokedex].type1
+	M.preview_mon.type2 = pbs[pokedex].type2
 end
 
 function M.mon_leveled(mon_index, exp_gained)

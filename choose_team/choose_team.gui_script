@@ -104,8 +104,8 @@ function display_enemies()
 	for i=1,4 do
 		if game_state["enemy_mon"..i] ~= nil then
 			gui.play_flipbook(gui.get_node("enemy_mon"..i), game_state["enemy_mon"..i].name.."_front_original")
-			gui.play_flipbook(gui.get_node("enemy_mon"..i.."_type1"), "type_"..types.names[game_state["enemy_mon"..i].type1].."_16")
 			gui.set_text(gui.get_node("enemy_mon"..i.."_level"), game_state["enemy_mon"..i].level)
+			gui.play_flipbook(gui.get_node("enemy_mon"..i.."_type1"), "type_"..types.names[game_state["enemy_mon"..i].type1].."_16")
 			if game_state["enemy_mon"..i].type2 ~= game_state["enemy_mon"..i].type1 then
 				gui.play_flipbook(gui.get_node("enemy_mon"..i.."_type2"), "type_"..types.names[game_state["enemy_mon"..i].type2].."_16")
 			else
