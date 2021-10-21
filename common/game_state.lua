@@ -124,6 +124,7 @@ end
 M.position_x = 263
 M.position_y = 761
 M.current_area = 1
+M.money = 300
 
 --List of all of the player's pokemon.
 M.pokemon = {}

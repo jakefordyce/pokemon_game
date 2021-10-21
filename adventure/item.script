@@ -1,0 +1,28 @@
+local game_state = require "common/game_state"
+
+function init(self)
+end
+
+function final(self)
+end
+
+function update(self, dt)
+end
+
+function on_message(self, message_id, message, sender)
+	if message_id == hash("contact_point_response") then
+		if message.other_group == hash("interaction") then
+			game_state.money = game_state.money + 50
+			msg.post("/adventure/gui", "display_alert", {text = "Found $50"})
+			go.delete(message.other_id)
+		end
+	elseif message_id == hash("dialog_end") then
+		go.delete()
+	end
+end
+
+function on_input(self, action_id, action)
+end
+
+function on_reload(self)
+end

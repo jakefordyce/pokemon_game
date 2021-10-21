@@ -1,26 +1,6 @@
 components {
-  id: "player"
-  component: "/adventure/player.script"
-  position {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-  }
-  rotation {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-    w: 1.0
-  }
-}
-embedded_components {
-  id: "sprite"
-  type: "sprite"
-  data: "tile_set: \"/adventure/player.atlas\"\n"
-  "default_animation: \"walk_down\"\n"
-  "material: \"/builtins/materials/sprite.material\"\n"
-  "blend_mode: BLEND_MODE_ALPHA\n"
-  ""
+  id: "item"
+  component: "/adventure/item.script"
   position {
     x: 0.0
     y: 0.0
@@ -40,13 +20,10 @@ embedded_components {
   "type: COLLISION_OBJECT_TYPE_KINEMATIC\n"
   "mass: 0.0\n"
   "friction: 0.1\n"
-  "restitution: 0.0\n"
-  "group: \"player\"\n"
-  "mask: \"default\"\n"
-  "mask: \"tall_grass\"\n"
-  "mask: \"door\"\n"
-  "mask: \"npc\"\n"
-  "mask: \"item\"\n"
+  "restitution: 0.5\n"
+  "group: \"item\"\n"
+  "mask: \"interaction\"\n"
+  "mask: \"player\"\n"
   "embedded_collision_shape {\n"
   "  shapes {\n"
   "    shape_type: TYPE_BOX\n"
@@ -72,6 +49,26 @@ embedded_components {
   "angular_damping: 0.0\n"
   "locked_rotation: false\n"
   "bullet: false\n"
+  ""
+  position {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+}
+embedded_components {
+  id: "sprite"
+  type: "sprite"
+  data: "tile_set: \"/adventure/misc.atlas\"\n"
+  "default_animation: \"pokeball_16\"\n"
+  "material: \"/builtins/materials/sprite.material\"\n"
+  "blend_mode: BLEND_MODE_ALPHA\n"
   ""
   position {
     x: 0.0

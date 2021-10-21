@@ -23,6 +23,11 @@ function on_message(self, message_id, message, sender)
 	if(message_id == hash("load_dialog")) then
 		dialog_sender = sender
 		begin_dialog(message.dialog_id)
+	elseif(message_id == hash("display_alert")) then
+		dialog_sender = sender
+		dialog_is_displaying = true
+		gui.set_enabled(gui.get_node("dialog_panel"), true)
+		gui.set_text(gui.get_node("dialog_text"), message.text)
 	end
 end
 
@@ -89,5 +94,4 @@ function begin_dialog(dialog_id)
 		gui.set_enabled(gui.get_node("choices_panel"), true)
 		gui.set_enabled(gui.get_node("yes_cursor"), true)
 	end
-	
 end
