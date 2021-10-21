@@ -257,7 +257,8 @@ function move_button_clicked(self, move_num)
 	--TODO: use real level instead of 0.
 	pmon = game_state.pokemon[self.current_pokemon]
 	if(pmon["move"..move_num] ~= nil) then
-		gui.set_text(gui.get_node("current_move_description"), moves[pmon.known_moves[pmon["move"..move_num]].id].description(0))
+		move_level = pmon.known_moves[pmon["move"..move_num]].level
+		gui.set_text(gui.get_node("current_move_description"), moves[pmon.known_moves[pmon["move"..move_num]].id].description(move_level))
 	else
 		gui.set_text(gui.get_node("current_move_description"), "select a move...")
 	end

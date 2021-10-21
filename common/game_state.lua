@@ -132,11 +132,11 @@ M.pokemon = {}
 moves = {}
 moves[1] = {
 	id = 1,
-	level = 0
+	level = 2
 }
 moves[2] = {
 	id = 2,
-	level = 0
+	level = 4
 }
 
 
