@@ -63,6 +63,11 @@ function on_message(self, message_id, message, sender)
 		swap_rune()
 		msg.post("gui", "display_pokemon_details", {mon = current_mon})
 	end
+	if message_id == hash("remove_rune") then
+		msg.post(".", "hide_runes")
+		remove_rune()
+		msg.post("gui", "display_pokemon_details", {mon = current_mon})
+	end
 	if message_id == hash("return_to_main") then
 		clear_gos(spawned_pokedex_icons)
 		clear_gos(spawned_pokemon_icons)
@@ -113,6 +118,12 @@ function swap_rune()
 	end
 	mon["rune"..current_rune] = selected_rune
 	game_state.runes[selected_rune].equipped_id = current_mon
+	game_state.calculate_pokemon_stats()
+end
+
+function remove_rune()
+	game_state.runes[mon["rune"..current_rune]].equipped_id = nil
+	mon["rune"..current_rune] = nil
 	game_state.calculate_pokemon_stats()
 end
 

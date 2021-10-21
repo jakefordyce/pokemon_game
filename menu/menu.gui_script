@@ -144,6 +144,9 @@ function on_input(self, action_id, action)
 		if(gui.pick_node(gui.get_node("swap_rune_button"),action.x,action.y) and node_enabled(gui.get_node("swap_rune_button"))) then
 			return true
 		end
+		if(gui.pick_node(gui.get_node("remove_rune_button"),action.x,action.y) and node_enabled(gui.get_node("remove_rune_button"))) then
+			return true
+		end
 	end
 	if(action_id == hash("touch") and action.released == true) then
 		if(gui.pick_node(gui.get_node("exit_button"),action.x,action.y) and node_enabled(gui.get_node("exit_button"))) then
@@ -233,6 +236,13 @@ function on_input(self, action_id, action)
 			gui.set_enabled(gui.get_node("selected_rune_description"), false)
 			gui.set_enabled(gui.get_node("current_rune_description"), false)
 			msg.post("menu", "swap_rune")
+			return true
+		end
+		if(gui.pick_node(gui.get_node("remove_rune_button"),action.x,action.y) and node_enabled(gui.get_node("remove_rune_button"))) then
+			gui.set_enabled(gui.get_node("runes_exit_button"), false)
+			gui.set_enabled(gui.get_node("selected_rune_description"), false)
+			gui.set_enabled(gui.get_node("current_rune_description"), false)
+			msg.post("menu", "remove_rune")
 			return true
 		end
 	end
