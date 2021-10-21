@@ -165,7 +165,9 @@ M.pokemon[1] = {
 	accuracy = 0,
 	resist = 0,
 	crit_chance = 5,
-	crit_damage = 50
+	crit_damage = 50,
+	type1 = 11,
+	type2 = 11
 }
 
 --List of all of the player's runes.

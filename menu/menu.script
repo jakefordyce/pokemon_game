@@ -131,13 +131,22 @@ function display_pokedex_grid()
 	local p = vmath.vector3()
 	p.y = 1000
 	p.x = 32
+	column_count = 1
 
 	for i, poke in ipairs(pbs) do
-		local icon = factory.create("#pokedex_icon_factory",p, nil, {pokedex = i})
-		go.set_parent(icon, go.get_id("menu"))
-		table.insert(spawned_pokedex_icons, icon)
+		if (poke.name ~= nil) then
+			local icon = factory.create("#pokedex_icon_factory",p, nil, {pokedex = i})
+			go.set_parent(icon, go.get_id("menu"))
+			table.insert(spawned_pokedex_icons, icon)
 
-		p.x = p.x + 70 --each image is 64 wide. Also adding a little extra space.
+			p.x = p.x + 70 --each image is 64 wide. Also adding a little extra space.
+			column_count = column_count + 1
+			if column_count > 9 then
+				column_count = 1
+				p.y = p.y - 70
+				p.x = 32
+			end
+		end
 	end
 end
 

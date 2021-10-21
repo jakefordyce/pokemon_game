@@ -2,6 +2,7 @@ local moves = require "common/moves"
 local game_state = require "common/game_state"
 local pbs = require "common/poke_base_stats"
 local runes = require "common/runes"
+local types = require "common/poke_types"
 
 function init(self)
 	msg.post(".", "acquire_input_focus")
@@ -9,6 +10,7 @@ function init(self)
 	gui.set_enabled(gui.get_node("current_move_panel"), false)
 	gui.set_enabled(gui.get_node("return_to_main_button"), false)
 	gui.set_enabled(gui.get_node("runes_exit_button"), false)
+	gui.set_enabled(gui.get_node("current_rune_description"), false)
 	gui.set_enabled(gui.get_node("selected_rune_description"), false)
 	self.current_pokemon = nil
 end
@@ -21,10 +23,36 @@ end
 
 function on_message(self, message_id, message, sender)
 	if message_id == hash("display_pokedex_details") then
-		--message.mon will be a record from common/poke_base_stats
+		--message.mon will be a pokedex id
+		game_state.generate_preview_mon(message.mon, 100)
+		mon = game_state.preview_mon
+		gui.set_text(gui.get_node("details_name"), mon.name)
+		gui.set_text(gui.get_node("details_hp"), mon.hp)
+		gui.set_text(gui.get_node("details_attack"), mon.attack)
+		gui.set_text(gui.get_node("details_spattack"), mon.spattack)
+		gui.set_text(gui.get_node("details_defense"), mon.defense)
+		gui.set_text(gui.get_node("details_spdefense"), mon.spdefense)
+		gui.set_text(gui.get_node("details_speed"), mon.speed)
+		gui.set_text(gui.get_node("details_accuracy"), mon.accuracy)
+		gui.set_text(gui.get_node("details_resist"), mon.resist)
+		gui.set_text(gui.get_node("details_crit_chance"), (mon.crit_chance.."%"))
+		gui.set_text(gui.get_node("details_crit_damage"), (mon.crit_damage.."%"))
+		gui.play_flipbook(gui.get_node("details_type1"), "type_"..types.names[mon.type1].."_16")
+		if mon.type2 ~= mon.type1 then
+			gui.set_enabled(gui.get_node("details_type2"), true)
+			gui.play_flipbook(gui.get_node("details_type2"), "type_"..types.names[mon.type2].."_16")
+		else
+			gui.set_enabled(gui.get_node("details_type2"), false)
+		end
+		gui.set_enabled(gui.get_node("details_level"), false)
+		gui.set_enabled(gui.get_node("details_level_lbl"), false)
+		gui.set_enabled(gui.get_node("details_exp"), false)
+		gui.set_enabled(gui.get_node("details_exp_bg"), false)
+		gui.set_enabled(gui.get_node("details_exp_lbl"), false)
+		gui.set_enabled(gui.get_node("moves_panel"), false)
+		gui.set_enabled(gui.get_node("runes_panel"), false)
 		gui.set_enabled(gui.get_node("details_panel"), true)
 		gui.set_enabled(gui.get_node("return_to_main_button"), false)
-		gui.set_text(gui.get_node("details_name"), message.mon.name)
 	end	
 	if message_id == hash("display_pokemon_details") then
 		--message.mon will be a record from common/game_state in the .pokemon table.
@@ -43,6 +71,13 @@ function on_message(self, message_id, message, sender)
 		gui.set_text(gui.get_node("details_resist"), mon.resist)
 		gui.set_text(gui.get_node("details_crit_chance"), (mon.crit_chance.."%"))
 		gui.set_text(gui.get_node("details_crit_damage"), (mon.crit_damage.."%"))
+		gui.play_flipbook(gui.get_node("details_type1"), "type_"..types.names[mon.type1].."_16")
+		if mon.type2 ~= mon.type1 then
+			gui.set_enabled(gui.get_node("details_type2"), true)
+			gui.play_flipbook(gui.get_node("details_type2"), "type_"..types.names[mon.type2].."_16")
+		else
+			gui.set_enabled(gui.get_node("details_type2"), false)
+		end
 		gui.set_text(gui.get_node("details_level"), mon.level)
 		new_size = vmath.vector3((mon.exp / pbs.exp_to_next_level(mon.level) * 100), 10, 0)
 		gui.set_size(gui.get_node("details_exp"), new_size)
@@ -62,6 +97,13 @@ function on_message(self, message_id, message, sender)
 				gui.set_text(gui.get_node("move"..m.."_text"), "")
 			end
 		end
+		gui.set_enabled(gui.get_node("details_level"), true)
+		gui.set_enabled(gui.get_node("details_level_lbl"), true)
+		gui.set_enabled(gui.get_node("details_exp"), true)
+		gui.set_enabled(gui.get_node("details_exp_bg"), true)
+		gui.set_enabled(gui.get_node("details_exp_lbl"), true)
+		gui.set_enabled(gui.get_node("moves_panel"), true)
+		gui.set_enabled(gui.get_node("runes_panel"), true)
 		
 	end
 	if message_id == hash("moves_exit") then
@@ -254,7 +296,6 @@ end
 function move_button_clicked(self, move_num)
 	gui.set_enabled(gui.get_node("details_panel"), false)
 	gui.set_enabled(gui.get_node("current_move_panel"), true)
-	--TODO: use real level instead of 0.
 	pmon = game_state.pokemon[self.current_pokemon]
 	if(pmon["move"..move_num] ~= nil) then
 		move_level = pmon.known_moves[pmon["move"..move_num]].level
