@@ -141,6 +141,9 @@ function apply_debuff(defender, debuff_type, duration)
 	debuff_go = factory.create("#buff_debuff_factory",p, nil, {duration = duration, image = hash(buff_debuff_names[debuff_type])})
 	debuff.go_id = debuff_go
 	table.insert(defender.buffs_debuffs, debuff)
+	p = go.get_position(defender.reference)
+	damage_text = factory.create("#effect_text_factory",p, nil)
+	msg.post(damage_text, "set_values", {label_text=buff_debuff_names[debuff_type]:gsub('_', ' '), label_color="grey"})
 end
 
 function reduce_buff_debuff_durations(mon, dur)

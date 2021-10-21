@@ -7,7 +7,6 @@ local num_selected = 0
 function init(self)
 	msg.post(".", "acquire_input_focus")
 	display_enemies()
-	print(game_state.battle_type)
 	if game_state.battle_type ~= 1 then
 		gui.set_enabled(gui.get_node("run_button"), false)
 	end
