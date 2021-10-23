@@ -1,3 +1,5 @@
+local game_state = require "common/game_state"
+
 function init(self)
 end
 
@@ -13,14 +15,20 @@ function on_message(self, message_id, message, sender)
 			msg.post("/adventure/gui", "load_dialog", {dialog_id = 1})
 			go.delete(message.other_id)
 		end
-	elseif message_id == hash("choice_made") then
-		if message.choice then
-			msg.post("/adventure/gui", "load_dialog", {dialog_id = 2})
-		else
-			msg.post("/adventure/gui", "load_dialog", {dialog_id = 3})
-		end
 	elseif message_id == hash("dialog_end") then
-		msg.post("main:/loader#main", "load_add_mon")
+		print(message.dialog_id)
+		if message.dialog_id == 1 then
+			if message.choice then
+				msg.post("/adventure/gui", "load_dialog", {dialog_id = 2})
+			else
+				msg.post("/adventure/gui", "load_dialog", {dialog_id = 3})
+			end
+		elseif message.dialog_id == 2 then
+			game_state.dialog_is_pending = true
+			game_state.pending_dialog_id = 8
+			game_state.pending_dialog_sender = go.get_id()
+			msg.post("main:/loader#main", "load_add_mon")
+		end
 	end
 end
 

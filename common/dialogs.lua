@@ -35,5 +35,10 @@ M[7] = {
 	next = nil,
 	has_choices = false
 }
+M[8] = {
+	text = "OAK: Good luck!",
+	next = nil,
+	has_choices = false
+}
 
 return M

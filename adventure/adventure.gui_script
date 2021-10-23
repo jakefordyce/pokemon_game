@@ -1,4 +1,5 @@
 local dialogs = require "common/dialogs"
+local game_state = require "common/game_state"
 local current_dialog_id = nil
 local dialog_is_displaying = false
 local waiting_for_choice = false
@@ -11,6 +12,11 @@ function init(self)
 	gui.set_enabled(gui.get_node("choices_panel"), false)
 	gui.set_enabled(gui.get_node("yes_cursor"), false)
 	gui.set_enabled(gui.get_node("no_cursor"), false)
+	if game_state.dialog_is_pending then
+		dialog_sender = game_state.pending_dialog_sender
+		msg.post(".", "continue_dialog", {dialog_id = game_state.pending_dialog_id})
+		game_state.dialog_is_pending = false
+	end
 end
 
 function final(self)
@@ -22,6 +28,8 @@ end
 function on_message(self, message_id, message, sender)
 	if(message_id == hash("load_dialog")) then
 		dialog_sender = sender
+		begin_dialog(message.dialog_id)
+	elseif(message_id == hash("continue_dialog")) then
 		begin_dialog(message.dialog_id)
 	elseif(message_id == hash("display_alert")) then
 		dialog_sender = sender
@@ -68,12 +76,16 @@ function on_input(self, action_id, action)
 			if dialog_is_displaying then
 				if waiting_for_choice then
 					gui.set_enabled(gui.get_node("choices_panel"), false)
-					msg.post(dialog_sender, "choice_made", {dialog_id = current_dialog_id, choice = choice_is_yes})
+					msg.post(dialog_sender, "dialog_end", {dialog_id = current_dialog_id, choice = choice_is_yes})
 					waiting_for_choice = false
 				else
 					gui.set_enabled(gui.get_node("dialog_panel"), false)
 					dialog_is_displaying = false
-					msg.post(dialog_sender, "dialog_end", {dialog_id = current_dialog_id})
+					if(dialogs[current_dialog_id].next ~= nil)then
+						msg.post(".", "continue_dialog", {dialog_id = dialogs[current_dialog_id].next})
+					else
+						msg.post(dialog_sender, "dialog_end", {dialog_id = current_dialog_id})
+					end
 				end
 			else
 				msg.post("player", "interact")
@@ -86,6 +98,7 @@ function on_reload(self)
 end
 
 function begin_dialog(dialog_id)
+	current_dialog_id = dialog_id
 	dialog_is_displaying = true
 	gui.set_enabled(gui.get_node("dialog_panel"), true)
 	gui.set_text(gui.get_node("dialog_text"), dialogs[dialog_id].text)

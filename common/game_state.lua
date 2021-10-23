@@ -6,6 +6,11 @@ local M = {}
 --FLAGS--
 M.starters_chosen = false
 
+--TEMP STATE--
+M.dialog_is_pending = false
+M.pending_dialog_id = nil
+M.pending_dialog_sender = nil
+
 --BATTLE INFO--
 M.player_mon1 = 1 --this is the index of M.pokemon
 M.player_mon2 = nil
