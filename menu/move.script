@@ -1,10 +1,14 @@
 go.property("move_index", 1)
 local moves = require "common/moves"
+local types = require "common/poke_types"
 
 function init(self)
 	--TODO: use move level instead of 0
-	description = moves[self.move_index].description(0)
-	label.set_text("#move_description", description)
+	move = moves[self.move_index]
+	label.set_text("#move_description", move.description(0))
+	label.set_text("#move_name", move.name)
+	label.set_text("#move_cooldown", "CD: "..move.cooldown)
+	msg.post("#move_type_sprite", "play_animation", { id = hash("type_"..types.names[move.type].."_16") })
 end
 
 function final(self)

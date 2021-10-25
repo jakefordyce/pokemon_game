@@ -10,7 +10,7 @@ meffects[1].param1 = 95
 meffects[1].param2 = "attack"
 
 M[1] = {
-	name = "tackle",
+	name = "Tackle",
 	effects = meffects,
 	cooldown = 0,
 	default = true,
@@ -18,7 +18,7 @@ M[1] = {
 	targetting = 1,
 	description = function(moveLevel)
 		damage = 95 + (moveLevel * 5)
-		return "Tackle - Attacks 1 enemy for "..damage.."% of Attack."
+		return "Attacks 1 enemy for "..damage.."% of Attack."
 	end
 }
 
@@ -30,7 +30,7 @@ meffects[1].param1 = 75
 meffects[1].param2 = 2
 
 M[2] = {
-	name = "growl",
+	name = "Growl",
 	effects = meffects,
 	cooldown = 2,
 	default = false,
@@ -38,7 +38,7 @@ M[2] = {
 	targetting = 1,
 	description = function(moveLevel)
 		chance = 75 + (moveLevel * 5)
-		return "Growl - Has a "..chance.."% chance of reducing Attack of 1 enemy."
+		return "Has a "..chance.."% chance of reducing Attack of 1 enemy."
 	end
 }
 
@@ -58,7 +58,7 @@ M[3] = {
 	targetting = 1,
 	description = function(moveLevel)
 		damage = 100 + (moveLevel * 5)
-		return "Scratch - Attacks 1 enemy for "..damage.."% of Attack."
+		return "Attacks 1 enemy for "..damage.."% of Attack."
 	end
 }
 
@@ -78,7 +78,7 @@ M[4] = {
 	targetting = 1,
 	description = function(moveLevel)
 		damage = 100 + (moveLevel * 5)
-		return "Vine Whip - Attacks 1 enemy for "..damage.."% of Special Attack."
+		return "Attacks 1 enemy for "..damage.."% of Special Attack."
 	end
 }
 
@@ -98,7 +98,7 @@ M[5] = {
 	targetting = 1,
 	description = function(moveLevel)
 		damage = 100 + (moveLevel * 5)
-		return "Bubble - Attacks 1 enemy for "..damage.."% of Special Attack."
+		return "Attacks 1 enemy for "..damage.."% of Special Attack."
 	end
 }
 
@@ -118,7 +118,7 @@ M[6] = {
 	targetting = 1,
 	description = function(moveLevel)
 		damage = 100 + (moveLevel * 5)
-		return "Ember - Attacks 1 enemy for "..damage.."% of Special Attack."
+		return "Attacks 1 enemy for "..damage.."% of Special Attack."
 	end
 }
 
@@ -138,7 +138,7 @@ M[7] = {
 	targetting = 2,
 	description = function(moveLevel)
 		chance = 75 + (moveLevel * 5)
-		return "Howl - Has a "..chance.."% chance of increasing Attack of 1 ally."
+		return "Has a "..chance.."% chance of increasing Attack of 1 ally."
 	end
 }
 

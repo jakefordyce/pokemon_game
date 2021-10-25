@@ -143,6 +143,14 @@ moves[2] = {
 	id = 2,
 	level = 4
 }
+moves[3] = {
+	id = 3,
+	level = 0
+}
+moves[4] = {
+	id = 4,
+	level = 0
+}
 
 
 M.pokemon[1] = {
