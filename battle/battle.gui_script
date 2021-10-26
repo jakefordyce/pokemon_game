@@ -88,6 +88,16 @@ function on_input(self, action_id, action)
 			level = mon.known_moves[mon.move2].level
 			gui.set_text(gui.get_node("move_description"), moves[mon.known_moves[mon.move2].id].description(level))
 			msg.post("battle", "move_selected", {move = mon.move2})
+		elseif(gui.pick_node(gui.get_node("Move3"),action.x,action.y) and node_enabled(gui.get_node("Move3"))) then
+			mon =  current_turn_mon
+			level = mon.known_moves[mon.move3].level
+			gui.set_text(gui.get_node("move_description"), moves[mon.known_moves[mon.move3].id].description(level))
+			msg.post("battle", "move_selected", {move = mon.move3})
+		elseif(gui.pick_node(gui.get_node("Move4"),action.x,action.y) and node_enabled(gui.get_node("Move4"))) then
+			mon =  current_turn_mon
+			level = mon.known_moves[mon.move4].level
+			gui.set_text(gui.get_node("move_description"), moves[mon.known_moves[mon.move4].id].description(level))
+			msg.post("battle", "move_selected", {move = mon.move2})
 		elseif(gui.pick_node(gui.get_node("player_mon1"),action.x,action.y)) then
 			msg.post("battle", "target_selected", {target = "player_mon1"})
 		elseif(gui.pick_node(gui.get_node("player_mon2"),action.x,action.y)) then

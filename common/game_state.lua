@@ -148,7 +148,7 @@ moves[2] = {
 	level = 4
 }
 moves[3] = {
-	id = 3,
+	id = 8,
 	level = 0
 }
 moves[4] = {
@@ -165,7 +165,7 @@ M.pokemon[1] = {
 	known_moves = moves,
 	move1 = 1, --this is the index from the pokemon's known_moves.
 	move2 = 2,
-	move3 = nil,
+	move3 = 3,
 	move4 = nil,
 	rune1 = 1, --this is the index from M.runes.
 	rune2 = nil,

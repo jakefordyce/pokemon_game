@@ -142,5 +142,33 @@ M[7] = {
 	end
 }
 
+meffects = {}
+meffects[1] = {}
+meffects[1].id = 1
+meffects[1].target = 1
+meffects[1].param1 = 200
+meffects[1].param2 = "attack"
+
+
+meffects[2] = {}
+meffects[2].id = 4
+meffects[2].target = 1
+meffects[2].param1 = 75
+meffects[2].param2 = 2
+
+M[8] = {
+	name = "Crunch",
+	effects = meffects,
+	cooldown = 4,
+	default = false,
+	type = 15,
+	targetting = 1,
+	description = function(moveLevel)
+		chance = 75 + (moveLevel * 5)
+		damage = 200 + (moveLevel * 5)
+		return "Attacks 1 enemy for "..damage.."% of Attack then has a "..chance.."% chance of reducing that enemy's defense."
+	end
+}
+
 
 return M

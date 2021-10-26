@@ -16,7 +16,6 @@ function on_message(self, message_id, message, sender)
 			go.delete(message.other_id)
 		end
 	elseif message_id == hash("dialog_end") then
-		print(message.dialog_id)
 		if message.dialog_id == 1 then
 			if message.choice then
 				msg.post("/adventure/gui", "load_dialog", {dialog_id = 2})
