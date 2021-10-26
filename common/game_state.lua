@@ -6,6 +6,10 @@ local M = {}
 --FLAGS--
 M.starters_chosen = false
 
+M.items_found = {}
+
+M.trainers_defeated = {}
+
 --TEMP STATE--
 M.dialog_is_pending = false
 M.pending_dialog_id = nil
@@ -155,7 +159,7 @@ moves[4] = {
 
 M.pokemon[1] = {
 	pokedex = 1,
-	level = 5,
+	level = 30,
 	exp = 0,
 	name = "bulbasaur",
 	known_moves = moves,

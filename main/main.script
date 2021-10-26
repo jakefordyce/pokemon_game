@@ -15,6 +15,12 @@ function init(self)
 	msg.post(".", "acquire_input_focus")
 	game_state.calculate_pokemon_stats() --TODO: move to appropriate areas.
 	--load_screen(area_names[game_state.current_area], nil)
+	for i=1,1 do
+		game_state.items_found[i] = false
+	end
+	for i=1,1 do
+		game_state.trainers_defeated[i] = false
+	end
 	load_screen(area_names[game_state.current_area], nil)
 	math.randomseed(os.time())
 	math.random(); math.random(); math.random()

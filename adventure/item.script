@@ -1,6 +1,9 @@
 local game_state = require "common/game_state"
 
 function init(self)
+	if(game_state.items_found[1]) then
+		go.delete()
+	end
 end
 
 function final(self)
@@ -17,6 +20,7 @@ function on_message(self, message_id, message, sender)
 			go.delete(message.other_id)
 		end
 	elseif message_id == hash("dialog_end") then
+		game_state.items_found[1] = true
 		go.delete()
 	end
 end

@@ -81,7 +81,7 @@ function on_input(self, action_id, action)
 				else
 					gui.set_enabled(gui.get_node("dialog_panel"), false)
 					dialog_is_displaying = false
-					if(dialogs[current_dialog_id].next ~= nil)then
+					if(current_dialog_id ~= nil and dialogs[current_dialog_id].next ~= nil)then
 						msg.post(".", "continue_dialog", {dialog_id = dialogs[current_dialog_id].next})
 					else
 						msg.post(dialog_sender, "dialog_end", {dialog_id = current_dialog_id})
