@@ -118,7 +118,14 @@ function handle_move_effects(effect, target, move_user)
 		end
 		local power = effect.param1 * stat / 100
 		local damage = calc_damage(power, defender.defense)
-		damage_defender(defender, damage)
+		crit_rng = math.random(1,100)
+		text_color = "white"
+		if crit_rng <= move_user.crit_chance then
+			damage = math.floor(damage * (1 + (move_user.crit_damage / 100)))
+			text_color = "yellow"
+		end
+			
+		damage_defender(defender, damage, text_color)
 	elseif effect.id == 2 then --reduce attack
 		local defender = combatants[target]
 		local duration = effect.param2
@@ -167,12 +174,13 @@ function mon_has_buff_debuff_type(mon, buff_debuff_type)
 	return has_buff_debuff
 end
 
-function damage_defender(defender, damage)
+function damage_defender(defender, damage, text_color)
 	defender.currenthp = defender.currenthp - damage
 
 	p = go.get_position(defender.reference)
 	damage_text = factory.create("#effect_text_factory",p, nil)
-	msg.post(damage_text, "set_values", {label_text=""..damage, label_color="grey"})
+	
+	msg.post(damage_text, "set_values", {label_text=""..damage, label_color=text_color})
 	
 	if defender.currenthp <= 0 then
 		defender.currenthp = 0
