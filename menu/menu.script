@@ -1,9 +1,10 @@
+local pbs = require "common/poke_base_stats"
+local game_state = require "common/game_state"
+local moves = require "common/moves"
 local spawned_pokedex_icons = {}
 local spawned_pokemon_icons = {}
 local spawned_moves = {}
 local spawned_rune_icons = {}
-local pbs = require "common/poke_base_stats"
-local game_state = require "common/game_state"
 local current_mon = nil
 local current_move = "move1"
 local current_rune = 1
@@ -34,8 +35,8 @@ function on_message(self, message_id, message, sender)
 	--this is sent from the GUI when a user selects one of their pokemon's moves.
 	if message_id == hash("display_pokemon_moves") then
 		clear_gos(spawned_pokemon_icons)
-		display_move_list(message.mon)
 		current_move = message.selected_move
+		display_move_list(message.mon)
 	end
 	if message_id == hash("display_runes") then
 		clear_gos(spawned_rune_icons)
@@ -172,11 +173,24 @@ function display_move_list(mon)
 	for i, m in ipairs(mon.known_moves) do
 		move_equipped = false
 		for e=1,4 do
-			if mon["move"..e] == m.id then
+			if mon["move"..e] ~= nil and mon.known_moves[mon["move"..e]].id == m.id then
 				move_equipped = true
 			end
 		end
-		if not move_equipped then
+
+		--move1 has to be a "default" move. Also, "default" moves cannot go in other slots.
+		move_can_equip_in_slot = false
+		if(current_move == "move1") then
+			if(moves[m.id].default) then
+				move_can_equip_in_slot = true
+			end
+		else
+			if(moves[m.id].default == false) then
+				move_can_equip_in_slot = true
+			end
+		end
+		
+		if (move_equipped == false) and move_can_equip_in_slot then
 			local move = factory.create("#move_factory",p, nil, {move_index = m.id})
 			go.set_parent(move, go.get_id("menu"))
 			table.insert(spawned_moves, move)

@@ -58,7 +58,9 @@ function M.add_pokemon(pokedex, level)
 		accuracy = 0,
 		resist = 0,
 		crit_chance = pbs.base_crit_chance,
-		crit_damage = pbs.base_crit_damage
+		crit_damage = pbs.base_crit_damage,
+		type1 = pbs[pokedex].type1,
+		type2 = pbs[pokedex].type2
 	}
 	equipped_moves = pbs.equipped_moves_by_level(pokedex, level)
 	for i=1,4 do

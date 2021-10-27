@@ -3788,7 +3788,7 @@ nodes {
     w: 1.0
   }
   adjust_mode: ADJUST_MODE_FIT
-  line_break: false
+  line_break: true
   parent: "current_move_panel"
   layer: ""
   inherit_alpha: true
