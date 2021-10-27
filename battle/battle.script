@@ -104,7 +104,38 @@ function start_handling_move(target)
 	msg.post("gui", "set_battle_text", {text = battle_text..current_turn_mon.name.." used "..selected_move.name.."!"})
 	local delay_time = 0.0
 	for index, effect in ipairs(selected_move.effects) do
-		timer.delay(delay_time, false, function() handle_move_effects(effect, target, current_turn_mon) end)
+
+		if (effect.target < 3) then --self, enemy, ally, only affect target selected.
+			timer.delay(delay_time, false, function() handle_move_effects(effect, target, current_turn_mon) end)
+		elseif (effect.target == 3) then -- all enemies
+			if string.match(current_turn_mon.reference, "^enemy") then -- an enemy mon using the move
+				for i=1,4 do
+					if(combatants["player_mon"..i] ~= nil) then
+						timer.delay(delay_time, false, function() handle_move_effects(effect, "player_mon"..i, current_turn_mon) end)
+					end
+				end
+			else -- player mon using the move
+				for i=1,4 do
+					if(combatants["enemy_mon"..i] ~= nil) then
+						timer.delay(delay_time, false, function() handle_move_effects(effect, "enemy_mon"..i, current_turn_mon) end)
+					end
+				end
+			end
+		elseif (effect.target == 4) then -- all allies
+			if string.match(current_turn_mon.reference, "^enemy") then -- an enemy mon using the move
+				for i=1,4 do
+					if(combatants["enemy_mon"..i] ~= nil) then
+						timer.delay(delay_time, false, function() handle_move_effects(effect, "enemy_mon"..i, current_turn_mon) end)
+					end
+				end
+			else -- player mon using the move
+				for i=1,4 do
+					if(combatants["player_mon"..i] ~= nil) then
+						timer.delay(delay_time, false, function() handle_move_effects(effect, "player_mon"..i, current_turn_mon) end)
+					end
+				end
+			end
+		end
 		delay_time = delay_time + 0.3
 	end
 end
@@ -462,17 +493,21 @@ function display_targetting_icons()
 		table.insert(spawned_target_icons, icon)
 	elseif(selected_move.targetting == 1) then --enemy
 		for i=1,4 do
-			local p = go.get_position("enemy_mon"..i)
-			p.y = p.y + 50
-			local icon = factory.create("#target_icon_factory",p)
-			table.insert(spawned_target_icons, icon)
+			if(combatants["enemy_mon"..i] ~= nil) then
+				local p = go.get_position("enemy_mon"..i)
+				p.y = p.y + 50
+				local icon = factory.create("#target_icon_factory",p)
+				table.insert(spawned_target_icons, icon)
+			end
 		end
 	elseif(selected_move.targetting == 2) then --ally
 		for i=1,4 do
-			local p = go.get_position("player_mon"..i)
-			p.y = p.y + 50
-			local icon = factory.create("#target_icon_factory",p)
-			table.insert(spawned_target_icons, icon)
+			if(combatants["player_mon"..i] ~= nil) then
+				local p = go.get_position("player_mon"..i)
+				p.y = p.y + 50
+				local icon = factory.create("#target_icon_factory",p)
+				table.insert(spawned_target_icons, icon)
+			end
 		end
 	end
 end

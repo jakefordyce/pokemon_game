@@ -25,7 +25,7 @@ M[1] = {
 meffects = {}
 meffects[1] = {}
 meffects[1].id = 2
-meffects[1].target = 1
+meffects[1].target = 3
 meffects[1].param1 = 75
 meffects[1].param2 = 2
 
@@ -125,7 +125,7 @@ M[6] = {
 meffects = {}
 meffects[1] = {}
 meffects[1].id = 3
-meffects[1].target = 2
+meffects[1].target = 4
 meffects[1].param1 = 75
 meffects[1].param2 = 2
 
