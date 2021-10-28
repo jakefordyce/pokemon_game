@@ -8,10 +8,12 @@ local player_mon3 = nil
 local player_mon4 = nil
 local enemy_mon1 = {}
 local selected_move = {}
+local selected_move_slot = 1
 local spawned_target_icons = {}
 local spawned_turn_markers = {}
 local current_turn_mon = nil
 local combatants = {}
+local waiting_for_target = false
 
 function init(self)
 	msg.post(".", "acquire_input_focus")
@@ -25,17 +27,22 @@ end
 function update(self, dt)
 end
 
--- Learn more: https://defold.com/manuals/message-passing/
 function on_message(self, message_id, message, sender)
 	if message_id == hash("move_selected") then
-		selected_move = moves[current_turn_mon.known_moves[message.move].id]
-		display_targetting_icons()
+		if(current_turn_mon["move"..message.slot.."cd"] == 0) then
+			selected_move_slot = message.slot
+			selected_move = moves[current_turn_mon.known_moves[message.move].id]
+			display_targetting_icons()
+			waiting_for_target = true
+		end
 	end
 	if message_id == hash("target_selected") then
-		if(target_is_valid(message.target)) then
+		if(waiting_for_target and target_is_valid(message.target)) then
 			--valid target, execute the move and then end the turn.
+			waiting_for_target = false
 			clear_gos(spawned_target_icons)
 			msg.post("gui", "hide_mon_display")
+			current_turn_mon["move"..selected_move_slot.."cd"] = selected_move.cooldown
 			start_handling_move(message.target)
 			timer.delay(1, false, function() msg.post(".", "end_turn") end)
 		end
@@ -293,12 +300,22 @@ function calc_damage(power, defense)
 	return math.ceil((200 / (200 + defense) * power))
 end
 
+function reduce_all_cooldowns(mon, amount)
+	for i=1,4 do
+		mon["move"..i.."cd"] = mon["move"..i.."cd"] - amount
+		if mon["move"..i.."cd"] < 0 then
+			mon["move"..i.."cd"] = 0
+		end
+	end
+end
+
 function load_data_for_battle()
 	load_player_mon_data()
 	load_enemy_data()
 end
 
 function start_player_turn(turn_mon)
+	reduce_all_cooldowns(turn_mon, 1)
 	msg.post("gui", "display_mon", {mon = turn_mon})
 	local p = go.get_position(turn_mon.reference)
 	p.y = p.y - 60
@@ -308,6 +325,7 @@ function start_player_turn(turn_mon)
 end
 
 function start_enemy_turn(turn_mon)
+	reduce_all_cooldowns(turn_mon, 1)
 	local p = go.get_position(turn_mon.reference)
 	p.y = p.y - 60
 	p.z = p.z - 1
@@ -326,6 +344,7 @@ function choose_enemy_move()
 		if(current_turn_mon["move"..random_move] ~= nil and current_turn_mon["move"..random_move.."cd"] == 0) then
 			selected_move = moves[current_turn_mon.known_moves[current_turn_mon["move"..random_move]].id]
 			is_move_chosen = true
+			current_turn_mon["move"..random_move.."cd"] = current_turn_mon["move"..random_move.."cd"] + selected_move.cooldown
 		end
 	end
 
