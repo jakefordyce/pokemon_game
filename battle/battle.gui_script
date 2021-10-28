@@ -28,10 +28,16 @@ function on_message(self, message_id, message, sender)
 		current_turn_mon = message.mon
 		for i=1,4 do
 			if message.mon["move"..i] ~= nil then
-				gui.set_enabled(gui.get_node("Move"..i), true)
-				gui.set_text(gui.get_node("Move"..i), moves[message.mon.known_moves[message.mon["move"..i]].id].name)
+				gui.set_enabled(gui.get_node("move"..i.."_button"), true)
+				gui.set_text(gui.get_node("move"..i.."_text"), moves[message.mon.known_moves[message.mon["move"..i]].id].name)
+				if message.mon["move"..i.."cd"] > 0 then
+					gui.set_enabled(gui.get_node("move"..i.."_cd_overlay"), true)
+					gui.set_text(gui.get_node("move"..i.."_cd_text"), message.mon["move"..i.."cd"])
+				else
+					gui.set_enabled(gui.get_node("move"..i.."_cd_overlay"), false)
+				end
 			else
-				gui.set_enabled(gui.get_node("Move"..i), false)
+				gui.set_enabled(gui.get_node("move"..i.."_button"), false)
 			end
 		end
 		
@@ -40,10 +46,10 @@ function on_message(self, message_id, message, sender)
 	if message_id == hash("hide_mon_display") then
 		gui.set_text(gui.get_node("current_mon_name"), "")
 		gui.set_text(gui.get_node("move_description"), "")
-		gui.set_enabled(gui.get_node("Move1"), false)
-		gui.set_enabled(gui.get_node("Move2"), false)
-		gui.set_enabled(gui.get_node("Move3"), false)
-		gui.set_enabled(gui.get_node("Move4"), false)
+		gui.set_enabled(gui.get_node("move1_button"), false)
+		gui.set_enabled(gui.get_node("move2_button"), false)
+		gui.set_enabled(gui.get_node("move3_button"), false)
+		gui.set_enabled(gui.get_node("move4_button"), false)
 	end
 	if message_id == hash("display_move_desc") then
 		gui.set_text(gui.get_node("move_description"), message.desc)
@@ -78,22 +84,22 @@ end
 function on_input(self, action_id, action)
 	local moves = require "common/moves"
 	if(action_id == hash("touch") and action.released == true) then
-		if(gui.pick_node(gui.get_node("Move1"),action.x,action.y)and node_enabled(gui.get_node("Move1"))) then
+		if(gui.pick_node(gui.get_node("move1_button"),action.x,action.y)and node_enabled(gui.get_node("move1_button"))) then
 			mon =  current_turn_mon
 			level = mon.known_moves[mon.move1].level
 			gui.set_text(gui.get_node("move_description"), moves[mon.known_moves[mon.move1].id].description(level))
 			msg.post("battle", "move_selected", {move = mon.move1})
-		elseif(gui.pick_node(gui.get_node("Move2"),action.x,action.y) and node_enabled(gui.get_node("Move2"))) then
+		elseif(gui.pick_node(gui.get_node("move2_button"),action.x,action.y) and node_enabled(gui.get_node("move2_button"))) then
 			mon =  current_turn_mon
 			level = mon.known_moves[mon.move2].level
 			gui.set_text(gui.get_node("move_description"), moves[mon.known_moves[mon.move2].id].description(level))
 			msg.post("battle", "move_selected", {move = mon.move2})
-		elseif(gui.pick_node(gui.get_node("Move3"),action.x,action.y) and node_enabled(gui.get_node("Move3"))) then
+		elseif(gui.pick_node(gui.get_node("move3_button"),action.x,action.y) and node_enabled(gui.get_node("move3_button"))) then
 			mon =  current_turn_mon
 			level = mon.known_moves[mon.move3].level
 			gui.set_text(gui.get_node("move_description"), moves[mon.known_moves[mon.move3].id].description(level))
 			msg.post("battle", "move_selected", {move = mon.move3})
-		elseif(gui.pick_node(gui.get_node("Move4"),action.x,action.y) and node_enabled(gui.get_node("Move4"))) then
+		elseif(gui.pick_node(gui.get_node("move4_button"),action.x,action.y) and node_enabled(gui.get_node("move4_button"))) then
 			mon =  current_turn_mon
 			level = mon.known_moves[mon.move4].level
 			gui.set_text(gui.get_node("move_description"), moves[mon.known_moves[mon.move4].id].description(level))
