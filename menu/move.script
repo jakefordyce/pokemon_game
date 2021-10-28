@@ -8,7 +8,7 @@ function init(self)
 	label.set_text("#move_description", move.description(0))
 	label.set_text("#move_name", move.name)
 	label.set_text("#move_cooldown", "CD: "..move.cooldown)
-	msg.post("#move_type_sprite", "play_animation", { id = hash("type_"..types.names[move.type].."_16") })
+	msg.post("#move_type_sprite", "play_animation", { id = hash("type_"..types[move.type].name.."_16") })
 end
 
 function final(self)

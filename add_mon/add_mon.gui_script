@@ -241,10 +241,10 @@ function display_preview(addable)
 	gui.set_text(gui.get_node("details_resist"), mon.resist)
 	gui.set_text(gui.get_node("details_crit_chance"), (mon.crit_chance.."%"))
 	gui.set_text(gui.get_node("details_crit_damage"), (mon.crit_damage.."%"))
-	gui.play_flipbook(gui.get_node("details_type1"), "type_"..types.names[mon.type1].."_16")
+	gui.play_flipbook(gui.get_node("details_type1"), "type_"..types[mon.type1].name.."_16")
 	if mon.type2 ~= mon.type1 then
 		gui.set_enabled(gui.get_node("details_type2"), true)
-		gui.play_flipbook(gui.get_node("details_type2"), "type_"..types.names[mon.type2].."_16")
+		gui.play_flipbook(gui.get_node("details_type2"), "type_"..types[mon.type2].name.."_16")
 	else
 		gui.set_enabled(gui.get_node("details_type2"), false)
 	end
