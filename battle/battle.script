@@ -2,6 +2,7 @@ local game_state = require "common/game_state"
 local encounters = require "common/encounters"
 local moves = require "common/moves"
 local status_effects = require "common/status_effects"
+local types = require "common/poke_types"
 local player_mon1 = {}
 local player_mon2 = nil
 local player_mon3 = nil
@@ -148,6 +149,8 @@ function start_handling_move(target)
 end
 
 function handle_move_effects(effect, target, move_user)
+	effectiveness = types.type_effectiveness(selected_move.type, combatants[target].type1, combatants[target].type2)
+	
 	if effect.id == 1 then --deal damage
 		local defender = combatants[target]
 		stat = move_user[effect.param2]
@@ -161,7 +164,7 @@ function handle_move_effects(effect, target, move_user)
 		if mon_has_status_effect(defender, 4) then
 			defense = defense / 2
 		end
-		local damage = calc_damage(power, defense)
+		local damage = math.floor(calc_damage(power, defense) * effectiveness / 100)
 		crit_rng = math.random(1,100)
 		text_color = "white"
 		if crit_rng <= move_user.crit_chance then
@@ -173,7 +176,8 @@ function handle_move_effects(effect, target, move_user)
 	elseif effect.id == 2 then --reduce attack
 		local defender = combatants[target]
 		local duration = effect.param2
-		if(should_apply_debuff(move_user.accuracy, defender.resist, effect.param1)) then
+		accuracy = move_user.accuracy + effectiveness - 100
+		if(should_apply_debuff(accuracy, defender.resist, effect.param1)) then
 			apply_status_effect(defender, 2, duration)
 		else
 			display_damage_text(go.get_position(defender.reference), "resist", "red")
@@ -185,7 +189,8 @@ function handle_move_effects(effect, target, move_user)
 	elseif effect.id == 4 then --reduce defense
 		local defender = combatants[target]
 		local duration = effect.param2
-		if(should_apply_debuff(move_user.accuracy, defender.resist, effect.param1)) then
+		accuracy = move_user.accuracy + effectiveness - 100
+		if(should_apply_debuff(accuracy, defender.resist, effect.param1)) then
 			apply_status_effect(defender, 4, duration)
 		else
 			display_damage_text(go.get_position(defender.reference), "resist", "red")
@@ -516,6 +521,11 @@ function load_enemy_data()
 end
 
 function display_targetting_icons()
+
+	if(#spawned_target_icons > 0) then
+		clear_gos(spawned_target_icons)
+	end
+	
 	if(selected_move.targetting == 0) then --self
 		local p = go.get_position(current_turn_mon.reference)
 		p.y = p.y + 50
@@ -524,9 +534,10 @@ function display_targetting_icons()
 	elseif(selected_move.targetting == 1) then --enemy
 		for i=1,4 do
 			if(combatants["enemy_mon"..i] ~= nil) then
+				effectiveness = types.type_effectiveness(selected_move.type, combatants["enemy_mon"..i].type1, combatants["enemy_mon"..i].type2)
 				local p = go.get_position("enemy_mon"..i)
 				p.y = p.y + 50
-				local icon = factory.create("#target_icon_factory",p)
+				local icon = factory.create("#target_icon_factory",p, nil, {effectiveness = effectiveness})
 				table.insert(spawned_target_icons, icon)
 			end
 		end
