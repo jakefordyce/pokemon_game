@@ -1,6 +1,6 @@
 components {
   id: "buff_debuff"
-  component: "/battle/buff_debuff.script"
+  component: "/battle/status_effect.script"
   position {
     x: 0.0
     y: 0.0
@@ -16,7 +16,7 @@ components {
 embedded_components {
   id: "sprite"
   type: "sprite"
-  data: "tile_set: \"/battle/buffs_debuffs.atlas\"\n"
+  data: "tile_set: \"/battle/status_effects.atlas\"\n"
   "default_animation: \"attack_down\"\n"
   "material: \"/builtins/materials/sprite.material\"\n"
   "blend_mode: BLEND_MODE_ALPHA\n"

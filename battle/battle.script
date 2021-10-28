@@ -1,7 +1,7 @@
 local game_state = require "common/game_state"
 local encounters = require "common/encounters"
 local moves = require "common/moves"
-local buff_debuff_names = require "common/buff_debuff_names"
+local status_effects = require "common/status_effects"
 local player_mon1 = {}
 local player_mon2 = nil
 local player_mon3 = nil
@@ -81,7 +81,7 @@ function on_message(self, message_id, message, sender)
 		end
 	end
 	if message_id == hash("end_turn") then
-		reduce_buff_debuff_durations(current_turn_mon, 1)
+		reduce_status_effect_durations(current_turn_mon, 1, true)
 		clear_gos(spawned_turn_markers)
 		msg.post(".", "find_next_turn")
 	end
@@ -144,14 +144,14 @@ function handle_move_effects(effect, target, move_user)
 	if effect.id == 1 then --deal damage
 		local defender = combatants[target]
 		stat = move_user[effect.param2]
-		if mon_has_buff_debuff_type(move_user, 2) and string.match(effect.param2, "^attack") then
+		if mon_has_status_effect(move_user, 2) and string.match(effect.param2, "^attack") then
 			stat = stat / 2
-		elseif mon_has_buff_debuff_type(move_user, 3) and string.match(effect.param2, "^attack") then
+		elseif mon_has_status_effect(move_user, 3) and string.match(effect.param2, "^attack") then
 			stat = stat * 1.5
 		end
 		local power = effect.param1 * stat / 100
 		local defense = defender.defense
-		if mon_has_buff_debuff_type(defender, 4) then
+		if mon_has_status_effect(defender, 4) then
 			defense = defense / 2
 		end
 		local damage = calc_damage(power, defense)
@@ -167,19 +167,19 @@ function handle_move_effects(effect, target, move_user)
 		local defender = combatants[target]
 		local duration = effect.param2
 		if(should_apply_debuff(move_user.accuracy, defender.resist, effect.param1)) then
-			apply_debuff(defender, 2, duration)
+			apply_status_effect(defender, 2, duration)
 		else
 			display_damage_text(go.get_position(defender.reference), "resist", "red")
 		end
 	elseif effect.id == 3 then --increase attack
 		local defender = combatants[target]
 		local duration = effect.param2
-		apply_debuff(defender, 3, duration)
+		apply_status_effect(defender, 3, duration)
 	elseif effect.id == 4 then --reduce defense
 		local defender = combatants[target]
 		local duration = effect.param2
 		if(should_apply_debuff(move_user.accuracy, defender.resist, effect.param1)) then
-			apply_debuff(defender, 4, duration)
+			apply_status_effect(defender, 4, duration)
 		else
 			display_damage_text(go.get_position(defender.reference), "resist", "red")
 		end
@@ -206,19 +206,25 @@ function should_apply_debuff(accuracy, resist, debuff_chance)
 	return should_apply
 end
 
-function apply_debuff(defender, debuff_type, duration)
-	debuff = {}
-	debuff.duration = duration
-	debuff.category = 2
-	debuff.type = debuff_type
+function apply_status_effect(defender, effect_id, duration)
+	effect = {}
+	effect.duration = duration
+	effect.category = status_effects[effect_id].category
+	effect.type = effect_id
+	--if someone is applying a buff to themself then mark it to not reduce its duration at the end of this turn.
+	if(status_effects[effect_id].category == 1 and current_turn_mon.reference == defender.reference) then
+		effect.ignore_duration_reduction = true
+	else
+		effect.ignore_duration_reduction = false
+	end
 	p = go.get_position(defender.reference)
 	p.y = p.y + 125
 	p.x = p.x - 10
-	debuff_go = factory.create("#buff_debuff_factory",p, nil, {duration = duration, image = hash(buff_debuff_names[debuff_type])})
-	debuff.go_id = debuff_go
-	table.insert(defender.buffs_debuffs, debuff)
-	display_damage_text(go.get_position(defender.reference), buff_debuff_names[debuff_type]:gsub('_', ' '), "white")
-	position_debuffs(defender)
+	effect_go = factory.create("#status_effect_factory",p, nil, {duration = duration, image = hash(status_effects[effect_id].sprite_name)})
+	effect.go_id = effect_go
+	table.insert(defender.status_effects, effect)
+	display_damage_text(go.get_position(defender.reference), status_effects[effect_id].damage_text, "white")
+	position_status_effects(defender)
 end
 
 function display_damage_text(position, text, text_color)
@@ -226,40 +232,45 @@ function display_damage_text(position, text, text_color)
 	msg.post(damage_text, "set_values", {label_text = text, label_color = text_color})
 end
 
-function position_debuffs(mon)
+function position_status_effects(mon)
 	p = go.get_position(mon.reference)
 	p.y = p.y + 125
 	p.x = p.x - 10
-	for i, bd in ipairs(mon.buffs_debuffs) do
-		go.set_position(p, bd.go_id)
+	for i, eff in ipairs(mon.status_effects) do
+		go.set_position(p, eff.go_id)
 		p.x = p.x + 32
 	end
 end
 
-function reduce_buff_debuff_durations(mon, dur)
-	buff_debuffs_to_remove = {}
-	for i, bd in ipairs(mon.buffs_debuffs) do
-		bd.duration = bd.duration - dur
-		msg.post(bd.go_id, "update_duration", {duration = bd.duration})
-		if bd.duration < 1 then
-			table.insert(buff_debuffs_to_remove, i)
-			go.delete(bd.go_id)
+function reduce_status_effect_durations(mon, dur, end_of_turn)
+	status_effects_to_remove = {}
+	for i, eff in ipairs(mon.status_effects) do
+		if(end_of_turn and eff.ignore_duration_reduction) then
+			--prevent a pokemon who just buffed themself from immediately losing a turn of the buff at the end of their turn.
+			eff.ignore_duration_reduction = false
+		else
+			eff.duration = eff.duration - dur
+			msg.post(eff.go_id, "update_duration", {duration = eff.duration})
+			if eff.duration < 1 then
+				table.insert(status_effects_to_remove, i)
+				go.delete(eff.go_id)
+			end
 		end
 	end
-	for i, bdtr in ipairs(buff_debuffs_to_remove) do
-		table.remove(mon.buffs_debuffs, i)
+	for i, setr in ipairs(status_effects_to_remove) do
+		table.remove(mon.status_effects, i)
 	end
-	position_debuffs(mon)
+	position_status_effects(mon)
 end
 
-function mon_has_buff_debuff_type(mon, buff_debuff_type)
-	has_buff_debuff = false
-	for i, bd in ipairs(mon.buffs_debuffs) do
-		if bd.type == buff_debuff_type then
-			has_buff_debuff = true
+function mon_has_status_effect(mon, effect_id)
+	has_status_effect = false
+	for i, eff in ipairs(mon.status_effects) do
+		if eff.type == effect_id then
+			has_status_effect = true
 		end
 	end
-	return has_buff_debuff
+	return has_status_effect
 end
 
 function damage_defender(defender, damage, text_color)
@@ -378,7 +389,7 @@ function load_player_mon_data()
 	player_mon1.move2cd = 0
 	player_mon1.move3cd = 0
 	player_mon1.move4cd = 0
-	player_mon1.buffs_debuffs = {}
+	player_mon1.status_effects = {}
 	msg.post("player_mon1#sprite", "play_animation", { id = hash(player_mon1.name.."_back_original") })
 	combatants["player_mon1"] = player_mon1
 
@@ -391,7 +402,7 @@ function load_player_mon_data()
 		player_mon2.move2cd = 0
 		player_mon2.move3cd = 0
 		player_mon2.move4cd = 0
-		player_mon2.buffs_debuffs = {}
+		player_mon2.status_effects = {}
 		msg.post("player_mon2#sprite", "play_animation", { id = hash(player_mon2.name.."_back_original") })
 		combatants["player_mon2"] = player_mon2
 	else
@@ -408,7 +419,7 @@ function load_player_mon_data()
 		player_mon3.move2cd = 0
 		player_mon3.move3cd = 0
 		player_mon3.move4cd = 0
-		player_mon3.buffs_debuffs = {}
+		player_mon3.status_effects = {}
 		msg.post("player_mon3#sprite", "play_animation", { id = hash(player_mon3.name.."_back_original") })
 		combatants["player_mon3"] = player_mon3
 	else
@@ -425,7 +436,7 @@ function load_player_mon_data()
 		player_mon4.move2cd = 0
 		player_mon4.move3cd = 0
 		player_mon4.move4cd = 0
-		player_mon4.buffs_debuffs = {}
+		player_mon4.status_effects = {}
 		msg.post("player_mon4#sprite", "play_animation", { id = hash(player_mon4.name.."_back_original") })
 		combatants["player_mon4"] = player_mon4
 	else
@@ -444,7 +455,7 @@ function load_enemy_data()
 	enemy_mon1.move2cd = 0
 	enemy_mon1.move3cd = 0
 	enemy_mon1.move4cd = 0
-	enemy_mon1.buffs_debuffs = {}
+	enemy_mon1.status_effects = {}
 	msg.post("enemy_mon1#sprite", "play_animation", { id = hash(enemy_mon1.name.."_front_original") })
 	combatants["enemy_mon1"] = enemy_mon1
 
@@ -456,7 +467,7 @@ function load_enemy_data()
 	enemy_mon2.move2cd = 0
 	enemy_mon2.move3cd = 0
 	enemy_mon2.move4cd = 0
-	enemy_mon2.buffs_debuffs = {}
+	enemy_mon2.status_effects = {}
 	msg.post("enemy_mon2#sprite", "play_animation", { id = hash(enemy_mon2.name.."_front_original") })
 	combatants["enemy_mon2"] = enemy_mon2
 
@@ -468,7 +479,7 @@ function load_enemy_data()
 	enemy_mon3.move2cd = 0
 	enemy_mon3.move3cd = 0
 	enemy_mon3.move4cd = 0
-	enemy_mon3.buffs_debuffs = {}
+	enemy_mon3.status_effects = {}
 	msg.post("enemy_mon3#sprite", "play_animation", { id = hash(enemy_mon3.name.."_front_original") })
 	combatants["enemy_mon3"] = enemy_mon3
 
@@ -480,7 +491,7 @@ function load_enemy_data()
 	enemy_mon4.move2cd = 0
 	enemy_mon4.move3cd = 0
 	enemy_mon4.move4cd = 0
-	enemy_mon4.buffs_debuffs = {}
+	enemy_mon4.status_effects = {}
 	msg.post("enemy_mon4#sprite", "play_animation", { id = hash(enemy_mon4.name.."_front_original") })
 	combatants["enemy_mon4"] = enemy_mon4
 end
