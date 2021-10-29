@@ -300,8 +300,15 @@ function move_button_clicked(self, move_num)
 	if(pmon["move"..move_num] ~= nil) then
 		move_level = pmon.known_moves[pmon["move"..move_num]].level
 		gui.set_text(gui.get_node("current_move_description"), moves[pmon.known_moves[pmon["move"..move_num]].id].description(move_level))
+		gui.set_text(gui.get_node("current_move_name"), moves[pmon.known_moves[pmon["move"..move_num]].id].name)
+		gui.set_text(gui.get_node("current_move_cooldown"), "CD: "..moves[pmon.known_moves[pmon["move"..move_num]].id].cooldown)
+		gui.set_enabled(gui.get_node("current_move_type"), true)
+		gui.play_flipbook(gui.get_node("current_move_type"), "type_"..types[moves[pmon.known_moves[pmon["move"..move_num]].id].type].name.."_16")
 	else
 		gui.set_text(gui.get_node("current_move_description"), "select a move...")
+		gui.set_text(gui.get_node("current_move_name"), "")
+		gui.set_text(gui.get_node("current_move_cooldown"), "")
+		gui.set_enabled(gui.get_node("current_move_type"), false)
 	end
 	
 	msg.post("menu", "display_pokemon_moves", {mon = pmon, selected_move="move"..move_num})
