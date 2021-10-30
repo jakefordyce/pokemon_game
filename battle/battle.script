@@ -52,35 +52,35 @@ function on_message(self, message_id, message, sender)
 		if current_turn_mon ~= nil then
 			msg.post("gui", "update_turn", {target=current_turn_mon.reference, current=current_turn_mon.turn, max=1000})
 		end
-		if player_mon1.turn > 1000 then
+		if player_mon1.turn > 1000 and not player_mon1.fainted then
 			player_mon1.turn = player_mon1.turn - 1000
 			current_turn_mon = player_mon1
 			start_player_turn(player_mon1)
-		elseif player_mon2 ~= nil and player_mon2.turn > 1000 then
+		elseif player_mon2 ~= nil and player_mon2.turn > 1000 and not player_mon2.fainted then
 			player_mon2.turn = player_mon2.turn - 1000
 			current_turn_mon = player_mon2
 			start_player_turn(player_mon2)
-		elseif player_mon3 ~= nil and player_mon3.turn > 1000 then
+		elseif player_mon3 ~= nil and player_mon3.turn > 1000 and not player_mon3.fainted then
 			player_mon3.turn = player_mon3.turn - 1000
 			current_turn_mon = player_mon3
 			start_player_turn(player_mon3)
-		elseif player_mon4 ~= nil and player_mon4.turn > 1000 then
+		elseif player_mon4 ~= nil and player_mon4.turn > 1000 and not player_mon4.fainted then
 			player_mon4.turn = player_mon4.turn - 1000
 			current_turn_mon = player_mon4
 			start_player_turn(player_mon4)
-		elseif enemy_mon1.turn > 1000 then
+		elseif enemy_mon1.turn > 1000 and not enemy_mon1.fainted then
 			enemy_mon1.turn = enemy_mon1.turn - 1000
 			current_turn_mon = enemy_mon1
 			start_enemy_turn(enemy_mon1)
-		elseif enemy_mon2.turn > 1000 then
+		elseif enemy_mon2.turn > 1000 and not enemy_mon2.fainted then
 			enemy_mon2.turn = enemy_mon2.turn - 1000
 			current_turn_mon = enemy_mon2
 			start_enemy_turn(enemy_mon2)
-		elseif enemy_mon3.turn > 1000 then
+		elseif enemy_mon3.turn > 1000 and not enemy_mon3.fainted then
 			enemy_mon3.turn = enemy_mon3.turn - 1000
 			current_turn_mon = enemy_mon3
 			start_enemy_turn(enemy_mon3)
-		elseif enemy_mon4.turn > 1000 then
+		elseif enemy_mon4.turn > 1000 and not enemy_mon4.fainted then
 			enemy_mon4.turn = enemy_mon4.turn - 1000
 			current_turn_mon = enemy_mon4
 			start_enemy_turn(enemy_mon4)
@@ -118,13 +118,13 @@ function start_handling_move(target)
 		elseif (effect.target == 3) then -- all enemies
 			if string.match(current_turn_mon.reference, "^enemy") then -- an enemy mon using the move
 				for i=1,4 do
-					if(combatants["player_mon"..i] ~= nil) then
+					if(combatants["player_mon"..i] ~= nil and not combatants["player_mon"..i].fainted) then
 						timer.delay(delay_time, false, function() handle_move_effects(effect, "player_mon"..i, current_turn_mon) end)
 					end
 				end
 			else -- player mon using the move
 				for i=1,4 do
-					if(combatants["enemy_mon"..i] ~= nil) then
+					if(combatants["enemy_mon"..i] ~= nil and not combatants["enemy_mon"..i].fainted) then
 						timer.delay(delay_time, false, function() handle_move_effects(effect, "enemy_mon"..i, current_turn_mon) end)
 					end
 				end
@@ -132,13 +132,13 @@ function start_handling_move(target)
 		elseif (effect.target == 4) then -- all allies
 			if string.match(current_turn_mon.reference, "^enemy") then -- an enemy mon using the move
 				for i=1,4 do
-					if(combatants["enemy_mon"..i] ~= nil) then
+					if(combatants["enemy_mon"..i] ~= nil and not combatants["enemy_mon"..i].fainted) then
 						timer.delay(delay_time, false, function() handle_move_effects(effect, "enemy_mon"..i, current_turn_mon) end)
 					end
 				end
 			else -- player mon using the move
 				for i=1,4 do
-					if(combatants["player_mon"..i] ~= nil) then
+					if(combatants["player_mon"..i] ~= nil and not combatants["player_mon"..i].fainted) then
 						timer.delay(delay_time, false, function() handle_move_effects(effect, "player_mon"..i, current_turn_mon) end)
 					end
 				end
@@ -172,7 +172,7 @@ function handle_move_effects(effect, target, move_user)
 			text_color = "yellow"
 		end
 		display_damage_text(go.get_position(defender.reference),""..damage, text_color)
-		damage_defender(defender, damage, text_color)
+		damage_defender(defender, damage)
 	elseif effect.id == 2 then --reduce attack
 		local defender = combatants[target]
 		local duration = effect.param2
@@ -285,19 +285,28 @@ function mon_has_status_effect(mon, effect_id)
 	return has_status_effect
 end
 
-function damage_defender(defender, damage, text_color)
+function damage_defender(defender, damage)
 	defender.currenthp = defender.currenthp - damage
 	
 	if defender.currenthp <= 0 then
 		defender.currenthp = 0
+		defender.fainted = true
+		defender.turn = 0
+		msg.post("gui", "disable_mon", {mon = defender.reference})
+		msg.post(defender.reference.."#sprite", "disable")
+	else
+		msg.post("gui", "update_hp", {target=defender.reference, current=defender.currenthp, max=defender.hp})
 	end
-	-- prompt damage numbers to appear on screen
-	msg.post("gui", "update_hp", {target=defender.reference, current=defender.currenthp, max=defender.hp})
-	-- check if dead
 
 	--TODO: check all instead of just one. Possibly find a better place for this check?
-	if defender.currenthp <= 0 then
-		msg.post("main:/loader#main", "end_battle")
+	--if defender.currenthp <= 0 then
+		--msg.post("main:/loader#main", "end_battle")
+	--end
+
+	if enemy_mon1.fainted and (enemy_mon2 == nil or enemy_mon2.fainted) and (enemy_mon3 == nil or enemy_mon3.fainted) and (enemy_mon4 == nil or enemy_mon4.fainted) then
+		timer.delay(0.5, false, function() msg.post("main:/loader#main", "end_battle", {victory = true}) end)
+	elseif player_mon1.fainted and (player_mon2 == nil or player_mon2.fainted) and (player_mon3 == nil or player_mon3.fainted) and (player_mon4 == nil or player_mon4.fainted) then
+		timer.delay(0.5, false, function() msg.post("main:/loader#main", "end_battle", {victory = false}) end)
 	end
 end
 
@@ -374,31 +383,38 @@ function choose_enemy_move()
 end
 
 function increment_turn()
-	player_mon1.turn = player_mon1.turn + player_mon1.speed
-	msg.post("gui", "update_turn", {target="player_mon1", current=player_mon1.turn, max=1000})
-	if player_mon2 ~= nil then
+	if not player_mon1.fainted then
+		player_mon1.turn = player_mon1.turn + player_mon1.speed
+		msg.post("gui", "update_turn", {target="player_mon1", current=player_mon1.turn, max=1000})
+	end
+	if player_mon2 ~= nil and not player_mon2.fainted then
 		player_mon2.turn = player_mon2.turn + player_mon2.speed
 		msg.post("gui", "update_turn", {target="player_mon2", current=player_mon2.turn, max=1000})
 	end
-	if player_mon3 ~= nil then
+	if player_mon3 ~= nil and not player_mon3.fainted then
 		player_mon3.turn = player_mon3.turn + player_mon3.speed
 		msg.post("gui", "update_turn", {target="player_mon3", current=player_mon3.turn, max=1000})
 	end
-	if player_mon4 ~= nil then
+	if player_mon4 ~= nil and not player_mon4.fainted then
 		player_mon4.turn = player_mon4.turn + player_mon4.speed
 		msg.post("gui", "update_turn", {target="player_mon4", current=player_mon4.turn, max=1000})
 	end
-	enemy_mon1.turn = enemy_mon1.turn + enemy_mon1.speed
-	msg.post("gui", "update_turn", {target="enemy_mon1", current=enemy_mon1.turn, max=1000})
-	
-	enemy_mon2.turn = enemy_mon2.turn + enemy_mon2.speed
-	msg.post("gui", "update_turn", {target="enemy_mon2", current=enemy_mon2.turn, max=1000})
-	
-	enemy_mon3.turn = enemy_mon3.turn + enemy_mon3.speed
-	msg.post("gui", "update_turn", {target="enemy_mon3", current=enemy_mon3.turn, max=1000})
-	
-	enemy_mon4.turn = enemy_mon4.turn + enemy_mon4.speed
-	msg.post("gui", "update_turn", {target="enemy_mon4", current=enemy_mon4.turn, max=1000})
+	if enemy_mon1 ~= nil and not enemy_mon1.fainted then
+		enemy_mon1.turn = enemy_mon1.turn + enemy_mon1.speed
+		msg.post("gui", "update_turn", {target="enemy_mon1", current=enemy_mon1.turn, max=1000})
+	end
+	if enemy_mon2 ~= nil and not enemy_mon2.fainted then
+		enemy_mon2.turn = enemy_mon2.turn + enemy_mon2.speed
+		msg.post("gui", "update_turn", {target="enemy_mon2", current=enemy_mon2.turn, max=1000})
+	end
+	if enemy_mon3 ~= nil and not enemy_mon3.fainted then
+		enemy_mon3.turn = enemy_mon3.turn + enemy_mon3.speed
+		msg.post("gui", "update_turn", {target="enemy_mon3", current=enemy_mon3.turn, max=1000})
+	end
+	if enemy_mon4 ~= nil and not enemy_mon4.fainted then
+		enemy_mon4.turn = enemy_mon4.turn + enemy_mon4.speed
+		msg.post("gui", "update_turn", {target="enemy_mon4", current=enemy_mon4.turn, max=1000})
+	end
 	
 	msg.post(".", "find_next_turn")
 end
@@ -414,6 +430,7 @@ function load_player_mon_data()
 	player_mon1.move3cd = 0
 	player_mon1.move4cd = 0
 	player_mon1.status_effects = {}
+	player_mon1.fainted = false
 	msg.post("player_mon1#sprite", "play_animation", { id = hash(player_mon1.name.."_back_original") })
 	combatants["player_mon1"] = player_mon1
 
@@ -427,6 +444,7 @@ function load_player_mon_data()
 		player_mon2.move3cd = 0
 		player_mon2.move4cd = 0
 		player_mon2.status_effects = {}
+		player_mon2.fainted = false
 		msg.post("player_mon2#sprite", "play_animation", { id = hash(player_mon2.name.."_back_original") })
 		combatants["player_mon2"] = player_mon2
 	else
@@ -444,6 +462,7 @@ function load_player_mon_data()
 		player_mon3.move3cd = 0
 		player_mon3.move4cd = 0
 		player_mon3.status_effects = {}
+		player_mon3.fainted = false
 		msg.post("player_mon3#sprite", "play_animation", { id = hash(player_mon3.name.."_back_original") })
 		combatants["player_mon3"] = player_mon3
 	else
@@ -461,6 +480,7 @@ function load_player_mon_data()
 		player_mon4.move3cd = 0
 		player_mon4.move4cd = 0
 		player_mon4.status_effects = {}
+		player_mon4.fainted = false
 		msg.post("player_mon4#sprite", "play_animation", { id = hash(player_mon4.name.."_back_original") })
 		combatants["player_mon4"] = player_mon4
 	else
@@ -480,6 +500,7 @@ function load_enemy_data()
 	enemy_mon1.move3cd = 0
 	enemy_mon1.move4cd = 0
 	enemy_mon1.status_effects = {}
+	enemy_mon1.fainted = false
 	msg.post("enemy_mon1#sprite", "play_animation", { id = hash(enemy_mon1.name.."_front_original") })
 	combatants["enemy_mon1"] = enemy_mon1
 
@@ -492,6 +513,7 @@ function load_enemy_data()
 	enemy_mon2.move3cd = 0
 	enemy_mon2.move4cd = 0
 	enemy_mon2.status_effects = {}
+	enemy_mon2.fainted = false
 	msg.post("enemy_mon2#sprite", "play_animation", { id = hash(enemy_mon2.name.."_front_original") })
 	combatants["enemy_mon2"] = enemy_mon2
 
@@ -504,6 +526,7 @@ function load_enemy_data()
 	enemy_mon3.move3cd = 0
 	enemy_mon3.move4cd = 0
 	enemy_mon3.status_effects = {}
+	enemy_mon3.fainted = false
 	msg.post("enemy_mon3#sprite", "play_animation", { id = hash(enemy_mon3.name.."_front_original") })
 	combatants["enemy_mon3"] = enemy_mon3
 
@@ -516,6 +539,7 @@ function load_enemy_data()
 	enemy_mon4.move3cd = 0
 	enemy_mon4.move4cd = 0
 	enemy_mon4.status_effects = {}
+	enemy_mon4.fainted = false
 	msg.post("enemy_mon4#sprite", "play_animation", { id = hash(enemy_mon4.name.."_front_original") })
 	combatants["enemy_mon4"] = enemy_mon4
 end
@@ -533,7 +557,7 @@ function display_targetting_icons()
 		table.insert(spawned_target_icons, icon)
 	elseif(selected_move.targetting == 1) then --enemy
 		for i=1,4 do
-			if(combatants["enemy_mon"..i] ~= nil) then
+			if(combatants["enemy_mon"..i] ~= nil and not combatants["enemy_mon"..i].fainted) then
 				effectiveness = types.type_effectiveness(selected_move.type, combatants["enemy_mon"..i].type1, combatants["enemy_mon"..i].type2)
 				local p = go.get_position("enemy_mon"..i)
 				p.y = p.y + 50
@@ -543,7 +567,7 @@ function display_targetting_icons()
 		end
 	elseif(selected_move.targetting == 2) then --ally
 		for i=1,4 do
-			if(combatants["player_mon"..i] ~= nil) then
+			if(combatants["player_mon"..i] ~= nil and not combatants["player_mon"..i].fainted) then
 				local p = go.get_position("player_mon"..i)
 				p.y = p.y + 50
 				local icon = factory.create("#target_icon_factory",p)
@@ -556,9 +580,9 @@ end
 function target_is_valid(target)
 	if(selected_move.targetting == 0 and target == current_turn_mon.reference) then
 		return true
-	elseif(selected_move.targetting == 1 and string.match(target, "^enemy")) then
+	elseif(selected_move.targetting == 1 and string.match(target, "^enemy") and not combatants[target].fainted) then
 		return true
-	elseif(selected_move.targetting == 2 and string.match(target, "^player")) then
+	elseif(selected_move.targetting == 2 and string.match(target, "^player") and not combatants[target].fainted) then
 		return true
 	else
 		return false

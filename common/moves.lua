@@ -170,5 +170,25 @@ M[8] = {
 	end
 }
 
+meffects = {}
+meffects[1] = {}
+meffects[1].id = 1
+meffects[1].target = 3
+meffects[1].param1 = 300
+meffects[1].param2 = "spattack"
+
+M[9] = {
+	name = "Razor Leaf",
+	effects = meffects,
+	cooldown = 3,
+	default = false,
+	type = 11,
+	targetting = 1,
+	description = function(moveLevel)
+		damage = 300 + (moveLevel * 15)
+		return "Attacks all enemies for "..damage.."% of Special Attack."
+	end
+}
+
 
 return M

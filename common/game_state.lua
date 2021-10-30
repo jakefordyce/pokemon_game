@@ -150,7 +150,7 @@ moves[2] = {
 	level = 4
 }
 moves[3] = {
-	id = 8,
+	id = 9,
 	level = 0
 }
 moves[4] = {
