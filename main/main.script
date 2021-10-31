@@ -35,6 +35,7 @@ end
 function on_message(self, message_id, message, sender)
 	if message_id == hash("load_choose_team") then
 		game_state.battle_type = message.battle_type
+		game_state.battle_id = message.battle_id
 		generate_enemy_team(message.battle_type, message.battle_id)
 		load_screen("choose_team", area_names[game_state.current_area])
 	end
@@ -42,7 +43,26 @@ function on_message(self, message_id, message, sender)
 		load_screen("battle", "choose_team")
 	end
 	if message_id == hash("end_battle") then
-		load_screen("rewards", "battle")
+		if game_state.battle_type == 1 then
+			game_state.dialog_is_pending = false
+			if(message.victory) then
+				load_screen("rewards", "battle")
+			else
+				load_screen(area_names[game_state.current_area], "battle")
+			end
+		elseif game_state.battle_type == 2 then
+			game_state.dialog_is_pending = true
+			if(message.victory) then
+				--battle_id should be the trainer id in common/encounters.
+				--this needs to be set in the trainer script
+				game_state.trainers_defeated[game_state.battle_id] = true
+				game_state.pending_dialog_id = game_state.victory_dialog_id
+				load_screen("rewards", "battle")
+			else
+				game_state.pending_dialog_id = game_state.loss_dialog_id
+				load_screen(area_names[game_state.current_area], "battle")
+			end
+		end
 	end
 	if message_id == hash("end_rewards") then
 		load_screen(area_names[game_state.current_area], "rewards")

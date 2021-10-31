@@ -14,6 +14,8 @@ M.trainers_defeated = {}
 M.dialog_is_pending = false
 M.pending_dialog_id = nil
 M.pending_dialog_sender = nil
+M.victory_dialog_id = nil
+M.loss_dialog_id = nil
 
 --BATTLE INFO--
 M.player_mon1 = 1 --this is the index of M.pokemon
@@ -32,6 +34,7 @@ M.battle_type = 1
 -- 1 - wild pokemon
 -- 2 - trainer
 -- 3 - boss fight
+M.battle_id = 1
 
 M.preview_mon = {}
 
@@ -161,7 +164,7 @@ moves[4] = {
 
 M.pokemon[1] = {
 	pokedex = 1,
-	level = 30,
+	level = 50,
 	exp = 0,
 	name = "bulbasaur",
 	known_moves = moves,

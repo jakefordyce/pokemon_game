@@ -21,17 +21,14 @@ function on_message(self, message_id, message, sender)
 		end
 	elseif message_id == hash("dialog_end") then
 		if(message.dialog_id == 7) then
-			game_state.dialog_is_pending = true
-			game_state.pending_dialog_id = 9
 			game_state.pending_dialog_sender = go.get_id()
+			game_state.victory_dialog_id = 9
+			game_state.loss_dialog_id = 10
 			msg.post("/adventure/camera", "reset")
 			msg.post("main:/loader#main", "load_choose_team", {battle_type = 2, battle_id = 1})
-			--TODO: move to a better spot.
-			game_state.trainers_defeated[1] = true
 		elseif(message.dialog_id == 9) then
 			--do nothing.
 		end
-		
 	end
 end
 
