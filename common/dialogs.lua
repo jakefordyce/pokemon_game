@@ -50,5 +50,15 @@ M[10] = {
 	next = nil,
 	has_choices = false
 }
+M[11] = {
+	text = "SHOPKEEPER: Lookin' to shop Runes?",
+	next = nil,
+	has_choices = true
+}
+M[12] = {
+	text = "SHOPKEEPER: Thank you, come again.",
+	next = nil,
+	has_choices = false
+}
 
 return M

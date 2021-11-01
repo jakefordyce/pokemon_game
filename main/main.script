@@ -93,12 +93,18 @@ function on_message(self, message_id, message, sender)
 			load_screen(area_names[game_state.current_area], "rewards")
 		end
 	end
+	if message_id == hash("load_rune_shop") then
+		load_screen("rune_shop", area_names[game_state.current_area])
+	end
+	if message_id == hash("exit_rune_shop") then
+		load_screen(area_names[game_state.current_area], "rune_shop")
+	end
+end
 
-	function generate_enemy_team(battle_type, battle_id)
-		if battle_type == 1 then
-			encounters.load_wild_encounter(game_state.current_area)
-		elseif battle_type == 2 then
-			encounters.load_trainer_data(battle_id)
-		end
+function generate_enemy_team(battle_type, battle_id)
+	if battle_type == 1 then
+		encounters.load_wild_encounter(game_state.current_area)
+	elseif battle_type == 2 then
+		encounters.load_trainer_data(battle_id)
 	end
 end
