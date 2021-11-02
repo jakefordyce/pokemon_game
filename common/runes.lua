@@ -14,6 +14,10 @@ M.stat_names = {
 	"Defense"
 }
 
+function M.upgrade_cost(level)
+	return (math.pow(3, level) * 10)
+end
+
 function M.levelup_rune(rune)
 	rune.level = rune.level + 1
 	if(#rune.substats > 3) then

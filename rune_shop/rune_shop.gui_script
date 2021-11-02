@@ -197,19 +197,24 @@ function decrease_substat(substat_num)
 end
 
 function upgrade_rune()
-	--TODO: check cost vs money
-	runes.levelup_rune(selected_rune)
-	display_rune_details()
-	game_state.calculate_pokemon_stats()
+	cost = runes.upgrade_cost(selected_rune.level)
+	if game_state.money >= cost then
+		runes.levelup_rune(selected_rune)
+		game_state.calculate_pokemon_stats()
+		game_state.money = game_state.money - cost
+		display_rune_details()
+	end
 end
 
 function display_rune_details()
 	gui.play_flipbook(gui.get_node("rune_sprite"), "rune_"..selected_rune.slot.."_"..selected_rune.rarity)
 	gui.set_text(gui.get_node("rune_level"), selected_rune.level)
+	gui.set_text(gui.get_node("current_money_text"), "Money: $"..game_state.money)
 	
 	if menu_mode == 3 then
 		gui.set_enabled(gui.get_node("substats_remaining"), true)
 		gui.set_text(gui.get_node("substats_remaining"), "Substats: "..selected_rune.substat_points)
+		gui.set_text(gui.get_node("cost_text"), "Cost: $"..runes.upgrade_cost(selected_rune.level))
 		for i=1,5 do
 			gui.set_enabled(gui.get_node("substat"..i.."_increase"), true)
 			gui.set_enabled(gui.get_node("substat"..i.."_decrease"), true)
