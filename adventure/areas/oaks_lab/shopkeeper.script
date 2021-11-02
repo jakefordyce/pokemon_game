@@ -21,6 +21,7 @@ function on_message(self, message_id, message, sender)
 				game_state.dialog_is_pending = true
 				game_state.pending_dialog_id = 12
 				game_state.pending_dialog_sender = go.get_id()
+				msg.post("/adventure/camera", "reset")
 				msg.post("main:/loader#main", "load_rune_shop")
 			else
 				msg.post("/adventure/gui", "load_dialog", {dialog_id = 12})

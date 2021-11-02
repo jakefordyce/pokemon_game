@@ -1,27 +1,30 @@
 local game_state = require "common/game_state"
+local runes = require "common/runes"
 local menu_mode = 1 -- 1 buy, 2 sell, 3 enhance
+local selected_rune = nil
 
 function init(self)
 	msg.post(".", "acquire_input_focus")
 	gui.set_enabled(gui.get_node("selected_rune_panel"), false)
+	gui.set_enabled(gui.get_node("return_to_menu_button"), false)
 end
 
 function final(self)
-	-- Add finalization code here
-	-- Learn more: https://defold.com/manuals/script/
-	-- Remove this function if not needed
 end
 
 function update(self, dt)
-	-- Add update code here
-	-- Learn more: https://defold.com/manuals/script/
-	-- Remove this function if not needed
 end
 
 function on_message(self, message_id, message, sender)
-	-- Add message-handling code here
-	-- Learn more: https://defold.com/manuals/message-passing/
-	-- Remove this function if not needed
+	if message_id == hash("display_rune_details") then
+		if menu_mode > 1 then
+			selected_rune = game_state.runes[message.rune]
+		end
+		gui.set_enabled(gui.get_node("return_to_menu_button"), false)
+		gui.set_enabled(gui.get_node("main_shop_panel"), false)
+		gui.set_enabled(gui.get_node("selected_rune_panel"), true)
+		display_rune_details()
+	end
 end
 
 function on_input(self, action_id, action)
@@ -33,23 +36,98 @@ function on_input(self, action_id, action)
 		if(gui.pick_node(gui.get_node("buy_button"),action.x,action.y) and node_enabled(gui.get_node("buy_button"))) then
 			return true
 		end
+		if(gui.pick_node(gui.get_node("sell_button"),action.x,action.y) and node_enabled(gui.get_node("sell_button"))) then
+			return true
+		end
+		if(gui.pick_node(gui.get_node("enhance_button"),action.x,action.y) and node_enabled(gui.get_node("enhance_button"))) then
+			return true
+		end
+		if(gui.pick_node(gui.get_node("return_to_menu_button"),action.x,action.y) and node_enabled(gui.get_node("return_to_menu_button"))) then
+			return true
+		end
+		if(gui.pick_node(gui.get_node("close_rune_panel_button"),action.x,action.y) and node_enabled(gui.get_node("close_rune_panel_button"))) then
+			return true
+		end
 	end
 	if(action_id == hash("touch") and action.released == true) then
 		if(gui.pick_node(gui.get_node("exit_shop_button"),action.x,action.y) and node_enabled(gui.get_node("exit_shop_button"))) then
 			msg.post("main:/loader#main", "exit_rune_shop")
+			return true
 		end
 		if(gui.pick_node(gui.get_node("buy_button"),action.x,action.y) and node_enabled(gui.get_node("buy_button"))) then
 			menu_mode = 1
+			msg.post("rune_shop", "display_player_runes") -- TODO: display shop runes
+			gui.set_enabled(gui.get_node("main_shop_panel"), false)
+			gui.set_enabled(gui.get_node("return_to_menu_button"), true)
+			return true
+		end
+		if(gui.pick_node(gui.get_node("sell_button"),action.x,action.y) and node_enabled(gui.get_node("sell_button"))) then
+			menu_mode = 2
 			msg.post("rune_shop", "display_player_runes")
 			gui.set_enabled(gui.get_node("main_shop_panel"), false)
+			gui.set_enabled(gui.get_node("return_to_menu_button"), true)
+			return true
+		end
+		if(gui.pick_node(gui.get_node("enhance_button"),action.x,action.y) and node_enabled(gui.get_node("enhance_button"))) then
+			menu_mode = 3
+			msg.post("rune_shop", "display_player_runes")
+			gui.set_enabled(gui.get_node("main_shop_panel"), false)
+			gui.set_enabled(gui.get_node("return_to_menu_button"), true)
+			return true
+		end
+		if(gui.pick_node(gui.get_node("return_to_menu_button"),action.x,action.y) and node_enabled(gui.get_node("return_to_menu_button"))) then
+			gui.set_enabled(gui.get_node("main_shop_panel"), true)
+			gui.set_enabled(gui.get_node("return_to_menu_button"), false)
+			return true
+		end
+		if(gui.pick_node(gui.get_node("close_rune_panel_button"),action.x,action.y) and node_enabled(gui.get_node("close_rune_panel_button"))) then
+			gui.set_enabled(gui.get_node("selected_rune_panel"), false)
+			gui.set_enabled(gui.get_node("return_to_menu_button"), true)
+			return true
 		end
 	end
 end
 
 function on_reload(self)
-	-- Add reload-handling code here
-	-- Learn more: https://defold.com/manuals/hot-reload/
-	-- Remove this function if not needed
+end
+
+function display_rune_details()
+	gui.play_flipbook(gui.get_node("rune_sprite"), "rune_"..selected_rune.slot.."_"..selected_rune.rarity)
+
+	if menu_mode == 3 then
+		gui.set_enabled(gui.get_node("substats_remaining"), true)
+		for i=1,5 do
+			gui.set_enabled(gui.get_node("substat"..i.."_increase"), true)
+			gui.set_enabled(gui.get_node("substat"..i.."_decrease"), true)
+		end
+	else
+		gui.set_enabled(gui.get_node("substats_remaining"), false)
+		for i=1,5 do
+			gui.set_enabled(gui.get_node("substat"..i.."_increase"), false)
+			gui.set_enabled(gui.get_node("substat"..i.."_decrease"), false)
+		end
+	end
+	
+	value_text = "+ " .. runes.mainstat_value(selected_rune.main_stat, selected_rune.level)
+	if selected_rune.main_stat > 6 then
+		value_text = value_text .. "%"
+	end
+	
+	gui.set_text(gui.get_node("mainstat_lbl"), runes.stat_names[selected_rune.main_stat])
+	gui.set_text(gui.get_node("mainstat"), value_text)
+	
+	for i=1,5 do
+		gui.set_enabled(gui.get_node("substat"..i), false)
+	end
+	for i,ss in ipairs(selected_rune.substats) do
+		value_text = "+ " .. runes.substat_value(ss.stat, ss.rank)
+		if ss.stat > 6 then
+			value_text = value_text .. "%"
+		end
+		gui.set_enabled(gui.get_node("substat"..i), true)
+		gui.set_text(gui.get_node("substat"..i.."_lbl"), runes.stat_names[ss.stat])
+		gui.set_text(gui.get_node("substat"..i), value_text)
+	end
 end
 
 function node_enabled(node)
