@@ -14,6 +14,26 @@ M.stat_names = {
 	"Defense"
 }
 
+function M.levelup_rune(rune)
+	rune.level = rune.level + 1
+	if(#rune.substats > 3) then
+		rune.substat_points = rune.substat_points + 1
+	else
+		dupe_found = true
+		new_substat = nil
+		while dupe_found == true do
+			dupe_found = false
+			new_substat = math.random(4,11)
+			for i, ss in ipairs(rune.substats) do
+				if(ss.stat == new_substat) then
+					dupe_found = true
+				end
+			end
+		end
+		table.insert(rune.substats, {stat = new_substat, rank = 1})
+	end
+end
+
 function M.substat_value(stat, rank)
 	value = rank * 5
 	return value

@@ -201,6 +201,7 @@ M.runes[1] = {
 	rarity = 5,
 	main_stat = 1,
 	equipped_id = 1, -- this is the index from M.pokemon
+	substat_points = 0,
 	substats = {
 		{
 			stat = 9,
@@ -227,6 +228,7 @@ M.runes[2] = {
 	rarity = 1,
 	main_stat = 2,
 	equipped_id = nil, -- this is the index from M.pokemon
+	substat_points = 0,
 	substats = {}
 }
 
@@ -236,6 +238,7 @@ M.runes[3] = {
 	rarity = 2,
 	main_stat = 3,
 	equipped_id = nil, -- this is the index from M.pokemon
+	substat_points = 0,
 	substats = {
 		{
 			stat = 4,
@@ -250,6 +253,7 @@ M.runes[4] = {
 	rarity = 2,
 	main_stat = 1,
 	equipped_id = nil, -- this is the index from M.pokemon
+	substat_points = 0,
 	substats = {
 		{
 			stat = 4,

@@ -250,8 +250,8 @@ nodes {
 }
 nodes {
   position {
-    x: -140.0
-    y: 158.0
+    x: -151.0
+    y: 157.0
     z: 0.0
     w: 1.0
   }
@@ -376,8 +376,8 @@ nodes {
 }
 nodes {
   position {
-    x: -140.0
-    y: 89.0
+    x: -151.0
+    y: 88.0
     z: 0.0
     w: 1.0
   }
@@ -738,8 +738,8 @@ nodes {
 }
 nodes {
   position {
-    x: -140.0
-    y: 124.0
+    x: -151.0
+    y: 123.0
     z: 0.0
     w: 1.0
   }
@@ -1100,8 +1100,8 @@ nodes {
 }
 nodes {
   position {
-    x: -140.0
-    y: 54.0
+    x: -151.0
+    y: 53.0
     z: 0.0
     w: 1.0
   }
@@ -1462,8 +1462,8 @@ nodes {
 }
 nodes {
   position {
-    x: -140.0
-    y: 18.0
+    x: -151.0
+    y: 17.0
     z: 0.0
     w: 1.0
   }
@@ -1824,8 +1824,8 @@ nodes {
 }
 nodes {
   position {
-    x: -140.0
-    y: -15.0
+    x: -151.0
+    y: -16.0
     z: 0.0
     w: 1.0
   }
@@ -2186,8 +2186,8 @@ nodes {
 }
 nodes {
   position {
-    x: -297.0
-    y: -51.0
+    x: -308.0
+    y: -52.0
     z: 0.0
     w: 1.0
   }
@@ -2249,8 +2249,8 @@ nodes {
 }
 nodes {
   position {
-    x: 207.0
-    y: 59.0
+    x: 127.0
+    y: 121.0
     z: 0.0
     w: 1.0
   }
@@ -2301,6 +2301,69 @@ nodes {
   alpha: 1.0
   template_node_child: false
   size_mode: SIZE_MODE_MANUAL
+}
+nodes {
+  position {
+    x: 0.0
+    y: -20.0
+    z: 0.0
+    w: 1.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale {
+    x: 1.5
+    y: 1.5
+    z: 1.0
+    w: 1.0
+  }
+  size {
+    x: 50.0
+    y: 20.0
+    z: 0.0
+    w: 1.0
+  }
+  color {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+    w: 1.0
+  }
+  type: TYPE_TEXT
+  blend_mode: BLEND_MODE_ALPHA
+  text: "1"
+  font: "system_font"
+  id: "rune_level"
+  xanchor: XANCHOR_NONE
+  yanchor: YANCHOR_NONE
+  pivot: PIVOT_W
+  outline {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+    w: 1.0
+  }
+  shadow {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+    w: 1.0
+  }
+  adjust_mode: ADJUST_MODE_FIT
+  line_break: false
+  parent: "rune_sprite"
+  layer: ""
+  inherit_alpha: false
+  alpha: 1.0
+  outline_alpha: 1.0
+  shadow_alpha: 1.0
+  template_node_child: false
+  text_leading: 1.0
+  text_tracking: 0.0
 }
 nodes {
   position {

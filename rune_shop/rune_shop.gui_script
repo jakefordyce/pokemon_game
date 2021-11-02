@@ -48,6 +48,9 @@ function on_input(self, action_id, action)
 		if(gui.pick_node(gui.get_node("close_rune_panel_button"),action.x,action.y) and node_enabled(gui.get_node("close_rune_panel_button"))) then
 			return true
 		end
+		if(gui.pick_node(gui.get_node("pay_button"),action.x,action.y) and node_enabled(gui.get_node("pay_button"))) then
+			return true
+		end
 	end
 	if(action_id == hash("touch") and action.released == true) then
 		if(gui.pick_node(gui.get_node("exit_shop_button"),action.x,action.y) and node_enabled(gui.get_node("exit_shop_button"))) then
@@ -56,6 +59,7 @@ function on_input(self, action_id, action)
 		end
 		if(gui.pick_node(gui.get_node("buy_button"),action.x,action.y) and node_enabled(gui.get_node("buy_button"))) then
 			menu_mode = 1
+			gui.set_text(gui.get_node("pay_text"), "Buy")
 			msg.post("rune_shop", "display_player_runes") -- TODO: display shop runes
 			gui.set_enabled(gui.get_node("main_shop_panel"), false)
 			gui.set_enabled(gui.get_node("return_to_menu_button"), true)
@@ -63,6 +67,7 @@ function on_input(self, action_id, action)
 		end
 		if(gui.pick_node(gui.get_node("sell_button"),action.x,action.y) and node_enabled(gui.get_node("sell_button"))) then
 			menu_mode = 2
+			gui.set_text(gui.get_node("pay_text"), "Sell")
 			msg.post("rune_shop", "display_player_runes")
 			gui.set_enabled(gui.get_node("main_shop_panel"), false)
 			gui.set_enabled(gui.get_node("return_to_menu_button"), true)
@@ -70,6 +75,7 @@ function on_input(self, action_id, action)
 		end
 		if(gui.pick_node(gui.get_node("enhance_button"),action.x,action.y) and node_enabled(gui.get_node("enhance_button"))) then
 			menu_mode = 3
+			gui.set_text(gui.get_node("pay_text"), "Upgrade")
 			msg.post("rune_shop", "display_player_runes")
 			gui.set_enabled(gui.get_node("main_shop_panel"), false)
 			gui.set_enabled(gui.get_node("return_to_menu_button"), true)
@@ -85,17 +91,36 @@ function on_input(self, action_id, action)
 			gui.set_enabled(gui.get_node("return_to_menu_button"), true)
 			return true
 		end
+		if(gui.pick_node(gui.get_node("pay_button"),action.x,action.y) and node_enabled(gui.get_node("pay_button"))) then
+			if menu_mode == 1 then
+				buy_rune()
+			elseif menu_mode == 2 then
+				sell_rune()
+			elseif menu_mode == 3 then
+				upgrade_rune()
+			end
+			
+			return true
+		end
 	end
 end
 
 function on_reload(self)
 end
 
+function upgrade_rune()
+	--TODO: check cost vs money
+	runes.levelup_rune(selected_rune)
+	display_rune_details()
+end
+
 function display_rune_details()
 	gui.play_flipbook(gui.get_node("rune_sprite"), "rune_"..selected_rune.slot.."_"..selected_rune.rarity)
-
+	gui.set_text(gui.get_node("rune_level"), selected_rune.level)
+	
 	if menu_mode == 3 then
 		gui.set_enabled(gui.get_node("substats_remaining"), true)
+		gui.set_text(gui.get_node("substats_remaining"), "Substats: "..selected_rune.substat_points)
 		for i=1,5 do
 			gui.set_enabled(gui.get_node("substat"..i.."_increase"), true)
 			gui.set_enabled(gui.get_node("substat"..i.."_decrease"), true)
@@ -128,6 +153,7 @@ function display_rune_details()
 		gui.set_text(gui.get_node("substat"..i.."_lbl"), runes.stat_names[ss.stat])
 		gui.set_text(gui.get_node("substat"..i), value_text)
 	end
+
 end
 
 function node_enabled(node)
