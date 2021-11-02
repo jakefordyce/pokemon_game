@@ -51,6 +51,36 @@ function on_input(self, action_id, action)
 		if(gui.pick_node(gui.get_node("pay_button"),action.x,action.y) and node_enabled(gui.get_node("pay_button"))) then
 			return true
 		end
+		if(gui.pick_node(gui.get_node("substat1_increase"),action.x,action.y) and node_enabled(gui.get_node("substat1_increase"))) then
+			return true
+		end
+		if(gui.pick_node(gui.get_node("substat1_decrease"),action.x,action.y) and node_enabled(gui.get_node("substat1_decrease"))) then
+			return true
+		end
+		if(gui.pick_node(gui.get_node("substat2_increase"),action.x,action.y) and node_enabled(gui.get_node("substat2_increase"))) then
+			return true
+		end
+		if(gui.pick_node(gui.get_node("substat2_decrease"),action.x,action.y) and node_enabled(gui.get_node("substat2_decrease"))) then
+			return true
+		end
+		if(gui.pick_node(gui.get_node("substat3_increase"),action.x,action.y) and node_enabled(gui.get_node("substat3_increase"))) then
+			return true
+		end
+		if(gui.pick_node(gui.get_node("substat3_decrease"),action.x,action.y) and node_enabled(gui.get_node("substat3_decrease"))) then
+			return true
+		end
+		if(gui.pick_node(gui.get_node("substat4_increase"),action.x,action.y) and node_enabled(gui.get_node("substat4_increase"))) then
+			return true
+		end
+		if(gui.pick_node(gui.get_node("substat4_decrease"),action.x,action.y) and node_enabled(gui.get_node("substat4_decrease"))) then
+			return true
+		end
+		if(gui.pick_node(gui.get_node("substat5_increase"),action.x,action.y) and node_enabled(gui.get_node("substat5_increase"))) then
+			return true
+		end
+		if(gui.pick_node(gui.get_node("substat5_decrease"),action.x,action.y) and node_enabled(gui.get_node("substat5_decrease"))) then
+			return true
+		end
 	end
 	if(action_id == hash("touch") and action.released == true) then
 		if(gui.pick_node(gui.get_node("exit_shop_button"),action.x,action.y) and node_enabled(gui.get_node("exit_shop_button"))) then
@@ -102,16 +132,75 @@ function on_input(self, action_id, action)
 			
 			return true
 		end
+		if(gui.pick_node(gui.get_node("substat1_increase"),action.x,action.y) and node_enabled(gui.get_node("substat1_increase"))) then
+			increase_substat(1)
+			return true
+		end
+		if(gui.pick_node(gui.get_node("substat1_decrease"),action.x,action.y) and node_enabled(gui.get_node("substat1_decrease"))) then
+			decrease_substat(1)
+			return true
+		end
+		if(gui.pick_node(gui.get_node("substat2_increase"),action.x,action.y) and node_enabled(gui.get_node("substat2_increase"))) then
+			increase_substat(2)
+			return true
+		end
+		if(gui.pick_node(gui.get_node("substat2_decrease"),action.x,action.y) and node_enabled(gui.get_node("substat2_decrease"))) then
+			decrease_substat(2)
+			return true
+		end
+		if(gui.pick_node(gui.get_node("substat3_increase"),action.x,action.y) and node_enabled(gui.get_node("substat3_increase"))) then
+			increase_substat(3)
+			return true
+		end
+		if(gui.pick_node(gui.get_node("substat3_decrease"),action.x,action.y) and node_enabled(gui.get_node("substat3_decrease"))) then
+			decrease_substat(3)
+			return true
+		end
+		if(gui.pick_node(gui.get_node("substat4_increase"),action.x,action.y) and node_enabled(gui.get_node("substat4_increase"))) then
+			increase_substat(4)
+			return true
+		end
+		if(gui.pick_node(gui.get_node("substat4_decrease"),action.x,action.y) and node_enabled(gui.get_node("substat4_decrease"))) then
+			decrease_substat(4)
+			return true
+		end
+		if(gui.pick_node(gui.get_node("substat5_increase"),action.x,action.y) and node_enabled(gui.get_node("substat5_increase"))) then
+			increase_substat(5)
+			return true
+		end
+		if(gui.pick_node(gui.get_node("substat5_decrease"),action.x,action.y) and node_enabled(gui.get_node("substat5_decrease"))) then
+			decrease_substat(5)
+			return true
+		end
 	end
 end
 
 function on_reload(self)
 end
 
+function increase_substat(substat_num)
+	if(selected_rune.substat_points > 0 and #selected_rune.substats > 3) then
+		selected_rune.substat_points = selected_rune.substat_points - 1
+		selected_rune.substats[substat_num].rank = selected_rune.substats[substat_num].rank +1
+		display_rune_details()
+		game_state.calculate_pokemon_stats()
+	end
+end
+
+function decrease_substat(substat_num)
+	if(selected_rune.substats[substat_num].rank > 1 and #selected_rune.substats > 3) then
+		selected_rune.substats[substat_num].rank = selected_rune.substats[substat_num].rank - 1
+		selected_rune.substat_points = selected_rune.substat_points + 1
+		display_rune_details()
+		game_state.calculate_pokemon_stats()
+	end
+end
+
 function upgrade_rune()
 	--TODO: check cost vs money
 	runes.levelup_rune(selected_rune)
 	display_rune_details()
+	game_state.calculate_pokemon_stats()
 end
 
 function display_rune_details()
