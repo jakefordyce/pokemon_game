@@ -10,6 +10,8 @@ M.items_found = {}
 
 M.trainers_defeated = {}
 
+M.shop_runes = {}
+
 --TEMP STATE--
 M.dialog_is_pending = false
 M.pending_dialog_id = nil
@@ -70,6 +72,37 @@ function M.add_pokemon(pokedex, level)
 		new_mon["move"..i] = equipped_moves[i]
 	end
 	table.insert(M.pokemon, new_mon)
+	
+end
+
+function M.generate_shop_runes()
+	count = #M.shop_runes
+	for i=0, count do M.shop_runes[i]=nil end
+
+	for i=1,3 do
+		M.shop_runes[i] = {
+			slot = i,
+			level = 1,
+			rarity = 1,
+			main_stat = i,
+			equipped_id = nil,
+			substat_points = 0,
+			substats = {}
+		}
+	end
+
+	for i=4,6 do
+		mainstat = runes.random_mainstat(i)
+		M.shop_runes[i] = {
+			slot = i,
+			level = 1,
+			rarity = 1,
+			main_stat = mainstat,
+			equipped_id = nil,
+			substat_points = 0,
+			substats = {}
+		}
+	end
 	
 end
 

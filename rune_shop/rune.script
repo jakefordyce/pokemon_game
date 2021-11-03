@@ -1,8 +1,13 @@
 go.property("rune_id", 1)
+go.property("menu_mode", 1)
 local game_state = require "common/game_state"
 
 function init(self)
-	msg.post("#sprite", "play_animation", { id = hash("rune_"..game_state.runes[self.rune_id].slot.."_"..game_state.runes[self.rune_id].rarity) })
+	if self.menu_mode == 1 then
+		msg.post("#sprite", "play_animation", { id = hash("rune_"..game_state.shop_runes[self.rune_id].slot.."_"..game_state.shop_runes[self.rune_id].rarity) })
+	else
+		msg.post("#sprite", "play_animation", { id = hash("rune_"..game_state.runes[self.rune_id].slot.."_"..game_state.runes[self.rune_id].rarity) })
+	end
 end
 
 function final(self)
@@ -15,7 +20,7 @@ function on_message(self, message_id, message, sender)
 	if message_id == hash("contact_point_response") then
 		if message.other_group == hash("cursor") then
 			msg.post("gui", "display_rune_details", { rune = self.rune_id })
-			--msg.post("menu", "select_rune", { rune = self.rune_id } )
+			msg.post("rune_shop", "disable_clicking")
 		end
 	end
 end

@@ -9,6 +9,7 @@ local current_mon = nil
 local current_move = "move1"
 local current_rune = 1
 local selected_rune = nil
+local current_menu = 1 --pokedex
 
 function init(self)
 	msg.post(".", "acquire_input_focus")
@@ -24,9 +25,11 @@ end
 
 function on_message(self, message_id, message, sender)
 	if message_id == hash("display_pokedex") then
+		current_menu = 1
 		display_pokedex_grid()
 	end
 	if message_id == hash("display_pokemon") then
+		current_menu = 2
 		display_pokemon_grid()
 	end
 	if message_id == hash("select_pokemon") then
@@ -45,7 +48,11 @@ function on_message(self, message_id, message, sender)
 	end
 	if message_id == hash("hide_runes") then
 		clear_gos(spawned_rune_icons)
-		display_pokemon_grid()
+		if current_menu == 1 then
+			display_pokedex_grid()
+		elseif current_menu == 2 then
+			display_pokemon_grid()
+		end
 	end
 	if message_id == hash("select_rune") then
 		selected_rune = message.rune
@@ -129,6 +136,8 @@ function remove_rune()
 end
 
 function display_pokedex_grid()
+	clear_gos(spawned_pokedex_icons)
+	clear_gos(spawned_pokemon_icons)
 	local p = vmath.vector3()
 	p.y = 1000
 	p.x = 32
@@ -152,6 +161,8 @@ function display_pokedex_grid()
 end
 
 function display_pokemon_grid()
+	clear_gos(spawned_pokedex_icons)
+	clear_gos(spawned_pokemon_icons)
 	local p = vmath.vector3()
 	p.y = 1000
 	p.x = 32

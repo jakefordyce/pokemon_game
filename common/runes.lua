@@ -14,12 +14,25 @@ M.stat_names = {
 	"Defense"
 }
 
+function M.random_mainstat(slot)
+	options = {}
+	options[4] = {7,8,9,10,11}
+	options[5] = {5,6,9,10,11}
+	options[6] = {4,9,10,11}
+	stat = options[slot][math.random(1,#options[slot])]
+	return stat
+end
+
 function M.upgrade_cost(level)
 	return (math.pow(3, level) * 10)
 end
 
 function M.sell_price(rune)
 	return (math.pow(3, rune.level) * 10 * (rune.rarity / 5))
+end
+
+function M.buy_price(rune)
+	return M.sell_price(rune) * 2
 end
 
 function M.levelup_rune(rune)
@@ -32,9 +45,13 @@ function M.levelup_rune(rune)
 		while dupe_found == true do
 			dupe_found = false
 			new_substat = math.random(4,11)
-			for i, ss in ipairs(rune.substats) do
-				if(ss.stat == new_substat) then
-					dupe_found = true
+			if new_substat == rune.main_stat then
+				dupe_found = true
+			else
+				for i, ss in ipairs(rune.substats) do
+					if(ss.stat == new_substat) then
+						dupe_found = true
+					end
 				end
 			end
 		end
