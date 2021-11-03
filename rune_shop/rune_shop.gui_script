@@ -2,6 +2,7 @@ local game_state = require "common/game_state"
 local runes = require "common/runes"
 local menu_mode = 1 -- 1 buy, 2 sell, 3 enhance
 local selected_rune = nil
+local selected_rune_index = nil
 
 function init(self)
 	msg.post(".", "acquire_input_focus")
@@ -19,6 +20,7 @@ function on_message(self, message_id, message, sender)
 	if message_id == hash("display_rune_details") then
 		if menu_mode > 1 then
 			selected_rune = game_state.runes[message.rune]
+			selected_rune_index = message.rune
 		end
 		gui.set_enabled(gui.get_node("return_to_menu_button"), false)
 		gui.set_enabled(gui.get_node("main_shop_panel"), false)
@@ -196,6 +198,15 @@ function decrease_substat(substat_num)
 	end
 end
 
+function sell_rune()
+	sell_price = runes.sell_price(selected_rune)
+	table.remove(game_state.runes, selected_rune_index)
+	game_state.money = game_state.money + sell_price
+	gui.set_enabled(gui.get_node("selected_rune_panel"), false)
+	gui.set_enabled(gui.get_node("return_to_menu_button"), true)
+	msg.post("rune_shop", "display_player_runes")
+end
+
 function upgrade_rune()
 	cost = runes.upgrade_cost(selected_rune.level)
 	if game_state.money >= cost then
@@ -224,6 +235,11 @@ function display_rune_details()
 		for i=1,5 do
 			gui.set_enabled(gui.get_node("substat"..i.."_increase"), false)
 			gui.set_enabled(gui.get_node("substat"..i.."_decrease"), false)
+		end
+		if menu_mode == 1 then
+			gui.set_text(gui.get_node("cost_text"), "Cost: $100")
+		elseif menu_mode == 2 then
+			gui.set_text(gui.get_node("cost_text"), "Value: $"..runes.sell_price(selected_rune))
 		end
 	end
 	

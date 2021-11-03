@@ -15,6 +15,7 @@ end
 
 function on_message(self, message_id, message, sender)
 	if message_id == hash("display_player_runes") then
+		clear_gos(spawned_rune_icons)
 		display_player_runes()
 	end
 	if message_id == hash("display_shop_runes") then

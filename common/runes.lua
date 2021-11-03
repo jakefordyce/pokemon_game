@@ -18,6 +18,10 @@ function M.upgrade_cost(level)
 	return (math.pow(3, level) * 10)
 end
 
+function M.sell_price(rune)
+	return (math.pow(3, rune.level) * 10 * (rune.rarity / 5))
+end
+
 function M.levelup_rune(rune)
 	rune.level = rune.level + 1
 	if(#rune.substats > 3) then
