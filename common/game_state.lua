@@ -196,10 +196,10 @@ moves[4] = {
 
 
 M.pokemon[1] = {
-	pokedex = 1,
+	pokedex = 133,
 	level = 50,
 	exp = 0,
-	name = "bulbasaur",
+	name = "eevee",
 	known_moves = moves,
 	move1 = 1, --this is the index from the pokemon's known_moves.
 	move2 = 2,

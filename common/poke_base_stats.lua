@@ -72,7 +72,10 @@ M[1] = {
 	speed = 100,
 	type1 = 11,
 	type2 = 11,
-	moves = moves
+	moves = moves,
+	evolutions = {
+		{target = 2, stone_type1 = 11, stone_cost1 = 20}
+	}
 }
 
 M[2] = {
@@ -85,7 +88,10 @@ M[2] = {
 	speed = 100,
 	type1 = 11,
 	type2 = 11,
-	moves = moves
+	moves = moves,
+	evolutions = {
+		{target = 3, stone_type1 = 11, stone_cost1 = 20}
+	}
 }
 
 M[3] = {
@@ -114,7 +120,10 @@ M[4] = {
 	speed = 100,
 	type1 = 9,
 	type2 = 9,
-	moves = moves
+	moves = moves,
+	evolutions = {
+		{target = 5, stone_type1 = 9, stone_cost1 = 20}
+	}
 }
 
 M[5] = {
@@ -127,7 +136,10 @@ M[5] = {
 	speed = 100,
 	type1 = 9,
 	type2 = 9,
-	moves = moves
+	moves = moves,
+	evolutions = {
+		{target = 6, stone_type1 = 9, stone_cost1 = 10, stone_type2 = 8, stone_cost2 = 10}
+	}
 }
 
 M[6] = {
@@ -393,10 +405,59 @@ M[129]={}
 M[130]={}
 M[131]={}
 M[132]={}
-M[133]={}
-M[134]={}
-M[135]={}
-M[136]={}
+M[133]={
+	name = "eevee",
+	hp = 90,
+	attack = 80,
+	defense = 80,
+	spattack = 90,
+	spdefense = 80,
+	speed = 100,
+	type1 = 1,
+	type2 = 1,
+	moves = moves,
+	evolutions = {
+		{target = 134, stone_type1 = 10, stone_cost1 = 30},
+		{target = 135, stone_type1 = 12, stone_cost1 = 30},
+		{target = 136, stone_type1 = 9, stone_cost1 = 30}
+	}
+}
+M[134]={
+	name = "vaporeon",
+	hp = 90,
+	attack = 80,
+	defense = 80,
+	spattack = 90,
+	spdefense = 80,
+	speed = 100,
+	type1 = 10,
+	type2 = 10,
+	moves = moves
+}
+M[135]={
+	name = "jolteon",
+	hp = 90,
+	attack = 80,
+	defense = 80,
+	spattack = 90,
+	spdefense = 80,
+	speed = 100,
+	type1 = 12,
+	type2 = 12,
+	moves = moves
+}
+M[136]={
+	name = "flareon",
+	hp = 90,
+	attack = 80,
+	defense = 80,
+	spattack = 90,
+	spdefense = 80,
+	speed = 100,
+	type1 = 9,
+	type2 = 9,
+	moves = moves
+}
 M[137]={}
 M[138]={}
 M[139]={}

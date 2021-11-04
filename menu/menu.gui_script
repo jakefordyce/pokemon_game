@@ -12,6 +12,8 @@ function init(self)
 	gui.set_enabled(gui.get_node("runes_exit_button"), false)
 	gui.set_enabled(gui.get_node("current_rune_description"), false)
 	gui.set_enabled(gui.get_node("selected_rune_description"), false)
+	gui.set_enabled(gui.get_node("evolve_button"), false)
+	gui.set_enabled(gui.get_node("exit_evolve_button"), false)
 	self.current_pokemon = nil
 end
 
@@ -104,6 +106,11 @@ function on_message(self, message_id, message, sender)
 		gui.set_enabled(gui.get_node("details_exp_lbl"), true)
 		gui.set_enabled(gui.get_node("moves_panel"), true)
 		gui.set_enabled(gui.get_node("runes_panel"), true)
+		if pbs[mon.pokedex].evolutions ~= nil then
+			gui.set_enabled(gui.get_node("evolve_button"), true)
+		else
+			gui.set_enabled(gui.get_node("evolve_button"), false)
+		end
 		
 	end
 	if message_id == hash("moves_exit") then
@@ -187,6 +194,12 @@ function on_input(self, action_id, action)
 			return true
 		end
 		if(gui.pick_node(gui.get_node("remove_rune_button"),action.x,action.y) and node_enabled(gui.get_node("remove_rune_button"))) then
+			return true
+		end
+		if(gui.pick_node(gui.get_node("evolve_button"),action.x,action.y) and node_enabled(gui.get_node("evolve_button"))) then
+			return true
+		end
+		if(gui.pick_node(gui.get_node("exit_evolve_button"),action.x,action.y) and node_enabled(gui.get_node("exit_evolve_button"))) then
 			return true
 		end
 	end
@@ -285,6 +298,18 @@ function on_input(self, action_id, action)
 			gui.set_enabled(gui.get_node("selected_rune_description"), false)
 			gui.set_enabled(gui.get_node("current_rune_description"), false)
 			msg.post("menu", "remove_rune")
+			return true
+		end
+		if(gui.pick_node(gui.get_node("evolve_button"),action.x,action.y) and node_enabled(gui.get_node("evolve_button"))) then
+			gui.set_enabled(gui.get_node("details_panel"), false)
+			gui.set_enabled(gui.get_node("exit_evolve_button"), true)
+			msg.post("menu", "display_evolutions", {pokedex = game_state.pokemon[self.current_pokemon].pokedex})
+			return true
+		end
+		if(gui.pick_node(gui.get_node("exit_evolve_button"),action.x,action.y) and node_enabled(gui.get_node("exit_evolve_button"))) then
+			gui.set_enabled(gui.get_node("details_panel"), true)
+			gui.set_enabled(gui.get_node("exit_evolve_button"), false)
+			msg.post("menu", "hide_evolutions")
 			return true
 		end
 	end

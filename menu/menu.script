@@ -5,6 +5,7 @@ local spawned_pokedex_icons = {}
 local spawned_pokemon_icons = {}
 local spawned_moves = {}
 local spawned_rune_icons = {}
+local spawned_evolutions = {}
 local current_mon = nil
 local current_move = "move1"
 local current_rune = 1
@@ -79,6 +80,14 @@ function on_message(self, message_id, message, sender)
 	if message_id == hash("return_to_main") then
 		clear_gos(spawned_pokedex_icons)
 		clear_gos(spawned_pokemon_icons)
+	end
+	if message_id == hash("display_evolutions") then
+		clear_gos(spawned_pokemon_icons)
+		display_evolutions(message.pokedex)
+	end
+	if message_id == hash("hide_evolutions") then
+		clear_gos(spawned_evolutions)
+		display_pokemon_grid()
 	end
 end
 
@@ -174,6 +183,21 @@ function display_pokemon_grid()
 
 		p.x = p.x + 70 --each image is 64 wide. Also adding a little extra space.
 	end
+end
+
+function display_evolutions(pokedex)
+	local p = vmath.vector3()
+	p.y = 1000
+	p.x = 320
+
+	evolutions = pbs[pokedex].evolutions
+	for i, e in ipairs(evolutions) do
+		local evolution = factory.create("#evolution_factory",p, nil, {pokedex = pokedex, evolve_id = i})
+		go.set_parent(evolution, go.get_id("menu"))
+		table.insert(spawned_evolutions, evolution)
+
+		p.y = p.y - 100 --each object is roughly 100px tall
+	end	
 end
 
 function display_move_list(mon)
