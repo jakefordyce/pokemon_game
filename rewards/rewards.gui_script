@@ -1,5 +1,6 @@
 local game_state = require "common/game_state"
 local pbs = require "common/poke_base_stats"
+local encounters = require "common/encounters"
 local exp_gained = 0
 
 function init(self)
@@ -7,6 +8,7 @@ function init(self)
 	calc_exp()
 	check_level_ups()
 	display_mons()
+	display_money()
 end
 
 function final(self)
@@ -68,6 +70,16 @@ function check_level_ups()
 				gui.set_enabled(gui.get_node("player_mon"..i.."_learned_move"), false)
 			end
 		end
+	end
+end
+
+function display_money()
+	if game_state.battle_type == 2 then
+		reward_money = encounters.trainer_reward_money(game_state.battle_id)
+		gui.set_text(gui.get_node("money_reward"), "Money Gained: $"..reward_money)
+		game_state.money = game_state.money + reward_money
+	else
+		gui.set_enabled(gui.get_node("money_reward"), false)
 	end
 end
 

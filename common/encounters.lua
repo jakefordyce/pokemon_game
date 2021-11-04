@@ -68,7 +68,17 @@ function M.load_trainer_data(trainer_index)
 		simulate_runes(game_state["enemy_mon"..i])
 		select_moves(game_state["enemy_mon"..i])
 	end
-	
+end
+
+function M.trainer_reward_money(trainer_index)
+	total_money = 0
+	for i=1,4 do
+		if trainers[trainer_index]["mon"..i] ~= nil then
+			reward = math.floor(math.pow(3, (trainers[trainer_index]["mon"..i].level / 10) ) * 10)
+			total_money = total_money + reward
+		end
+	end
+	return total_money
 end
 
 function M.load_wild_encounter(area_index)
