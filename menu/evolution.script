@@ -2,15 +2,27 @@ go.property("pokedex", 1)
 go.property("evolve_id", 1)
 local types = require "common/poke_types"
 local pbs = require "common/poke_base_stats"
+local game_state = require "common/game_state"
 
 function init(self)
 	evolution = pbs[self.pokedex].evolutions[self.evolve_id]
 	msg.post("#stone_type1", "play_animation", { id = hash("type_"..types[evolution.stone_type1].name.."_16") })
 	msg.post("#evolve_target_sprite", "play_animation", { id = hash(pbs[evolution.target].name.."_front_original") })
-	label.set_text("#stone_cost1", evolution.stone_cost1)
+	label.set_text("#stone_cost1", game_state.stones[evolution.stone_type1].." / "..evolution.stone_cost1)
+	if game_state.stones[evolution.stone_type1] >= evolution.stone_cost1 then
+		go.set("#stone_cost1", "color", vmath.vector4(0, 1, 0, 1.0)) -- green
+	else
+		go.set("#stone_cost1", "color", vmath.vector4(1, 0, 0, 1.0)) -- red
+	end
+	
 	if evolution.stone_type2 ~= nil then
 		msg.post("#stone_type2", "play_animation", { id = hash("type_"..types[evolution.stone_type2].name.."_16") })
-		label.set_text("#stone_cost2", evolution.stone_cost2)
+		label.set_text("#stone_cost2", game_state.stones[evolution.stone_type2].." / "..evolution.stone_cost2)
+		if game_state.stones[evolution.stone_type2] >= evolution.stone_cost2 then
+			go.set("#stone_cost2", "color", vmath.vector4(0, 1, 0, 1.0)) -- green
+		else
+			go.set("#stone_cost2", "color", vmath.vector4(1, 0, 0, 1.0)) -- red
+		end
 	else
 		msg.post("#stone_type2", "disable")
 		msg.post("#stone_cost2", "disable")
@@ -26,8 +38,7 @@ end
 function on_message(self, message_id, message, sender)
 	if message_id == hash("contact_point_response") then
 		if message.other_group == hash("cursor") then
-			--TODO: evolve
-			--msg.post("menu", "swap_move", { move_id = self.move_index })
+			msg.post("menu", "evolve_pokemon", { pokedex = self.pokedex, evolve_id = self.evolve_id })
 		end
 	end
 end

@@ -167,11 +167,22 @@ function M.mon_learned_move(mon_index)
 	return learned_a_move
 end
 
+function M.evolve_pokemon(mon_index, target_pokedex)
+	mon = M.pokemon[mon_index]
+	mon.pokedex = target_pokedex
+	mon.name = pbs[target_pokedex].name
+	mon.type1 = pbs[target_pokedex].type1
+	mon.type2 = pbs[target_pokedex].type2
+	learned_moves = M.mon_learned_move(mon_index)
+	M.calculate_pokemon_stats()
+end
+
 --PLAYER INFO--
 M.position_x = 263
 M.position_y = 761
 M.current_area = 1
 M.money = 300
+M.stones = {0,0,0,0,0,0,0,20,20,0,0,0,0,0,0} -- 1 for each of the types in common/poke_types
 
 --List of all of the player's pokemon.
 M.pokemon = {}
@@ -196,10 +207,10 @@ moves[4] = {
 
 
 M.pokemon[1] = {
-	pokedex = 133,
+	pokedex = 5,
 	level = 50,
 	exp = 0,
-	name = "eevee",
+	name = "charmeleon",
 	known_moves = moves,
 	move1 = 1, --this is the index from the pokemon's known_moves.
 	move2 = 2,
@@ -221,8 +232,8 @@ M.pokemon[1] = {
 	resist = 0,
 	crit_chance = 5,
 	crit_damage = 50,
-	type1 = 11,
-	type2 = 11
+	type1 = 9,
+	type2 = 9
 }
 
 --List of all of the player's runes.

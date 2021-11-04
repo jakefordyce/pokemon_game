@@ -62,6 +62,7 @@ function on_message(self, message_id, message, sender)
 		mon = game_state.pokemon[self.current_pokemon]
 		gui.set_enabled(gui.get_node("details_panel"), true)
 		gui.set_enabled(gui.get_node("return_to_main_button"), false)
+		gui.set_enabled(gui.get_node("exit_evolve_button"), false)
 		gui.set_text(gui.get_node("details_name"), mon.name)
 		gui.set_text(gui.get_node("details_hp"), mon.hp)
 		gui.set_text(gui.get_node("details_attack"), mon.attack)

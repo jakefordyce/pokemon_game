@@ -89,6 +89,9 @@ function on_message(self, message_id, message, sender)
 		clear_gos(spawned_evolutions)
 		display_pokemon_grid()
 	end
+	if message_id == hash("evolve_pokemon") then
+		try_evolve_pokemon(message.pokedex, message.evolve_id)
+	end
 end
 
 function on_input(self, action_id, action)
@@ -113,6 +116,22 @@ function on_input(self, action_id, action)
 end
 
 function on_reload(self)
+end
+
+function try_evolve_pokemon(pokedex, evolve_id)
+	evolution = pbs[pokedex].evolutions[evolve_id]
+	if game_state.stones[evolution.stone_type1] >= evolution.stone_cost1 
+	and (evolution.stone_type2 == nil or game_state.stones[evolution.stone_type2] >= evolution.stone_cost2)
+	then
+		game_state.stones[evolution.stone_type1] = game_state.stones[evolution.stone_type1] - evolution.stone_cost1
+		if evolution.stone_type2 ~= nil then
+			game_state.stones[evolution.stone_type2] = game_state.stones[evolution.stone_type2] - evolution.stone_cost2
+		end
+		game_state.evolve_pokemon(current_mon, evolution.target)
+		--print("success")
+		clear_gos(spawned_evolutions)
+		msg.post("gui", "display_pokemon_details", {mon = current_mon})
+	end
 end
 
 function swap_move(move_id)

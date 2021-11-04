@@ -60,7 +60,7 @@ M.base_crit_damage = 100
 moves = {}
 moves[1] = {["level"] = 1, ["id"] = 1}
 moves[2] = {["level"] = 1, ["id"] = 2}
-moves[4] = {["level"] = 6, ["id"] = 3}
+
 
 M[1] = {
 	name = "bulbasaur",
@@ -141,6 +141,8 @@ M[5] = {
 		{target = 6, stone_type1 = 9, stone_cost1 = 10, stone_type2 = 8, stone_cost2 = 10}
 	}
 }
+
+moves[2] = {["level"] = 6, ["id"] = 3}
 
 M[6] = {
 	name = "charizard",

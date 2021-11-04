@@ -26,6 +26,7 @@ embedded_components {
   "mask: \"pokemon_icon\"\n"
   "mask: \"move\"\n"
   "mask: \"rune\"\n"
+  "mask: \"evolution\"\n"
   "embedded_collision_shape {\n"
   "  shapes {\n"
   "    shape_type: TYPE_SPHERE\n"
