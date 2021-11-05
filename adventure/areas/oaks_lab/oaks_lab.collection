@@ -22,12 +22,12 @@ instances {
     }
     properties {
       id: "target_x"
-      value: "371.0"
+      value: "261.0"
       type: PROPERTY_TYPE_NUMBER
     }
     properties {
       id: "target_y"
-      value: "644.0"
+      value: "655.0"
       type: PROPERTY_TYPE_NUMBER
     }
   }

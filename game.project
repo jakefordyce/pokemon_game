@@ -44,3 +44,6 @@ shared_state = 1
 gravity_y = -1000.0
 scale = 0.01
 
+[collection_proxy]
+max_count = 64
+
