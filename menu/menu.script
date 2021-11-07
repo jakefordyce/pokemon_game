@@ -128,7 +128,6 @@ function try_evolve_pokemon(pokedex, evolve_id)
 			game_state.stones[evolution.stone_type2] = game_state.stones[evolution.stone_type2] - evolution.stone_cost2
 		end
 		game_state.evolve_pokemon(current_mon, evolution.target)
-		--print("success")
 		clear_gos(spawned_evolutions)
 		msg.post("gui", "display_pokemon_details", {mon = current_mon})
 	end

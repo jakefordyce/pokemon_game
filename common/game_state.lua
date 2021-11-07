@@ -113,7 +113,7 @@ function M.generate_reward_runes()
 	
 	rune_count = 0
 	for i=1,4 do
-		rune_chance = 25
+		rune_chance = 50
 		if math.random(1,100) <= rune_chance then
 			rune_count = rune_count + 1
 		end
@@ -123,7 +123,7 @@ function M.generate_reward_runes()
 		rune_rarity = 1
 		rarity_increased = true
 		rarity_chance = 50
-		while rarity_increased == true and rune_rarity <= 5 do
+		while rarity_increased == true and rune_rarity < 5 do
 			if math.random(1,100) <= rarity_chance then
 				rarity_increased = true
 				rune_rarity = rune_rarity + 1
@@ -240,7 +240,7 @@ moves[4] = {
 
 M.pokemon[1] = {
 	pokedex = 5,
-	level = 50,
+	level = 100,
 	exp = 0,
 	name = "charmeleon",
 	known_moves = moves,

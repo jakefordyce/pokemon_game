@@ -1,10 +1,12 @@
 local game_state = require "common/game_state"
 local pbs = require "common/poke_base_stats"
 local encounters = require "common/encounters"
+local runes = require "common/runes"
 local exp_gained = 0
 
 function init(self)
 	msg.post(".", "acquire_input_focus")
+	gui.set_enabled(gui.get_node("selected_rune_description"), false)
 	calc_exp()
 	check_level_ups()
 	display_mons()
@@ -19,7 +21,10 @@ function update(self, dt)
 end
 
 function on_message(self, message_id, message, sender)
-
+	if message_id == hash("display_rune_details") then
+		gui.set_enabled(gui.get_node("selected_rune_description"), true)
+		gui.set_text(gui.get_node("selected_rune_description"),runes.description(game_state.reward_runes[message.rune]))
+	end
 end
 
 function on_input(self, action_id, action)
