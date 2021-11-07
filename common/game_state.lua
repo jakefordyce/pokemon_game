@@ -108,6 +108,9 @@ function M.generate_shop_runes()
 end
 
 function M.generate_reward_runes()
+	count = #M.reward_runes
+	for i=0, count do M.reward_runes[i]=nil end
+	
 	rune_count = 0
 	for i=1,4 do
 		rune_chance = 25

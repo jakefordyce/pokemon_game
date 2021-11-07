@@ -34,7 +34,7 @@ function M.generate_random_rune(rarity)
 	}
 	num_of_ss = rarity - 1
 
-	for i=0,num_of_ss do
+	for i=1,num_of_ss do
 		new_substat = M.random_substat(main_stat, new_rune.substats)
 		table.insert(new_rune.substats, {stat = new_substat, rank = 1})
 	end

@@ -87,6 +87,7 @@ end
 function display_runes()
 	if game_state.battle_type == 1 then
 		game_state.generate_reward_runes()
+		msg.post("rewards", "display_runes")
 		--TODO: generate rune icons
 	else
 		gui.set_enabled(gui.get_node("runes_header"), false)
