@@ -9,6 +9,7 @@ function init(self)
 	check_level_ups()
 	display_mons()
 	display_money()
+	display_runes()
 end
 
 function final(self)
@@ -81,5 +82,15 @@ function display_money()
 	else
 		gui.set_enabled(gui.get_node("money_reward"), false)
 	end
+end
+
+function display_runes()
+	if game_state.battle_type == 1 then
+		game_state.generate_reward_runes()
+		--TODO: generate rune icons
+	else
+		gui.set_enabled(gui.get_node("runes_header"), false)
+	end
+
 end
 

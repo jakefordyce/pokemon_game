@@ -11,6 +11,7 @@ M.items_found = {}
 M.trainers_defeated = {}
 
 M.shop_runes = {}
+M.reward_runes = {}
 
 --TEMP STATE--
 M.dialog_is_pending = false
@@ -104,6 +105,34 @@ function M.generate_shop_runes()
 		}
 	end
 	
+end
+
+function M.generate_reward_runes()
+	rune_count = 0
+	for i=1,4 do
+		rune_chance = 25
+		if math.random(1,100) <= rune_chance then
+			rune_count = rune_count + 1
+		end
+	end
+
+	for i=1, rune_count do
+		rune_rarity = 1
+		rarity_increased = true
+		rarity_chance = 50
+		while rarity_increased == true and rune_rarity <= 5 do
+			if math.random(1,100) <= rarity_chance then
+				rarity_increased = true
+				rune_rarity = rune_rarity + 1
+			else
+				rarity_increased = false
+			end
+		end
+		
+		new_rune = runes.generate_random_rune(rune_rarity)
+		table.insert(M.reward_runes, new_rune)
+		table.insert(M.runes, new_rune)
+	end
 end
 
 function M.generate_preview_mon(pokedex, level)

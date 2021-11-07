@@ -14,6 +14,53 @@ M.stat_names = {
 	"Defense"
 }
 
+function M.generate_random_rune(rarity)
+	rune_slot = math.random(1,6)
+	main_stat = 1
+	if rune_slot < 4 then
+		main_stat = rune_slot
+	else
+		main_stat = M.random_mainstat(rune_slot)
+	end
+
+	new_rune = {
+		slot = rune_slot,
+		level = 1,
+		rarity = rarity,
+		main_stat = main_stat,
+		equipped_id = nil,
+		substat_points = 0,
+		substats = {}
+	}
+	num_of_ss = rarity - 1
+
+	for i=0,num_of_ss do
+		new_substat = M.random_substat(main_stat, new_rune.substats)
+		table.insert(new_rune.substats, {stat = new_substat, rank = 1})
+	end
+
+	return new_rune
+end
+
+function M.random_substat(mainstat, substats)
+	dupe_found = true
+	new_substat = nil
+	while dupe_found == true do
+		dupe_found = false
+		new_substat = math.random(4,11)
+		if new_substat == main_stat then
+			dupe_found = true
+		else
+			for i, ss in ipairs(substats) do
+				if(ss.stat == new_substat) then
+					dupe_found = true
+				end
+			end
+		end
+	end
+	return new_substat
+end
+
 function M.random_mainstat(slot)
 	options = {}
 	options[4] = {7,8,9,10,11}
