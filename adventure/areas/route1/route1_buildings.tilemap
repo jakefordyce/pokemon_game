@@ -1,0 +1,274 @@
+tile_set: "/adventure/areas/neon_city/neon_city_buildings.tilesource"
+layers {
+  id: "layer1"
+  z: 0.0
+  is_visible: 1
+  cell {
+    x: -8
+    y: 0
+    tile: 199
+    h_flip: 0
+    v_flip: 0
+  }
+  cell {
+    x: -7
+    y: 0
+    tile: 200
+    h_flip: 0
+    v_flip: 0
+  }
+  cell {
+    x: -6
+    y: 0
+    tile: 204
+    h_flip: 0
+    v_flip: 0
+  }
+  cell {
+    x: -5
+    y: 0
+    tile: 204
+    h_flip: 0
+    v_flip: 0
+  }
+  cell {
+    x: -4
+    y: 0
+    tile: 204
+    h_flip: 0
+    v_flip: 0
+  }
+  cell {
+    x: -3
+    y: 0
+    tile: 204
+    h_flip: 0
+    v_flip: 0
+  }
+  cell {
+    x: -2
+    y: 0
+    tile: 205
+    h_flip: 0
+    v_flip: 0
+  }
+  cell {
+    x: -1
+    y: 0
+    tile: 206
+    h_flip: 0
+    v_flip: 0
+  }
+  cell {
+    x: -8
+    y: 1
+    tile: 164
+    h_flip: 0
+    v_flip: 0
+  }
+  cell {
+    x: -7
+    y: 1
+    tile: 165
+    h_flip: 0
+    v_flip: 0
+  }
+  cell {
+    x: -6
+    y: 1
+    tile: 166
+    h_flip: 0
+    v_flip: 0
+  }
+  cell {
+    x: -5
+    y: 1
+    tile: 166
+    h_flip: 0
+    v_flip: 0
+  }
+  cell {
+    x: -4
+    y: 1
+    tile: 166
+    h_flip: 0
+    v_flip: 0
+  }
+  cell {
+    x: -3
+    y: 1
+    tile: 166
+    h_flip: 0
+    v_flip: 0
+  }
+  cell {
+    x: -2
+    y: 1
+    tile: 170
+    h_flip: 0
+    v_flip: 0
+  }
+  cell {
+    x: -1
+    y: 1
+    tile: 171
+    h_flip: 0
+    v_flip: 0
+  }
+  cell {
+    x: -8
+    y: 2
+    tile: 129
+    h_flip: 0
+    v_flip: 0
+  }
+  cell {
+    x: -7
+    y: 2
+    tile: 130
+    h_flip: 0
+    v_flip: 0
+  }
+  cell {
+    x: -6
+    y: 2
+    tile: 131
+    h_flip: 0
+    v_flip: 0
+  }
+  cell {
+    x: -5
+    y: 2
+    tile: 131
+    h_flip: 0
+    v_flip: 0
+  }
+  cell {
+    x: -4
+    y: 2
+    tile: 131
+    h_flip: 0
+    v_flip: 0
+  }
+  cell {
+    x: -3
+    y: 2
+    tile: 131
+    h_flip: 0
+    v_flip: 0
+  }
+  cell {
+    x: -2
+    y: 2
+    tile: 135
+    h_flip: 0
+    v_flip: 0
+  }
+  cell {
+    x: -1
+    y: 2
+    tile: 136
+    h_flip: 0
+    v_flip: 0
+  }
+  cell {
+    x: -8
+    y: 3
+    tile: 94
+    h_flip: 0
+    v_flip: 0
+  }
+  cell {
+    x: -7
+    y: 3
+    tile: 95
+    h_flip: 0
+    v_flip: 0
+  }
+  cell {
+    x: -6
+    y: 3
+    tile: 96
+    h_flip: 0
+    v_flip: 0
+  }
+  cell {
+    x: -5
+    y: 3
+    tile: 96
+    h_flip: 0
+    v_flip: 0
+  }
+  cell {
+    x: -4
+    y: 3
+    tile: 96
+    h_flip: 0
+    v_flip: 0
+  }
+  cell {
+    x: -3
+    y: 3
+    tile: 96
+    h_flip: 0
+    v_flip: 0
+  }
+  cell {
+    x: -2
+    y: 3
+    tile: 100
+    h_flip: 0
+    v_flip: 0
+  }
+  cell {
+    x: -1
+    y: 3
+    tile: 101
+    h_flip: 0
+    v_flip: 0
+  }
+  cell {
+    x: -7
+    y: 4
+    tile: 60
+    h_flip: 0
+    v_flip: 0
+  }
+  cell {
+    x: -6
+    y: 4
+    tile: 61
+    h_flip: 0
+    v_flip: 0
+  }
+  cell {
+    x: -5
+    y: 4
+    tile: 61
+    h_flip: 0
+    v_flip: 0
+  }
+  cell {
+    x: -4
+    y: 4
+    tile: 61
+    h_flip: 0
+    v_flip: 0
+  }
+  cell {
+    x: -3
+    y: 4
+    tile: 61
+    h_flip: 0
+    v_flip: 0
+  }
+  cell {
+    x: -2
+    y: 4
+    tile: 65
+    h_flip: 0
+    v_flip: 0
+  }
+}
+material: "/builtins/materials/tile_map.material"
+blend_mode: BLEND_MODE_ALPHA
