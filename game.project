@@ -47,3 +47,6 @@ scale = 0.01
 [collection_proxy]
 max_count = 64
 
+[tilemap]
+max_tile_count = 10000
+
