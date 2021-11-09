@@ -112,7 +112,7 @@ end
 -- Wild Encounter Data
 areas = {}
 
-areas[2] = {
+areas[3] = {
 	{10,19},
 	{13,16},
 	{1,4,7,63,66},

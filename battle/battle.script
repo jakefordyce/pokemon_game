@@ -542,6 +542,8 @@ function load_enemy_data()
 	enemy_mon4.fainted = false
 	msg.post("enemy_mon4#sprite", "play_animation", { id = hash(enemy_mon4.name.."_front_original") })
 	combatants["enemy_mon4"] = enemy_mon4
+
+	msg.post("enemy_boss#sprite", "disable")
 end
 
 function display_targetting_icons()

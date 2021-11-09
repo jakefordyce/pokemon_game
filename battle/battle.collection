@@ -167,7 +167,7 @@ embedded_instances {
   ""
   position {
     x: 93.0
-    y: 558.0
+    y: 470.0
     z: 0.0
   }
   rotation {
@@ -207,7 +207,7 @@ embedded_instances {
   ""
   position {
     x: 89.0
-    y: 846.0
+    y: 715.0
     z: 0.0
   }
   rotation {
@@ -247,7 +247,7 @@ embedded_instances {
   ""
   position {
     x: 245.0
-    y: 558.0
+    y: 470.0
     z: 0.0
   }
   rotation {
@@ -287,7 +287,7 @@ embedded_instances {
   ""
   position {
     x: 398.0
-    y: 558.0
+    y: 470.0
     z: 0.0
   }
   rotation {
@@ -327,7 +327,7 @@ embedded_instances {
   ""
   position {
     x: 547.0
-    y: 558.0
+    y: 470.0
     z: 0.0
   }
   rotation {
@@ -367,7 +367,7 @@ embedded_instances {
   ""
   position {
     x: 244.0
-    y: 846.0
+    y: 715.0
     z: 0.0
   }
   rotation {
@@ -407,7 +407,7 @@ embedded_instances {
   ""
   position {
     x: 405.0
-    y: 846.0
+    y: 715.0
     z: 0.0
   }
   rotation {
@@ -447,7 +447,7 @@ embedded_instances {
   ""
   position {
     x: 554.0
-    y: 846.0
+    y: 715.0
     z: 0.0
   }
   rotation {
@@ -459,6 +459,46 @@ embedded_instances {
   scale3 {
     x: 2.0
     y: 2.0
+    z: 1.0
+  }
+}
+embedded_instances {
+  id: "enemy_boss"
+  data: "embedded_components {\n"
+  "  id: \"sprite\"\n"
+  "  type: \"sprite\"\n"
+  "  data: \"tile_set: \\\"/battle/front_sprites.atlas\\\"\\n"
+  "default_animation: \\\"kangaskhan_front_original\\\"\\n"
+  "material: \\\"/builtins/materials/sprite.material\\\"\\n"
+  "blend_mode: BLEND_MODE_ALPHA\\n"
+  "\"\n"
+  "  position {\n"
+  "    x: 0.0\n"
+  "    y: 0.0\n"
+  "    z: 0.0\n"
+  "  }\n"
+  "  rotation {\n"
+  "    x: 0.0\n"
+  "    y: 0.0\n"
+  "    z: 0.0\n"
+  "    w: 1.0\n"
+  "  }\n"
+  "}\n"
+  ""
+  position {
+    x: 320.0
+    y: 940.0
+    z: 0.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale3 {
+    x: 4.0
+    y: 4.0
     z: 1.0
   }
 }

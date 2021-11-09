@@ -6,6 +6,7 @@ local current_turn_mon = nil
 function init(self)
 	msg.post(".", "acquire_input_focus")
 	msg.post(".", "hide_mon_display")
+	gui.set_enabled(gui.get_node("enemy_boss"), false)
 end
 
 function final(self)
