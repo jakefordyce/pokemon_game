@@ -1,10 +1,10 @@
-name: "oaks_lab"
+name: "rune_shop"
 instances {
   id: "door"
   prototype: "/adventure/door.go"
   position {
-    x: 259.0
-    y: 613.0
+    x: 262.0
+    y: 606.0
     z: 0.0
   }
   rotation {
@@ -22,12 +22,12 @@ instances {
     }
     properties {
       id: "target_x"
-      value: "260.0"
+      value: "-62.0"
       type: PROPERTY_TYPE_NUMBER
     }
     properties {
       id: "target_y"
-      value: "673.0"
+      value: "693.0"
       type: PROPERTY_TYPE_NUMBER
     }
   }
@@ -61,8 +61,8 @@ scale_along_z: 0
 embedded_instances {
   id: "area"
   data: "components {\n"
-  "  id: \"oaks_lab\"\n"
-  "  component: \"/adventure/areas/oaks_lab/oaks_lab.tilemap\"\n"
+  "  id: \"rune_shop\"\n"
+  "  component: \"/adventure/areas/rune_shop/rune_shop.tilemap\"\n"
   "  position {\n"
   "    x: 0.0\n"
   "    y: 0.0\n"
@@ -78,11 +78,11 @@ embedded_instances {
   "embedded_components {\n"
   "  id: \"collisionobject\"\n"
   "  type: \"collisionobject\"\n"
-  "  data: \"collision_shape: \\\"/adventure/areas/oaks_lab/oaks_lab.tilemap\\\"\\n"
-  "type: COLLISION_OBJECT_TYPE_STATIC\\n"
+  "  data: \"collision_shape: \\\"/adventure/areas/rune_shop/rune_shop.tilemap\\\"\\n"
+  "type: COLLISION_OBJECT_TYPE_KINEMATIC\\n"
   "mass: 0.0\\n"
   "friction: 0.1\\n"
-  "restitution: 0.0\\n"
+  "restitution: 0.5\\n"
   "group: \\\"default\\\"\\n"
   "mask: \\\"player\\\"\\n"
   "linear_damping: 0.0\\n"
@@ -104,9 +104,9 @@ embedded_instances {
   "}\n"
   ""
   position {
-    x: 51.0
-    y: 620.0
-    z: 0.0
+    x: 134.0
+    y: 610.0
+    z: -0.5
   }
   rotation {
     x: 0.0
@@ -121,30 +121,10 @@ embedded_instances {
   }
 }
 embedded_instances {
-  id: "oak"
+  id: "shopkeeper"
   data: "components {\n"
-  "  id: \"oak\"\n"
-  "  component: \"/adventure/areas/oaks_lab/oak.script\"\n"
-  "  position {\n"
-  "    x: 0.0\n"
-  "    y: 0.0\n"
-  "    z: 0.0\n"
-  "  }\n"
-  "  rotation {\n"
-  "    x: 0.0\n"
-  "    y: 0.0\n"
-  "    z: 0.0\n"
-  "    w: 1.0\n"
-  "  }\n"
-  "}\n"
-  "embedded_components {\n"
-  "  id: \"sprite\"\n"
-  "  type: \"sprite\"\n"
-  "  data: \"tile_set: \\\"/adventure/npcs.atlas\\\"\\n"
-  "default_animation: \\\"oak_down_1\\\"\\n"
-  "material: \\\"/builtins/materials/sprite.material\\\"\\n"
-  "blend_mode: BLEND_MODE_ALPHA\\n"
-  "\"\n"
+  "  id: \"shopkeeper\"\n"
+  "  component: \"/adventure/areas/rune_shop/shopkeeper.script\"\n"
   "  position {\n"
   "    x: 0.0\n"
   "    y: 0.0\n"
@@ -206,10 +186,30 @@ embedded_instances {
   "    w: 1.0\n"
   "  }\n"
   "}\n"
+  "embedded_components {\n"
+  "  id: \"sprite\"\n"
+  "  type: \"sprite\"\n"
+  "  data: \"tile_set: \\\"/adventure/npcs.atlas\\\"\\n"
+  "default_animation: \\\"youngster_down_1\\\"\\n"
+  "material: \\\"/builtins/materials/sprite.material\\\"\\n"
+  "blend_mode: BLEND_MODE_ALPHA\\n"
+  "\"\n"
+  "  position {\n"
+  "    x: 0.0\n"
+  "    y: 0.0\n"
+  "    z: 0.0\n"
+  "  }\n"
+  "  rotation {\n"
+  "    x: 0.0\n"
+  "    y: 0.0\n"
+  "    z: 0.0\n"
+  "    w: 1.0\n"
+  "  }\n"
+  "}\n"
   ""
   position {
-    x: 230.0
-    y: 933.0
+    x: 182.0
+    y: 767.0
     z: 0.0
   }
   rotation {
