@@ -1,6 +1,7 @@
 local game_state = require "common/game_state"
 local pbs = require "common/poke_base_stats"
 local moves = require "common/moves"
+local bosses = require "common/boss_stats"
 
 local M = {}
 
@@ -22,6 +23,22 @@ local function generate_stats(mon)
 	mon.crit_damage = pbs.base_crit_damage
 	mon.type1 = pbs[mon.pokedex].type1
 	mon.type2 = pbs[mon.pokedex].type2
+end
+
+local function generate_boss_stats(boss)
+	mon.name = bosses[boss.index].name
+	mon.hp =  bosses.stat_by_level(boss_index, "hp", boss.level)
+	mon.attack = bosses.stat_by_level(boss_index, "attack", boss.level)
+	mon.defense = bosses.stat_by_level(boss_index, "defense", boss.level)
+	mon.spattack = bosses.stat_by_level(boss_index, "spattack", boss.level)
+	mon.spdefense = bosses.stat_by_level(boss_index, "spdefense", boss.level)
+	mon.speed = bosses[boss.index].speed
+	mon.accuracy = 0
+	mon.resist = 0
+	mon.crit_chance = bosses.base_crit_chance
+	mon.crit_damage = bosses.base_crit_damage
+	mon.type1 = bosses[boss.index].type1
+	mon.type2 = bosses[boss.index].type2
 end
 
 local function simulate_runes(mon)
@@ -58,7 +75,16 @@ local function select_moves(mon)
 	for i=1,4 do
 		mon["move"..i] = equipped_moves[i]
 	end
-	
+end
+
+--This loads the last (up to) 4 moves the pokemon has learned while leveling up.
+local function select_boss_moves(boss)
+	boss.known_moves = bosses.known_moves_by_level(boss.index, boss.level)
+	equipped_moves = bosses.equipped_moves_by_level(boss.index, boss.level)
+
+	for i=1,4 do
+		boss["move"..i] = equipped_moves[i]
+	end
 end
 
 function M.load_trainer_data(trainer_index)
@@ -107,6 +133,19 @@ function M.load_wild_encounter(area_index)
 		generate_stats(game_state["enemy_mon"..i])
 		select_moves(game_state["enemy_mon"..i])
 	end
+end
+
+function M.load_boss_encounter(boss_index, level)
+	for i=1,4 do
+		game_state["enemy_mon"..i] = nil
+		--simulate_runes(game_state["enemy_mon"..i])
+	end
+	game_state["enemy_boss"] = {
+		index = boss_index,
+		level = level
+	}
+	generate_boss_stats(game_state["enemy_boss"])
+	select_boss_moves(game_state["enemy_boss")
 end
 
 -- Wild Encounter Data
