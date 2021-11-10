@@ -107,6 +107,6 @@ function generate_enemy_team(battle_type, battle_id)
 	elseif battle_type == 2 then
 		encounters.load_trainer_data(battle_id)
 	elseif battle_type == 3 then
-		
+		encounters.load_boss_encounter(battle_id)
 	end
 end

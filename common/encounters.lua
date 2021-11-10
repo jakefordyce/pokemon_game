@@ -26,19 +26,19 @@ local function generate_stats(mon)
 end
 
 local function generate_boss_stats(boss)
-	mon.name = bosses[boss.index].name
-	mon.hp =  bosses.stat_by_level(boss_index, "hp", boss.level)
-	mon.attack = bosses.stat_by_level(boss_index, "attack", boss.level)
-	mon.defense = bosses.stat_by_level(boss_index, "defense", boss.level)
-	mon.spattack = bosses.stat_by_level(boss_index, "spattack", boss.level)
-	mon.spdefense = bosses.stat_by_level(boss_index, "spdefense", boss.level)
-	mon.speed = bosses[boss.index].speed
-	mon.accuracy = 0
-	mon.resist = 0
-	mon.crit_chance = bosses.base_crit_chance
-	mon.crit_damage = bosses.base_crit_damage
-	mon.type1 = bosses[boss.index].type1
-	mon.type2 = bosses[boss.index].type2
+	boss.name = bosses[boss.index].name
+	boss.hp =  bosses.stat_by_level(boss.index, "hp", boss.level)
+	boss.attack = bosses.stat_by_level(boss.index, "attack", boss.level)
+	boss.defense = bosses.stat_by_level(boss.index, "defense", boss.level)
+	boss.spattack = bosses.stat_by_level(boss.index, "spattack", boss.level)
+	boss.spdefense = bosses.stat_by_level(boss.index, "spdefense", boss.level)
+	boss.speed = bosses[boss.index].speed
+	boss.accuracy = bosses.stat_by_level(boss.index, "accuracy", boss.level)
+	boss.resist = bosses.stat_by_level(boss.index, "resist", boss.level)
+	boss.crit_chance = bosses.base_crit_chance
+	boss.crit_damage = bosses.base_crit_damage
+	boss.type1 = bosses[boss.index].type1
+	boss.type2 = bosses[boss.index].type2
 end
 
 local function simulate_runes(mon)
@@ -135,17 +135,17 @@ function M.load_wild_encounter(area_index)
 	end
 end
 
-function M.load_boss_encounter(boss_index, level)
+function M.load_boss_encounter(boss_index)
 	for i=1,4 do
 		game_state["enemy_mon"..i] = nil
 		--simulate_runes(game_state["enemy_mon"..i])
 	end
 	game_state["enemy_boss"] = {
-		index = boss_index,
-		level = level
+		index = boss_fights[boss_index].boss_index,
+		level = boss_fights[boss_index].level
 	}
 	generate_boss_stats(game_state["enemy_boss"])
-	select_boss_moves(game_state["enemy_boss")
+	select_boss_moves(game_state["enemy_boss"])
 end
 
 -- Wild Encounter Data
@@ -188,6 +188,14 @@ trainers[1].mon4 = {
 	gear_rarity = 1,
 	level = 2,
 	build_style = 1
+}
+
+-- Boss Data
+boss_fights = {}
+
+boss_fights[1] = {
+	boss_index = 1,
+	level = 5
 }
 
 return M

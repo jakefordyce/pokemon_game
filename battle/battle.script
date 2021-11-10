@@ -7,7 +7,7 @@ local player_mon1 = {}
 local player_mon2 = nil
 local player_mon3 = nil
 local player_mon4 = nil
-local enemy_mon1 = {}
+local enemy_mon1 = nil
 local enemy_mon2 = nil
 local enemy_mon3 = nil
 local enemy_mon4 = nil
@@ -72,19 +72,23 @@ function on_message(self, message_id, message, sender)
 			player_mon4.turn = player_mon4.turn - 1000
 			current_turn_mon = player_mon4
 			start_player_turn(player_mon4)
-		elseif enemy_mon1.turn > 1000 and not enemy_mon1.fainted then
+		elseif enemy_boss.turn > 1000 and not enemy_boss.fainted then --TODO: add nil checks?
+			enemy_boss.turn = enemy_boss.turn - 1000
+			current_turn_mon = enemy_boss
+			start_enemy_turn(enemy_boss)
+		elseif enemy_mon1 ~= nil and enemy_mon1.turn > 1000 and not enemy_mon1.fainted then
 			enemy_mon1.turn = enemy_mon1.turn - 1000
 			current_turn_mon = enemy_mon1
 			start_enemy_turn(enemy_mon1)
-		elseif enemy_mon2.turn > 1000 and not enemy_mon2.fainted then
+		elseif enemy_mon2 ~= nil and enemy_mon2.turn > 1000 and not enemy_mon2.fainted then
 			enemy_mon2.turn = enemy_mon2.turn - 1000
 			current_turn_mon = enemy_mon2
 			start_enemy_turn(enemy_mon2)
-		elseif enemy_mon3.turn > 1000 and not enemy_mon3.fainted then
+		elseif enemy_mon3 ~= nil and enemy_mon3.turn > 1000 and not enemy_mon3.fainted then
 			enemy_mon3.turn = enemy_mon3.turn - 1000
 			current_turn_mon = enemy_mon3
 			start_enemy_turn(enemy_mon3)
-		elseif enemy_mon4.turn > 1000 and not enemy_mon4.fainted then
+		elseif enemy_mon4 ~= nil and enemy_mon4.turn > 1000 and not enemy_mon4.fainted then
 			enemy_mon4.turn = enemy_mon4.turn - 1000
 			current_turn_mon = enemy_mon4
 			start_enemy_turn(enemy_mon4)
@@ -131,7 +135,7 @@ function start_handling_move(target)
 					if(combatants["enemy_mon"..i] ~= nil and not combatants["enemy_mon"..i].fainted) then
 						timer.delay(delay_time, false, function() handle_move_effects(effect, "enemy_mon"..i, current_turn_mon) end)
 					end
-				end
+				end --TODO: add enemy_boss after this line
 			end
 		elseif (effect.target == 4) then -- all allies
 			if string.match(current_turn_mon.reference, "^enemy") then -- an enemy mon using the move
@@ -139,7 +143,7 @@ function start_handling_move(target)
 					if(combatants["enemy_mon"..i] ~= nil and not combatants["enemy_mon"..i].fainted) then
 						timer.delay(delay_time, false, function() handle_move_effects(effect, "enemy_mon"..i, current_turn_mon) end)
 					end
-				end
+				end--TODO: add enemy_boss after this line
 			else -- player mon using the move
 				for i=1,4 do
 					if(combatants["player_mon"..i] ~= nil and not combatants["player_mon"..i].fainted) then
@@ -403,6 +407,10 @@ function increment_turn()
 		player_mon4.turn = player_mon4.turn + player_mon4.speed
 		msg.post("gui", "update_turn", {target="player_mon4", current=player_mon4.turn, max=1000})
 	end
+	if enemy_boss ~= nil and not enemy_boss.fainted then
+		enemy_boss.turn = enemy_boss.turn + enemy_boss.speed
+		msg.post("gui", "update_turn", {target="enemy_boss", current=enemy_boss.turn, max=1000})
+	end
 	if enemy_mon1 ~= nil and not enemy_mon1.fainted then
 		enemy_mon1.turn = enemy_mon1.turn + enemy_mon1.speed
 		msg.post("gui", "update_turn", {target="enemy_mon1", current=enemy_mon1.turn, max=1000})
@@ -495,59 +503,96 @@ end
 
 function load_enemy_data()
 	--TODO: copy stats?
-	enemy_mon1 = game_state.enemy_mon1
-	enemy_mon1.currenthp = enemy_mon1.hp
-	enemy_mon1.turn = 0
-	enemy_mon1.reference = "enemy_mon1"
-	enemy_mon1.move1cd = 0
-	enemy_mon1.move2cd = 0
-	enemy_mon1.move3cd = 0
-	enemy_mon1.move4cd = 0
-	enemy_mon1.status_effects = {}
-	enemy_mon1.fainted = false
-	msg.post("enemy_mon1#sprite", "play_animation", { id = hash(enemy_mon1.name.."_front_original") })
-	combatants["enemy_mon1"] = enemy_mon1
+	if game_state.enemy_mon1 ~= nil then
+		enemy_mon1 = game_state.enemy_mon1
+		enemy_mon1.currenthp = enemy_mon1.hp
+		enemy_mon1.turn = 0
+		enemy_mon1.reference = "enemy_mon1"
+		enemy_mon1.move1cd = 0
+		enemy_mon1.move2cd = 0
+		enemy_mon1.move3cd = 0
+		enemy_mon1.move4cd = 0
+		enemy_mon1.status_effects = {}
+		enemy_mon1.fainted = false
+		msg.post("enemy_mon1#sprite", "play_animation", { id = hash(enemy_mon1.name.."_front_original") })
+		combatants["enemy_mon1"] = enemy_mon1
+	else
+		msg.post("enemy_mon1", "disable")
+		msg.post("gui", "disable_mon", {mon = "enemy_mon1"})
+	end
 
-	enemy_mon2 = game_state.enemy_mon2
-	enemy_mon2.currenthp = enemy_mon2.hp
-	enemy_mon2.turn = 0
-	enemy_mon2.reference = "enemy_mon2"
-	enemy_mon2.move1cd = 0
-	enemy_mon2.move2cd = 0
-	enemy_mon2.move3cd = 0
-	enemy_mon2.move4cd = 0
-	enemy_mon2.status_effects = {}
-	enemy_mon2.fainted = false
-	msg.post("enemy_mon2#sprite", "play_animation", { id = hash(enemy_mon2.name.."_front_original") })
-	combatants["enemy_mon2"] = enemy_mon2
+	if game_state.enemy_mon2 ~= nil then
+		enemy_mon2 = game_state.enemy_mon2
+		enemy_mon2.currenthp = enemy_mon2.hp
+		enemy_mon2.turn = 0
+		enemy_mon2.reference = "enemy_mon2"
+		enemy_mon2.move1cd = 0
+		enemy_mon2.move2cd = 0
+		enemy_mon2.move3cd = 0
+		enemy_mon2.move4cd = 0
+		enemy_mon2.status_effects = {}
+		enemy_mon2.fainted = false
+		msg.post("enemy_mon2#sprite", "play_animation", { id = hash(enemy_mon2.name.."_front_original") })
+		combatants["enemy_mon2"] = enemy_mon2
+	else
+		msg.post("enemy_mon2", "disable")
+		msg.post("gui", "disable_mon", {mon = "enemy_mon2"})
+	end
 
-	enemy_mon3 = game_state.enemy_mon3
-	enemy_mon3.currenthp = enemy_mon3.hp
-	enemy_mon3.turn = 0
-	enemy_mon3.reference = "enemy_mon3"
-	enemy_mon3.move1cd = 0
-	enemy_mon3.move2cd = 0
-	enemy_mon3.move3cd = 0
-	enemy_mon3.move4cd = 0
-	enemy_mon3.status_effects = {}
-	enemy_mon3.fainted = false
-	msg.post("enemy_mon3#sprite", "play_animation", { id = hash(enemy_mon3.name.."_front_original") })
-	combatants["enemy_mon3"] = enemy_mon3
+	if game_state.enemy_mon3 ~= nil then
+		enemy_mon3 = game_state.enemy_mon3
+		enemy_mon3.currenthp = enemy_mon3.hp
+		enemy_mon3.turn = 0
+		enemy_mon3.reference = "enemy_mon3"
+		enemy_mon3.move1cd = 0
+		enemy_mon3.move2cd = 0
+		enemy_mon3.move3cd = 0
+		enemy_mon3.move4cd = 0
+		enemy_mon3.status_effects = {}
+		enemy_mon3.fainted = false
+		msg.post("enemy_mon3#sprite", "play_animation", { id = hash(enemy_mon3.name.."_front_original") })
+		combatants["enemy_mon3"] = enemy_mon3
+	else
+		msg.post("enemy_mon3", "disable")
+		msg.post("gui", "disable_mon", {mon = "enemy_mon3"})
+	end
 
-	enemy_mon4 = game_state.enemy_mon4
-	enemy_mon4.currenthp = enemy_mon4.hp
-	enemy_mon4.turn = 0
-	enemy_mon4.reference = "enemy_mon4"
-	enemy_mon4.move1cd = 0
-	enemy_mon4.move2cd = 0
-	enemy_mon4.move3cd = 0
-	enemy_mon4.move4cd = 0
-	enemy_mon4.status_effects = {}
-	enemy_mon4.fainted = false
-	msg.post("enemy_mon4#sprite", "play_animation", { id = hash(enemy_mon4.name.."_front_original") })
-	combatants["enemy_mon4"] = enemy_mon4
+	if game_state.enemy_mon4 ~= nil then
+		enemy_mon4 = game_state.enemy_mon4
+		enemy_mon4.currenthp = enemy_mon4.hp
+		enemy_mon4.turn = 0
+		enemy_mon4.reference = "enemy_mon4"
+		enemy_mon4.move1cd = 0
+		enemy_mon4.move2cd = 0
+		enemy_mon4.move3cd = 0
+		enemy_mon4.move4cd = 0
+		enemy_mon4.status_effects = {}
+		enemy_mon4.fainted = false
+		msg.post("enemy_mon4#sprite", "play_animation", { id = hash(enemy_mon4.name.."_front_original") })
+		combatants["enemy_mon4"] = enemy_mon4
+	else
+		msg.post("enemy_mon4", "disable")
+		msg.post("gui", "disable_mon", {mon = "enemy_mon4"})
+	end
 
-	msg.post("enemy_boss#sprite", "disable")
+	if game_state.enemy_boss ~= nil then
+		enemy_boss = game_state.enemy_boss
+		enemy_boss.currenthp = enemy_boss.hp
+		enemy_boss.turn = 0
+		enemy_boss.reference = "enemy_boss"
+		enemy_boss.move1cd = 0
+		enemy_boss.move2cd = 0
+		enemy_boss.move3cd = 0
+		enemy_boss.move4cd = 0
+		enemy_boss.status_effects = {}
+		enemy_boss.fainted = false
+		
+		msg.post("enemy_boss#sprite", "play_animation", { id = hash(enemy_boss.name.."_front_original") })
+		combatants["enemy_boss"] = enemy_boss
+	else
+		msg.post("enemy_boss", "disable")
+		msg.post("gui", "disable_mon", {mon = "enemy_boss"})
+	end
 end
 
 function display_targetting_icons()
@@ -570,7 +615,7 @@ function display_targetting_icons()
 				local icon = factory.create("#target_icon_factory",p, nil, {effectiveness = effectiveness})
 				table.insert(spawned_target_icons, icon)
 			end
-		end
+		end --TODO: add enemy_boss after this line?
 	elseif(selected_move.targetting == 2) then --ally
 		for i=1,4 do
 			if(combatants["player_mon"..i] ~= nil and not combatants["player_mon"..i].fainted) then
