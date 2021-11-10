@@ -210,9 +210,12 @@ function M.evolve_pokemon(mon_index, target_pokedex)
 end
 
 --PLAYER INFO--
-M.position_x = 263
-M.position_y = 761
-M.current_area = 1
+--M.position_x = 263 --starting values
+--M.position_y = 761
+--M.current_area = 1
+M.position_x = 261
+M.position_y = 665
+M.current_area = 3
 M.money = 300
 M.stones = {0,0,0,0,0,0,0,20,20,0,0,0,0,0,0} -- 1 for each of the types in common/poke_types
 
