@@ -190,5 +190,45 @@ M[9] = {
 	end
 }
 
+meffects = {}
+meffects[1] = {}
+meffects[1].id = 1
+meffects[1].target = 1
+meffects[1].param1 = 300
+meffects[1].param2 = "attack"
+
+M[10] = {
+	name = "Mega Punch",
+	effects = meffects,
+	cooldown = 1,
+	default = true,
+	type = 1,
+	targetting = 1,
+	description = function(moveLevel)
+		damage = 300
+		return "Boss Move: Attacks 1 enemy for "..damage.."% of Attack."
+	end
+}
+
+meffects = {}
+meffects[1] = {}
+meffects[1].id = 1
+meffects[1].target = 3
+meffects[1].param1 = 900
+meffects[1].param2 = "attack"
+
+M[11] = {
+	name = "Mega Impact",
+	effects = meffects,
+	cooldown = 3,
+	default = false,
+	type = 1,
+	targetting = 1,
+	description = function(moveLevel)
+		damage = 900
+		return "Boss Move: Attacks all enemies for "..damage.."% of Attack."
+	end
+}
+
 
 return M

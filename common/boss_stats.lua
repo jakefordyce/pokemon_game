@@ -5,8 +5,8 @@ M.base_crit_chance = 5
 M.base_crit_damage = 100
 
 moves = {}
-moves[1] = {["level"] = 1, ["id"] = 3}
-moves[2] = {["level"] = 1, ["id"] = 9}
+moves[1] = {["level"] = 1, ["id"] = 10}
+moves[2] = {["level"] = 1, ["id"] = 11}
 
 M[1] = {
 	name = "kangaskhan",
