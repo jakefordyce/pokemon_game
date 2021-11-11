@@ -101,18 +101,33 @@ function display_player_mons()
 end
 
 function display_enemies()
-	for i=1,4 do
-		if game_state["enemy_mon"..i] ~= nil then
-			gui.play_flipbook(gui.get_node("enemy_mon"..i), game_state["enemy_mon"..i].name.."_front_original")
-			gui.set_text(gui.get_node("enemy_mon"..i.."_level"), game_state["enemy_mon"..i].level)
-			gui.play_flipbook(gui.get_node("enemy_mon"..i.."_type1"), "type_"..types[game_state["enemy_mon"..i].type1].name.."_16")
-			if game_state["enemy_mon"..i].type2 ~= game_state["enemy_mon"..i].type1 then
-				gui.play_flipbook(gui.get_node("enemy_mon"..i.."_type2"), "type_"..types[game_state["enemy_mon"..i].type2].name.."_16")
-			else
-				gui.set_enabled(gui.get_node("enemy_mon"..i.."_type2"), false)
-			end
+	if game_state.battle_type == 3 then
+		gui.play_flipbook(gui.get_node("enemy_boss"), game_state["enemy_boss"].name.."_front_original")
+		gui.set_text(gui.get_node("enemy_boss_level"), game_state["enemy_boss"].level)
+		gui.play_flipbook(gui.get_node("enemy_boss_type1"), "type_"..types[game_state["enemy_boss"].type1].name.."_16")
+		if game_state["enemy_boss"].type2 ~= game_state["enemy_boss"].type1 then
+			gui.play_flipbook(gui.get_node("enemy_boss_type2"), "type_"..types[game_state["enemy_boss"].type2].name.."_16")
 		else
+			gui.set_enabled(gui.get_node("enemy_boss_type2"), false)
+		end
+		for i=1,4 do
 			gui.set_enabled(gui.get_node("enemy_mon"..i), false)
+		end
+	else
+		gui.set_enabled(gui.get_node("enemy_boss"), false)
+		for i=1,4 do
+			if game_state["enemy_mon"..i] ~= nil then
+				gui.play_flipbook(gui.get_node("enemy_mon"..i), game_state["enemy_mon"..i].name.."_front_original")
+				gui.set_text(gui.get_node("enemy_mon"..i.."_level"), game_state["enemy_mon"..i].level)
+				gui.play_flipbook(gui.get_node("enemy_mon"..i.."_type1"), "type_"..types[game_state["enemy_mon"..i].type1].name.."_16")
+				if game_state["enemy_mon"..i].type2 ~= game_state["enemy_mon"..i].type1 then
+					gui.play_flipbook(gui.get_node("enemy_mon"..i.."_type2"), "type_"..types[game_state["enemy_mon"..i].type2].name.."_16")
+				else
+					gui.set_enabled(gui.get_node("enemy_mon"..i.."_type2"), false)
+				end
+			else
+				gui.set_enabled(gui.get_node("enemy_mon"..i), false)
+			end
 		end
 	end
 end
