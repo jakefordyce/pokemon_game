@@ -135,7 +135,10 @@ function start_handling_move(target)
 					if(combatants["enemy_mon"..i] ~= nil and not combatants["enemy_mon"..i].fainted) then
 						timer.delay(delay_time, false, function() handle_move_effects(effect, "enemy_mon"..i, current_turn_mon) end)
 					end
-				end --TODO: add enemy_boss after this line
+				end
+				if game_state.battle_type == 3 then
+					timer.delay(delay_time, false, function() handle_move_effects(effect, "enemy_boss", current_turn_mon) end)
+				end
 			end
 		elseif (effect.target == 4) then -- all allies
 			if string.match(current_turn_mon.reference, "^enemy") then -- an enemy mon using the move
@@ -143,7 +146,10 @@ function start_handling_move(target)
 					if(combatants["enemy_mon"..i] ~= nil and not combatants["enemy_mon"..i].fainted) then
 						timer.delay(delay_time, false, function() handle_move_effects(effect, "enemy_mon"..i, current_turn_mon) end)
 					end
-				end--TODO: add enemy_boss after this line
+				end
+				if game_state.battle_type == 3 then
+					timer.delay(delay_time, false, function() handle_move_effects(effect, "enemy_boss", current_turn_mon) end)
+				end
 			else -- player mon using the move
 				for i=1,4 do
 					if(combatants["player_mon"..i] ~= nil and not combatants["player_mon"..i].fainted) then
@@ -318,10 +324,10 @@ function enemies_are_fainted()
 	if game_state.battle_type == 3 then --boss fight
 		fainted = enemy_boss.fainted
 	else
-		fainted = (enemy_mon1 == nil or enemy_mon1.fainted) and 
-			(enemy_mon2 == nil or enemy_mon2.fainted) and 
-			(enemy_mon3 == nil or enemy_mon3.fainted) and 
-			(enemy_mon4 == nil or enemy_mon4.fainted)
+		fainted = (enemy_mon1 == nil or enemy_mon1.fainted) 
+		and (enemy_mon2 == nil or enemy_mon2.fainted) 
+		and (enemy_mon3 == nil or enemy_mon3.fainted) 
+		and (enemy_mon4 == nil or enemy_mon4.fainted)
 	end
 	return fainted
 end

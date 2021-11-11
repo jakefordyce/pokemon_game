@@ -174,13 +174,13 @@ meffects = {}
 meffects[1] = {}
 meffects[1].id = 1
 meffects[1].target = 3
-meffects[1].param1 = 300
+meffects[1].param1 = 1000
 meffects[1].param2 = "spattack"
 
 M[9] = {
 	name = "Razor Leaf",
 	effects = meffects,
-	cooldown = 3,
+	cooldown = 1,
 	default = false,
 	type = 11,
 	targetting = 1,
