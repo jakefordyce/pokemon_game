@@ -72,7 +72,7 @@ function on_message(self, message_id, message, sender)
 			player_mon4.turn = player_mon4.turn - 1000
 			current_turn_mon = player_mon4
 			start_player_turn(player_mon4)
-		elseif enemy_boss.turn > 1000 and not enemy_boss.fainted then --TODO: add nil checks?
+		elseif enemy_boss ~= nil and enemy_boss.turn > 1000 and not enemy_boss.fainted then
 			enemy_boss.turn = enemy_boss.turn - 1000
 			current_turn_mon = enemy_boss
 			start_enemy_turn(enemy_boss)
@@ -306,16 +306,33 @@ function damage_defender(defender, damage)
 		msg.post("gui", "update_hp", {target=defender.reference, current=defender.currenthp, max=defender.hp})
 	end
 
-	--TODO: check all instead of just one. Possibly find a better place for this check?
-	--if defender.currenthp <= 0 then
-		--msg.post("main:/loader#main", "end_battle")
-	--end
-
-	if enemy_mon1.fainted and (enemy_mon2 == nil or enemy_mon2.fainted) and (enemy_mon3 == nil or enemy_mon3.fainted) and (enemy_mon4 == nil or enemy_mon4.fainted) then
+	if enemies_are_fainted() then
 		timer.delay(0.5, false, function() msg.post("main:/loader#main", "end_battle", {victory = true}) end)
-	elseif player_mon1.fainted and (player_mon2 == nil or player_mon2.fainted) and (player_mon3 == nil or player_mon3.fainted) and (player_mon4 == nil or player_mon4.fainted) then
+	elseif player_mons_are_fainted() then
 		timer.delay(0.5, false, function() msg.post("main:/loader#main", "end_battle", {victory = false}) end)
 	end
+end
+
+function enemies_are_fainted()
+	fainted = false
+	if game_state.battle_type == 3 then --boss fight
+		fainted = enemy_boss.fainted
+	else
+		fainted = (enemy_mon1 == nil or enemy_mon1.fainted) and 
+			(enemy_mon2 == nil or enemy_mon2.fainted) and 
+			(enemy_mon3 == nil or enemy_mon3.fainted) and 
+			(enemy_mon4 == nil or enemy_mon4.fainted)
+	end
+	return fainted
+end
+
+function player_mons_are_fainted()
+	fainted = player_mon1.fainted and 
+		(player_mon2 == nil or player_mon2.fainted) and 
+		(player_mon3 == nil or player_mon3.fainted) and 
+		(player_mon4 == nil or player_mon4.fainted)
+
+	return fainted
 end
 
 function calc_damage(power, defense)
@@ -349,9 +366,11 @@ end
 function start_enemy_turn(turn_mon)
 	reduce_all_cooldowns(turn_mon, 1)
 	local p = go.get_position(turn_mon.reference)
-	p.y = p.y - 60
 	p.z = p.z - 1
-	local turn_marker = factory.create("#turn_marker_factory",p, nil, nil, 1.5)
+	scale = (game_state.battle_type == 3 and 4 or 2)
+	yshift = (game_state.battle_type == 3 and 128 or 32)
+	p.y = p.y - yshift
+	local turn_marker = factory.create("#turn_marker_factory",p, nil, nil, scale)
 	table.insert(spawned_turn_markers, turn_marker)
 	timer.delay(1, false, choose_enemy_move)
 	timer.delay(2, false, function() msg.post(".", "end_turn") end)
@@ -502,7 +521,6 @@ function load_player_mon_data()
 end
 
 function load_enemy_data()
-	--TODO: copy stats?
 	if game_state.enemy_mon1 ~= nil then
 		enemy_mon1 = game_state.enemy_mon1
 		enemy_mon1.currenthp = enemy_mon1.hp
@@ -616,6 +634,13 @@ function display_targetting_icons()
 				table.insert(spawned_target_icons, icon)
 			end
 		end --TODO: add enemy_boss after this line?
+		if(game_state.battle_type == 3) then
+			effectiveness = types.type_effectiveness(selected_move.type, enemy_boss.type1, enemy_boss.type2)
+			local p = go.get_position("enemy_boss")
+			p.y = p.y + 128
+			local icon = factory.create("#target_icon_factory",p, nil, {effectiveness = effectiveness})
+			table.insert(spawned_target_icons, icon)
+		end
 	elseif(selected_move.targetting == 2) then --ally
 		for i=1,4 do
 			if(combatants["player_mon"..i] ~= nil and not combatants["player_mon"..i].fainted) then
