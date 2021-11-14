@@ -111,6 +111,9 @@ function on_message(self, message_id, message, sender)
 	if message_id == hash("exit_rune_shop") then
 		load_screen(area_names[game_state.current_area], "rune_shop")
 	end
+	if message_id == hash("load_boss_select") then
+		load_screen("boss_select", area_names[game_state.current_area])
+	end
 end
 
 function generate_enemy_team(battle_type, battle_id)

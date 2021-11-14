@@ -60,5 +60,24 @@ M[12] = {
 	next = nil,
 	has_choices = false
 }
-
+M[13] = {
+	text = "BILL: Hey, you look like a skilled trainer. Want to battle a special pokemon? You'll be helping science!",
+	next = nil,
+	has_choices = true
+}
+M[14] = {
+	text = "BILL: Oh... Let me know if you change your mind.",
+	next = nil,
+	has_choices = false
+}
+M[15] = {
+	text = "BILL: Wow, you did it! Hey it looks like it dropped something interesting. You can keep that, it may come in handy.",
+	next = nil,
+	has_choices = false
+}
+M[16] = {
+	text = "BILL: Don't feel bad, I designed it to be very powerful. Let me know if you'd like a rematch.",
+	next = nil,
+	has_choices = false
+}
 return M

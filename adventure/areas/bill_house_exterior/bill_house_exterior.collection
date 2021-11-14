@@ -165,8 +165,8 @@ embedded_instances {
 embedded_instances {
   id: "bill"
   data: "components {\n"
-  "  id: \"oak\"\n"
-  "  component: \"/adventure/areas/oaks_lab/oak.script\"\n"
+  "  id: \"bill\"\n"
+  "  component: \"/adventure/areas/bill_house_exterior/bill.script\"\n"
   "  position {\n"
   "    x: 0.0\n"
   "    y: 0.0\n"

@@ -1,0 +1,50 @@
+local game_state = require "common/game_state"
+local encounters = require "common/encounters"
+local boss_stats = require "common/boss_stats"
+local spawned_bosses = {}
+
+function init(self)
+	msg.post(".", "acquire_input_focus")
+	display_bosses()
+end
+
+function final(self)
+end
+
+function update(self, dt)
+end
+
+function on_message(self, message_id, message, sender)
+	if message == hash("exit_button_pressed") then
+
+	end
+end
+
+function on_input(self, action_id, action)
+	
+end
+
+function on_reload(self)
+end
+
+function display_bosses()
+	local bosses = encounters.bill_bosses
+	local p = vmath.vector3()
+	p.y = 400
+	p.x = 320
+	for i, boss in ipairs(bosses) do
+		print("creating object for "..boss.boss_index)
+		local boss_obj = factory.create("#boss_factory",p, nil, {boss_index = boss.boss_index})
+		go.set_parent(boss_obj, go.get_id("boss_select"))
+		table.insert(spawned_bosses, boss_obj)
+
+		p.y = p.y - 100 --each image is 100px tall
+	end
+end
+
+function clear_gos(id_table)
+	for i, v in ipairs(id_table) do
+		go.delete(v)
+		id_table[i] = nil
+	end
+end

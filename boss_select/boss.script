@@ -1,0 +1,50 @@
+go.property("boss_index", 1)
+local types = require "common/poke_types"
+local boss_stats = require "common/boss_stats"
+
+function init(self)
+	type1 = boss_stats[self.boss_index].type1
+	type2 = boss_stats[self.boss_index].type2
+	msg.post("#boss_type1_sprite", "play_animation", { id = hash("type_"..types[type1].name.."_16") })
+	if type2 ~= type1 then
+		msg.post("#boss_type2_sprite", "play_animation", { id = hash("type_"..types[type2].name.."_16") })
+	else
+		msg.post("#boss_type2_sprite", "disable")
+	end
+end
+
+function final(self)
+	-- Add finalization code here
+	-- Learn more: https://defold.com/manuals/script/
+	-- Remove this function if not needed
+end
+
+function update(self, dt)
+	-- Add update code here
+	-- Learn more: https://defold.com/manuals/script/
+	-- Remove this function if not needed
+end
+
+function on_message(self, message_id, message, sender)
+	-- Add message-handling code here
+	-- Learn more: https://defold.com/manuals/message-passing/
+	-- Remove this function if not needed
+end
+
+function on_input(self, action_id, action)
+	-- Add input-handling code here. The game object this script is attached to
+	-- must have acquired input focus:
+	--
+	--    msg.post(".", "acquire_input_focus")
+	--
+	-- All mapped input bindings will be received. Mouse and touch input will
+	-- be received regardless of where on the screen it happened.
+	-- Learn more: https://defold.com/manuals/input/
+	-- Remove this function if not needed
+end
+
+function on_reload(self)
+	-- Add reload-handling code here
+	-- Learn more: https://defold.com/manuals/hot-reload/
+	-- Remove this function if not needed
+end

@@ -27,6 +27,7 @@ embedded_components {
   "mask: \"move\"\n"
   "mask: \"rune\"\n"
   "mask: \"evolution\"\n"
+  "mask: \"boss\"\n"
   "embedded_collision_shape {\n"
   "  shapes {\n"
   "    shape_type: TYPE_SPHERE\n"

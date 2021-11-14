@@ -1,7 +1,7 @@
 local game_state = require "common/game_state"
 local pbs = require "common/poke_base_stats"
 local moves = require "common/moves"
-local bosses = require "common/boss_stats"
+local boss_stats = require "common/boss_stats"
 
 local M = {}
 
@@ -26,19 +26,19 @@ local function generate_stats(mon)
 end
 
 local function generate_boss_stats(boss)
-	boss.name = bosses[boss.index].name
-	boss.hp =  bosses.stat_by_level(boss.index, "hp", boss.level)
-	boss.attack = bosses.stat_by_level(boss.index, "attack", boss.level)
-	boss.defense = bosses.stat_by_level(boss.index, "defense", boss.level)
-	boss.spattack = bosses.stat_by_level(boss.index, "spattack", boss.level)
-	boss.spdefense = bosses.stat_by_level(boss.index, "spdefense", boss.level)
-	boss.speed = bosses[boss.index].speed
-	boss.accuracy = bosses.stat_by_level(boss.index, "accuracy", boss.level)
-	boss.resist = bosses.stat_by_level(boss.index, "resist", boss.level)
-	boss.crit_chance = bosses.base_crit_chance
-	boss.crit_damage = bosses.base_crit_damage
-	boss.type1 = bosses[boss.index].type1
-	boss.type2 = bosses[boss.index].type2
+	boss.name = boss_stats[boss.index].name
+	boss.hp =  boss_stats.stat_by_level(boss.index, "hp", boss.level)
+	boss.attack = boss_stats.stat_by_level(boss.index, "attack", boss.level)
+	boss.defense = boss_stats.stat_by_level(boss.index, "defense", boss.level)
+	boss.spattack = boss_stats.stat_by_level(boss.index, "spattack", boss.level)
+	boss.spdefense = boss_stats.stat_by_level(boss.index, "spdefense", boss.level)
+	boss.speed = boss_stats[boss.index].speed
+	boss.accuracy = boss_stats.stat_by_level(boss.index, "accuracy", boss.level)
+	boss.resist = boss_stats.stat_by_level(boss.index, "resist", boss.level)
+	boss.crit_chance = boss_stats.base_crit_chance
+	boss.crit_damage = boss_stats.base_crit_damage
+	boss.type1 = boss_stats[boss.index].type1
+	boss.type2 = boss_stats[boss.index].type2
 end
 
 local function simulate_runes(mon)
@@ -79,8 +79,8 @@ end
 
 --This loads the last (up to) 4 moves the pokemon has learned while leveling up.
 local function select_boss_moves(boss)
-	boss.known_moves = bosses.known_moves_by_level(boss.index, boss.level)
-	equipped_moves = bosses.equipped_moves_by_level(boss.index, boss.level)
+	boss.known_moves = boss_stats.known_moves_by_level(boss.index, boss.level)
+	equipped_moves = boss_stats.equipped_moves_by_level(boss.index, boss.level)
 
 	for i=1,4 do
 		boss["move"..i] = equipped_moves[i]
@@ -191,11 +191,9 @@ trainers[1].mon4 = {
 }
 
 -- Boss Data
-boss_fights = {}
-
-boss_fights[1] = {
-	boss_index = 1,
-	level = 5
+M.bill_bosses = {}
+M.bill_bosses[1] = {
+	boss_index = 1
 }
 
 return M
