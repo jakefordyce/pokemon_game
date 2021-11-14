@@ -230,6 +230,7 @@ function should_apply_debuff(accuracy, resist, debuff_chance)
 		should_apply = true
 	end
 	return should_apply
+	--return true --DEV: leaving this to make testing debuffs easier
 end
 
 function apply_status_effect(defender, effect_id, duration)
@@ -342,7 +343,9 @@ function player_mons_are_fainted()
 end
 
 function calc_damage(power, defense)
-	return math.ceil((200 / (200 + defense) * power))
+	modded_def = defense * 400 / (400 + defense)
+	damage_modifier = 100 / (100 + modded_def)
+	return math.ceil(power * damage_modifier)
 end
 
 function reduce_all_cooldowns(mon, amount)
