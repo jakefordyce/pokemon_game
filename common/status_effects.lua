@@ -24,5 +24,15 @@ M[4] = {
 	damage_text = "Defense Down",
 	category = 2
 }
+M[5] = {
+	sprite_name = "defense_up",
+	damage_text = "Defense Up",
+	category = 1
+}
+M[7] = {
+	sprite_name = "speed_up",
+	damage_text = "Speed Up",
+	category = 1
+}
 
 return M

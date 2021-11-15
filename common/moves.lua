@@ -291,5 +291,80 @@ M[12] = {
 	end
 }
 
+meffects = {}
+meffects[1] = {}
+meffects[1].id = 5
+meffects[1].target = 4
+meffects[1].param1 = function(moveLevel)
+	chance = 75 + (moveLevel * 5)
+	return chance
+end
+meffects[1].param2 = 2
+
+M[13] = {
+	name = "Iron Defense",
+	effects = meffects,
+	cooldown = 3,
+	default = false,
+	type = 1,
+	targetting = 2,
+	description = function(moveLevel)
+		chance = 75 + (moveLevel * 5)
+		return "Has a "..chance.."% chance of increasing Defense of all allies."
+	end
+}
+
+meffects = {}
+meffects[1] = {}
+meffects[1].id = 6
+meffects[1].target = 1
+meffects[1].param1 = function(moveLevel)
+	return 10
+end
+meffects[1].param2 = "attack"
+
+M[14] = {
+	name = "Super Fang",
+	effects = meffects,
+	cooldown = 3,
+	default = true,
+	type = 1,
+	targetting = 1,
+	description = function(moveLevel)
+		damage = 10
+		return "Attacks 1 enemy for "..damage.."% of their Max HP."
+	end
+}
+
+meffects = {}
+meffects[1] = {}
+meffects[1].id = 7 --increase speed
+meffects[1].target = 4
+meffects[1].param1 = function(moveLevel)
+	return 75 + (5 * moveLevel)
+end
+meffects[1].param2 = 2
+
+meffects[2] = {}
+meffects[2].id = 8 --increase turn
+meffects[2].target = 4
+meffects[2].param1 = function(moveLevel)
+	return 75 + (5 * moveLevel)
+end
+meffects[2].param2 = 25
+
+M[15] = {
+	name = "Energize",
+	effects = meffects,
+	cooldown = 3,
+	default = true,
+	type = 12,
+	targetting = 2,
+	description = function(moveLevel)
+		chance = 75 + (5 + moveLevel)
+		return "Has a "..chance.."% chance of increasing speed of all allies for 2 turns and increasing the turn of all allies by 25%"
+	end
+}
+
 
 return M

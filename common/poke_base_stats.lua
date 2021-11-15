@@ -59,7 +59,7 @@ M.base_crit_damage = 100
 --List of all pokemon by pokedex ID.
 moves = {}
 moves[1] = {["level"] = 1, ["id"] = 1}
-moves[2] = {["level"] = 1, ["id"] = 2}
+moves[2] = {["level"] = 1, ["id"] = 9}
 
 
 M[1] = {
@@ -143,8 +143,6 @@ M[5] = {
 	}
 }
 
-moves[2] = {["level"] = 6, ["id"] = 3}
-
 M[6] = {
 	name = "charizard",
 	hp = 90,
@@ -157,6 +155,10 @@ M[6] = {
 	type2 = 8,
 	moves = moves
 }
+
+moves = {}
+moves[1] = {["level"] = 1, ["id"] = 1}
+moves[2] = {["level"] = 1, ["id"] = 13}
 
 M[7] = {
 	name = "squirtle",
@@ -196,6 +198,8 @@ M[9] = {
 	type2 = 10,
 	moves = moves
 }
+moves = {}
+moves[1] = {["level"] = 1, ["id"] = 1}
 
 M[10] = {
 	name = "caterpie",
@@ -239,6 +243,10 @@ M[16] = {
 }
 M[17] = {}
 M[18] = {}
+
+moves = {}
+moves[1] = {["level"] = 1, ["id"] = 1}
+moves[1] = {["level"] = 1, ["id"] = 14}
 M[19] = {
 	name = "rattata",
 	hp = 90,
@@ -717,6 +725,10 @@ M[300]={}
 M[301]={}
 M[302]={}
 M[303]={}
+
+moves = {}
+moves[1] = {["level"] = 1, ["id"] = 1}
+moves[2] = {["level"] = 1, ["id"] = 12}
 
 M[304] = {
 	name = "aron",

@@ -238,7 +238,7 @@ moves[3] = {
 	level = 0
 }
 moves[4] = {
-	id = 8,
+	id = 15,
 	level = 0
 }
 

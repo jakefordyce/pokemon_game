@@ -10,6 +10,14 @@ images {
   image: "/assets/battle_sprites/buffs_debuffs/defense_down.png"
   sprite_trim_mode: SPRITE_TRIM_MODE_OFF
 }
+images {
+  image: "/assets/battle_sprites/buffs_debuffs/defense_up.png"
+  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
+}
+images {
+  image: "/assets/battle_sprites/buffs_debuffs/speed_up.png"
+  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
+}
 margin: 0
 extrude_borders: 0
 inner_padding: 0
