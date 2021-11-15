@@ -537,6 +537,11 @@ M[168]={}
 M[169]={}
 M[170]={}
 M[171]={}
+
+moves = {
+	["level"] = 1, ["id"] = 1,
+	["level"] = 1, ["id"] = 15
+}
 M[172] = {
 	name = "pichu",
 	hp = 90,
@@ -549,11 +554,11 @@ M[172] = {
 	type2 = 12,
 	moves = moves
 }
+
 moves = {
 	["level"] = 1, ["id"] = 1,
 	["level"] = 1, ["id"] = 2
 }
-
 M[173] = {
 	name = "cleffa",
 	hp = 90,
