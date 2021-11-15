@@ -119,41 +119,44 @@ function start_handling_move(target)
 	end
 	msg.post("gui", "set_battle_text", {text = battle_text..current_turn_mon.name.." used "..selected_move.name.."!"})
 	local delay_time = 0.0
+
+	level = current_turn_mon.known_moves[current_turn_mon["move"..selected_move_slot]].level
+	
 	for index, effect in ipairs(selected_move.effects) do
 
 		if (effect.target < 3) then --self, enemy, ally, only affect target selected.
-			timer.delay(delay_time, false, function() handle_move_effects(effect, target, current_turn_mon) end)
+			timer.delay(delay_time, false, function() handle_move_effects(level, effect, target, current_turn_mon) end)
 		elseif (effect.target == 3) then -- all enemies
 			if string.match(current_turn_mon.reference, "^enemy") then -- an enemy mon using the move
 				for i=1,4 do
 					if(combatants["player_mon"..i] ~= nil and not combatants["player_mon"..i].fainted) then
-						timer.delay(delay_time, false, function() handle_move_effects(effect, "player_mon"..i, current_turn_mon) end)
+						timer.delay(delay_time, false, function() handle_move_effects(level, effect, "player_mon"..i, current_turn_mon) end)
 					end
 				end
 			else -- player mon using the move
 				for i=1,4 do
 					if(combatants["enemy_mon"..i] ~= nil and not combatants["enemy_mon"..i].fainted) then
-						timer.delay(delay_time, false, function() handle_move_effects(effect, "enemy_mon"..i, current_turn_mon) end)
+						timer.delay(delay_time, false, function() handle_move_effects(level, effect, "enemy_mon"..i, current_turn_mon) end)
 					end
 				end
 				if game_state.battle_type == 3 then
-					timer.delay(delay_time, false, function() handle_move_effects(effect, "enemy_boss", current_turn_mon) end)
+					timer.delay(delay_time, false, function() handle_move_effects(level, effect, "enemy_boss", current_turn_mon) end)
 				end
 			end
 		elseif (effect.target == 4) then -- all allies
 			if string.match(current_turn_mon.reference, "^enemy") then -- an enemy mon using the move
 				for i=1,4 do
 					if(combatants["enemy_mon"..i] ~= nil and not combatants["enemy_mon"..i].fainted) then
-						timer.delay(delay_time, false, function() handle_move_effects(effect, "enemy_mon"..i, current_turn_mon) end)
+						timer.delay(delay_time, false, function() handle_move_effects(level, effect, "enemy_mon"..i, current_turn_mon) end)
 					end
 				end
 				if game_state.battle_type == 3 then
-					timer.delay(delay_time, false, function() handle_move_effects(effect, "enemy_boss", current_turn_mon) end)
+					timer.delay(delay_time, false, function() handle_move_effects(level, effect, "enemy_boss", current_turn_mon) end)
 				end
 			else -- player mon using the move
 				for i=1,4 do
 					if(combatants["player_mon"..i] ~= nil and not combatants["player_mon"..i].fainted) then
-						timer.delay(delay_time, false, function() handle_move_effects(effect, "player_mon"..i, current_turn_mon) end)
+						timer.delay(delay_time, false, function() handle_move_effects(level, effect, "player_mon"..i, current_turn_mon) end)
 					end
 				end
 			end
@@ -162,7 +165,7 @@ function start_handling_move(target)
 	end
 end
 
-function handle_move_effects(effect, target, move_user)
+function handle_move_effects(level, effect, target, move_user)
 	effectiveness = types.type_effectiveness(selected_move.type, combatants[target].type1, combatants[target].type2)
 	
 	if effect.id == 1 then --deal damage
@@ -173,7 +176,7 @@ function handle_move_effects(effect, target, move_user)
 		elseif mon_has_status_effect(move_user, 3) and string.match(effect.param2, "^attack") then
 			stat = stat * 1.5
 		end
-		local power = effect.param1 * stat / 100
+		local power = effect.param1(level) * stat / 100
 		local defense = defender.defense
 		if mon_has_status_effect(defender, 4) then
 			defense = defense / 2
@@ -191,7 +194,7 @@ function handle_move_effects(effect, target, move_user)
 		local defender = combatants[target]
 		local duration = effect.param2
 		accuracy = move_user.accuracy + effectiveness - 100
-		if(should_apply_debuff(accuracy, defender.resist, effect.param1)) then
+		if(should_apply_debuff(accuracy, defender.resist, effect.param1(level))) then
 			apply_status_effect(defender, 2, duration)
 		else
 			display_damage_text(go.get_position(defender.reference), "resist", "red")
@@ -204,7 +207,7 @@ function handle_move_effects(effect, target, move_user)
 		local defender = combatants[target]
 		local duration = effect.param2
 		accuracy = move_user.accuracy + effectiveness - 100
-		if(should_apply_debuff(accuracy, defender.resist, effect.param1)) then
+		if(should_apply_debuff(accuracy, defender.resist, effect.param1(level))) then
 			apply_status_effect(defender, 4, duration)
 		else
 			display_damage_text(go.get_position(defender.reference), "resist", "red")
@@ -393,6 +396,7 @@ function choose_enemy_move()
 		-- see if the move is off cooldown
 		if(current_turn_mon["move"..random_move] ~= nil and current_turn_mon["move"..random_move.."cd"] == 0) then
 			selected_move = moves[current_turn_mon.known_moves[current_turn_mon["move"..random_move]].id]
+			selected_move_slot = random_move
 			is_move_chosen = true
 			current_turn_mon["move"..random_move.."cd"] = current_turn_mon["move"..random_move.."cd"] + selected_move.cooldown
 		end

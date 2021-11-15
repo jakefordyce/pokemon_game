@@ -109,6 +109,7 @@ M[3] = {
 
 moves = {}
 moves[1] = {["level"] = 1, ["id"] = 1}
+moves[2] = {["level"] = 1, ["id"] = 12}
 
 M[4] = {
 	name = "charmander",
@@ -539,6 +540,10 @@ M[172] = {
 	type1 = 12,
 	type2 = 12,
 	moves = moves
+}
+moves = {
+	["level"] = 1, ["id"] = 1,
+	["level"] = 1, ["id"] = 2
 }
 
 M[173] = {

@@ -6,7 +6,10 @@ meffects = {}
 meffects[1] = {}
 meffects[1].id = 1
 meffects[1].target = 1
-meffects[1].param1 = 95
+meffects[1].param1 = function(moveLevel)
+	damage = 95 + (moveLevel * 5)
+	return damage
+end
 meffects[1].param2 = "attack"
 
 M[1] = {
@@ -26,7 +29,10 @@ meffects = {}
 meffects[1] = {}
 meffects[1].id = 2
 meffects[1].target = 3
-meffects[1].param1 = 75
+meffects[1].param1 = function(moveLevel)
+	chance = 75 + (moveLevel * 5)
+	return chance
+end
 meffects[1].param2 = 2
 
 M[2] = {
@@ -46,7 +52,10 @@ meffects = {}
 meffects[1] = {}
 meffects[1].id = 1
 meffects[1].target = 1
-meffects[1].param1 = 100
+meffects[1].param1 = function(moveLevel)
+	damage = 125 + (moveLevel * 5)
+	return damage
+end
 meffects[1].param2 = "attack"
 
 M[3] = {
@@ -57,7 +66,7 @@ M[3] = {
 	type = 1,
 	targetting = 1,
 	description = function(moveLevel)
-		damage = 100 + (moveLevel * 5)
+		damage = 125 + (moveLevel * 5)
 		return "Attacks 1 enemy for "..damage.."% of Attack."
 	end
 }
@@ -66,7 +75,10 @@ meffects = {}
 meffects[1] = {}
 meffects[1].id = 1
 meffects[1].target = 1
-meffects[1].param1 = 100
+meffects[1].param1 = function(moveLevel)
+	damage = 150 + (moveLevel * 10)
+	return damage
+end
 meffects[1].param2 = "spattack"
 
 M[4] = {
@@ -77,7 +89,7 @@ M[4] = {
 	type = 11,
 	targetting = 1,
 	description = function(moveLevel)
-		damage = 100 + (moveLevel * 5)
+		damage = 150 + (moveLevel * 10)
 		return "Attacks 1 enemy for "..damage.."% of Special Attack."
 	end
 }
@@ -86,7 +98,10 @@ meffects = {}
 meffects[1] = {}
 meffects[1].id = 1
 meffects[1].target = 1
-meffects[1].param1 = 100
+meffects[1].param1 = function(moveLevel)
+	damage = 125 + (moveLevel * 5)
+	return damage
+end
 meffects[1].param2 = "spattack"
 
 M[5] = {
@@ -97,7 +112,7 @@ M[5] = {
 	type = 10,
 	targetting = 1,
 	description = function(moveLevel)
-		damage = 100 + (moveLevel * 5)
+		damage = 125 + (moveLevel * 5)
 		return "Attacks 1 enemy for "..damage.."% of Special Attack."
 	end
 }
@@ -106,7 +121,10 @@ meffects = {}
 meffects[1] = {}
 meffects[1].id = 1
 meffects[1].target = 1
-meffects[1].param1 = 100
+meffects[1].param1 = function(moveLevel)
+	damage = 125 + (moveLevel * 5)
+	return damage
+end
 meffects[1].param2 = "spattack"
 
 M[6] = {
@@ -117,7 +135,7 @@ M[6] = {
 	type = 9,
 	targetting = 1,
 	description = function(moveLevel)
-		damage = 100 + (moveLevel * 5)
+		damage = 125 + (moveLevel * 5)
 		return "Attacks 1 enemy for "..damage.."% of Special Attack."
 	end
 }
@@ -126,7 +144,10 @@ meffects = {}
 meffects[1] = {}
 meffects[1].id = 3
 meffects[1].target = 4
-meffects[1].param1 = 75
+meffects[1].param1 = function(moveLevel)
+	chance = 75 + (moveLevel * 5)
+	return chance
+end
 meffects[1].param2 = 2
 
 M[7] = {
@@ -146,14 +167,20 @@ meffects = {}
 meffects[1] = {}
 meffects[1].id = 1
 meffects[1].target = 1
-meffects[1].param1 = 200
+meffects[1].param1 = function(moveLevel)
+	damage = 200 + (moveLevel * 10)
+	return damage
+end
 meffects[1].param2 = "attack"
 
 
 meffects[2] = {}
 meffects[2].id = 4
 meffects[2].target = 1
-meffects[2].param1 = 75
+meffects[2].param1 = function(moveLevel)
+	chance = 75 + (moveLevel * 5)
+	return chance
+end
 meffects[2].param2 = 2
 
 M[8] = {
@@ -165,7 +192,7 @@ M[8] = {
 	targetting = 1,
 	description = function(moveLevel)
 		chance = 75 + (moveLevel * 5)
-		damage = 200 + (moveLevel * 5)
+		damage = 200 + (moveLevel * 10)
 		return "Attacks 1 enemy for "..damage.."% of Attack then has a "..chance.."% chance of reducing that enemy's defense."
 	end
 }
@@ -174,18 +201,21 @@ meffects = {}
 meffects[1] = {}
 meffects[1].id = 1
 meffects[1].target = 3
-meffects[1].param1 = 1000
+meffects[1].param1 = function(moveLevel)
+	damage = 150 + (moveLevel * 10)
+	return damage
+end
 meffects[1].param2 = "spattack"
 
 M[9] = {
 	name = "Razor Leaf",
 	effects = meffects,
-	cooldown = 1,
+	cooldown = 3,
 	default = false,
 	type = 11,
 	targetting = 1,
 	description = function(moveLevel)
-		damage = 300 + (moveLevel * 15)
+		damage = 150 + (moveLevel * 10)
 		return "Attacks all enemies for "..damage.."% of Special Attack."
 	end
 }
@@ -194,7 +224,9 @@ meffects = {}
 meffects[1] = {}
 meffects[1].id = 1
 meffects[1].target = 1
-meffects[1].param1 = 300
+meffects[1].param1 = function(moveLevel)
+	return 300
+end
 meffects[1].param2 = "attack"
 
 M[10] = {
@@ -214,7 +246,9 @@ meffects = {}
 meffects[1] = {}
 meffects[1].id = 1
 meffects[1].target = 3
-meffects[1].param1 = 900
+meffects[1].param1 = function(moveLevel)
+	return 900
+end
 meffects[1].param2 = "attack"
 
 M[11] = {
@@ -227,6 +261,33 @@ M[11] = {
 	description = function(moveLevel)
 		damage = 900
 		return "Boss Move: Attacks all enemies for "..damage.."% of Attack."
+	end
+}
+
+meffects = {}
+meffects[1] = {}
+meffects[1].id = 1
+meffects[1].target = 3
+meffects[1].param1 = function(moveLevel)
+	damage = 50 + (moveLevel * 5)
+	return damage
+end
+meffects[1].param2 = "spattack"
+
+meffects[2] = meffects[1]
+meffects[3] = meffects[1]
+
+
+M[12] = {
+	name = "Fire Spin",
+	effects = meffects,
+	cooldown = 3,
+	default = false,
+	type = 9,
+	targetting = 1,
+	description = function(moveLevel)
+		damage = 50 + (moveLevel * 5)
+		return "Attacks all enemies 3 times for "..damage.."% of Special Attack."
 	end
 }
 

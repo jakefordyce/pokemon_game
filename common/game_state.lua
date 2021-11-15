@@ -234,7 +234,7 @@ moves[2] = {
 	level = 4
 }
 moves[3] = {
-	id = 9,
+	id = 12,
 	level = 0
 }
 moves[4] = {
