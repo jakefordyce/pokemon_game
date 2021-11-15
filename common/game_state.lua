@@ -10,6 +10,8 @@ M.items_found = {}
 
 M.trainers_defeated = {}
 
+M.bill_bosses_defeated = {0}
+
 M.shop_runes = {}
 M.reward_runes = {}
 

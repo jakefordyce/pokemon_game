@@ -127,8 +127,8 @@ function on_message(self, message_id, message, sender)
 				--TODO: load encounter chance from area data
 				if encounter_number <= 25 then
 					msg.post("camera", "reset")
-					--msg.post("main:/loader#main", "load_choose_team", {battle_type = 1})
-					msg.post("main:/loader#main", "load_choose_team", {battle_type = 3, battle_id = 1})
+					msg.post("main:/loader#main", "load_choose_team", {battle_type = 1})
+					--msg.post("main:/loader#main", "load_choose_team", {battle_type = 3, battle_id = 1}) --DEV: useful for testing.
 				end
 			end
 		elseif message.other_group == hash("door") then

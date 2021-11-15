@@ -1,0 +1,43 @@
+go.property("boss_index", 1)
+go.property("level", 5)
+local types = require "common/poke_types"
+local boss_stats = require "common/boss_stats"
+local encounters = require "common/encounters"
+
+function init(self)
+	type1 = boss_stats[self.boss_index].type1
+	type2 = boss_stats[self.boss_index].type2
+	max_reward = self.level / 5
+	msg.post("#boss_type1", "play_animation", { id = hash("type_"..types[type1].name.."_16") })
+	msg.post("#stone_type1", "play_animation", { id = hash("type_"..types[type1].name.."_16") })
+	label.set_text("#stone_reward1", "1 - "..max_reward)
+	if type2 ~= type1 then
+		msg.post("#boss_type2", "play_animation", { id = hash("type_"..types[type2].name.."_16") })
+		msg.post("#stone_type2", "play_animation", { id = hash("type_"..types[type1].name.."_16") })
+		label.set_text("#stone_reward2", "1 - "..max_reward)
+	else
+		msg.post("#boss_type2", "disable")
+		msg.post("#stone_type2", "disable")
+		msg.post("#stone_reward2", "disable")
+	end
+end
+
+function final(self)
+end
+
+function update(self, dt)
+end
+
+function on_message(self, message_id, message, sender)
+	if message_id == hash("contact_point_response") then
+		if message.other_group == hash("cursor") then
+			msg.post("main:/loader#main", "load_choose_team", {battle_type = 3, battle_id = self.boss_index, level = self.level})
+		end
+	end
+end
+
+function on_input(self, action_id, action)
+end
+
+function on_reload(self)
+end

@@ -22,7 +22,7 @@ embedded_components {
   "blend_mode: BLEND_MODE_ALPHA\n"
   ""
   position {
-    x: -200.0
+    x: -270.0
     y: 0.0
     z: 0.0
   }
@@ -108,7 +108,7 @@ embedded_components {
   "blend_mode: BLEND_MODE_ALPHA\n"
   ""
   position {
-    x: -159.0
+    x: -228.0
     y: -24.0
     z: 0.0
   }
@@ -128,7 +128,7 @@ embedded_components {
   "blend_mode: BLEND_MODE_ALPHA\n"
   ""
   position {
-    x: -142.0
+    x: -211.0
     y: -24.0
     z: 0.0
   }

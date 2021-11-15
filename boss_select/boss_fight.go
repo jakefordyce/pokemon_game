@@ -1,6 +1,6 @@
 components {
-  id: "evolution"
-  component: "/menu/evolution.script"
+  id: "boss_fight"
+  component: "/boss_select/boss_fight.script"
   position {
     x: 0.0
     y: 0.0
@@ -21,7 +21,7 @@ embedded_components {
   "mass: 0.0\n"
   "friction: 0.1\n"
   "restitution: 0.5\n"
-  "group: \"evolution\"\n"
+  "group: \"boss\"\n"
   "mask: \"cursor\"\n"
   "embedded_collision_shape {\n"
   "  shapes {\n"
@@ -80,27 +80,7 @@ embedded_components {
   }
 }
 embedded_components {
-  id: "evolve_target_sprite"
-  type: "sprite"
-  data: "tile_set: \"/battle/front_sprites.atlas\"\n"
-  "default_animation: \"bulbasaur_front_original\"\n"
-  "material: \"/builtins/materials/sprite.material\"\n"
-  "blend_mode: BLEND_MODE_ALPHA\n"
-  ""
-  position {
-    x: -178.0
-    y: 0.0
-    z: 0.0
-  }
-  rotation {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-    w: 1.0
-  }
-}
-embedded_components {
-  id: "stone_cost1"
+  id: "stone_reward1"
   type: "label"
   data: "size {\n"
   "  x: 50.0\n"
@@ -137,121 +117,13 @@ embedded_components {
   "pivot: PIVOT_CENTER\n"
   "blend_mode: BLEND_MODE_ALPHA\n"
   "line_break: false\n"
-  "text: \"10\"\n"
+  "text: \"1\"\n"
   "font: \"/builtins/fonts/system_font.font\"\n"
   "material: \"/builtins/fonts/label.material\"\n"
   ""
   position {
     x: -12.0
     y: 2.0
-    z: 0.0
-  }
-  rotation {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-    w: 1.0
-  }
-}
-embedded_components {
-  id: "stone_cost2"
-  type: "label"
-  data: "size {\n"
-  "  x: 50.0\n"
-  "  y: 20.0\n"
-  "  z: 0.0\n"
-  "  w: 0.0\n"
-  "}\n"
-  "scale {\n"
-  "  x: 1.0\n"
-  "  y: 1.0\n"
-  "  z: 1.0\n"
-  "  w: 0.0\n"
-  "}\n"
-  "color {\n"
-  "  x: 1.0\n"
-  "  y: 1.0\n"
-  "  z: 1.0\n"
-  "  w: 1.0\n"
-  "}\n"
-  "outline {\n"
-  "  x: 0.0\n"
-  "  y: 0.0\n"
-  "  z: 0.0\n"
-  "  w: 1.0\n"
-  "}\n"
-  "shadow {\n"
-  "  x: 0.0\n"
-  "  y: 0.0\n"
-  "  z: 0.0\n"
-  "  w: 1.0\n"
-  "}\n"
-  "leading: 1.0\n"
-  "tracking: 0.0\n"
-  "pivot: PIVOT_CENTER\n"
-  "blend_mode: BLEND_MODE_ALPHA\n"
-  "line_break: false\n"
-  "text: \"15\"\n"
-  "font: \"/builtins/fonts/system_font.font\"\n"
-  "material: \"/builtins/fonts/label.material\"\n"
-  ""
-  position {
-    x: -12.0
-    y: -20.0
-    z: 0.0
-  }
-  rotation {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-    w: 1.0
-  }
-}
-embedded_components {
-  id: "cost_label"
-  type: "label"
-  data: "size {\n"
-  "  x: 128.0\n"
-  "  y: 20.0\n"
-  "  z: 0.0\n"
-  "  w: 0.0\n"
-  "}\n"
-  "scale {\n"
-  "  x: 1.0\n"
-  "  y: 1.0\n"
-  "  z: 1.0\n"
-  "  w: 0.0\n"
-  "}\n"
-  "color {\n"
-  "  x: 1.0\n"
-  "  y: 1.0\n"
-  "  z: 1.0\n"
-  "  w: 1.0\n"
-  "}\n"
-  "outline {\n"
-  "  x: 0.0\n"
-  "  y: 0.0\n"
-  "  z: 0.0\n"
-  "  w: 1.0\n"
-  "}\n"
-  "shadow {\n"
-  "  x: 0.0\n"
-  "  y: 0.0\n"
-  "  z: 0.0\n"
-  "  w: 1.0\n"
-  "}\n"
-  "leading: 1.0\n"
-  "tracking: 0.0\n"
-  "pivot: PIVOT_CENTER\n"
-  "blend_mode: BLEND_MODE_ALPHA\n"
-  "line_break: false\n"
-  "text: \"Stones Needed\"\n"
-  "font: \"/builtins/fonts/system_font.font\"\n"
-  "material: \"/builtins/fonts/label.material\"\n"
-  ""
-  position {
-    x: -13.0
-    y: 23.0
     z: 0.0
   }
   rotation {
@@ -292,6 +164,228 @@ embedded_components {
   position {
     x: -60.0
     y: -17.0
+    z: 0.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+}
+embedded_components {
+  id: "boss_sprite"
+  type: "sprite"
+  data: "tile_set: \"/battle/front_sprites.atlas\"\n"
+  "default_animation: \"kangaskhan_front_original\"\n"
+  "material: \"/builtins/materials/sprite.material\"\n"
+  "blend_mode: BLEND_MODE_ALPHA\n"
+  ""
+  position {
+    x: -270.0
+    y: 0.0
+    z: 0.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+}
+embedded_components {
+  id: "stone_reward2"
+  type: "label"
+  data: "size {\n"
+  "  x: 50.0\n"
+  "  y: 20.0\n"
+  "  z: 0.0\n"
+  "  w: 0.0\n"
+  "}\n"
+  "scale {\n"
+  "  x: 1.0\n"
+  "  y: 1.0\n"
+  "  z: 1.0\n"
+  "  w: 0.0\n"
+  "}\n"
+  "color {\n"
+  "  x: 1.0\n"
+  "  y: 1.0\n"
+  "  z: 1.0\n"
+  "  w: 1.0\n"
+  "}\n"
+  "outline {\n"
+  "  x: 0.0\n"
+  "  y: 0.0\n"
+  "  z: 0.0\n"
+  "  w: 1.0\n"
+  "}\n"
+  "shadow {\n"
+  "  x: 0.0\n"
+  "  y: 0.0\n"
+  "  z: 0.0\n"
+  "  w: 1.0\n"
+  "}\n"
+  "leading: 1.0\n"
+  "tracking: 0.0\n"
+  "pivot: PIVOT_CENTER\n"
+  "blend_mode: BLEND_MODE_ALPHA\n"
+  "line_break: false\n"
+  "text: \"1\"\n"
+  "font: \"/builtins/fonts/system_font.font\"\n"
+  "material: \"/builtins/fonts/label.material\"\n"
+  ""
+  position {
+    x: -12.0
+    y: -20.0
+    z: 0.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+}
+embedded_components {
+  id: "rewards_label"
+  type: "label"
+  data: "size {\n"
+  "  x: 128.0\n"
+  "  y: 20.0\n"
+  "  z: 0.0\n"
+  "  w: 0.0\n"
+  "}\n"
+  "scale {\n"
+  "  x: 1.0\n"
+  "  y: 1.0\n"
+  "  z: 1.0\n"
+  "  w: 0.0\n"
+  "}\n"
+  "color {\n"
+  "  x: 1.0\n"
+  "  y: 1.0\n"
+  "  z: 1.0\n"
+  "  w: 1.0\n"
+  "}\n"
+  "outline {\n"
+  "  x: 0.0\n"
+  "  y: 0.0\n"
+  "  z: 0.0\n"
+  "  w: 1.0\n"
+  "}\n"
+  "shadow {\n"
+  "  x: 0.0\n"
+  "  y: 0.0\n"
+  "  z: 0.0\n"
+  "  w: 1.0\n"
+  "}\n"
+  "leading: 1.0\n"
+  "tracking: 0.0\n"
+  "pivot: PIVOT_CENTER\n"
+  "blend_mode: BLEND_MODE_ALPHA\n"
+  "line_break: false\n"
+  "text: \"Rewards\"\n"
+  "font: \"/builtins/fonts/system_font.font\"\n"
+  "material: \"/builtins/fonts/label.material\"\n"
+  ""
+  position {
+    x: -13.0
+    y: 23.0
+    z: 0.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+}
+embedded_components {
+  id: "boss_type1"
+  type: "sprite"
+  data: "tile_set: \"/choose_team/types.atlas\"\n"
+  "default_animation: \"type_grass_16\"\n"
+  "material: \"/builtins/materials/sprite.material\"\n"
+  "blend_mode: BLEND_MODE_ALPHA\n"
+  ""
+  position {
+    x: -228.0
+    y: -24.0
+    z: 0.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+}
+embedded_components {
+  id: "boss_type2"
+  type: "sprite"
+  data: "tile_set: \"/choose_team/types.atlas\"\n"
+  "default_animation: \"type_grass_16\"\n"
+  "material: \"/builtins/materials/sprite.material\"\n"
+  "blend_mode: BLEND_MODE_ALPHA\n"
+  ""
+  position {
+    x: -211.0
+    y: -24.0
+    z: 0.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+}
+embedded_components {
+  id: "boss_level"
+  type: "label"
+  data: "size {\n"
+  "  x: 128.0\n"
+  "  y: 20.0\n"
+  "  z: 0.0\n"
+  "  w: 0.0\n"
+  "}\n"
+  "scale {\n"
+  "  x: 1.0\n"
+  "  y: 1.0\n"
+  "  z: 1.0\n"
+  "  w: 0.0\n"
+  "}\n"
+  "color {\n"
+  "  x: 1.0\n"
+  "  y: 1.0\n"
+  "  z: 1.0\n"
+  "  w: 1.0\n"
+  "}\n"
+  "outline {\n"
+  "  x: 0.0\n"
+  "  y: 0.0\n"
+  "  z: 0.0\n"
+  "  w: 1.0\n"
+  "}\n"
+  "shadow {\n"
+  "  x: 0.0\n"
+  "  y: 0.0\n"
+  "  z: 0.0\n"
+  "  w: 1.0\n"
+  "}\n"
+  "leading: 1.0\n"
+  "tracking: 0.0\n"
+  "pivot: PIVOT_W\n"
+  "blend_mode: BLEND_MODE_ALPHA\n"
+  "line_break: false\n"
+  "text: \"Level: 5\"\n"
+  "font: \"/builtins/fonts/system_font.font\"\n"
+  "material: \"/builtins/fonts/label.material\"\n"
+  ""
+  position {
+    x: -232.0
+    y: 2.0
     z: 0.0
   }
   rotation {

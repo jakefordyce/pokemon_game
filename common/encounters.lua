@@ -135,14 +135,14 @@ function M.load_wild_encounter(area_index)
 	end
 end
 
-function M.load_boss_encounter(boss_index)
+function M.load_boss_encounter(boss_index, level)
 	for i=1,4 do
 		game_state["enemy_mon"..i] = nil
 		--simulate_runes(game_state["enemy_mon"..i])
 	end
 	game_state["enemy_boss"] = {
-		index = boss_fights[boss_index].boss_index,
-		level = boss_fights[boss_index].level
+		index = boss_index, --TODO: fix this
+		level = level
 	}
 	generate_boss_stats(game_state["enemy_boss"])
 	select_boss_moves(game_state["enemy_boss"])
@@ -188,12 +188,6 @@ trainers[1].mon4 = {
 	gear_rarity = 1,
 	level = 2,
 	build_style = 1
-}
-
--- Boss Data
-M.bill_bosses = {}
-M.bill_bosses[1] = {
-	boss_index = 1
 }
 
 return M
