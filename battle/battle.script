@@ -197,8 +197,7 @@ function handle_move_effects(level, effect, target, move_user)
 	elseif effect.id == 2 then --reduce attack
 		local defender = combatants[target]
 		local duration = effect.param2
-		accuracy = move_user.accuracy + effectiveness - 100
-		if(should_apply_debuff(accuracy, defender.resist, effect.param1(level))) then
+		if(should_apply_debuff(move_user, effectiveness, defender.resist, effect.param1(level))) then
 			apply_status_effect(defender, 2, duration)
 		else
 			display_damage_text(go.get_position(defender.reference), "resist", "red")
@@ -210,8 +209,7 @@ function handle_move_effects(level, effect, target, move_user)
 	elseif effect.id == 4 then --reduce defense
 		local defender = combatants[target]
 		local duration = effect.param2
-		accuracy = move_user.accuracy + effectiveness - 100
-		if(should_apply_debuff(accuracy, defender.resist, effect.param1(level))) then
+		if(should_apply_debuff(move_user, effectiveness, defender.resist, effect.param1(level))) then
 			apply_status_effect(defender, 4, duration)
 		else
 			display_damage_text(go.get_position(defender.reference), "resist", "red")
@@ -249,10 +247,22 @@ function handle_move_effects(level, effect, target, move_user)
 		local defender = combatants[target]
 		local turn_amount = effect.param2 * 10
 		modify_turn_meter(defender, effect.id, turn_amount)
+	elseif effect.id == 9 then --reduce accuracy
+		local defender = combatants[target]
+		local duration = effect.param2
+		if(should_apply_debuff(move_user, effectiveness, defender.resist, effect.param1(level))) then
+			apply_status_effect(defender, 9, duration)
+		else
+			display_damage_text(go.get_position(defender.reference), "resist", "red")
+		end
 	end
 end
 
-function should_apply_debuff(accuracy, resist, debuff_chance)
+function should_apply_debuff(move_user, effectiveness, resist, debuff_chance)
+	accuracy = move_user.accuracy + effectiveness - 100
+	if mon_has_status_effect(move_user, 9) then
+		accuracy = accuracy / 2
+	end
 	x = accuracy - resist
 	if x < 0 then
 		x = 0

@@ -34,5 +34,10 @@ M[7] = {
 	damage_text = "Speed Up",
 	category = 1
 }
+M[9] = {
+	sprite_name = "accuracy_down",
+	damage_text = "Accuracy Down",
+	category = 2
+}
 
 return M

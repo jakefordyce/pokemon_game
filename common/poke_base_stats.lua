@@ -61,7 +61,6 @@ moves = {}
 moves[1] = {["level"] = 1, ["id"] = 1}
 moves[2] = {["level"] = 1, ["id"] = 9}
 
-
 M[1] = {
 	name = "bulbasaur",
 	hp = 90,
@@ -77,7 +76,6 @@ M[1] = {
 		{target = 2, stone_type1 = 11, stone_cost1 = 20}
 	}
 }
-
 M[2] = {
 	name = "ivysaur",
 	hp = 90,
@@ -93,7 +91,6 @@ M[2] = {
 		{target = 3, stone_type1 = 11, stone_cost1 = 20}
 	}
 }
-
 M[3] = {
 	name = "venusaur",
 	hp = 90,
@@ -126,7 +123,6 @@ M[4] = {
 		{target = 5, stone_type1 = 9, stone_cost1 = 20}
 	}
 }
-
 M[5] = {
 	name = "charmeleon",
 	hp = 90,
@@ -142,7 +138,6 @@ M[5] = {
 		{target = 6, stone_type1 = 9, stone_cost1 = 10, stone_type2 = 8, stone_cost2 = 10}
 	}
 }
-
 M[6] = {
 	name = "charizard",
 	hp = 90,
@@ -229,6 +224,10 @@ M[13] = {
 }
 M[14] = {}
 M[15] = {}
+
+moves = {}
+moves[1] = {["level"] = 1, ["id"] = 1}
+moves[2] = {["level"] = 1, ["id"] = 16}
 M[16] = {
 	name = "pidgey",
 	hp = 90,
@@ -246,7 +245,7 @@ M[18] = {}
 
 moves = {}
 moves[1] = {["level"] = 1, ["id"] = 1}
-moves[1] = {["level"] = 1, ["id"] = 14}
+moves[2] = {["level"] = 1, ["id"] = 14}
 M[19] = {
 	name = "rattata",
 	hp = 90,

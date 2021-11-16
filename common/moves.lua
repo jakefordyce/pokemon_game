@@ -327,7 +327,7 @@ M[14] = {
 	name = "Super Fang",
 	effects = meffects,
 	cooldown = 3,
-	default = true,
+	default = false,
 	type = 1,
 	targetting = 1,
 	description = function(moveLevel)
@@ -357,7 +357,7 @@ M[15] = {
 	name = "Energize",
 	effects = meffects,
 	cooldown = 3,
-	default = true,
+	default = false,
 	type = 12,
 	targetting = 2,
 	description = function(moveLevel)
@@ -366,5 +366,26 @@ M[15] = {
 	end
 }
 
+meffects = {}
+meffects[1] = {}
+meffects[1].id = 9 --reduce accuracy
+meffects[1].target = 3
+meffects[1].param1 = function(moveLevel)
+	return 75 + (5 * moveLevel)
+end
+meffects[1].param2 = 2
+
+M[16] = {
+	name = "Sand Attack",
+	effects = meffects,
+	cooldown = 3,
+	default = false,
+	type = 5,
+	targetting = 1,
+	description = function(moveLevel)
+		chance = 75 + (5 + moveLevel)
+		return "Has a "..chance.."% chance of reducing the accuracy of all enemies for 2 turns."
+	end
+}
 
 return M
