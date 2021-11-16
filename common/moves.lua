@@ -159,7 +159,7 @@ M[7] = {
 	targetting = 2,
 	description = function(moveLevel)
 		chance = 75 + (moveLevel * 5)
-		return "Has a "..chance.."% chance of increasing Attack of 1 ally."
+		return "Has a "..chance.."% chance of increasing Attack of all allies."
 	end
 }
 

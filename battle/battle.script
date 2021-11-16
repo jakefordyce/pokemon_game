@@ -184,7 +184,7 @@ function handle_move_effects(level, effect, target, move_user)
 			damage = damage * 2
 		end
 		if mon_has_status_effect(defender, 5) then
-			damage = damage / 2
+			damage = math.ceil(damage / 2)
 		end
 		crit_rng = math.random(1,100)
 		text_color = "white"
@@ -220,16 +220,14 @@ function handle_move_effects(level, effect, target, move_user)
 		apply_status_effect(defender, 5, duration)
 	elseif effect.id == 6 then --damage based on max hp
 		local defender = combatants[target]
-		print(defender.hp)
 		local power = effect.param1(level) * defender.hp / 100
-		print(power)
 		local defense = defender.defense
 		local damage = math.floor(calc_damage(power, defense) * effectiveness / 100)
 		if mon_has_status_effect(defender, 4) then
 			damage = damage * 2
 		end
 		if mon_has_status_effect(defender, 5) then
-			damage = damage / 2
+			damage = math.ceil(damage / 2)
 		end
 		crit_rng = math.random(1,100)
 		text_color = "white"
