@@ -253,6 +253,14 @@ function handle_move_effects(level, effect, target, move_user)
 		else
 			display_damage_text(go.get_position(defender.reference), "resist", "red")
 		end
+	elseif effect.id == 10 then --reduce speed
+		local defender = combatants[target]
+		local duration = effect.param2
+		if(should_apply_debuff(move_user, effectiveness, defender.resist, effect.param1(level))) then
+			apply_status_effect(defender, 10, duration)
+		else
+			display_damage_text(go.get_position(defender.reference), "resist", "red")
+		end
 	end
 end
 
@@ -476,6 +484,7 @@ function choose_enemy_move()
 end
 
 function increment_turn()
+	--TODO: handle speed down debuff
 	if not player_mon1.fainted then
 		local speed = player_mon1.speed
 		if mon_has_status_effect(player_mon1, 7) then

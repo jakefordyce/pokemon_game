@@ -383,8 +383,40 @@ M[16] = {
 	type = 5,
 	targetting = 1,
 	description = function(moveLevel)
-		chance = 75 + (5 + moveLevel)
+		chance = 75 + (5 * moveLevel)
 		return "Has a "..chance.."% chance of reducing the accuracy of all enemies for 2 turns."
+	end
+}
+
+meffects = {}
+meffects[1] = {}
+meffects[1].id = 1
+meffects[1].target = 3
+meffects[1].param1 = function(moveLevel)
+	damage = 150 + (moveLevel * 10)
+	return damage
+end
+meffects[1].param2 = "spattack"
+
+meffects[2] = {}
+meffects[2].id = 10 --reduce speed
+meffects[2].target = 3
+meffects[2].param1 = function(moveLevel)
+	return 25 + (5 * moveLevel)
+end
+meffects[2].param2 = 2
+
+M[17] = {
+	name = "Bubblebeam",
+	effects = meffects,
+	cooldown = 4,
+	default = false,
+	type = 10,
+	targetting = 1,
+	description = function(moveLevel)
+		chance = 25 + (5 * moveLevel)
+		damage = 150 + (10 * moveLevel)
+		return "Attacks all enemies for "..damage.."% of Special Attack and has a "..chance.."% chance of reducing the speed of all enemies for 2 turns."
 	end
 }
 
