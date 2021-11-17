@@ -732,7 +732,7 @@ M[303]={}
 
 moves = {}
 moves[1] = {["level"] = 1, ["id"] = 1}
-moves[2] = {["level"] = 1, ["id"] = 12}
+moves[2] = {["level"] = 1, ["id"] = 13}
 
 M[304] = {
 	name = "aron",

@@ -93,7 +93,7 @@ function on_message(self, message_id, message, sender)
 			current_turn_mon = enemy_mon4
 			start_enemy_turn(enemy_mon4)
 		else
-			timer.delay(.1, false, increment_turn)
+			timer.delay(.1, false, increment_turns)
 		end
 	end
 	if message_id == hash("end_turn") then
@@ -483,80 +483,30 @@ function choose_enemy_move()
 	start_handling_move(target)
 end
 
-function increment_turn()
-	--TODO: handle speed down debuff
-	if not player_mon1.fainted then
-		local speed = player_mon1.speed
-		if mon_has_status_effect(player_mon1, 7) then
+function increment_mon_turn(mon)
+	if mon ~= nil and not mon.fainted then
+		local speed = mon.speed
+		if mon_has_status_effect(mon, 7) then
 			speed = speed * 1.3
 		end
-		player_mon1.turn = player_mon1.turn + speed
-		msg.post("gui", "update_turn", {target="player_mon1", current=player_mon1.turn, max=1000})
-	end
-	if player_mon2 ~= nil and not player_mon2.fainted then
-		local speed = player_mon2.speed
-		if mon_has_status_effect(player_mon2, 7) then
-			speed = speed * 1.3
+		if mon_has_status_effect(mon, 10) then
+			speed = speed / 1.3
 		end
-		player_mon2.turn = player_mon2.turn + speed
-		msg.post("gui", "update_turn", {target="player_mon2", current=player_mon2.turn, max=1000})
+		mon.turn = mon.turn + speed
+		msg.post("gui", "update_turn", {target=mon.reference, current=mon.turn, max=1000})
 	end
-	if player_mon3 ~= nil and not player_mon3.fainted then
-		local speed = player_mon3.speed
-		if mon_has_status_effect(player_mon3, 7) then
-			speed = speed * 1.3
-		end
-		player_mon3.turn = player_mon3.turn + speed
-		msg.post("gui", "update_turn", {target="player_mon3", current=player_mon3.turn, max=1000})
+end
+
+function increment_turns()
+	local mon = {}
+	for i=1,4 do
+		mon = combatants["player_mon"..i]
+		increment_mon_turn(mon)
+		mon = combatants["enemy_mon"..i]
+		increment_mon_turn(mon)
 	end
-	if player_mon4 ~= nil and not player_mon4.fainted then
-		local speed = player_mon4.speed
-		if mon_has_status_effect(player_mon4, 7) then
-			speed = speed * 1.3
-		end
-		player_mon4.turn = player_mon4.turn + speed
-		msg.post("gui", "update_turn", {target="player_mon4", current=player_mon4.turn, max=1000})
-	end
-	if enemy_boss ~= nil and not enemy_boss.fainted then
-		local speed = enemy_boss.speed
-		if mon_has_status_effect(enemy_boss, 7) then
-			speed = speed * 1.3
-		end
-		enemy_boss.turn = enemy_boss.turn + speed
-		msg.post("gui", "update_turn", {target="enemy_boss", current=enemy_boss.turn, max=1000})
-	end
-	if enemy_mon1 ~= nil and not enemy_mon1.fainted then
-		local speed = enemy_mon1.speed
-		if mon_has_status_effect(enemy_mon1, 7) then
-			speed = speed * 1.3
-		end
-		enemy_mon1.turn = enemy_mon1.turn + speed
-		msg.post("gui", "update_turn", {target="enemy_mon1", current=enemy_mon1.turn, max=1000})
-	end
-	if enemy_mon2 ~= nil and not enemy_mon2.fainted then
-		local speed = enemy_mon2.speed
-		if mon_has_status_effect(enemy_mon2, 7) then
-			speed = speed * 1.3
-		end
-		enemy_mon2.turn = enemy_mon2.turn + speed
-		msg.post("gui", "update_turn", {target="enemy_mon2", current=enemy_mon2.turn, max=1000})
-	end
-	if enemy_mon3 ~= nil and not enemy_mon3.fainted then
-		local speed = enemy_mon3.speed
-		if mon_has_status_effect(enemy_mon3, 7) then
-			speed = speed * 1.3
-		end
-		enemy_mon3.turn = enemy_mon3.turn + speed
-		msg.post("gui", "update_turn", {target="enemy_mon3", current=enemy_mon3.turn, max=1000})
-	end
-	if enemy_mon4 ~= nil and not enemy_mon4.fainted then
-		local speed = enemy_mon4.speed
-		if mon_has_status_effect(enemy_mon4, 7) then
-			speed = speed * 1.3
-		end
-		enemy_mon4.turn = enemy_mon4.turn + speed
-		msg.post("gui", "update_turn", {target="enemy_mon4", current=enemy_mon4.turn, max=1000})
-	end
+	mon = combatants["enemy_boss"]
+	increment_mon_turn(mon)
 	
 	msg.post(".", "find_next_turn")
 end
