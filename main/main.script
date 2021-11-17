@@ -36,6 +36,7 @@ function on_message(self, message_id, message, sender)
 	if message_id == hash("load_choose_team") then
 		game_state.battle_type = message.battle_type
 		game_state.battle_id = message.battle_id
+		game_state.battle_level = message.level
 		generate_enemy_team(message.battle_type, message.battle_id, message.level)
 		if message.battle_type == 3 then
 			load_screen("choose_team", "boss_select")
@@ -124,6 +125,11 @@ function on_message(self, message_id, message, sender)
 end
 
 function generate_enemy_team(battle_type, battle_id, level)
+	game_state.enemy_mon1 = nil
+	game_state.enemy_mon2 = nil
+	game_state.enemy_mon3 = nil
+	game_state.enemy_mon4 = nil
+	game_state.enemy_boss = nil
 	if battle_type == 1 then
 		encounters.load_wild_encounter(game_state.current_area)
 	elseif battle_type == 2 then

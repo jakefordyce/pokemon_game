@@ -3,6 +3,7 @@ local common_moves = require "common/moves"
 
 M.base_crit_chance = 5
 M.base_crit_damage = 100
+M.STONE_REWARD_MINIMUM = 1
 
 moves = {}
 moves[1] = {["level"] = 1, ["id"] = 10}
@@ -10,7 +11,7 @@ moves[2] = {["level"] = 1, ["id"] = 11}
 
 M[1] = {
 	name = "kangaskhan",
-	hp = 1000,
+	hp = 1, --1000
 	attack = 120,
 	defense = 120,
 	spattack = 100,
@@ -24,7 +25,7 @@ M[1] = {
 }
 
 function M.exp_reward_by_level(level)
-	return math.ceil(math.pow(1.05, (level - 1)) * 20)
+	return math.ceil(math.pow(1.05, (level - 1)) * 20) * 2
 end
 
 -- this should only be used for hp, attack, defense, spattack, spdefense

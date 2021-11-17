@@ -74,6 +74,7 @@ function on_input(self, action_id, action)
 		if(gui.pick_node(gui.get_node("button_a"),action.x,action.y) and action.released == true) then
 			if game_state.dialog_is_displaying then
 				if waiting_for_choice then
+					game_state.dialog_is_displaying = false
 					gui.set_enabled(gui.get_node("choices_panel"), false)
 					msg.post(dialog_sender, "dialog_end", {dialog_id = current_dialog_id, choice = choice_is_yes})
 					waiting_for_choice = false

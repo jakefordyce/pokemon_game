@@ -1,5 +1,6 @@
 local pbs = require "common/poke_base_stats"
 local runes = require "common/runes"
+local boss_stats = require "common/boss_stats"
 
 local M = {}
 
@@ -81,7 +82,7 @@ end
 
 function M.generate_shop_runes()
 	count = #M.shop_runes
-	for i=0, count do M.shop_runes[i]=nil end
+	for i=1, count do M.shop_runes[i]=nil end
 
 	for i=1,3 do
 		M.shop_runes[i] = {
@@ -112,19 +113,26 @@ end
 
 function M.generate_reward_runes()
 	count = #M.reward_runes
-	for i=0, count do M.reward_runes[i]=nil end
+	for i=1, count do M.reward_runes[i]=nil end
+
+	local rune_chance = 50
+	local base_rune_rarity = 1
+	local rarity_chance = 50
 	
-	rune_count = 0
+	if M.battle_type == 3 then
+		base_rune_rarity = 2
+	end
+	
+	local rune_count = 0
 	for i=1,4 do
-		rune_chance = 50
 		if math.random(1,100) <= rune_chance then
 			rune_count = rune_count + 1
 		end
 	end
 
 	for i=1, rune_count do
-		rune_rarity = 1
-		rarity_increased = true
+		local rune_rarity = base_rune_rarity
+		local rarity_increased = true
 		rarity_chance = 50
 		while rarity_increased == true and rune_rarity < 5 do
 			if math.random(1,100) <= rarity_chance then
@@ -139,6 +147,35 @@ function M.generate_reward_runes()
 		table.insert(M.reward_runes, new_rune)
 		table.insert(M.runes, new_rune)
 	end
+end
+
+function M.generate_reward_stones()
+	stones = {}
+	index = M.battle_id
+	level = M.battle_level
+	if boss_stats[index].type1 == boss_stats[index].type2 then
+		reward = math.random(boss_stats.STONE_REWARD_MINIMUM, math.floor(level / 5)) * 2
+		stones[1] = {
+			type = boss_stats[index].type1,
+			amount = reward
+		}
+		M.stones[boss_stats[index].type1] = M.stones[boss_stats[index].type1] + reward
+	else
+		reward = math.random(boss_stats.STONE_REWARD_MINIMUM, math.floor(level / 5))
+		stones[1] = {
+			type = boss_stats[index].type1,
+			amount = reward
+		}
+		M.stones[boss_stats[index].type1] = M.stones[boss_stats[index].type1] + reward
+		reward = math.random(boss_stats.STONE_REWARD_MINIMUM, math.floor(level / 5))
+		stones[2] = {
+			type = boss_stats[index].type2,
+			amount = reward
+		}
+		M.stones[boss_stats[index].type2] = M.stones[boss_stats[index].type2] + reward
+	end
+
+	return stones
 end
 
 function M.generate_preview_mon(pokedex, level)
