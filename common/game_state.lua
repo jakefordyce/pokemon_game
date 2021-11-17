@@ -16,6 +16,7 @@ M.shop_runes = {}
 M.reward_runes = {}
 
 --TEMP STATE--
+M.dialog_is_displaying = false
 M.dialog_is_pending = false
 M.pending_dialog_id = nil
 M.pending_dialog_sender = nil

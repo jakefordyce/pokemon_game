@@ -117,18 +117,20 @@ function on_message(self, message_id, message, sender)
 	-- Handle collisions
 	if message_id == hash("contact_point_response") then
 		if message.other_group == hash("tall_grass") then
-			p = go.get_position()
-			game_state.position_x = p.x
-			game_state.position_y = p.y
-			encounter_tracker = encounter_tracker + 1
-			if encounter_tracker > 300 then
-				encounter_number = math.random(1,100)
-				encounter_tracker = 0
-				--TODO: load encounter chance from area data
-				if encounter_number <= 25 then
-					msg.post("camera", "reset")
-					msg.post("main:/loader#main", "load_choose_team", {battle_type = 1})
-					--msg.post("main:/loader#main", "load_choose_team", {battle_type = 3, battle_id = 1}) --DEV: useful for testing.
+			if not game_state.dialog_is_displaying then
+				p = go.get_position()
+				game_state.position_x = p.x
+				game_state.position_y = p.y
+				encounter_tracker = encounter_tracker + 1
+				if encounter_tracker > 300 then
+					encounter_number = math.random(1,100)
+					encounter_tracker = 0
+					--TODO: load encounter chance from area data
+					if encounter_number <= 25 then
+						msg.post("camera", "reset")
+						msg.post("main:/loader#main", "load_choose_team", {battle_type = 1})
+						--msg.post("main:/loader#main", "load_choose_team", {battle_type = 3, battle_id = 1}) --DEV: useful for testing.
+					end
 				end
 			end
 		elseif message.other_group == hash("door") then
