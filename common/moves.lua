@@ -492,4 +492,60 @@ M[20] = {
 	end
 }
 
+meffects = {}
+meffects[1] = {}
+meffects[1].id = 1
+meffects[1].target = 3
+meffects[1].param1 = function(moveLevel)
+	damage = 150 + (moveLevel * 10)
+	return damage
+end
+meffects[1].param2 = "attack"
+
+meffects[2] = {}
+meffects[2].id = 12 --decrease turn
+meffects[2].target = 3
+meffects[2].param1 = function(moveLevel)
+	return 50 + (5 * moveLevel)
+end
+meffects[2].param2 = 25
+
+M[21] = {
+	name = "Rock Slide",
+	effects = meffects,
+	cooldown = 4,
+	default = false,
+	type = 5,
+	targetting = 1,
+	description = function(moveLevel)
+		damage = 150 + (10 * moveLevel)
+		chance = 50 + (5 * moveLevel)
+		return "Attacks all enemies for "..damage.."% of Attack and has a "..chance.."% chance of reducing the turn meter of all enemies by 25%."
+	end
+}
+
+meffects = {}
+meffects[1] = {}
+meffects[1].id = 1
+meffects[1].target = 1
+meffects[1].param1 = function(moveLevel)
+	damage = 150 + (moveLevel * 10)
+	return damage
+end
+meffects[1].param2 = "spattack"
+meffects[1].ignore_def = 100
+
+M[22] = {
+	name = "Magic Leaf",
+	effects = meffects,
+	cooldown = 4,
+	default = false,
+	type = 11,
+	targetting = 1,
+	description = function(moveLevel)
+		damage = 150 + (10 * moveLevel)
+		return "Attacks an enemy for "..damage.."% of Special Attack. This attack ignores the target's defense."
+	end
+}
+
 return M

@@ -275,6 +275,14 @@ function handle_move_effects(level, effect, target, move_user)
 			else
 				display_damage_text(go.get_position(defender.reference), "resist", "red")
 			end
+		elseif effect.id == 12 then --decrease turn
+			local defender = combatants[target]
+			local turn_amount = effect.param2 * -10
+			if(should_apply_debuff(move_user, effectiveness, defender.resist, effect.param1(level))) then
+				modify_turn_meter(defender, effect.id, turn_amount)
+			else
+				display_damage_text(go.get_position(defender.reference), "resist", "red")
+			end
 		end
 		
 	end
@@ -329,7 +337,12 @@ end
 function modify_turn_meter(defender, effect_id, amount)
 	defender.turn = defender.turn + amount
 	text_color = "white"
-	damage_text = "turn boost"
+	local damage_text
+	if amount > 0 then
+		damage_text = "turn boost"
+	else
+		damage_text = "turn reduce"
+	end
 	display_damage_text(go.get_position(defender.reference), damage_text, text_color)
 	msg.post("gui", "update_turn", {target=defender.reference, current=defender.turn, max=1000})
 end

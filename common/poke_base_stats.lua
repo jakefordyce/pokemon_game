@@ -342,6 +342,10 @@ M[70]={}
 M[71]={}
 M[72]={}
 M[73]={}
+
+moves = {}
+moves[1] = {["level"] = 1, ["id"] = 1}
+moves[2] = {["level"] = 1, ["id"] = 21}
 M[74] = {
 	name = "geodude",
 	hp = 90,
@@ -495,6 +499,10 @@ M[148]={}
 M[149]={}
 M[150]={}
 M[151]={}
+
+moves = {}
+moves[1] = {["level"] = 1, ["id"] = 1}
+moves[2] = {["level"] = 1, ["id"] = 22}
 M[152] = {
 	name = "chikorita",
 	hp = 90,

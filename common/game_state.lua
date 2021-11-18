@@ -300,18 +300,18 @@ moves[2] = {
 	level = 4
 }
 moves[3] = {
-	id = 20,
+	id = 21,
 	level = 0
 }
 moves[4] = {
-	id = 12,
+	id = 22,
 	level = 0
 }
 
 
 M.pokemon[1] = {
 	pokedex = 5,
-	level = 100,
+	level = 5,
 	exp = 0,
 	name = "charmeleon",
 	known_moves = moves,
