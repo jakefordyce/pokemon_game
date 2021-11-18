@@ -150,28 +150,15 @@ function M.generate_reward_runes()
 end
 
 function M.generate_reward_stones()
-	stones = {}
+	
 	index = M.battle_id
 	level = M.battle_level
-	if boss_stats[index].type1 == boss_stats[index].type2 then
-		reward = math.random(boss_stats.STONE_REWARD_MINIMUM, math.floor(level / 5)) * 2
-		stones[1] = {
-			type = boss_stats[index].type1,
-			amount = reward
-		}
+	stones = boss_stats.stone_reward(index, level)
+	
+	if stones[2] == nil then
 		M.stones[boss_stats[index].type1] = M.stones[boss_stats[index].type1] + reward
 	else
-		reward = math.random(boss_stats.STONE_REWARD_MINIMUM, math.floor(level / 5))
-		stones[1] = {
-			type = boss_stats[index].type1,
-			amount = reward
-		}
 		M.stones[boss_stats[index].type1] = M.stones[boss_stats[index].type1] + reward
-		reward = math.random(boss_stats.STONE_REWARD_MINIMUM, math.floor(level / 5))
-		stones[2] = {
-			type = boss_stats[index].type2,
-			amount = reward
-		}
 		M.stones[boss_stats[index].type2] = M.stones[boss_stats[index].type2] + reward
 	end
 
@@ -337,7 +324,9 @@ M.pokemon[1] = {
 	rune3 = nil,
 	rune4 = nil,
 	rune5 = nil,
-	rune6 = nil
+	rune6 = nil,
+	type1 = 9,
+	type2 = 9
 }
 
 --List of all of the player's runes.

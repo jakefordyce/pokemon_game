@@ -5,17 +5,21 @@ local boss_stats = require "common/boss_stats"
 local encounters = require "common/encounters"
 
 function init(self)
-	type1 = boss_stats[self.boss_index].type1
-	type2 = boss_stats[self.boss_index].type2
-	max_reward = self.level / 5
+	
+	local minimum_reward = boss_stats.minimum_reward(self.boss_index, self.level)
+	local max_reward = boss_stats.maximum_reward(self.boss_index, self.level)
+	local reward_types = boss_stats.reward_stone_types(self.boss_index)
+	local type1 = reward_types[1]
+	local type2 = reward_types[2]
+	
 	label.set_text("#boss_level", "Level: "..self.level)
 	msg.post("#boss_type1", "play_animation", { id = hash("type_"..types[type1].name.."_16") })
 	msg.post("#stone_type1", "play_animation", { id = hash("type_"..types[type1].name.."_16") })
-	label.set_text("#stone_reward1", "1 - "..max_reward)
-	if type2 ~= type1 then
+	label.set_text("#stone_reward1", minimum_reward.." - "..max_reward)
+	if type2 ~= nil then
 		msg.post("#boss_type2", "play_animation", { id = hash("type_"..types[type2].name.."_16") })
-		msg.post("#stone_type2", "play_animation", { id = hash("type_"..types[type1].name.."_16") })
-		label.set_text("#stone_reward2", "1 - "..max_reward)
+		msg.post("#stone_type2", "play_animation", { id = hash("type_"..types[type2].name.."_16") })
+		label.set_text("#stone_reward2", minimum_reward.." - "..max_reward)
 	else
 		msg.post("#boss_type2", "disable")
 		msg.post("#stone_type2", "disable")

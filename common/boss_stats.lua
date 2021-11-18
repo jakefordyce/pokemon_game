@@ -28,6 +28,56 @@ function M.exp_reward_by_level(level)
 	return math.ceil(math.pow(1.05, (level - 1)) * 20) * 2
 end
 
+function M.minimum_reward(index, level)
+	if M[index].type1 ~= M[index].type2 then
+		return M.STONE_REWARD_MINIMUM
+	else
+		return M.STONE_REWARD_MINIMUM * 2
+	end
+end
+
+function M.maximum_reward(index, level)
+	local max_reward =  math.floor(level / 5)
+	if M[index].type1 == M[index].type2 then
+		max_reward = max_reward * 2
+	end
+	return max_reward
+end
+
+function M.reward_stone_types(index)
+	types = {}
+	types[1] = M[index].type1
+	if M[index].type1 ~= M[index].type2 then
+		types[2] = M[index].type2
+	end
+	return types
+end
+
+function M.stone_reward(index, level)
+	stones = {}
+
+	if M[index].type1 == M[index].type2 then
+		reward = math.random(M.minimum_reward(index, level), M.maximum_reward(index, level))
+		stones[1] = {
+			type = M[index].type1,
+			amount = reward
+		}
+	else
+		reward = math.random(M.minimum_reward(index, level), M.maximum_reward(index, level))
+		stones[1] = {
+			type = M[index].type1,
+			amount = reward
+		}
+		reward = math.random(M.minimum_reward(index, level), M.maximum_reward(index, level))
+		stones[2] = {
+			type = M[index].type2,
+			amount = reward
+		}
+	end
+
+	return stones
+end
+
 -- this should only be used for hp, attack, defense, spattack, spdefense
 function M.stat_by_level(pokedex, stat, level)
 	calc_stat = (5 + (M[pokedex][stat] * level * 0.01) * 2)
