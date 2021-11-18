@@ -319,6 +319,10 @@ M[63] = {
 }
 M[64]={}
 M[65]={}
+
+moves = {}
+moves[1] = {["level"] = 1, ["id"] = 1}
+moves[2] = {["level"] = 1, ["id"] = 19}
 M[66] = {
 	name = "machop",
 	hp = 90,
@@ -367,6 +371,10 @@ M[88]={}
 M[89]={}
 M[90]={}
 M[91]={}
+
+moves = {}
+moves[1] = {["level"] = 1, ["id"] = 1}
+moves[2] = {["level"] = 1, ["id"] = 20}
 M[92] = {
 	name = "gastly",
 	hp = 90,

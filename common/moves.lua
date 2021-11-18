@@ -446,4 +446,50 @@ M[18] = {
 	end
 }
 
+meffects = {}
+meffects[1] = {}
+meffects[1].id = 1
+meffects[1].target = 1
+meffects[1].param1 = function(moveLevel)
+	damage = 200 + (moveLevel * 10)
+	return damage
+end
+meffects[1].param2 = "attack"
+meffects[1].extra_crit = 100
+
+M[19] = {
+	name = "Vital Throw",
+	effects = meffects,
+	cooldown = 5,
+	default = false,
+	type = 2,
+	targetting = 1,
+	description = function(moveLevel)
+		damage = 200 + (10 * moveLevel)
+		return "Attacks an enemy for "..damage.."% of Attack. This attack will always crit."
+	end
+}
+
+meffects = {}
+meffects[1] = {}
+meffects[1].id = 11 -- sleep
+meffects[1].target = 3
+meffects[1].param1 = function(moveLevel)
+	return 75 + (5 * moveLevel)
+end
+meffects[1].param2 = 1
+
+M[20] = {
+	name = "Hypnosis",
+	effects = meffects,
+	cooldown = 3,
+	default = false,
+	type = 15,
+	targetting = 1,
+	description = function(moveLevel)
+		chance = 75 + (5 * moveLevel)
+		return "Has a "..chance.."% chance of putting all enemies to sleep for 1 turns."
+	end
+}
+
 return M

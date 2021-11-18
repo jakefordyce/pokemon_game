@@ -267,6 +267,14 @@ function handle_move_effects(level, effect, target, move_user)
 			else
 				display_damage_text(go.get_position(defender.reference), "resist", "red")
 			end
+		elseif effect.id == 11 then --sleep
+			local defender = combatants[target]
+			local duration = effect.param2
+			if(should_apply_debuff(move_user, effectiveness, defender.resist, effect.param1(level))) then
+				apply_status_effect(defender, 11, duration)
+			else
+				display_damage_text(go.get_position(defender.reference), "resist", "red")
+			end
 		end
 		
 	end
@@ -372,8 +380,26 @@ function mon_has_status_effect(mon, effect_id)
 	return has_status_effect
 end
 
+function mon_can_act(mon)
+	can_act = true
+	for i, eff in ipairs(mon.status_effects) do
+		if eff.category == 4 then --loss of control
+			can_act = false
+		end
+	end
+	return can_act
+end
+
 function damage_defender(defender, damage)
 	defender.currenthp = defender.currenthp - damage
+
+	--taking damage wakes up a sleeping pokemon
+	for i, eff in ipairs(defender.status_effects) do
+		if eff.type == 11 then
+			go.delete(eff.go_id)
+			defender.status_effects[i] = nil
+		end
+	end
 	
 	if defender.currenthp <= 0 then
 		defender.currenthp = 0
@@ -440,12 +466,17 @@ end
 
 function start_player_turn(turn_mon)
 	reduce_all_cooldowns(turn_mon, 1)
-	msg.post("gui", "display_mon", {mon = turn_mon})
 	local p = go.get_position(turn_mon.reference)
 	p.y = p.y - 60
 	p.z = p.z - 1
 	local turn_marker = factory.create("#turn_marker_factory",p, nil, nil, 2.0)
 	table.insert(spawned_turn_markers, turn_marker)
+	
+	if mon_can_act(turn_mon) then
+		msg.post("gui", "display_mon", {mon = turn_mon})
+	else
+		timer.delay(.5, false, function() msg.post(".", "end_turn") end)
+	end
 end
 
 function start_enemy_turn(turn_mon)
@@ -457,8 +488,13 @@ function start_enemy_turn(turn_mon)
 	p.y = p.y - yshift
 	local turn_marker = factory.create("#turn_marker_factory",p, nil, nil, scale)
 	table.insert(spawned_turn_markers, turn_marker)
-	timer.delay(1, false, choose_enemy_move)
-	timer.delay(2, false, function() msg.post(".", "end_turn") end)
+	
+	if mon_can_act(turn_mon) then
+		timer.delay(1, false, choose_enemy_move)
+		timer.delay(2, false, function() msg.post(".", "end_turn") end)
+	else
+		timer.delay(.5, false, function() msg.post(".", "end_turn") end)
+	end
 end
 
 function choose_enemy_move()
