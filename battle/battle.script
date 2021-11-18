@@ -179,7 +179,9 @@ function handle_move_effects(level, effect, target, move_user)
 			end
 			local power = effect.param1(level) * stat / 100
 			local defense = defender.defense
-			
+			if effect.ignore_def ~= nil then
+				defense = defense * (100 - effect.ignore_def) / 100
+			end
 			local damage = math.floor(calc_damage(power, defense) * effectiveness / 100)
 			if mon_has_status_effect(defender, 4) then
 				damage = damage * 2

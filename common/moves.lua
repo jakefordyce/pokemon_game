@@ -211,7 +211,7 @@ meffects[1].extra_crit = 25
 M[9] = {
 	name = "Razor Leaf",
 	effects = meffects,
-	cooldown = 4,
+	cooldown = 5,
 	default = false,
 	type = 11,
 	targetting = 1,
@@ -418,6 +418,31 @@ M[17] = {
 		chance = 25 + (5 * moveLevel)
 		damage = 150 + (10 * moveLevel)
 		return "Attacks all enemies for "..damage.."% of Special Attack and has a "..chance.."% chance of reducing the speed of all enemies for 2 turns."
+	end
+}
+
+
+meffects = {}
+meffects[1] = {}
+meffects[1].id = 1
+meffects[1].target = 3
+meffects[1].param1 = function(moveLevel)
+	damage = 150 + (moveLevel * 10)
+	return damage
+end
+meffects[1].param2 = "spattack"
+meffects[1].ignore_def = 25
+
+M[18] = {
+	name = "Psywave",
+	effects = meffects,
+	cooldown = 5,
+	default = false,
+	type = 13,
+	targetting = 1,
+	description = function(moveLevel)
+		damage = 150 + (10 * moveLevel)
+		return "Attacks all enemies for "..damage.."% of Special Attack. This attack ignores 25% of the target's defense."
 	end
 }
 
