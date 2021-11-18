@@ -337,19 +337,7 @@ M.pokemon[1] = {
 	rune3 = nil,
 	rune4 = nil,
 	rune5 = nil,
-	rune6 = nil,
-	hp = 100,
-	attack = 10,
-	defense = 10,
-	spattack = 10,
-	spdefense = 10,
-	speed = 100,
-	accuracy = 0,
-	resist = 0,
-	crit_chance = 5,
-	crit_damage = 50,
-	type1 = 9,
-	type2 = 9
+	rune6 = nil
 }
 
 --List of all of the player's runes.

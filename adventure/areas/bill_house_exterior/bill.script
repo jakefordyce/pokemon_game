@@ -18,9 +18,9 @@ function on_message(self, message_id, message, sender)
 	elseif message_id == hash("dialog_end") then
 		if message.dialog_id == 13 then
 			if message.choice then
-				--game_state.dialog_is_pending = true
-				--game_state.pending_dialog_id = 8
-				--game_state.pending_dialog_sender = go.get_id()
+				game_state.pending_dialog_sender = go.get_id()
+				game_state.victory_dialog_id = 15
+				game_state.loss_dialog_id = 16
 				msg.post("/adventure/camera", "reset")
 				msg.post("main:/loader#main", "load_boss_select")
 			else

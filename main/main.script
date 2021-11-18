@@ -68,15 +68,20 @@ function on_message(self, message_id, message, sender)
 				load_screen(area_names[game_state.current_area], "battle")
 			end
 		elseif game_state.battle_type == 3 then
-			--game_state.dialog_is_pending = true --TODO: set a dialog
+			game_state.dialog_is_pending = true
 			if(message.victory) then
 				--battle_id should be the boss fight id in common/encounters.
 				--this needs to be set in boss fight selection script
-				--TODO: set a value in game_state showing that the boss has been defeated in order to unlock next fight.
-				--game_state.pending_dialog_id = game_state.victory_dialog_id --TODO: use the dialog
+				local current_best = game_state.bill_bosses_defeated[game_state.battle_id]
+				local this_battle = game_state.battle_level / 5
+				if this_battle > current_best then
+					game_state.bill_bosses_defeated[game_state.battle_id] = this_battle
+				end
+				
+				game_state.pending_dialog_id = game_state.victory_dialog_id
 				load_screen("rewards", "battle")
 			else
-				--game_state.pending_dialog_id = game_state.loss_dialog_id --TODO: a message from Bill
+				game_state.pending_dialog_id = game_state.loss_dialog_id
 				load_screen(area_names[game_state.current_area], "battle")
 			end
 		end

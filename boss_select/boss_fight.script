@@ -8,6 +8,7 @@ function init(self)
 	type1 = boss_stats[self.boss_index].type1
 	type2 = boss_stats[self.boss_index].type2
 	max_reward = self.level / 5
+	label.set_text("#boss_level", "Level: "..self.level)
 	msg.post("#boss_type1", "play_animation", { id = hash("type_"..types[type1].name.."_16") })
 	msg.post("#stone_type1", "play_animation", { id = hash("type_"..types[type1].name.."_16") })
 	label.set_text("#stone_reward1", "1 - "..max_reward)
