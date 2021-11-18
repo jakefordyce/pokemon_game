@@ -167,100 +167,106 @@ end
 
 function handle_move_effects(level, effect, target, move_user)
 	effectiveness = types.type_effectiveness(selected_move.type, combatants[target].type1, combatants[target].type2)
-	
-	if effect.id == 1 then --deal damage
-		local defender = combatants[target]
-		stat = move_user[effect.param2]
-		if mon_has_status_effect(move_user, 2) then
-			stat = stat / 2
-		elseif mon_has_status_effect(move_user, 3) then
-			stat = stat * 1.5
-		end
-		local power = effect.param1(level) * stat / 100
-		local defense = defender.defense
+	if not combatants[target].fainted then
 		
-		local damage = math.floor(calc_damage(power, defense) * effectiveness / 100)
-		if mon_has_status_effect(defender, 4) then
-			damage = damage * 2
+		if effect.id == 1 then --deal damage
+			local defender = combatants[target]
+			stat = move_user[effect.param2]
+			if mon_has_status_effect(move_user, 2) then
+				stat = stat / 2
+			elseif mon_has_status_effect(move_user, 3) then
+				stat = stat * 1.5
+			end
+			local power = effect.param1(level) * stat / 100
+			local defense = defender.defense
+			
+			local damage = math.floor(calc_damage(power, defense) * effectiveness / 100)
+			if mon_has_status_effect(defender, 4) then
+				damage = damage * 2
+			end
+			if mon_has_status_effect(defender, 5) then
+				damage = math.ceil(damage / 2)
+			end
+			crit_rng = math.random(1,100)
+			text_color = "white"
+			if effect.extra_crit ~= nil then
+				crit_rng = crit_rng - effect.extra_crit
+			end
+			if crit_rng <= move_user.crit_chance then
+				damage = math.floor(damage * (1 + (move_user.crit_damage / 100)))
+				text_color = "yellow"
+			end
+			display_damage_text(go.get_position(defender.reference),""..damage, text_color)
+			damage_defender(defender, damage)
+		elseif effect.id == 2 then --reduce attack
+			local defender = combatants[target]
+			local duration = effect.param2
+			if(should_apply_debuff(move_user, effectiveness, defender.resist, effect.param1(level))) then
+				apply_status_effect(defender, 2, duration)
+			else
+				display_damage_text(go.get_position(defender.reference), "resist", "red")
+			end
+		elseif effect.id == 3 then --increase attack
+			local defender = combatants[target]
+			local duration = effect.param2
+			apply_status_effect(defender, 3, duration)
+		elseif effect.id == 4 then --reduce defense
+			local defender = combatants[target]
+			local duration = effect.param2
+			if(should_apply_debuff(move_user, effectiveness, defender.resist, effect.param1(level))) then
+				apply_status_effect(defender, 4, duration)
+			else
+				display_damage_text(go.get_position(defender.reference), "resist", "red")
+			end
+		elseif effect.id == 5 then --increase defense
+			local defender = combatants[target]
+			local duration = effect.param2
+			apply_status_effect(defender, 5, duration)
+		elseif effect.id == 6 then --damage based on max hp
+			local defender = combatants[target]
+			local power = effect.param1(level) * defender.hp / 100
+			local defense = defender.defense
+			local damage = math.floor(calc_damage(power, defense) * effectiveness / 100)
+			if mon_has_status_effect(defender, 4) then
+				damage = damage * 2
+			end
+			if mon_has_status_effect(defender, 5) then
+				damage = math.ceil(damage / 2)
+			end
+			crit_rng = math.random(1,100)
+			text_color = "white"
+			if crit_rng <= move_user.crit_chance then
+				damage = math.floor(damage * (1 + (move_user.crit_damage / 100)))
+				text_color = "yellow"
+			end
+			display_damage_text(go.get_position(defender.reference),""..damage, text_color)
+			damage_defender(defender, damage)
+		elseif effect.id == 7 then --increase speed
+			local defender = combatants[target]
+			local duration = effect.param2
+			apply_status_effect(defender, 7, duration)
+		elseif effect.id == 8 then --increase turn
+			local defender = combatants[target]
+			local turn_amount = effect.param2 * 10
+			modify_turn_meter(defender, effect.id, turn_amount)
+		elseif effect.id == 9 then --reduce accuracy
+			local defender = combatants[target]
+			local duration = effect.param2
+			if(should_apply_debuff(move_user, effectiveness, defender.resist, effect.param1(level))) then
+				apply_status_effect(defender, 9, duration)
+			else
+				display_damage_text(go.get_position(defender.reference), "resist", "red")
+			end
+		elseif effect.id == 10 then --reduce speed
+			local defender = combatants[target]
+			local duration = effect.param2
+			if(should_apply_debuff(move_user, effectiveness, defender.resist, effect.param1(level))) then
+				apply_status_effect(defender, 10, duration)
+			else
+				display_damage_text(go.get_position(defender.reference), "resist", "red")
+			end
 		end
-		if mon_has_status_effect(defender, 5) then
-			damage = math.ceil(damage / 2)
-		end
-		crit_rng = math.random(1,100)
-		text_color = "white"
-		if crit_rng <= move_user.crit_chance then
-			damage = math.floor(damage * (1 + (move_user.crit_damage / 100)))
-			text_color = "yellow"
-		end
-		display_damage_text(go.get_position(defender.reference),""..damage, text_color)
-		damage_defender(defender, damage)
-	elseif effect.id == 2 then --reduce attack
-		local defender = combatants[target]
-		local duration = effect.param2
-		if(should_apply_debuff(move_user, effectiveness, defender.resist, effect.param1(level))) then
-			apply_status_effect(defender, 2, duration)
-		else
-			display_damage_text(go.get_position(defender.reference), "resist", "red")
-		end
-	elseif effect.id == 3 then --increase attack
-		local defender = combatants[target]
-		local duration = effect.param2
-		apply_status_effect(defender, 3, duration)
-	elseif effect.id == 4 then --reduce defense
-		local defender = combatants[target]
-		local duration = effect.param2
-		if(should_apply_debuff(move_user, effectiveness, defender.resist, effect.param1(level))) then
-			apply_status_effect(defender, 4, duration)
-		else
-			display_damage_text(go.get_position(defender.reference), "resist", "red")
-		end
-	elseif effect.id == 5 then --increase defense
-		local defender = combatants[target]
-		local duration = effect.param2
-		apply_status_effect(defender, 5, duration)
-	elseif effect.id == 6 then --damage based on max hp
-		local defender = combatants[target]
-		local power = effect.param1(level) * defender.hp / 100
-		local defense = defender.defense
-		local damage = math.floor(calc_damage(power, defense) * effectiveness / 100)
-		if mon_has_status_effect(defender, 4) then
-			damage = damage * 2
-		end
-		if mon_has_status_effect(defender, 5) then
-			damage = math.ceil(damage / 2)
-		end
-		crit_rng = math.random(1,100)
-		text_color = "white"
-		if crit_rng <= move_user.crit_chance then
-			damage = math.floor(damage * (1 + (move_user.crit_damage / 100)))
-			text_color = "yellow"
-		end
-		display_damage_text(go.get_position(defender.reference),""..damage, text_color)
-		damage_defender(defender, damage)
-	elseif effect.id == 7 then --increase speed
-		local defender = combatants[target]
-		local duration = effect.param2
-		apply_status_effect(defender, 7, duration)
-	elseif effect.id == 8 then --increase turn
-		local defender = combatants[target]
-		local turn_amount = effect.param2 * 10
-		modify_turn_meter(defender, effect.id, turn_amount)
-	elseif effect.id == 9 then --reduce accuracy
-		local defender = combatants[target]
-		local duration = effect.param2
-		if(should_apply_debuff(move_user, effectiveness, defender.resist, effect.param1(level))) then
-			apply_status_effect(defender, 9, duration)
-		else
-			display_damage_text(go.get_position(defender.reference), "resist", "red")
-		end
-	elseif effect.id == 10 then --reduce speed
-		local defender = combatants[target]
-		local duration = effect.param2
-		if(should_apply_debuff(move_user, effectiveness, defender.resist, effect.param1(level))) then
-			apply_status_effect(defender, 10, duration)
-		else
-			display_damage_text(go.get_position(defender.reference), "resist", "red")
-		end
+		
 	end
 end
 
@@ -373,6 +379,10 @@ function damage_defender(defender, damage)
 		defender.turn = 0
 		msg.post("gui", "disable_mon", {mon = defender.reference})
 		msg.post(defender.reference.."#sprite", "disable")
+		for i, eff in ipairs(defender.status_effects) do
+			go.delete(eff.go_id)
+			defender.status_effects[i] = nil
+		end
 	else
 		msg.post("gui", "update_hp", {target=defender.reference, current=defender.currenthp, max=defender.hp})
 	end

@@ -300,11 +300,11 @@ moves[2] = {
 	level = 4
 }
 moves[3] = {
-	id = 12,
+	id = 9,
 	level = 0
 }
 moves[4] = {
-	id = 17,
+	id = 12,
 	level = 0
 }
 

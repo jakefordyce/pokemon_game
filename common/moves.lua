@@ -206,17 +206,18 @@ meffects[1].param1 = function(moveLevel)
 	return damage
 end
 meffects[1].param2 = "spattack"
+meffects[1].extra_crit = 25
 
 M[9] = {
 	name = "Razor Leaf",
 	effects = meffects,
-	cooldown = 3,
+	cooldown = 4,
 	default = false,
 	type = 11,
 	targetting = 1,
 	description = function(moveLevel)
 		damage = 150 + (moveLevel * 10)
-		return "Attacks all enemies for "..damage.."% of Special Attack."
+		return "Attacks all enemies for "..damage.."% of Special Attack. Has an extra 25% chance of dealing a critical hit."
 	end
 }
 
