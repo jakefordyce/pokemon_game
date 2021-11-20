@@ -9,6 +9,7 @@ local M = {}
 -- 4 = loss of control - prevents actions in some way
 
 M= {}
+--1 deal damage based on attack or sp.attack
 M[2] = {
 	sprite_name = "attack_down",
 	damage_text = "Attack Down",
@@ -29,11 +30,13 @@ M[5] = {
 	damage_text = "Defense Up",
 	category = 1
 }
+-- 6 deal damage based on enemy max hp
 M[7] = {
 	sprite_name = "speed_up",
 	damage_text = "Speed Up",
 	category = 1
 }
+-- 8 increase turn meter by percent
 M[9] = {
 	sprite_name = "accuracy_down",
 	damage_text = "Accuracy Down",
@@ -49,10 +52,22 @@ M[11] = {
 	damage_text = "Sleep",
 	category = 4
 }
+-- 12 decrease turn meter by percent
 M[13] = {
 	sprite_name = "block_debuffs",
 	damage_text = "Block Debuffs",
 	category = 1
 }
+M[14] = {
+	sprite_name = "stun",
+	damage_text = "Stun",
+	category = 4
+}
+M[15] = {
+	sprite_name = "poison",
+	damage_text = "Poison",
+	category = 3
+}
+--16 heal
 
 return M

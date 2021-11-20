@@ -571,4 +571,97 @@ M[23] = {
 	end
 }
 
+
+meffects = {}
+meffects[1] = {}
+meffects[1].id = 1
+meffects[1].target = 1
+meffects[1].param1 = function(moveLevel)
+	damage = 250 + (moveLevel * 15)
+	return damage
+end
+meffects[1].param2 = "attack"
+
+
+meffects[2] = {}
+meffects[2].id = 14
+meffects[2].target = 1
+meffects[2].param1 = function(moveLevel)
+	chance = 25 + (moveLevel * 5)
+	return chance
+end
+meffects[2].param2 = 1
+
+M[24] = {
+	name = "Clamp",
+	effects = meffects,
+	cooldown = 4,
+	default = false,
+	type = 10,
+	targetting = 1,
+	description = function(moveLevel)
+		chance = 25 + (moveLevel * 5)
+		damage = 250 + (moveLevel * 15)
+		return "Attacks 1 enemy for "..damage.."% of Attack then has a "..chance.."% chance of stunning the enemy for 1 turn."
+	end
+}
+
+meffects = {}
+meffects[1] = {}
+meffects[1].id = 16
+meffects[1].target = 4
+meffects[1].param1 = function(moveLevel)
+	heal = 100 + (moveLevel * 5)
+	return heal
+end
+meffects[1].param2 = "spattack"
+
+M[25] = {
+	name = "Heal Pulse",
+	effects = meffects,
+	cooldown = 1,
+	default = false,
+	type = 13,
+	targetting = 2,
+	description = function(moveLevel)
+		heal = 100 + (moveLevel * 5)
+		return "Heals all allies for "..heal.."% of Special Attack."
+	end
+}
+
+
+meffects = {}
+meffects[1] = {}
+meffects[1].id = 1
+meffects[1].target = 1
+meffects[1].param1 = function(moveLevel)
+	damage = 200 + (moveLevel * 10)
+	return damage
+end
+meffects[1].param2 = "spattack"
+
+
+meffects[2] = {}
+meffects[2].id = 2
+meffects[2].target = 1
+meffects[2].param1 = function(moveLevel)
+	chance = 75 + (moveLevel * 5)
+	return chance
+end
+meffects[2].param2 = 2
+
+M[26] = {
+	name = "Aurora Beam",
+	effects = meffects,
+	cooldown = 4,
+	default = false,
+	type = 14,
+	targetting = 1,
+	description = function(moveLevel)
+		chance = 75 + (moveLevel * 5)
+		damage = 200 + (moveLevel * 10)
+		return "Attacks 1 enemy for "..damage.."% of Attack then has a "..chance.."% chance of reducing that enemy's attack for 2 turns."
+	end
+}
+
 return M

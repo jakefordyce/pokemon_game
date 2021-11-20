@@ -51,3 +51,6 @@ max_count = 64
 [tilemap]
 max_tile_count = 10000
 
+[factory]
+max_count = 1024
+

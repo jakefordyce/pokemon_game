@@ -60,7 +60,6 @@ M.base_crit_damage = 100
 moves = {}
 moves[1] = {["level"] = 1, ["id"] = 1}
 moves[2] = {["level"] = 1, ["id"] = 9}
-
 M[1] = {
 	name = "bulbasaur",
 	hp = 90,
@@ -107,7 +106,6 @@ M[3] = {
 moves = {}
 moves[1] = {["level"] = 1, ["id"] = 1}
 moves[2] = {["level"] = 1, ["id"] = 12}
-
 M[4] = {
 	name = "charmander",
 	hp = 90,
@@ -153,8 +151,7 @@ M[6] = {
 
 moves = {}
 moves[1] = {["level"] = 1, ["id"] = 1}
-moves[2] = {["level"] = 1, ["id"] = 13}
-
+moves[2] = {["level"] = 1, ["id"] = 17}
 M[7] = {
 	name = "squirtle",
 	hp = 90,
@@ -167,7 +164,6 @@ M[7] = {
 	type2 = 10,
 	moves = moves
 }
-
 M[8] = {
 	name = "wartortle",
 	hp = 90,
@@ -180,7 +176,6 @@ M[8] = {
 	type2 = 10,
 	moves = moves
 }
-
 M[9] = {
 	name = "blastoise",
 	hp = 90,
@@ -193,9 +188,9 @@ M[9] = {
 	type2 = 10,
 	moves = moves
 }
+
 moves = {}
 moves[1] = {["level"] = 1, ["id"] = 1}
-
 M[10] = {
 	name = "caterpie",
 	hp = 90,
@@ -210,6 +205,9 @@ M[10] = {
 }
 M[11] = {}
 M[12] = {}
+
+moves = {}
+moves[1] = {["level"] = 1, ["id"] = 1}
 M[13] = {
 	name = "weedle",
 	hp = 90,
@@ -533,6 +531,10 @@ M[155] = {
 	type2 = 9,
 	moves = moves
 }
+
+moves = {}
+moves[1] = {["level"] = 1, ["id"] = 1}
+moves[2] = {["level"] = 1, ["id"] = 24}
 M[156]={}
 M[157]={}
 M[158] = {
@@ -648,10 +650,11 @@ M[224]={}
 M[225]={}
 M[226]={}
 M[227]={}
+
 moves = {}
 moves[1] = {["level"] = 1, ["id"] = 1}
-moves[2] = {["level"] = 1, ["id"] = 7}
-moves[3] = {["level"] = 1, ["id"] = 8}
+moves[2] = {["level"] = 1, ["id"] = 8}
+moves[3] = {["level"] = 7, ["id"] = 7}
 M[228] = {
 	name = "houndour",
 	hp = 90,
@@ -715,9 +718,10 @@ M[276]={}
 M[277]={}
 M[278]={}
 M[279]={}
+
 moves = {}
 moves[1] = {["level"] = 1, ["id"] = 1}
-
+moves[2] = {["level"] = 1, ["id"] = 25}
 M[280] = {
 	name = "ralts",
 	hp = 90,
@@ -757,7 +761,6 @@ M[303]={}
 moves = {}
 moves[1] = {["level"] = 1, ["id"] = 1}
 moves[2] = {["level"] = 1, ["id"] = 13}
-
 M[304] = {
 	name = "aron",
 	hp = 90,
@@ -828,6 +831,10 @@ M[359]={}
 M[360]={}
 M[361]={}
 M[362]={}
+
+moves = {}
+moves[1] = {["level"] = 1, ["id"] = 1}
+moves[2] = {["level"] = 1, ["id"] = 26}
 M[363] = {
 	name = "spheal",
 	hp = 90,

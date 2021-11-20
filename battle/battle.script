@@ -173,7 +173,7 @@ function handle_move_effects(level, effect, target, move_user)
 		local defender = combatants[target]
 		
 		if effect.id == 1 then --deal damage
-			stat = move_user[effect.param2]
+			local stat = move_user[effect.param2]
 			if mon_has_status_effect(move_user, 2) then
 				stat = stat / 2
 			elseif mon_has_status_effect(move_user, 3) then
@@ -237,6 +237,19 @@ function handle_move_effects(level, effect, target, move_user)
 					damage_text = "resist"
 				end
 			end
+		elseif effect.id == 16 then --heal
+			local stat = move_user[effect.param2]
+			local power = effect.param1(level) * stat / 100
+			local crit_rng = math.random(1,100)
+			text_color = "green"
+			if effect.extra_crit ~= nil then
+				crit_rng = crit_rng - effect.extra_crit
+			end
+			if crit_rng <= move_user.crit_chance then
+				power = math.floor(power * (1 + (move_user.crit_damage / 100)))
+			end
+			damage_text = power
+			heal_defender(defender, power)
 		elseif status_effects[effect.id] ~= nil and status_effects[effect.id].category > 1 then
 			local duration = effect.param2
 			if(should_apply_debuff(move_user, effectiveness, defender, effect.param1(level))) then
@@ -340,6 +353,7 @@ function reduce_status_effect_durations(mon, dur, end_of_turn)
 			msg.post(eff.go_id, "update_duration", {duration = eff.duration})
 			if eff.duration < 1 then
 				table.insert(status_effects_to_remove, i)
+				print(eff.go_id)
 				go.delete(eff.go_id)
 			end
 		end
@@ -400,6 +414,14 @@ function damage_defender(defender, damage)
 	elseif player_mons_are_fainted() then
 		timer.delay(0.5, false, function() msg.post("main:/loader#main", "end_battle", {victory = false}) end)
 	end
+end
+
+function heal_defender(defender, damage)
+	defender.currenthp = defender.currenthp + damage
+	if defender.currenthp > defender.hp then
+		defender.currenthp = defender.hp
+	end
+	msg.post("gui", "update_hp", {target=defender.reference, current=defender.currenthp, max=defender.hp})
 end
 
 function enemies_are_fainted()
