@@ -49,5 +49,10 @@ M[11] = {
 	damage_text = "Sleep",
 	category = 4
 }
+M[13] = {
+	sprite_name = "block_debuffs",
+	damage_text = "Block Debuffs",
+	category = 1
+}
 
 return M

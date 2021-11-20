@@ -296,15 +296,15 @@ moves[1] = {
 	level = 2
 }
 moves[2] = {
-	id = 2,
+	id = 13,
 	level = 4
 }
 moves[3] = {
-	id = 21,
+	id = 15,
 	level = 0
 }
 moves[4] = {
-	id = 22,
+	id = 20,
 	level = 0
 }
 

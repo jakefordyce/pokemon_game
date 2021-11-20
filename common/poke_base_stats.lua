@@ -517,6 +517,10 @@ M[152] = {
 }
 M[153]={}
 M[154]={}
+
+moves = {}
+moves[1] = {["level"] = 1, ["id"] = 1}
+moves[2] = {["level"] = 1, ["id"] = 23}
 M[155] = {
 	name = "cyndaquil",
 	hp = 90,
