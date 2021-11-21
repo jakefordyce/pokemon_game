@@ -318,7 +318,6 @@ function apply_status_effect(defender, effect_id, duration)
 	p.x = p.x - 10
 	local effect_go = factory.create("#status_effect_factory",p, nil, {duration = duration, image = hash(status_effects[effect_id].sprite_name)})
 	effect.go_id = effect_go
-	print(defender.name.." status add "..effect_go)
 	table.insert(defender.status_effects, effect)
 	position_status_effects(defender)
 end
