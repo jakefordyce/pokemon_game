@@ -23,8 +23,13 @@ end
 
 function on_message(self, message_id, message, sender)
 	if message_id == hash("update_duration") then
-		self.duration = message.duration
-		label.set_text("#label", self.duration)
+		if message.duration < 1 then
+			print(go.get_id().." duration < 1, deleting")
+			go.delete()
+		else
+			self.duration = message.duration
+			label.set_text("#label", self.duration)
+		end
 	end
 end
 

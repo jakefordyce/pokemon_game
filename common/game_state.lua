@@ -278,11 +278,12 @@ function M.calculate_pokemon_stats()
 end
 
 --PLAYER INFO--
-
+--[[
 M.position_x = 263 --starting values
 M.position_y = 761
 M.current_area = 1
---[[
+--]]
+---[[
 M.position_x = 416
 M.position_y = 51
 M.current_area = 5
@@ -292,6 +293,10 @@ M.stones = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0} -- 1 for each of the types in common/
 
 --List of all of the player's pokemon.
 M.pokemon = {}
+
+--List of all of the player's runes.
+M.runes = {}
+
 --[[
 moves = {}
 moves[1] = {
@@ -331,9 +336,6 @@ M.pokemon[1] = {
 	type1 = 9,
 	type2 = 9
 }
-
---List of all of the player's runes.
-M.runes = {}
 
 M.runes[1] = {
 	slot = 1,

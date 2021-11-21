@@ -303,7 +303,7 @@ function should_apply_debuff(move_user, effectiveness, defender, debuff_chance)
 end
 
 function apply_status_effect(defender, effect_id, duration)
-	effect = {}
+	local effect = {}
 	effect.duration = duration
 	effect.category = status_effects[effect_id].category
 	effect.type = effect_id
@@ -313,11 +313,12 @@ function apply_status_effect(defender, effect_id, duration)
 	else
 		effect.ignore_duration_reduction = false
 	end
-	p = go.get_position(defender.reference)
+	local p = go.get_position(defender.reference)
 	p.y = p.y + 125
 	p.x = p.x - 10
-	effect_go = factory.create("#status_effect_factory",p, nil, {duration = duration, image = hash(status_effects[effect_id].sprite_name)})
+	local effect_go = factory.create("#status_effect_factory",p, nil, {duration = duration, image = hash(status_effects[effect_id].sprite_name)})
 	effect.go_id = effect_go
+	print(defender.name.." status add "..effect_go)
 	table.insert(defender.status_effects, effect)
 	position_status_effects(defender)
 end
@@ -328,7 +329,7 @@ function modify_turn_meter(defender, effect_id, amount)
 end
 
 function display_damage_text(position, text, text_color)
-	damage_text = factory.create("#effect_text_factory", position, nil)
+	local damage_text = factory.create("#effect_text_factory", position, nil)
 	msg.post(damage_text, "set_values", {label_text = text, label_color = text_color})
 end
 
@@ -343,7 +344,7 @@ function position_status_effects(mon)
 end
 
 function reduce_status_effect_durations(mon, dur, end_of_turn)
-	status_effects_to_remove = {}
+	local status_effects_to_remove = {}
 	for i, eff in ipairs(mon.status_effects) do
 		if(end_of_turn and eff.ignore_duration_reduction) then
 			--prevent a pokemon who just buffed themself from immediately losing a turn of the buff at the end of their turn.
@@ -352,14 +353,12 @@ function reduce_status_effect_durations(mon, dur, end_of_turn)
 			eff.duration = eff.duration - dur
 			msg.post(eff.go_id, "update_duration", {duration = eff.duration})
 			if eff.duration < 1 then
-				table.insert(status_effects_to_remove, i)
-				print(eff.go_id)
-				go.delete(eff.go_id)
+				table.insert(status_effects_to_remove, 1, i)
 			end
 		end
 	end
 	for i, setr in ipairs(status_effects_to_remove) do
-		table.remove(mon.status_effects, i)
+		table.remove(mon.status_effects, setr)
 	end
 	position_status_effects(mon)
 end
@@ -391,7 +390,7 @@ function damage_defender(defender, damage)
 	for i, eff in ipairs(defender.status_effects) do
 		if eff.type == 11 then
 			go.delete(eff.go_id)
-			defender.status_effects[i] = nil
+			table.remove(defender.status_effects, i)
 		end
 	end
 	

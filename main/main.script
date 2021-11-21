@@ -24,6 +24,12 @@ function init(self)
 	load_screen(area_names[game_state.current_area], nil)
 	math.randomseed(os.time())
 	math.random(); math.random(); math.random()
+	---[[
+	game_state.add_pokemon(1,5)
+	game_state.add_pokemon(172,5)
+	game_state.add_pokemon(173,5)
+	game_state.add_pokemon(304,5)
+	--]]
 end
 
 function on_input(self, action_id, action)
