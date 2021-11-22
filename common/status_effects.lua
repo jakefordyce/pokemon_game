@@ -69,5 +69,10 @@ M[15] = {
 	category = 3
 }
 --16 heal
+M[17] = {
+	sprite_name = "leech_seed",
+	damage_text = "Leech Seed",
+	category = 3
+}
 
 return M

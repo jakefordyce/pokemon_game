@@ -11,7 +11,7 @@ moves[2] = {["level"] = 1, ["id"] = 11}
 
 M[1] = {
 	name = "kangaskhan",
-	hp = 1, --1000
+	hp = 1000,
 	attack = 120,
 	defense = 120,
 	spattack = 100,

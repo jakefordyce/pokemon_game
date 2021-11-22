@@ -97,7 +97,7 @@ function on_message(self, message_id, message, sender)
 		end
 	end
 	if message_id == hash("end_turn") then
-		reduce_status_effect_durations(current_turn_mon, 1, true)
+		reduce_status_effect_durations(current_turn_mon, 1, 5)
 		clear_gos(spawned_turn_markers)
 		msg.post(".", "find_next_turn")
 	end
@@ -253,7 +253,7 @@ function handle_move_effects(level, effect, target, move_user)
 		elseif status_effects[effect.id] ~= nil and status_effects[effect.id].category > 1 then
 			local duration = effect.param2
 			if(should_apply_debuff(move_user, effectiveness, defender, effect.param1(level))) then
-				apply_status_effect(defender, effect.id, duration)
+				apply_status_effect(defender, effect.id, duration, move_user)
 				damage_text = status_effects[effect.id].damage_text
 			else
 				text_color = "red"
@@ -265,7 +265,7 @@ function handle_move_effects(level, effect, target, move_user)
 			end
 		elseif status_effects[effect.id] ~= nil and status_effects[effect.id].category == 1 then
 			local duration = effect.param2
-			apply_status_effect(defender, effect.id, duration)
+			apply_status_effect(defender, effect.id, duration, move_user)
 			damage_text = status_effects[effect.id].damage_text
 		end
 		
@@ -298,15 +298,16 @@ function should_apply_debuff(move_user, effectiveness, defender, debuff_chance)
 	if(accuracy_calc_rng <= chance_to_apply and move_chance_rng <= debuff_chance)then
 		should_apply = true
 	end
-	return should_apply
-	--return true --DEV: leaving this to make testing debuffs easier
+	--return should_apply
+	return true --DEV: leaving this to make testing debuffs easier
 end
 
-function apply_status_effect(defender, effect_id, duration)
+function apply_status_effect(defender, effect_id, duration, move_user)
 	local effect = {}
 	effect.duration = duration
 	effect.category = status_effects[effect_id].category
 	effect.type = effect_id
+	effect.placed_by = move_user.reference
 	--if someone is applying a buff to themself then mark it to not reduce its duration at the end of this turn.
 	if(status_effects[effect_id].category == 1 and current_turn_mon.reference == defender.reference) then
 		effect.ignore_duration_reduction = true
@@ -342,17 +343,26 @@ function position_status_effects(mon)
 	end
 end
 
-function reduce_status_effect_durations(mon, dur, end_of_turn)
+-- Categories
+-- 1 = buff - increase stats
+-- 2 = debuff - decrease stats
+-- 3 = torment - takes damage each round
+-- 4 = loss of control - prevents actions in some way
+-- 5 = 1, 2, and 4  i.e. end of turn
+-- 6 = 2, 3, and 4  i.e. debuff cleanse from ally
+function reduce_status_effect_durations(mon, dur, category)
 	local status_effects_to_remove = {}
 	for i, eff in ipairs(mon.status_effects) do
-		if(end_of_turn and eff.ignore_duration_reduction) then
+		if(category == 5 and eff.ignore_duration_reduction) then
 			--prevent a pokemon who just buffed themself from immediately losing a turn of the buff at the end of their turn.
 			eff.ignore_duration_reduction = false
 		else
-			eff.duration = eff.duration - dur
-			msg.post(eff.go_id, "update_duration", {duration = eff.duration})
-			if eff.duration < 1 then
-				table.insert(status_effects_to_remove, 1, i)
+			if(category == 5 and eff.category ~= 3) or (category == 6 and eff.category ~= 1) or (category == eff.category) then
+				eff.duration = eff.duration - dur
+				msg.post(eff.go_id, "update_duration", {duration = eff.duration})
+				if eff.duration < 1 then
+					table.insert(status_effects_to_remove, 1, i)
+				end
 			end
 		end
 	end
@@ -459,6 +469,24 @@ function reduce_all_cooldowns(mon, amount)
 	end
 end
 
+function activate_torments(turn_mon)
+	local delay_time = 0
+	for i, eff in ipairs(turn_mon.status_effects) do
+		if(eff.category == 3) then
+			local damage = math.ceil(turn_mon.hp * 5 / 100)
+			local damage_text = damage
+			damage_defender(turn_mon, damage)
+			timer.delay(delay_time, false, function() display_damage_text(go.get_position(turn_mon.reference),damage_text, "white") end)
+			
+			if eff.type == 17 then
+				heal_defender(combatants[eff.placed_by], damage)
+				timer.delay(delay_time, false, function() display_damage_text(go.get_position(eff.placed_by),damage_text, "green") end)
+			end
+			delay_time = delay_time + 0.2
+		end
+	end
+end
+
 function load_data_for_battle()
 	load_player_mon_data()
 	load_enemy_data()
@@ -466,6 +494,8 @@ end
 
 function start_player_turn(turn_mon)
 	reduce_all_cooldowns(turn_mon, 1)
+	activate_torments(turn_mon)
+	reduce_status_effect_durations(turn_mon, 1, 3)
 	local p = go.get_position(turn_mon.reference)
 	p.y = p.y - 60
 	p.z = p.z - 1
@@ -481,6 +511,8 @@ end
 
 function start_enemy_turn(turn_mon)
 	reduce_all_cooldowns(turn_mon, 1)
+	activate_torments(turn_mon)
+	reduce_status_effect_durations(turn_mon, 1, 3)
 	local p = go.get_position(turn_mon.reference)
 	p.z = p.z - 1
 	scale = (game_state.battle_type == 3 and 4 or 2)

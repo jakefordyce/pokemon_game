@@ -42,6 +42,10 @@ images {
   image: "/assets/battle_sprites/buffs_debuffs/poison.png"
   sprite_trim_mode: SPRITE_TRIM_MODE_OFF
 }
+images {
+  image: "/assets/battle_sprites/buffs_debuffs/leech_seed.png"
+  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
+}
 margin: 0
 extrude_borders: 0
 inner_padding: 0

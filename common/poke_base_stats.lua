@@ -49,8 +49,8 @@ function M.exp_reward_by_level(level)
 end
 
 function M.exp_to_next_level(level)
-	--return math.ceil(math.pow(1.05, (level - 1)) * (50 + level) / 50 * 200)
-	return math.ceil(math.pow(1.05, (level - 1)) * (50 + level) / 50 * 10) -- for testing
+	return math.ceil(math.pow(1.05, (level - 1)) * (50 + level) / 50 * 200)
+	--return math.ceil(math.pow(1.05, (level - 1)) * (50 + level) / 50 * 10) -- for testing
 end
 
 M.base_crit_chance = 5
@@ -60,6 +60,7 @@ M.base_crit_damage = 100
 moves = {}
 moves[1] = {["level"] = 1, ["id"] = 1}
 moves[2] = {["level"] = 1, ["id"] = 9}
+moves[3] = {["level"] = 7, ["id"] = 27}
 M[1] = {
 	name = "bulbasaur",
 	hp = 90,

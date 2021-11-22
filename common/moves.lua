@@ -664,4 +664,26 @@ M[26] = {
 	end
 }
 
+meffects = {}
+meffects[1] = {}
+meffects[1].id = 17 --leech seed
+meffects[1].target = 1
+meffects[1].param1 = function(moveLevel)
+	return 75 + (5 * moveLevel)
+end
+meffects[1].param2 = 2
+
+M[27] = {
+	name = "Leech Seed",
+	effects = meffects,
+	cooldown = 2,
+	default = false,
+	type = 11,
+	targetting = 1,
+	description = function(moveLevel)
+		chance = 75 + (5 * moveLevel)
+		return "Has a "..chance.."% chance of placing a leech seed on the target for 2 turns."
+	end
+}
+
 return M
