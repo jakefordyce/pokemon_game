@@ -21,7 +21,8 @@ M[1] = {
 	resist = 100,
 	type1 = 1,
 	type2 = 1,
-	moves = moves
+	moves = moves,
+	move_priority = {2, 1}
 }
 
 function M.exp_reward_by_level(level)

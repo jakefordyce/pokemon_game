@@ -39,6 +39,7 @@ local function generate_boss_stats(boss)
 	boss.crit_damage = boss_stats.base_crit_damage
 	boss.type1 = boss_stats[boss.index].type1
 	boss.type2 = boss_stats[boss.index].type2
+	boss.move_priority = boss_stats[boss.index].move_priority
 end
 
 local function simulate_runes(mon)

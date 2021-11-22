@@ -532,14 +532,31 @@ end
 function choose_enemy_move()
 	is_move_chosen = false
 	local target = ""
-	while is_move_chosen == false do
-		random_move = math.random(1,4) -- choose a move at random
-		-- see if the move is off cooldown
-		if(current_turn_mon["move"..random_move] ~= nil and current_turn_mon["move"..random_move.."cd"] == 0) then
-			selected_move = moves[current_turn_mon.known_moves[current_turn_mon["move"..random_move]].id]
-			selected_move_slot = random_move
-			is_move_chosen = true
-			current_turn_mon["move"..random_move.."cd"] = current_turn_mon["move"..random_move.."cd"] + selected_move.cooldown
+	if(current_turn_mon.move_priority == nil) then --wild encounters or bad trainers
+		print("priority not found")
+		while is_move_chosen == false do
+			random_move = math.random(1,4) -- choose a move at random
+			-- see if the move is off cooldown
+			if(current_turn_mon["move"..random_move] ~= nil and current_turn_mon["move"..random_move.."cd"] == 0) then
+				selected_move = moves[current_turn_mon.known_moves[current_turn_mon["move"..random_move]].id]
+				selected_move_slot = random_move
+				is_move_chosen = true
+				current_turn_mon["move"..random_move.."cd"] = current_turn_mon["move"..random_move.."cd"] + selected_move.cooldown
+			end
+		end
+	else -- bosses and good trainers
+		local i = 1
+		while is_move_chosen == false do
+			local priority_move = current_turn_mon.move_priority[i]
+			print(priority_move)
+			if current_turn_mon["move"..priority_move.."cd"] == 0 then
+				selected_move = moves[current_turn_mon.known_moves[current_turn_mon["move"..priority_move]].id]
+				selected_move_slot = priority_move
+				is_move_chosen = true
+				current_turn_mon["move"..priority_move.."cd"] = current_turn_mon["move"..priority_move.."cd"] + selected_move.cooldown
+			else
+				i = i + 1
+			end
 		end
 	end
 
@@ -550,7 +567,7 @@ function choose_enemy_move()
 	elseif selected_move.targetting == 1 then
 		while is_target_chosen == false do
 			target_chosen = math.random(1,4)
-			if(combatants["player_mon"..target_chosen] ~= nil) then
+			if(combatants["player_mon"..target_chosen] ~= nil and not combatants["player_mon"..target_chosen].fainted) then
 				target = combatants["player_mon"..target_chosen].reference
 				is_target_chosen = true
 			end
