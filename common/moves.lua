@@ -38,13 +38,13 @@ meffects[1].param2 = 2
 M[2] = {
 	name = "Growl",
 	effects = meffects,
-	cooldown = 2,
+	cooldown = 3,
 	default = false,
 	type = 1,
 	targetting = 1,
 	description = function(moveLevel)
 		chance = 75 + (moveLevel * 5)
-		return "Has a "..chance.."% chance of reducing Attack of 1 enemy."
+		return "Has a "..chance.."% chance of reducing the Attack of all enemies for 2 turns."
 	end
 }
 
@@ -57,6 +57,7 @@ meffects[1].param1 = function(moveLevel)
 	return damage
 end
 meffects[1].param2 = "attack"
+meffects[1].extra_crit = 15
 
 M[3] = {
 	name = "Scratch",
@@ -67,7 +68,7 @@ M[3] = {
 	targetting = 1,
 	description = function(moveLevel)
 		damage = 125 + (moveLevel * 5)
-		return "Attacks 1 enemy for "..damage.."% of Attack."
+		return "Attacks 1 enemy for "..damage.."% of Attack. Has an extra 15% chance of dealing a critical hit."
 	end
 }
 
@@ -683,6 +684,53 @@ M[27] = {
 	description = function(moveLevel)
 		chance = 75 + (5 * moveLevel)
 		return "Has a "..chance.."% chance of placing a leech seed on the target for 2 turns."
+	end
+}
+
+meffects = {}
+meffects[1] = {}
+meffects[1].id = 1
+meffects[1].target = 1
+meffects[1].param1 = function(moveLevel)
+	damage = 250 + (moveLevel * 15)
+	return damage
+end
+meffects[1].param2 = "attack"
+meffects[1].extra_crit = 25
+
+M[28] = {
+	name = "Slash",
+	effects = meffects,
+	cooldown = 3,
+	default = false,
+	type = 1,
+	targetting = 1,
+	description = function(moveLevel)
+		damage = 250 + (moveLevel * 15)
+		return "Attacks an enemy for "..damage.."% of Attack. Has an extra 25% chance of dealing a critical hit."
+	end
+}
+
+meffects = {}
+meffects[1] = {}
+meffects[1].id = 4
+meffects[1].target = 3
+meffects[1].param1 = function(moveLevel)
+	chance = 75 + (moveLevel * 5)
+	return chance
+end
+meffects[1].param2 = 2
+
+M[29] = {
+	name = "Tail Whip",
+	effects = meffects,
+	cooldown = 3,
+	default = false,
+	type = 1,
+	targetting = 1,
+	description = function(moveLevel)
+		chance = 75 + (moveLevel * 5)
+		return "Has a "..chance.."% chance of reducing the Defense of all enemies for 2 turns."
 	end
 }
 
