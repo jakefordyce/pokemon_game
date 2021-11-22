@@ -298,8 +298,8 @@ function should_apply_debuff(move_user, effectiveness, defender, debuff_chance)
 	if(accuracy_calc_rng <= chance_to_apply and move_chance_rng <= debuff_chance)then
 		should_apply = true
 	end
-	--return should_apply
-	return true --DEV: leaving this to make testing debuffs easier
+	return should_apply
+	--return true --DEV: leaving this to make testing debuffs easier
 end
 
 function apply_status_effect(defender, effect_id, duration, move_user)
@@ -533,7 +533,6 @@ function choose_enemy_move()
 	is_move_chosen = false
 	local target = ""
 	if(current_turn_mon.move_priority == nil) then --wild encounters or bad trainers
-		print("priority not found")
 		while is_move_chosen == false do
 			random_move = math.random(1,4) -- choose a move at random
 			-- see if the move is off cooldown
@@ -548,7 +547,6 @@ function choose_enemy_move()
 		local i = 1
 		while is_move_chosen == false do
 			local priority_move = current_turn_mon.move_priority[i]
-			print(priority_move)
 			if current_turn_mon["move"..priority_move.."cd"] == 0 then
 				selected_move = moves[current_turn_mon.known_moves[current_turn_mon["move"..priority_move]].id]
 				selected_move_slot = priority_move

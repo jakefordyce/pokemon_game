@@ -97,6 +97,7 @@ function M.generate_shop_runes()
 	end
 
 	for i=4,6 do
+		--[[
 		mainstat = runes.random_mainstat(i)
 		M.shop_runes[i] = {
 			slot = i,
@@ -107,6 +108,19 @@ function M.generate_shop_runes()
 			substat_points = 0,
 			substats = {}
 		}
+		--]]
+		for j=1,#runes.mainstat_options[i] do
+			local new_rune = {
+				slot = i,
+				level = 1,
+				rarity = 1,
+				main_stat = runes.mainstat_options[i][j],
+				equipped_id = nil,
+				substat_points = 0,
+				substats = {}
+			}
+			table.insert(M.shop_runes, new_rune)
+		end
 	end
 	
 end
@@ -278,12 +292,12 @@ function M.calculate_pokemon_stats()
 end
 
 --PLAYER INFO--
---[[
+---[[
 M.position_x = 263 --starting values
 M.position_y = 761
 M.current_area = 1
 --]]
----[[
+--[[
 M.position_x = 416
 M.position_y = 51
 M.current_area = 5

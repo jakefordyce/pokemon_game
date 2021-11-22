@@ -14,6 +14,11 @@ M.stat_names = {
 	"Defense"
 }
 
+M.mainstat_options = {}
+M.mainstat_options[4] = {7,8,9,10,11}
+M.mainstat_options[5] = {5,6,9,10,11}
+M.mainstat_options[6] = {4,9,10,11}
+
 function M.generate_random_rune(rarity)
 	rune_slot = math.random(1,6)
 	main_stat = 1
@@ -62,11 +67,7 @@ function M.random_substat(mainstat, substats)
 end
 
 function M.random_mainstat(slot)
-	options = {}
-	options[4] = {7,8,9,10,11}
-	options[5] = {5,6,9,10,11}
-	options[6] = {4,9,10,11}
-	stat = options[slot][math.random(1,#options[slot])]
+	stat = M.mainstat_options[slot][math.random(1,#M.mainstat_options[slot])]
 	return stat
 end
 
