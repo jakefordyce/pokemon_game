@@ -1,7 +1,7 @@
 tile_set: "/adventure/areas/neon_city/neon_city_buildings.tilesource"
 layers {
   id: "layer1"
-  z: 0.0
+  z: -0.2
   is_visible: 1
   cell {
     x: -4
