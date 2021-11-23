@@ -16998,20 +16998,6 @@ layers {
     v_flip: 0
   }
   cell {
-    x: 30
-    y: 14
-    tile: 125
-    h_flip: 0
-    v_flip: 0
-  }
-  cell {
-    x: 31
-    y: 14
-    tile: 125
-    h_flip: 0
-    v_flip: 0
-  }
-  cell {
     x: 32
     y: 14
     tile: 125
@@ -17167,20 +17153,6 @@ layers {
   }
   cell {
     x: 29
-    y: 15
-    tile: 95
-    h_flip: 0
-    v_flip: 0
-  }
-  cell {
-    x: 30
-    y: 15
-    tile: 95
-    h_flip: 0
-    v_flip: 0
-  }
-  cell {
-    x: 31
     y: 15
     tile: 95
     h_flip: 0

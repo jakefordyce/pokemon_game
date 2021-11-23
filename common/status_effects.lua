@@ -74,5 +74,10 @@ M[17] = {
 	damage_text = "Leech Seed",
 	category = 3
 }
+M[18] = {
+	sprite_name = "protect",
+	damage_text = "Protect",
+	category = 1
+}
 
 return M

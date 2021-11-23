@@ -292,12 +292,12 @@ function M.calculate_pokemon_stats()
 end
 
 --PLAYER INFO--
----[[
+--[[
 M.position_x = 263 --starting values
 M.position_y = 761
 M.current_area = 1
 --]]
---[[
+---[[
 M.position_x = 416
 M.position_y = 51
 M.current_area = 5

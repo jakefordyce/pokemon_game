@@ -160,6 +160,7 @@ M[6] = {
 moves = {}
 moves[1] = {["level"] = 1, ["id"] = 1}
 moves[2] = {["level"] = 1, ["id"] = 17}
+moves[3] = {["level"] = 7, ["id"] = 30}
 M[7] = {
 	name = "squirtle",
 	rarity = 3,

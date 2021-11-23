@@ -19,6 +19,7 @@ local spawned_turn_markers = {}
 local current_turn_mon = nil
 local combatants = {}
 local waiting_for_target = false
+local protections = {}
 
 function init(self)
 	msg.post(".", "acquire_input_focus")
@@ -163,6 +164,36 @@ function start_handling_move(target)
 		end
 		delay_time = delay_time + 0.3
 	end
+
+	timer.delay(delay_time, false, function() handle_protections() end)
+	
+end
+
+function handle_protections()
+	local delay_time = 0
+	for index, protection in ipairs(protections) do
+		local protector = combatants[protection.protector]
+		if not protector.fainted then
+			local power = protection.power
+			local defense = protector.defense
+			if mon_has_status_effect(protector, 4) then
+				defense = defense * 0.5
+			end
+			if mon_has_status_effect(protector, 5) then
+				defense = defense * 2
+			end
+			if protection.ignore_def ~= nil then
+				defense = defense * (100 - protection.ignore_def) / 100
+			end
+			local damage = calc_damage(power, defense)
+			timer.delay(delay_time, false, function() damage_defender(protector, damage) end)
+			timer.delay(delay_time, false, function() display_damage_text(go.get_position(protector.reference), damage, "white") end)
+		end
+		delay_time = delay_time + 0.3
+	end
+	for i, v in ipairs(protections) do
+		protections[i] = nil
+	end
 end
 
 function handle_move_effects(level, effect, target, move_user)
@@ -181,45 +212,73 @@ function handle_move_effects(level, effect, target, move_user)
 			end
 			local power = effect.param1(level) * stat / 100
 			local defense = defender.defense
+			if mon_has_status_effect(defender, 4) then
+				defense = defense * 0.5
+			end
+			if mon_has_status_effect(defender, 5) then
+				defense = defense * 2
+			end
 			if effect.ignore_def ~= nil then
 				defense = defense * (100 - effect.ignore_def) / 100
 			end
-			local damage = math.floor(calc_damage(power, defense) * effectiveness / 100)
-			if mon_has_status_effect(defender, 4) then
-				damage = damage * 2
-			end
-			if mon_has_status_effect(defender, 5) then
-				damage = math.ceil(damage / 2)
-			end
+			
 			crit_rng = math.random(1,100)
 			
 			if effect.extra_crit ~= nil then
 				crit_rng = crit_rng - effect.extra_crit
 			end
 			if crit_rng <= move_user.crit_chance then
-				damage = math.floor(damage * (1 + (move_user.crit_damage / 100)))
+				power = math.floor(power * (1 + (move_user.crit_damage / 100)))
 				text_color = "yellow"
 			end
-			damage_text = damage
-			damage_defender(defender, damage)
+
+			protector = mon_protector(defender)
+			if protector == nil then
+				local damage = math.floor(calc_damage(power, defense) * effectiveness / 100)
+				damage_text = damage
+				damage_defender(defender, damage)
+			else
+				local share_of_power = math.floor(power / 2)
+				local damage = math.floor(calc_damage(share_of_power, defense) * effectiveness / 100)
+				damage_text = damage
+				damage_defender(defender, damage)
+				table.insert(protections, { protector = protector, power = math.ceil(power / 2), ignore_def = effect.ignore_def})
+			end
 		elseif effect.id == 6 then --damage based on max hp
 			local power = effect.param1(level) * defender.hp / 100
 			local defense = defender.defense
-			local damage = math.floor(calc_damage(power, defense) * effectiveness / 100)
 			if mon_has_status_effect(defender, 4) then
-				damage = damage * 2
+				defense = defense * 0.5
 			end
 			if mon_has_status_effect(defender, 5) then
-				damage = math.ceil(damage / 2)
+				defense = defense * 2
 			end
+			if effect.ignore_def ~= nil then
+				defense = defense * (100 - effect.ignore_def) / 100
+			end
+
 			crit_rng = math.random(1,100)
-			
+
+			if effect.extra_crit ~= nil then
+				crit_rng = crit_rng - effect.extra_crit
+			end
 			if crit_rng <= move_user.crit_chance then
-				damage = math.floor(damage * (1 + (move_user.crit_damage / 100)))
+				power = math.floor(power * (1 + (move_user.crit_damage / 100)))
 				text_color = "yellow"
 			end
-			damage_text = damage
-			damage_defender(defender, damage)
+
+			protector = mon_protector(defender)
+			if protector == nil then
+				local damage = math.floor(calc_damage(power, defense) * effectiveness / 100)
+				damage_text = damage
+				damage_defender(defender, damage)
+			else
+				local share_of_power = math.floor(power / 2)
+				local damage = math.floor(calc_damage(share_of_power, defense) * effectiveness / 100)
+				damage_text = damage
+				damage_defender(defender, damage)
+				table.insert(protections, { protector = protector, power = math.ceil(power / 2), ignore_def = effect.ignore_def})
+			end
 		elseif effect.id == 8 then --increase turn
 			local turn_amount = effect.param2 * 10
 			damage_text = "turn boost"
@@ -272,6 +331,16 @@ function handle_move_effects(level, effect, target, move_user)
 		display_damage_text(go.get_position(defender.reference),damage_text, text_color)
 		
 	end
+end
+
+function mon_protector(mon)
+	protector = nil
+	for i, eff in ipairs(mon.status_effects) do
+		if eff.type == 18 then
+			protector = eff.placed_by
+		end
+	end
+	return protector
 end
 
 function should_apply_debuff(move_user, effectiveness, defender, debuff_chance)

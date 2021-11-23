@@ -734,4 +734,27 @@ M[29] = {
 	end
 }
 
+meffects = {}
+meffects[1] = {}
+meffects[1].id = 18
+meffects[1].target = 4
+meffects[1].param1 = function(moveLevel)
+	chance = 100 + (moveLevel * 5)
+	return chance
+end
+meffects[1].param2 = 1
+
+M[30] = {
+	name = "Protect",
+	effects = meffects,
+	cooldown = 3,
+	default = false,
+	type = 1,
+	targetting = 2,
+	description = function(moveLevel)
+		chance = 75 + (moveLevel * 5)
+		return "Has a "..chance.."% chance of placing Block Debuff on all allies for 1 turn."
+	end
+}
+
 return M
