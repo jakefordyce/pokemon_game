@@ -63,6 +63,7 @@ moves[2] = {["level"] = 1, ["id"] = 9}
 moves[3] = {["level"] = 7, ["id"] = 27}
 M[1] = {
 	name = "bulbasaur",
+	rarity = 3,
 	hp = 90,
 	attack = 80,
 	defense = 80,
@@ -78,6 +79,7 @@ M[1] = {
 }
 M[2] = {
 	name = "ivysaur",
+	rarity = 3,
 	hp = 90,
 	attack = 80,
 	defense = 80,
@@ -93,6 +95,7 @@ M[2] = {
 }
 M[3] = {
 	name = "venusaur",
+	rarity = 3,
 	hp = 90,
 	attack = 80,
 	defense = 80,
@@ -110,6 +113,7 @@ moves[2] = {["level"] = 1, ["id"] = 12}
 moves[3] = {["level"] = 7, ["id"] = 28}
 M[4] = {
 	name = "charmander",
+	rarity = 3,
 	hp = 90,
 	attack = 80,
 	defense = 80,
@@ -125,6 +129,7 @@ M[4] = {
 }
 M[5] = {
 	name = "charmeleon",
+	rarity = 3,
 	hp = 90,
 	attack = 80,
 	defense = 80,
@@ -140,6 +145,7 @@ M[5] = {
 }
 M[6] = {
 	name = "charizard",
+	rarity = 3,
 	hp = 90,
 	attack = 80,
 	defense = 80,
@@ -156,6 +162,7 @@ moves[1] = {["level"] = 1, ["id"] = 1}
 moves[2] = {["level"] = 1, ["id"] = 17}
 M[7] = {
 	name = "squirtle",
+	rarity = 3,
 	hp = 90,
 	attack = 80,
 	defense = 80,
@@ -168,6 +175,7 @@ M[7] = {
 }
 M[8] = {
 	name = "wartortle",
+	rarity = 3,
 	hp = 90,
 	attack = 80,
 	defense = 80,
@@ -180,6 +188,7 @@ M[8] = {
 }
 M[9] = {
 	name = "blastoise",
+	rarity = 3,
 	hp = 90,
 	attack = 80,
 	defense = 80,
@@ -195,6 +204,7 @@ moves = {}
 moves[1] = {["level"] = 1, ["id"] = 1}
 M[10] = {
 	name = "caterpie",
+	rarity = 1,
 	hp = 90,
 	attack = 80,
 	defense = 80,
@@ -212,6 +222,7 @@ moves = {}
 moves[1] = {["level"] = 1, ["id"] = 1}
 M[13] = {
 	name = "weedle",
+	rarity = 1,
 	hp = 90,
 	attack = 80,
 	defense = 80,
@@ -230,6 +241,7 @@ moves[1] = {["level"] = 1, ["id"] = 1}
 moves[2] = {["level"] = 1, ["id"] = 16}
 M[16] = {
 	name = "pidgey",
+	rarity = 1,
 	hp = 90,
 	attack = 80,
 	defense = 80,
@@ -248,6 +260,7 @@ moves[1] = {["level"] = 1, ["id"] = 1}
 moves[2] = {["level"] = 1, ["id"] = 14}
 M[19] = {
 	name = "rattata",
+	rarity = 1,
 	hp = 90,
 	attack = 80,
 	defense = 80,
@@ -307,6 +320,7 @@ moves[1] = {["level"] = 1, ["id"] = 1}
 moves[2] = {["level"] = 1, ["id"] = 18}
 M[63] = {
 	name = "abra",
+	rarity = 3,
 	hp = 90,
 	attack = 80,
 	defense = 80,
@@ -325,6 +339,7 @@ moves[1] = {["level"] = 1, ["id"] = 1}
 moves[2] = {["level"] = 1, ["id"] = 19}
 M[66] = {
 	name = "machop",
+	rarity = 3,
 	hp = 90,
 	attack = 80,
 	defense = 80,
@@ -348,6 +363,7 @@ moves[1] = {["level"] = 1, ["id"] = 1}
 moves[2] = {["level"] = 1, ["id"] = 21}
 M[74] = {
 	name = "geodude",
+	rarity = 3,
 	hp = 90,
 	attack = 80,
 	defense = 80,
@@ -381,6 +397,7 @@ moves[1] = {["level"] = 1, ["id"] = 1}
 moves[2] = {["level"] = 1, ["id"] = 20}
 M[92] = {
 	name = "gastly",
+	rarity = 3,
 	hp = 90,
 	attack = 80,
 	defense = 80,
@@ -433,6 +450,7 @@ M[131]={}
 M[132]={}
 M[133]={
 	name = "eevee",
+	rarity = 3,
 	hp = 90,
 	attack = 80,
 	defense = 80,
@@ -450,6 +468,7 @@ M[133]={
 }
 M[134]={
 	name = "vaporeon",
+	rarity = 4,
 	hp = 90,
 	attack = 80,
 	defense = 80,
@@ -462,6 +481,7 @@ M[134]={
 }
 M[135]={
 	name = "jolteon",
+	rarity = 4,
 	hp = 90,
 	attack = 80,
 	defense = 80,
@@ -474,6 +494,7 @@ M[135]={
 }
 M[136]={
 	name = "flareon",
+	rarity = 4,
 	hp = 90,
 	attack = 80,
 	defense = 80,
@@ -505,6 +526,7 @@ moves[1] = {["level"] = 1, ["id"] = 1}
 moves[2] = {["level"] = 1, ["id"] = 22}
 M[152] = {
 	name = "chikorita",
+	rarity = 3,
 	hp = 90,
 	attack = 80,
 	defense = 80,
@@ -523,6 +545,7 @@ moves[1] = {["level"] = 1, ["id"] = 1}
 moves[2] = {["level"] = 1, ["id"] = 23}
 M[155] = {
 	name = "cyndaquil",
+	rarity = 3,
 	hp = 90,
 	attack = 80,
 	defense = 80,
@@ -542,6 +565,7 @@ M[156]={}
 M[157]={}
 M[158] = {
 	name = "totodile",
+	rarity = 3,
 	hp = 90,
 	attack = 80,
 	defense = 80,
@@ -572,6 +596,7 @@ moves = {
 }
 M[172] = {
 	name = "pichu",
+	rarity = 3,
 	hp = 90,
 	attack = 80,
 	defense = 80,
@@ -589,6 +614,7 @@ moves = {
 }
 M[173] = {
 	name = "cleffa",
+	rarity = 3,
 	hp = 90,
 	attack = 80,
 	defense = 80,
@@ -660,6 +686,7 @@ moves[2] = {["level"] = 1, ["id"] = 8}
 moves[3] = {["level"] = 7, ["id"] = 7}
 M[228] = {
 	name = "houndour",
+	rarity = 3,
 	hp = 90,
 	attack = 80,
 	defense = 80,
@@ -727,6 +754,7 @@ moves[1] = {["level"] = 1, ["id"] = 1}
 moves[2] = {["level"] = 1, ["id"] = 25}
 M[280] = {
 	name = "ralts",
+	rarity = 3,
 	hp = 90,
 	attack = 80,
 	defense = 80,
@@ -766,6 +794,7 @@ moves[1] = {["level"] = 1, ["id"] = 1}
 moves[2] = {["level"] = 1, ["id"] = 13}
 M[304] = {
 	name = "aron",
+	rarity = 3,
 	hp = 90,
 	attack = 80,
 	defense = 80,
@@ -840,6 +869,7 @@ moves[1] = {["level"] = 1, ["id"] = 1}
 moves[2] = {["level"] = 1, ["id"] = 26}
 M[363] = {
 	name = "spheal",
+	rarity = 3,
 	hp = 90,
 	attack = 80,
 	defense = 80,

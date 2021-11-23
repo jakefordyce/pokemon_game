@@ -3,6 +3,7 @@ local pbs = require "common/poke_base_stats"
 
 function init(self)
 	msg.post("#sprite", "play_animation", { id = hash(pbs[self.pokedex].name.."_front_original") })
+	msg.post("#background", "play_animation", { id = hash("poke_background_"..pbs[self.pokedex].rarity) })
 end
 
 function final(self)
