@@ -5,8 +5,10 @@ local game_state = require "common/game_state"
 function init(self)
 	if self.menu_mode == 1 then
 		msg.post("#sprite", "play_animation", { id = hash("rune_"..game_state.shop_runes[self.rune_id].slot.."_"..game_state.shop_runes[self.rune_id].rarity) })
+		label.set_text("#rune_level", game_state.shop_runes[self.rune_id].level)
 	else
 		msg.post("#sprite", "play_animation", { id = hash("rune_"..game_state.runes[self.rune_id].slot.."_"..game_state.runes[self.rune_id].rarity) })
+		label.set_text("#rune_level", game_state.runes[self.rune_id].level)
 	end
 end
 

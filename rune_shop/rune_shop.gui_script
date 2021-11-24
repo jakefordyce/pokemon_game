@@ -125,6 +125,12 @@ function on_input(self, action_id, action)
 			gui.set_enabled(gui.get_node("selected_rune_panel"), false)
 			gui.set_enabled(gui.get_node("return_to_menu_button"), true)
 			msg.post("rune_shop", "enable_clicking")
+			if menu_mode == 2 then
+				msg.post("rune_shop", "display_player_runes", {selling = true})
+			elseif menu_mode == 3 then
+				msg.post("rune_shop", "display_player_runes", {selling = false})
+			end
+				
 			return true
 		end
 		if(gui.pick_node(gui.get_node("pay_button"),action.x,action.y) and node_enabled(gui.get_node("pay_button"))) then
@@ -300,7 +306,7 @@ function node_enabled(node)
 	local parent = gui.get_parent(node)
 	local enabled = gui.is_enabled(node)
 	if parent then
-		return enabled and gui.is_enabled(parent)
+		return enabled and node_enabled(parent)
 	end
 	return enabled
 end
