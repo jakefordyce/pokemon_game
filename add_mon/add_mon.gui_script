@@ -45,15 +45,17 @@ end
 function on_input(self, action_id, action)
 	if(action_id == hash("touch") and action.released == true) then
 		if(gui.pick_node(gui.get_node("done_button"),action.x,action.y) and node_enabled(gui.get_node("done_button"))) then
-			for i=1,4 do
-				if selected_mons[i] ~= nil then
-					game_state.add_pokemon(addable_mons[selected_mons[i]].pokedex, addable_mons[selected_mons[i]].level)
-				end
-			end
-			if game_state.starters_chosen == false then
+			if game_state.starters_chosen == false and #selected_mons < 4 then
+				--need to choose 4 starters to continue
+			else
 				game_state.starters_chosen = true
+				for i=1,4 do
+					if selected_mons[i] ~= nil then
+						game_state.add_pokemon(addable_mons[selected_mons[i]].pokedex, addable_mons[selected_mons[i]].level)
+					end
+				end
+				msg.post("main:/loader#main", "close_add_mon")
 			end
-			msg.post("main:/loader#main", "close_add_mon")
 		end
 		if(gui.pick_node(gui.get_node("addable1"),action.x,action.y) and node_enabled(gui.get_node("addable1"))) then
 			display_preview(1)

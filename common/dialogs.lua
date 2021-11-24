@@ -80,4 +80,9 @@ M[16] = {
 	next = nil,
 	has_choices = false
 }
+M[17] = {
+	text = "OAK: Please come speak with me before you leave...",
+	next = nil,
+	has_choices = false
+}
 return M

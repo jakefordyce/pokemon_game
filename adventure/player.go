@@ -47,6 +47,7 @@ embedded_components {
   "mask: \"door\"\n"
   "mask: \"npc\"\n"
   "mask: \"item\"\n"
+  "mask: \"event\"\n"
   "embedded_collision_shape {\n"
   "  shapes {\n"
   "    shape_type: TYPE_BOX\n"
