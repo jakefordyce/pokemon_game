@@ -18,7 +18,7 @@ end
 function on_message(self, message_id, message, sender)
 	if message_id == hash("display_player_runes") then
 		clear_gos(spawned_rune_icons)
-		display_player_runes()
+		display_player_runes(message.selling)
 	end
 	if message_id == hash("display_shop_runes") then
 		clear_gos(spawned_rune_icons)
@@ -58,28 +58,29 @@ end
 function on_reload(self)
 end
 
-function display_player_runes()
+function display_player_runes(selling_runes)
 	local p = vmath.vector3()
-	p.y = 1050
+	p.y = 1000
 	p.x = 32
 
 	for i, rune in ipairs(game_state.runes) do
-		--if rune.equipped_id == nil
-		local icon = factory.create("#rune_factory",p, nil, {rune_id = i, menu_mode = 3})
-		go.set_parent(icon, go.get_id("rune_shop"))
-		table.insert(spawned_rune_icons, icon)
+		if not selling_runes or rune.equipped_id == nil then
+			local icon = factory.create("#rune_factory",p, nil, {rune_id = i, menu_mode = 3})
+			go.set_parent(icon, go.get_id("rune_shop"))
+			table.insert(spawned_rune_icons, icon)
 
-		p.x = p.x + 70 --each image is 64 wide. Also adding a little extra space.
-		if p.x > 620 then
-			p.x = 32
-			p.y = p.y - 70
+			p.x = p.x + 70 --each image is 64 wide. Also adding a little extra space.
+			if p.x > 620 then
+				p.x = 32
+				p.y = p.y - 70
+			end
 		end
 	end
 end
 
 function display_shop_runes()
 	local p = vmath.vector3()
-	p.y = 1050
+	p.y = 1000
 	p.x = 32
 
 	for i, rune in ipairs(game_state.shop_runes) do
