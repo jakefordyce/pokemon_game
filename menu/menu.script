@@ -1,6 +1,7 @@
 local pbs = require "common/poke_base_stats"
 local game_state = require "common/game_state"
 local moves = require "common/moves"
+local render_data = require "common/render"
 local spawned_pokedex_icons = {}
 local spawned_pokemon_icons = {}
 local spawned_moves = {}
@@ -104,7 +105,9 @@ function on_input(self, action_id, action)
 		released_pos = vmath.vector3(self.current_pos.x, action.y, 0)
 		drag_distance = vmath.length(released_pos - self.pressed_pos)
 		if drag_distance < 20 then
-			p = vmath.vector3(action.x, action.y, 0)
+			local xpos = render_data.click_x(action.x)
+			local ypos = render_data.click_y(action.y)
+			p = vmath.vector3(xpos, ypos, 0)
 			factory.create("#cursor_factory",p)
 		end
 	end
