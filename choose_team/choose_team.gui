@@ -7,6 +7,10 @@ fonts {
   name: "battle"
   font: "/battle/battle.font"
 }
+fonts {
+  name: "menu_details_outlined"
+  font: "/menu/menu_details_outlined.font"
+}
 textures {
   name: "front_sprites"
   texture: "/battle/front_sprites.atlas"
@@ -203,8 +207,8 @@ nodes {
 }
 nodes {
   position {
-    x: -30.5
-    y: -31.5
+    x: -28.0
+    y: -28.0
     z: 0.0
     w: 1.0
   }
@@ -215,8 +219,8 @@ nodes {
     w: 1.0
   }
   scale {
-    x: 1.0
-    y: 1.0
+    x: 0.5
+    y: 0.5
     z: 1.0
     w: 1.0
   }
@@ -258,8 +262,8 @@ nodes {
 }
 nodes {
   position {
-    x: -14.5
-    y: -31.5
+    x: -20.0
+    y: -28.0
     z: 0.0
     w: 1.0
   }
@@ -270,8 +274,8 @@ nodes {
     w: 1.0
   }
   scale {
-    x: 1.0
-    y: 1.0
+    x: 0.5
+    y: 0.5
     z: 1.0
     w: 1.0
   }
@@ -313,8 +317,8 @@ nodes {
 }
 nodes {
   position {
-    x: 15.0
-    y: -32.0
+    x: 32.0
+    y: -24.0
     z: 0.0
     w: 1.0
   }
@@ -325,8 +329,8 @@ nodes {
     w: 1.0
   }
   scale {
-    x: 1.0
-    y: 1.0
+    x: 0.8
+    y: 0.8
     z: 1.0
     w: 1.0
   }
@@ -345,15 +349,15 @@ nodes {
   type: TYPE_TEXT
   blend_mode: BLEND_MODE_ALPHA
   text: "5"
-  font: "system_font"
+  font: "menu_details_outlined"
   id: "enemy_mon1_level"
   xanchor: XANCHOR_NONE
   yanchor: YANCHOR_NONE
-  pivot: PIVOT_CENTER
+  pivot: PIVOT_E
   outline {
-    x: 1.0
-    y: 1.0
-    z: 1.0
+    x: 0.0
+    y: 0.0
+    z: 0.0
     w: 1.0
   }
   shadow {
@@ -431,8 +435,8 @@ nodes {
 }
 nodes {
   position {
-    x: -30.5
-    y: -31.5
+    x: -28.0
+    y: -28.0
     z: 0.0
     w: 1.0
   }
@@ -443,8 +447,8 @@ nodes {
     w: 1.0
   }
   scale {
-    x: 1.0
-    y: 1.0
+    x: 0.5
+    y: 0.5
     z: 1.0
     w: 1.0
   }
@@ -486,8 +490,8 @@ nodes {
 }
 nodes {
   position {
-    x: -14.5
-    y: -31.5
+    x: -20.0
+    y: -28.0
     z: 0.0
     w: 1.0
   }
@@ -498,8 +502,8 @@ nodes {
     w: 1.0
   }
   scale {
-    x: 1.0
-    y: 1.0
+    x: 0.5
+    y: 0.5
     z: 1.0
     w: 1.0
   }
@@ -541,8 +545,8 @@ nodes {
 }
 nodes {
   position {
-    x: 15.0
-    y: -33.5
+    x: 32.0
+    y: -24.0
     z: 0.0
     w: 1.0
   }
@@ -553,8 +557,8 @@ nodes {
     w: 1.0
   }
   scale {
-    x: 1.0
-    y: 1.0
+    x: 0.8
+    y: 0.8
     z: 1.0
     w: 1.0
   }
@@ -573,15 +577,15 @@ nodes {
   type: TYPE_TEXT
   blend_mode: BLEND_MODE_ALPHA
   text: "5"
-  font: "system_font"
+  font: "menu_details_outlined"
   id: "enemy_mon2_level"
   xanchor: XANCHOR_NONE
   yanchor: YANCHOR_NONE
-  pivot: PIVOT_CENTER
+  pivot: PIVOT_E
   outline {
-    x: 1.0
-    y: 1.0
-    z: 1.0
+    x: 0.0
+    y: 0.0
+    z: 0.0
     w: 1.0
   }
   shadow {
@@ -659,8 +663,8 @@ nodes {
 }
 nodes {
   position {
-    x: -30.5
-    y: -31.5
+    x: -28.0
+    y: -28.0
     z: 0.0
     w: 1.0
   }
@@ -671,8 +675,8 @@ nodes {
     w: 1.0
   }
   scale {
-    x: 1.0
-    y: 1.0
+    x: 0.5
+    y: 0.5
     z: 1.0
     w: 1.0
   }
@@ -714,8 +718,8 @@ nodes {
 }
 nodes {
   position {
-    x: -14.5
-    y: -31.5
+    x: -20.0
+    y: -28.0
     z: 0.0
     w: 1.0
   }
@@ -726,8 +730,8 @@ nodes {
     w: 1.0
   }
   scale {
-    x: 1.0
-    y: 1.0
+    x: 0.5
+    y: 0.5
     z: 1.0
     w: 1.0
   }
@@ -769,8 +773,8 @@ nodes {
 }
 nodes {
   position {
-    x: 15.0
-    y: -32.0
+    x: 30.0
+    y: -24.0
     z: 0.0
     w: 1.0
   }
@@ -781,8 +785,8 @@ nodes {
     w: 1.0
   }
   scale {
-    x: 1.0
-    y: 1.0
+    x: 0.8
+    y: 0.8
     z: 1.0
     w: 1.0
   }
@@ -801,15 +805,15 @@ nodes {
   type: TYPE_TEXT
   blend_mode: BLEND_MODE_ALPHA
   text: "5"
-  font: "system_font"
+  font: "menu_details_outlined"
   id: "enemy_mon3_level"
   xanchor: XANCHOR_NONE
   yanchor: YANCHOR_NONE
-  pivot: PIVOT_CENTER
+  pivot: PIVOT_E
   outline {
-    x: 1.0
-    y: 1.0
-    z: 1.0
+    x: 0.0
+    y: 0.0
+    z: 0.0
     w: 1.0
   }
   shadow {
@@ -887,8 +891,8 @@ nodes {
 }
 nodes {
   position {
-    x: -30.5
-    y: -31.5
+    x: -28.0
+    y: -28.0
     z: 0.0
     w: 1.0
   }
@@ -899,8 +903,8 @@ nodes {
     w: 1.0
   }
   scale {
-    x: 1.0
-    y: 1.0
+    x: 0.5
+    y: 0.5
     z: 1.0
     w: 1.0
   }
@@ -942,8 +946,8 @@ nodes {
 }
 nodes {
   position {
-    x: -14.5
-    y: -31.5
+    x: -20.0
+    y: -28.0
     z: 0.0
     w: 1.0
   }
@@ -954,8 +958,8 @@ nodes {
     w: 1.0
   }
   scale {
-    x: 1.0
-    y: 1.0
+    x: 0.5
+    y: 0.5
     z: 1.0
     w: 1.0
   }
@@ -997,8 +1001,8 @@ nodes {
 }
 nodes {
   position {
-    x: 15.0
-    y: -33.5
+    x: 32.0
+    y: -24.0
     z: 0.0
     w: 1.0
   }
@@ -1009,8 +1013,8 @@ nodes {
     w: 1.0
   }
   scale {
-    x: 1.0
-    y: 1.0
+    x: 0.8
+    y: 0.8
     z: 1.0
     w: 1.0
   }
@@ -1029,15 +1033,15 @@ nodes {
   type: TYPE_TEXT
   blend_mode: BLEND_MODE_ALPHA
   text: "5"
-  font: "system_font"
+  font: "menu_details_outlined"
   id: "enemy_mon4_level"
   xanchor: XANCHOR_NONE
   yanchor: YANCHOR_NONE
-  pivot: PIVOT_CENTER
+  pivot: PIVOT_E
   outline {
-    x: 1.0
-    y: 1.0
-    z: 1.0
+    x: 0.0
+    y: 0.0
+    z: 0.0
     w: 1.0
   }
   shadow {
@@ -1571,8 +1575,8 @@ nodes {
 }
 nodes {
   position {
-    x: -24.5
-    y: -31.5
+    x: -28.0
+    y: -28.0
     z: 0.0
     w: 1.0
   }
@@ -1626,8 +1630,8 @@ nodes {
 }
 nodes {
   position {
-    x: -14.5
-    y: -31.5
+    x: -20.0
+    y: -28.0
     z: 0.0
     w: 1.0
   }
@@ -1681,8 +1685,8 @@ nodes {
 }
 nodes {
   position {
-    x: 15.0
-    y: -32.0
+    x: 32.0
+    y: -27.0
     z: 0.0
     w: 1.0
   }
@@ -1713,15 +1717,15 @@ nodes {
   type: TYPE_TEXT
   blend_mode: BLEND_MODE_ALPHA
   text: "5"
-  font: "system_font"
+  font: "menu_details_outlined"
   id: "enemy_boss_level"
   xanchor: XANCHOR_NONE
   yanchor: YANCHOR_NONE
-  pivot: PIVOT_CENTER
+  pivot: PIVOT_E
   outline {
-    x: 1.0
-    y: 1.0
-    z: 1.0
+    x: 0.0
+    y: 0.0
+    z: 0.0
     w: 1.0
   }
   shadow {

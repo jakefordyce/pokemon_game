@@ -5,6 +5,8 @@ local game_state = require "common/game_state"
 function init(self)
 	--look up the name using the pokedex since the name in game_state could be anything.
 	msg.post("#sprite", "play_animation", { id = hash(pbs[game_state.pokemon[self.mon_id].pokedex].name.."_front_original") })
+	msg.post("#background", "play_animation", { id = hash("poke_background_"..pbs[game_state.pokemon[self.mon_id].pokedex].rarity) })
+	label.set_text("#mon_level", game_state.pokemon[self.mon_id].level)
 end
 
 function final(self)
