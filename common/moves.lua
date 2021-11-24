@@ -404,7 +404,7 @@ meffects[2] = {}
 meffects[2].id = 10 --reduce speed
 meffects[2].target = 3
 meffects[2].param1 = function(moveLevel)
-	return 25 + (5 * moveLevel)
+	return 50 + (5 * moveLevel)
 end
 meffects[2].param2 = 2
 
@@ -416,7 +416,7 @@ M[17] = {
 	type = 10,
 	targetting = 1,
 	description = function(moveLevel)
-		chance = 25 + (5 * moveLevel)
+		chance = 50 + (5 * moveLevel)
 		damage = 150 + (10 * moveLevel)
 		return "Attacks all enemies for "..damage.."% of Special Attack and has a "..chance.."% chance of reducing the speed of all enemies for 2 turns."
 	end
@@ -754,6 +754,111 @@ M[30] = {
 	description = function(moveLevel)
 		chance = 75 + (moveLevel * 5)
 		return "Has a "..chance.."% chance of placing Block Debuff on all allies for 1 turn."
+	end
+}
+
+
+meffects = {}
+meffects[1] = {}
+meffects[1].id = 1
+meffects[1].target = 3
+meffects[1].param1 = function(moveLevel)
+	damage = 150 + (moveLevel * 10)
+	return damage
+end
+meffects[1].param2 = "spattack"
+
+meffects[2] = {}
+meffects[2].id = 14 --stun
+meffects[2].target = 3
+meffects[2].param1 = function(moveLevel)
+	return 25 + (5 * moveLevel)
+end
+meffects[2].param2 = 1
+
+M[31] = {
+	name = "Thunder Wave",
+	effects = meffects,
+	cooldown = 4,
+	default = false,
+	type = 12,
+	targetting = 1,
+	description = function(moveLevel)
+		chance = 25 + (5 * moveLevel)
+		damage = 150 + (10 * moveLevel)
+		return "Attacks all enemies for "..damage.."% of Special Attack and has a "..chance.."% chance of stunning all enemies for 1 turn."
+	end
+}
+
+meffects = {}
+meffects[1] = {}
+meffects[1].id = 1
+meffects[1].target = 1
+meffects[1].param1 = function(moveLevel)
+	damage = 300 + (moveLevel * 20)
+	return damage
+end
+meffects[1].param2 = "spattack"
+
+M[32] = {
+	name = "Psybeam",
+	effects = meffects,
+	cooldown = 3,
+	default = false,
+	type = 13,
+	targetting = 1,
+	description = function(moveLevel)
+		damage = 300 + (moveLevel * 20)
+		return "Attacks an enemy for "..damage.."% of Attack."
+	end
+}
+
+meffects = {}
+meffects[1] = {}
+meffects[1].id = 1
+meffects[1].target = 1
+meffects[1].param1 = function(moveLevel)
+	damage = 150 + (moveLevel * 10)
+	return damage
+end
+meffects[1].param2 = "spattack"
+meffects[1].ignore_def = 100
+
+M[33] = {
+	name = "Seismic Toss",
+	effects = meffects,
+	cooldown = 4,
+	default = false,
+	type = 2,
+	targetting = 1,
+	description = function(moveLevel)
+		damage = 150 + (10 * moveLevel)
+		return "Attacks an enemy for "..damage.."% of Special Attack. This attack ignores the target's defense."
+	end
+}
+
+
+meffects = {}
+meffects[1] = {}
+meffects[1].id = 1
+meffects[1].target = 3
+meffects[1].param1 = function(moveLevel)
+	damage = 150 + (moveLevel * 10)
+	return damage
+end
+meffects[1].param2 = "spattack"
+meffects[1].ignore_def = 25
+
+M[34] = {
+	name = "Nightshade",
+	effects = meffects,
+	cooldown = 5,
+	default = false,
+	type = 15,
+	targetting = 1,
+	description = function(moveLevel)
+		damage = 150 + (10 * moveLevel)
+		return "Attacks all enemies for "..damage.."% of Special Attack. This attack ignores 25% of the target's defense."
 	end
 }
 

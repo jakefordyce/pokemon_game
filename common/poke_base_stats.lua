@@ -319,6 +319,7 @@ M[62]={}
 moves = {}
 moves[1] = {["level"] = 1, ["id"] = 1}
 moves[2] = {["level"] = 1, ["id"] = 18}
+moves[3] = {["level"] = 7, ["id"] = 32}
 M[63] = {
 	name = "abra",
 	rarity = 3,
@@ -338,6 +339,7 @@ M[65]={}
 moves = {}
 moves[1] = {["level"] = 1, ["id"] = 1}
 moves[2] = {["level"] = 1, ["id"] = 19}
+moves[3] = {["level"] = 7, ["id"] = 33}
 M[66] = {
 	name = "machop",
 	rarity = 3,
@@ -396,6 +398,7 @@ M[91]={}
 moves = {}
 moves[1] = {["level"] = 1, ["id"] = 1}
 moves[2] = {["level"] = 1, ["id"] = 20}
+moves[3] = {["level"] = 7, ["id"] = 34}
 M[92] = {
 	name = "gastly",
 	rarity = 3,
@@ -593,7 +596,8 @@ M[171]={}
 
 moves = {
 	{["level"] = 1, ["id"] = 1},
-	{["level"] = 1, ["id"] = 15}
+	{["level"] = 1, ["id"] = 15},
+	{["level"] = 7, ["id"] = 31}
 }
 M[172] = {
 	name = "pichu",
