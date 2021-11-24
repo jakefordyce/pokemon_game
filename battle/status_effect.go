@@ -49,9 +49,9 @@ embedded_components {
   "  w: 0.0\n"
   "}\n"
   "color {\n"
-  "  x: 0.8\n"
-  "  y: 0.8\n"
-  "  z: 0.8\n"
+  "  x: 1.0\n"
+  "  y: 1.0\n"
+  "  z: 1.0\n"
   "  w: 1.0\n"
   "}\n"
   "outline {\n"
@@ -72,8 +72,8 @@ embedded_components {
   "blend_mode: BLEND_MODE_ALPHA\n"
   "line_break: false\n"
   "text: \"0\"\n"
-  "font: \"/battle/battle.font\"\n"
-  "material: \"/builtins/fonts/label.material\"\n"
+  "font: \"/menu/menu_details_outlined.font\"\n"
+  "material: \"/builtins/fonts/font.material\"\n"
   ""
   position {
     x: 13.0

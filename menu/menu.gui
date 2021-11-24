@@ -7,6 +7,10 @@ fonts {
   name: "menu_details_outlined"
   font: "/menu/menu_details_outlined.font"
 }
+fonts {
+  name: "menu_buttons"
+  font: "/menu/menu_buttons.font"
+}
 textures {
   name: "runes"
   texture: "/menu/runes.atlas"
@@ -144,8 +148,8 @@ nodes {
     w: 1.0
   }
   scale {
-    x: 4.0
-    y: 4.0
+    x: 1.0
+    y: 1.0
     z: 1.0
     w: 1.0
   }
@@ -156,15 +160,15 @@ nodes {
     w: 1.0
   }
   color {
-    x: 0.4
-    y: 0.4
-    z: 0.4
+    x: 0.101960786
+    y: 0.101960786
+    z: 0.101960786
     w: 1.0
   }
   type: TYPE_TEXT
   blend_mode: BLEND_MODE_ALPHA
   text: "POKEDEX"
-  font: "system_font"
+  font: "menu_buttons"
   id: "pokedex_label"
   xanchor: XANCHOR_NONE
   yanchor: YANCHOR_NONE
@@ -325,8 +329,8 @@ nodes {
     w: 1.0
   }
   scale {
-    x: 4.0
-    y: 4.0
+    x: 1.0
+    y: 1.0
     z: 1.0
     w: 1.0
   }
@@ -337,15 +341,15 @@ nodes {
     w: 1.0
   }
   color {
-    x: 0.4
-    y: 0.4
-    z: 0.4
+    x: 0.101960786
+    y: 0.101960786
+    z: 0.101960786
     w: 1.0
   }
   type: TYPE_TEXT
   blend_mode: BLEND_MODE_ALPHA
   text: "POKEMON"
-  font: "system_font"
+  font: "menu_buttons"
   id: "pokemon_label"
   xanchor: XANCHOR_NONE
   yanchor: YANCHOR_NONE
