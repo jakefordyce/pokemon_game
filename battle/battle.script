@@ -403,7 +403,7 @@ function display_damage_text(position, text, text_color)
 end
 
 function position_status_effects(mon)
-	p = go.get_position(mon.reference)
+	local p = go.get_position(mon.reference)
 	p.y = p.y + 125
 	p.x = p.x - 10
 	for i, eff in ipairs(mon.status_effects) do
