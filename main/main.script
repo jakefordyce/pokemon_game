@@ -28,9 +28,14 @@ function init(self)
 	game_state.add_pokemon(1,5)
 	game_state.add_pokemon(4,5)
 	game_state.add_pokemon(7,5)
+	game_state.add_pokemon(63,5)
+	game_state.add_pokemon(66,5)
 	game_state.add_pokemon(172,5)
 	game_state.add_pokemon(173,5)
+	game_state.add_pokemon(228,5)
+	game_state.add_pokemon(280,5)
 	game_state.add_pokemon(304,5)
+	game_state.add_pokemon(363,5)
 	--]]
 end
 

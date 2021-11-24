@@ -52,13 +52,20 @@ function display_pokemon_grid()
 	local p = vmath.vector3()
 	p.y = 500
 	p.x = 32
-
+	local column_count = 1
+	
 	for i, poke in ipairs(game_state.pokemon) do
 		local icon = factory.create("#pokemon_icon_factory",p, nil, {mon_id = i})
 		go.set_parent(icon, go.get_id("choose_team"))
 		table.insert(spawned_pokemon_icons, icon)
 
 		p.x = p.x + 70 --each image is 64 wide. Also adding a little extra space.
+		column_count = column_count + 1
+		if column_count > 9 then
+			column_count = 1
+			p.y = p.y - 70
+			p.x = 32
+		end
 	end
 end
 

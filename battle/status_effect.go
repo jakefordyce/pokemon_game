@@ -43,8 +43,8 @@ embedded_components {
   "  w: 0.0\n"
   "}\n"
   "scale {\n"
-  "  x: 1.5\n"
-  "  y: 1.5\n"
+  "  x: 0.5\n"
+  "  y: 0.5\n"
   "  z: 1.0\n"
   "  w: 0.0\n"
   "}\n"
@@ -76,8 +76,8 @@ embedded_components {
   "material: \"/builtins/fonts/label.material\"\n"
   ""
   position {
-    x: 0.0
-    y: 26.0
+    x: 13.0
+    y: -12.0
     z: 1.0
   }
   rotation {
