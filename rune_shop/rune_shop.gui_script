@@ -259,6 +259,13 @@ function display_rune_details()
 	gui.set_text(gui.get_node("current_money_text"), "Money: $"..game_state.money)
 	
 	if menu_mode == 3 then
+		if selected_rune.equipped_id ~= nil then
+			local mon_name = game_state.pokemon[selected_rune.equipped_id].name
+			gui.set_enabled(gui.get_node("equipped_by"), true)
+			gui.set_text(gui.get_node("equipped_by"), "equipped by: "..mon_name)
+		else
+			gui.set_enabled(gui.get_node("equipped_by"), false)
+		end
 		gui.set_enabled(gui.get_node("substats_remaining"), true)
 		gui.set_text(gui.get_node("substats_remaining"), "Substats: "..selected_rune.substat_points)
 		gui.set_text(gui.get_node("cost_text"), "Cost: $"..runes.upgrade_cost(selected_rune.level))
@@ -267,6 +274,7 @@ function display_rune_details()
 			gui.set_enabled(gui.get_node("substat"..i.."_decrease"), true)
 		end
 	else
+		gui.set_enabled(gui.get_node("equipped_by"), false)
 		gui.set_enabled(gui.get_node("substats_remaining"), false)
 		for i=1,5 do
 			gui.set_enabled(gui.get_node("substat"..i.."_increase"), false)
