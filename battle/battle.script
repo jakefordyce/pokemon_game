@@ -309,6 +309,18 @@ function handle_move_effects(level, effect, target, move_user)
 			end
 			damage_text = power
 			heal_defender(defender, power)
+		elseif effect.id == 19 then --shield
+			local stat = move_user[effect.param3]
+			local power = math.floor(effect.param4(level) * stat / 100)
+			local apply_rng = math.random(1,100)
+			if apply_rng <= effect.param1(level) then
+				shield_defender(defender, power)
+				text_color = "blue"
+				damage_text = power
+			else
+				text_color = "red"
+				damage_text = "missed"
+			end
 		elseif status_effects[effect.id] ~= nil and status_effects[effect.id].category > 1 then
 			local duration = effect.param2
 			if(should_apply_debuff(move_user, effectiveness, defender, effect.param1(level))) then
@@ -462,8 +474,15 @@ function mon_can_act(mon)
 end
 
 function damage_defender(defender, damage)
-	defender.currenthp = defender.currenthp - damage
-
+	shield_amount = defender.shield
+	local remaining_damage = damage - shield_amount
+	defender.shield = defender.shield - damage
+	if defender.shield < 0 then
+		defender.shield = 0
+	end
+	if remaining_damage > 0 then
+		defender.currenthp = defender.currenthp - damage
+	end
 	--taking damage wakes up a sleeping pokemon
 	for i, eff in ipairs(defender.status_effects) do
 		if eff.type == 11 then
@@ -483,7 +502,7 @@ function damage_defender(defender, damage)
 			defender.status_effects[i] = nil
 		end
 	else
-		msg.post("gui", "update_hp", {target=defender.reference, current=defender.currenthp, max=defender.hp})
+		msg.post("gui", "update_hp", {target=defender.reference, current=defender.currenthp, max=defender.hp, shield=defender.shield})
 	end
 
 	if enemies_are_fainted() then
@@ -498,7 +517,12 @@ function heal_defender(defender, damage)
 	if defender.currenthp > defender.hp then
 		defender.currenthp = defender.hp
 	end
-	msg.post("gui", "update_hp", {target=defender.reference, current=defender.currenthp, max=defender.hp})
+	msg.post("gui", "update_hp", {target=defender.reference, current=defender.currenthp, max=defender.hp, shield=defender.shield})
+end
+
+function shield_defender(defender, damage)
+	defender.shield = defender.shield + damage
+	msg.post("gui", "update_hp", {target = defender.reference, current=defender.currenthp, max=defender.hp, shield=defender.shield})
 end
 
 function enemies_are_fainted()
@@ -679,6 +703,7 @@ end
 function load_player_mon_data()
 	player_mon1 = game_state.pokemon[game_state.player_mon1]
 	player_mon1.currenthp = player_mon1.hp
+	player_mon1.shield = 0
 	player_mon1.turn = 0
 	player_mon1.reference = "player_mon1"
 	player_mon1.move1cd = 0
@@ -693,6 +718,7 @@ function load_player_mon_data()
 	if game_state.player_mon2 ~= nil then
 		player_mon2 = game_state.pokemon[game_state.player_mon2]
 		player_mon2.currenthp = player_mon2.hp
+		player_mon2.shield = 0
 		player_mon2.turn = 0
 		player_mon2.reference = "player_mon2"
 		player_mon2.move1cd = 0
@@ -711,6 +737,7 @@ function load_player_mon_data()
 	if game_state.player_mon3 ~= nil then
 		player_mon3 = game_state.pokemon[game_state.player_mon3]
 		player_mon3.currenthp = player_mon3.hp
+		player_mon3.shield = 0
 		player_mon3.turn = 0
 		player_mon3.reference = "player_mon3"
 		player_mon3.move1cd = 0
@@ -729,6 +756,7 @@ function load_player_mon_data()
 	if game_state.player_mon4 ~= nil then
 		player_mon4 = game_state.pokemon[game_state.player_mon4]
 		player_mon4.currenthp = player_mon4.hp
+		player_mon4.shield = 0
 		player_mon4.turn = 0
 		player_mon4.reference = "player_mon4"
 		player_mon4.move1cd = 0
@@ -821,6 +849,7 @@ function load_enemy_data()
 	if game_state.enemy_boss ~= nil then
 		enemy_boss = game_state.enemy_boss
 		enemy_boss.currenthp = enemy_boss.hp
+		enemy_boss.shield = 0
 		enemy_boss.turn = 0
 		enemy_boss.reference = "enemy_boss"
 		enemy_boss.move1cd = 0

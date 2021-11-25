@@ -364,6 +364,7 @@ M[73]={}
 moves = {}
 moves[1] = {["level"] = 1, ["id"] = 1}
 moves[2] = {["level"] = 1, ["id"] = 21}
+moves[3] = {["level"] = 7, ["id"] = 35}
 M[74] = {
 	name = "geodude",
 	rarity = 3,

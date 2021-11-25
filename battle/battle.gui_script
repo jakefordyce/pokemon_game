@@ -7,6 +7,11 @@ function init(self)
 	msg.post(".", "acquire_input_focus")
 	msg.post(".", "hide_mon_display")
 	gui.set_text(gui.get_node("battle_text"),"")
+
+	for i=1,4 do
+		gui.set_enabled(gui.get_node("player_mon"..i.."_shield"), false)
+		gui.set_enabled(gui.get_node("enemy_mon"..i.."_shield"), false)
+	end
 end
 
 function final(self)
@@ -57,12 +62,42 @@ function on_message(self, message_id, message, sender)
 		gui.set_text(gui.get_node("move_description"), message.desc)
 	end
 	if message_id == hash("update_hp") then
+		--[[
 		local current_hp = message.current
 		if current_hp > message.max then
 			current_hp = message.max
 		end
 		new_size = vmath.vector3((current_hp / message.max * 100), 10, 0)
 		gui.set_size(gui.get_node(message.target.."_health"), new_size)
+
+		--]]
+		local current_hp = message.current
+		local max_hp = message.max
+		local shield = message.shield
+		
+		if shield > 0 then
+			gui.set_enabled(gui.get_node(message.target.."_shield"), true)
+		else
+			gui.set_enabled(gui.get_node(message.target.."_shield"), false)
+		end
+		if current_hp + shield <= max_hp then
+			local hp_size = vmath.vector3((current_hp / max_hp * 100), 10, 0)
+			gui.set_size(gui.get_node(message.target.."_health"), hp_size)
+			local pos = gui.get_position(gui.get_node(message.target.."_health"))
+			pos.x = pos.x + hp_size.x / 2
+			local shield_size = vmath.vector3((shield / max_hp * 100), 10, 0)
+			gui.set_size(gui.get_node(message.target.."_shield"), shield_size)
+			gui.set_position(gui.get_node(message.target.."_shield"), pos)
+
+		else
+			local max_hp = current_hp + shield
+			local hp_size = vmath.vector3((current_hp / max_hp * 100), 10, 0)
+			gui.set_size(gui.get_node(message.target.."_health"), hp_size)
+			local pos = gui.get_position(gui.get_node(message.target.."_health"))
+			pos.x = pox.x + hp_size.x
+			local shield_size = vmath.vector3((shield / max_hp * 100), 10, 0)
+			gui.set_size(gui.get_node(message.target.."_shield"), shield_size)
+		end
 	end
 	if message_id == hash("update_turn") then
 		--https://defold.com/ref/stable/gui/#gui.set_size:node-size

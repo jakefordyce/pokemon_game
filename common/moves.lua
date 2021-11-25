@@ -862,4 +862,43 @@ M[34] = {
 	end
 }
 
+meffects = {}
+meffects[1] = {}
+meffects[1].id = 5
+meffects[1].target = 0
+meffects[1].param1 = function(moveLevel)
+	chance = 75 + (moveLevel * 5)
+	return chance
+end
+meffects[1].param2 = 4
+
+meffects[2] = {}
+meffects[2].id = 19
+meffects[2].target = 0
+meffects[2].param1 = function(moveLevel)
+	chance = 100
+	return chance
+end
+meffects[2].param2 = 2
+meffects[2].param3 = "hp"
+meffects[2].param4 = function(moveLevel)
+	shield = 20 + (moveLevel * 2)
+	return shield
+end
+
+
+M[35] = {
+	name = "Defense Curl",
+	effects = meffects,
+	cooldown = 3,
+	default = false,
+	type = 1,
+	targetting = 0,
+	description = function(moveLevel)
+		chance = 75 + (moveLevel * 5)
+		shield = 20 + (moveLevel * 2)
+		return "Has a "..chance.."% chance of increasing user's Defense for 2 turns. Also places a shield on the user for "..shield.."% of user's max HP"
+	end
+}
+
 return M
