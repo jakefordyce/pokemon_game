@@ -43,28 +43,35 @@ local function generate_boss_stats(boss)
 end
 
 local function simulate_runes(mon)
+	local effective_level = mon.level
+
+	if effective_level <= 10 then
+		effective_level = effective_level * 2
+	else
+		effective_level = effective_level + 10
+	end
 	--main stats on first three runes
-	mon.hp = mon.hp + (mon.level * 20)
-	mon.attack = mon.attack + mon.level
-	mon.spattack = mon.spattack + mon.level
-	mon.defense = mon.defense + mon.level
-	mon.spdefense = mon.spdefense + mon.level
+	mon.hp = mon.hp + (effective_level * 20)
+	mon.attack = mon.attack + effective_level
+	mon.spattack = mon.spattack + effective_level
+	mon.defense = mon.defense + effective_level
+	mon.spdefense = mon.spdefense + effective_level
 	
 	--rest of stats
 	if mon.build_style == 1 then --even build no speed.
-		mon.hp = mon.hp + (mon.hp * (mon.level * (0.009)))
-		mon.attack = mon.attack + (mon.attack * (mon.level * 0.009))
-		mon.spattack = mon.spattack + (mon.spattack * (mon.level * 0.009))
-		mon.defense = mon.defense + (mon.defense * (mon.level * 0.009))
-		mon.spdefense = mon.spdefense + (mon.spdefense * (mon.level * 0.009))
-		mon.accuracy = mon.accuracy + (mon.level * 0.009)
-		mon.resist = mon.resist + (mon.level * 0.009)
+		mon.hp = mon.hp + (mon.hp * (effective_level * (0.009)))
+		mon.attack = mon.attack + (mon.attack * (effective_level * 0.009))
+		mon.spattack = mon.spattack + (mon.spattack * (effective_level * 0.009))
+		mon.defense = mon.defense + (mon.defense * (effective_level * 0.009))
+		mon.spdefense = mon.spdefense + (mon.spdefense * (effective_level * 0.009))
+		mon.accuracy = mon.accuracy + (effective_level * 0.009)
+		mon.resist = mon.resist + (effective_level * 0.009)
 
-		mon.hp = mon.hp + (mon.hp * (mon.level * (0.001) * (mon.gear_rarity - 1)))
-		mon.attack = mon.attack + (mon.attack * (mon.level *  (0.001) * (mon.gear_rarity - 1)))
-		mon.spattack = mon.spattack + (mon.spattack * (mon.level *  (0.001) * (mon.gear_rarity - 1)))
-		mon.defense = mon.defense + (mon.defense * (mon.level *  (0.001) * (mon.gear_rarity - 1)))
-		mon.spdefense = mon.spdefense + (mon.spdefense * (mon.level *  (0.001) * (mon.gear_rarity - 1)))
+		mon.hp = mon.hp + (mon.hp * (effective_level * (0.001) * (mon.gear_rarity - 1)))
+		mon.attack = mon.attack + (mon.attack * (effective_level *  (0.001) * (mon.gear_rarity - 1)))
+		mon.spattack = mon.spattack + (mon.spattack * (effective_level *  (0.001) * (mon.gear_rarity - 1)))
+		mon.defense = mon.defense + (mon.defense * (effective_level *  (0.001) * (mon.gear_rarity - 1)))
+		mon.spdefense = mon.spdefense + (mon.spdefense * (effective_level *  (0.001) * (mon.gear_rarity - 1)))
 	end
 end
 
@@ -153,7 +160,7 @@ end
 areas = {}
 
 areas[3] = {
-	{10,19},
+	{10,19,29},
 	{13,16},
 	{1,4,7,63,66},
 	{92},

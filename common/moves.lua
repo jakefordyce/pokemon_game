@@ -1184,4 +1184,86 @@ M[44] = {
 	end
 }
 
+meffects = {}
+meffects[1] = {}
+meffects[1].id = 1
+meffects[1].target = 1
+meffects[1].param1 = function(moveLevel)
+	damage = 100 + (moveLevel * 7)
+	return damage
+end
+meffects[1].param2 = "attack"
+meffects[1].min_hits = 2
+meffects[1].max_hits = 5
+
+M[45] = {
+	name = "Fury Swipes",
+	effects = meffects,
+	cooldown = 3,
+	default = false,
+	type = 1,
+	targetting = 1,
+	description = function(moveLevel)
+		damage = 100 + (moveLevel * 7)
+		return "Attacks 1 enemy 2 to 5 times for "..damage.."% of Attack."
+	end
+}
+
+
+meffects = {}
+meffects[1] = {}
+meffects[1].id = 2
+meffects[1].target = 3
+meffects[1].param1 = function(moveLevel)
+	chance = 75 + (moveLevel * 5)
+	return chance
+end
+meffects[1].param2 = 2
+
+M[46] = {
+	name = "Charm",
+	effects = meffects,
+	cooldown = 3,
+	default = false,
+	type = 1,
+	targetting = 1,
+	description = function(moveLevel)
+		chance = 75 + (moveLevel * 5)
+		return "Has a "..chance.."% chance of reducing the Attack of all enemies for 2 turns."
+	end
+}
+
+
+meffects = {}
+meffects[1] = {}
+meffects[1].id = 1
+meffects[1].target = 1
+meffects[1].param1 = function(moveLevel)
+	damage = 100 + (moveLevel * 5)
+	return damage
+end
+meffects[1].param2 = "attack"
+
+meffects[2] = {}
+meffects[2].id = 15 --poison
+meffects[2].target = 1
+meffects[2].param1 = function(moveLevel)
+	return 25 + (moveLevel * 5)
+end
+meffects[2].param2 = 2
+
+M[47] = {
+	name = "Poison Sting",
+	effects = meffects,
+	cooldown = 0,
+	default = true,
+	type = 4,
+	targetting = 1,
+	description = function(moveLevel)
+		damage = 100 + (moveLevel * 5)
+		chance = 25 + (moveLevel * 5)
+		return "Attacks 1 enemy for "..damage.."% of Attack. Has a "..chance.."% chance of poisoning the enemy for 2 turns"
+	end
+}
+
 return M
