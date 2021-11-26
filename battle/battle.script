@@ -204,15 +204,35 @@ function handle_move_effects(level, effect, target, move_user)
 				elseif mon_has_status_effect(move_user, 3) then
 					stat = stat * 1.5
 				end
-			end
-			if string.match(effect.param2, "^defense") then
+			elseif string.match(effect.param2, "^defense") then
 				if mon_has_status_effect(move_user, 4) then
 					stat = stat / 2
 				elseif mon_has_status_effect(move_user, 5) then
 					stat = stat * 2
 				end
+			elseif string.match(effect.param2, "enemy_hp") then
+				stat = defender.hp
 			end
 			local power = effect.param1(level) * stat / 100
+			if effect.param4 ~= nil then --damage based on multiple stats
+				stat = move_user[effect.param4]
+				if string.match(effect.param4, "^attack") then
+					if mon_has_status_effect(move_user, 2) then
+						stat = stat / 2
+					elseif mon_has_status_effect(move_user, 3) then
+						stat = stat * 1.5
+					end
+				elseif string.match(effect.param4, "^defense") then
+					if mon_has_status_effect(move_user, 4) then
+						stat = stat / 2
+					elseif mon_has_status_effect(move_user, 5) then
+						stat = stat * 2
+					end
+				elseif string.match(effect.param4, "enemy_hp") then
+					stat = defender.hp
+				end
+				power = power + (effect.param3(level) * stat / 100)
+			end
 			local defense = defender.defense
 			if mon_has_status_effect(defender, 4) then
 				defense = defense * 0.5
@@ -226,41 +246,6 @@ function handle_move_effects(level, effect, target, move_user)
 			
 			crit_rng = math.random(1,100)
 			
-			if effect.extra_crit ~= nil then
-				crit_rng = crit_rng - effect.extra_crit
-			end
-			if crit_rng <= move_user.crit_chance then
-				power = math.floor(power * (1 + (move_user.crit_damage / 100)))
-				text_color = "yellow"
-			end
-
-			protector = mon_protector(defender)
-			if protector == nil then
-				local damage = math.floor(calc_damage(power, defense) * effectiveness / 100)
-				damage_text = damage
-				damage_defender(defender, damage)
-			else
-				local share_of_power = math.floor(power / 2)
-				local damage = math.floor(calc_damage(share_of_power, defense) * effectiveness / 100)
-				damage_text = damage
-				damage_defender(defender, damage)
-				table.insert(protections, { protector = protector, power = math.ceil(power / 2), ignore_def = effect.ignore_def})
-			end
-		elseif effect.id == 6 then --damage based on max hp
-			local power = effect.param1(level) * defender.hp / 100
-			local defense = defender.defense
-			if mon_has_status_effect(defender, 4) then
-				defense = defense * 0.5
-			end
-			if mon_has_status_effect(defender, 5) then
-				defense = defense * 2
-			end
-			if effect.ignore_def ~= nil then
-				defense = defense * (100 - effect.ignore_def) / 100
-			end
-
-			crit_rng = math.random(1,100)
-
 			if effect.extra_crit ~= nil then
 				crit_rng = crit_rng - effect.extra_crit
 			end

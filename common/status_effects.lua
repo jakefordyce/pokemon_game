@@ -30,7 +30,7 @@ M[5] = {
 	damage_text = "Defense Up",
 	category = 1
 }
--- 6 deal damage based on enemy max hp
+-- 6 - 
 M[7] = {
 	sprite_name = "speed_up",
 	damage_text = "Speed Up",

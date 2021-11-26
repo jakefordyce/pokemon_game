@@ -336,12 +336,17 @@ M[13] = {
 
 meffects = {}
 meffects[1] = {}
-meffects[1].id = 6
+meffects[1].id = 1
 meffects[1].target = 1
 meffects[1].param1 = function(moveLevel)
 	return 10
 end
-meffects[1].param2 = "attack"
+meffects[1].param2 = "enemy_hp"
+meffects[1].param3 = function(moveLevel)
+	damage = 100 + (moveLevel * 5)
+	return damage
+end
+meffects[1].param4 = "attack"
 
 M[14] = {
 	name = "Super Fang",
@@ -352,7 +357,8 @@ M[14] = {
 	targetting = 1,
 	description = function(moveLevel)
 		damage = 10
-		return "Attacks 1 enemy for "..damage.."% of their Max HP."
+		attk_damage = 100 + (moveLevel * 5)
+		return "Attacks 1 enemy for "..damage.."% of their Max HP plus "..attk_damage.."% of Attack."
 	end
 }
 
@@ -896,7 +902,7 @@ meffects[2].param1 = function(moveLevel)
 	chance = 100
 	return chance
 end
-meffects[2].param2 = 2
+meffects[2].param2 = 2 -- duration. Currently not using
 meffects[2].param3 = "hp"
 meffects[2].param4 = function(moveLevel)
 	shield = 20 + (moveLevel * 2)
