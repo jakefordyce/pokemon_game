@@ -52,6 +52,7 @@ function M.add_pokemon(pokedex, level)
 		level = level,
 		exp = 0,
 		name = pbs[pokedex].name,
+		nickname = pbs[pokedex].name:upper():gsub("_", " "),
 		known_moves = pbs.known_moves_by_level(pokedex, level),
 		rune1 = nil, --this is the index from M.runes.
 		rune2 = nil,
@@ -97,18 +98,6 @@ function M.generate_shop_runes()
 	end
 
 	for i=4,6 do
-		--[[
-		mainstat = runes.random_mainstat(i)
-		M.shop_runes[i] = {
-			slot = i,
-			level = 1,
-			rarity = 1,
-			main_stat = mainstat,
-			equipped_id = nil,
-			substat_points = 0,
-			substats = {}
-		}
-		--]]
 		for j=1,#runes.mainstat_options[i] do
 			local new_rune = {
 				slot = i,
@@ -183,6 +172,7 @@ function M.generate_preview_mon(pokedex, level)
 	M.preview_mon.pokedex = pokedex
 	M.preview_mon.level = level
 	M.preview_mon.name = pbs[pokedex].name
+	M.preview_mon.nickname = pbs[pokedex].name:upper():gsub("_", " ")
 	M.preview_mon.hp =  pbs.stat_by_level(pokedex, "hp", level)
 	M.preview_mon.attack = pbs.stat_by_level(pokedex, "attack", level)
 	M.preview_mon.defense = pbs.stat_by_level(pokedex, "defense", level)
