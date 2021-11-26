@@ -124,47 +124,38 @@ function start_handling_move(target)
 	level = current_turn_mon.known_moves[current_turn_mon["move"..selected_move_slot]].level
 	
 	for index, effect in ipairs(selected_move.effects) do
-
-		if effect.target == 0 then --self
-			timer.delay(delay_time, false, function() handle_move_effects(level, effect, current_turn_mon.reference, current_turn_mon) end)
-		elseif (effect.target == 1 or effect.target == 2) then --enemy, ally, only affect target selected.
-			timer.delay(delay_time, false, function() handle_move_effects(level, effect, target, current_turn_mon) end)
-		elseif (effect.target == 3) then -- all enemies
-			if string.match(current_turn_mon.reference, "^enemy") then -- an enemy mon using the move
-				for i=1,4 do
-					if(combatants["player_mon"..i] ~= nil and not combatants["player_mon"..i].fainted) then
-						timer.delay(delay_time, false, function() handle_move_effects(level, effect, "player_mon"..i, current_turn_mon) end)
-					end
-				end
-			else -- player mon using the move
-				for i=1,4 do
-					if(combatants["enemy_mon"..i] ~= nil and not combatants["enemy_mon"..i].fainted) then
-						timer.delay(delay_time, false, function() handle_move_effects(level, effect, "enemy_mon"..i, current_turn_mon) end)
-					end
-				end
-				if game_state.battle_type == 3 then
-					timer.delay(delay_time, false, function() handle_move_effects(level, effect, "enemy_boss", current_turn_mon) end)
-				end
-			end
-		elseif (effect.target == 4) then -- all allies
-			if string.match(current_turn_mon.reference, "^enemy") then -- an enemy mon using the move
-				for i=1,4 do
-					if(combatants["enemy_mon"..i] ~= nil and not combatants["enemy_mon"..i].fainted) then
-						timer.delay(delay_time, false, function() handle_move_effects(level, effect, "enemy_mon"..i, current_turn_mon) end)
-					end
-				end
-				if game_state.battle_type == 3 then
-					timer.delay(delay_time, false, function() handle_move_effects(level, effect, "enemy_boss", current_turn_mon) end)
-				end
-			else -- player mon using the move
-				for i=1,4 do
-					if(combatants["player_mon"..i] ~= nil and not combatants["player_mon"..i].fainted) then
-						timer.delay(delay_time, false, function() handle_move_effects(level, effect, "player_mon"..i, current_turn_mon) end)
-					end
-				end
-			end
+		local num_of_hits = 1
+		if effect.min_hits ~= nil then
+			num_of_hits = math.random(effect.min_hits, effect.max_hits)
 		end
-		delay_time = delay_time + 0.3
+		for i=1,num_of_hits do
+			if effect.target == 0 then --self
+				timer.delay(delay_time, false, function() handle_move_effects(level, effect, current_turn_mon.reference, current_turn_mon) end)
+			elseif (effect.target == 1 or effect.target == 2) then --enemy, ally, only affect target selected.
+				timer.delay(delay_time, false, function() handle_move_effects(level, effect, target, current_turn_mon) end)
+			elseif (effect.target == 3) then -- all enemies
+				local effect_target = "^enemy"
+				if string.match(current_turn_mon.reference, "^enemy") then -- an enemy mon using the move
+					effect_target = "^player"
+				end
+				for i, comb in pairs(combatants) do
+					if(string.match(comb.reference, effect_target) and not comb.fainted) then
+						timer.delay(delay_time, false, function() handle_move_effects(level, effect, comb.reference, current_turn_mon) end)
+					end
+				end
+			elseif (effect.target == 4) then -- all allies
+				local effect_target = "^player"
+				if string.match(current_turn_mon.reference, "^enemy") then -- an enemy mon using the move
+					effect_target = "^enemy"
+				end
+				for i, comb in pairs(combatants) do
+					if(string.match(comb.reference, effect_target) and not comb.fainted) then
+						timer.delay(delay_time, false, function() handle_move_effects(level, effect, comb.reference, current_turn_mon) end)
+					end
+				end
+			end
+			delay_time = delay_time + 0.2
+		end
 	end
 
 	timer.delay(delay_time, false, function() handle_protections() end)

@@ -1153,4 +1153,29 @@ M[43] = {
 	end
 }
 
+meffects = {}
+meffects[1] = {}
+meffects[1].id = 1
+meffects[1].target = 1
+meffects[1].param1 = function(moveLevel)
+	damage = 50 + (moveLevel * 5)
+	return damage
+end
+meffects[1].param2 = "attack"
+meffects[1].min_hits = 2
+meffects[1].max_hits = 4
+
+M[44] = {
+	name = "Fury Attack",
+	effects = meffects,
+	cooldown = 0,
+	default = true,
+	type = 1,
+	targetting = 1,
+	description = function(moveLevel)
+		damage = 50 + (moveLevel * 5)
+		return "Attacks 1 enemy 2 to 4 times for "..damage.."% of Attack."
+	end
+}
+
 return M
