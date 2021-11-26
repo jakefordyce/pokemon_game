@@ -884,7 +884,7 @@ M[362]={}
 moves = {}
 moves[1] = {["level"] = 1, ["id"] = 1}
 moves[2] = {["level"] = 1, ["id"] = 26}
-moves[3] = {["level"] = 1, ["id"] = 41}
+moves[3] = {["level"] = 7, ["id"] = 41}
 M[363] = {
 	name = "spheal",
 	rarity = 3,
