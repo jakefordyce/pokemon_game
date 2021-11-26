@@ -288,7 +288,8 @@ M[28] = {}
 moves = {}
 moves[1] = {["level"] = 1, ["id"] = 1}
 moves[2] = {["level"] = 1, ["id"] = 45}
-moves[3] = {["level"] = 7, ["id"] = 2}
+moves[3] = {["level"] = 6, ["id"] = 2}
+moves[4] = {["level"] = 9, ["id"] = 47}
 M[29] = {
 	name = "nidoran_f",
 	rarity = 1,
