@@ -17,12 +17,16 @@ end
 
 function on_message(self, message_id, message, sender)
 	if message_id == hash("display_player_runes") then
+		can_click = false
 		clear_gos(spawned_rune_icons)
 		display_player_runes(message.selling)
+		msg.post(".", "enable_clicking")
 	end
 	if message_id == hash("display_shop_runes") then
+		can_click = false
 		clear_gos(spawned_rune_icons)
 		display_shop_runes()
+		msg.post(".", "enable_clicking")
 	end
 	if message_id == hash("disable_clicking") then
 		can_click = false

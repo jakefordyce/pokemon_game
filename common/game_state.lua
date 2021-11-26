@@ -5,7 +5,7 @@ local boss_stats = require "common/boss_stats"
 local M = {}
 
 --FLAGS--
-M.starters_chosen = false --DEV
+M.starters_chosen = true --DEV
 
 M.items_found = {}
 
