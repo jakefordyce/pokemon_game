@@ -870,7 +870,7 @@ meffects[1].param1 = function(moveLevel)
 	chance = 75 + (moveLevel * 5)
 	return chance
 end
-meffects[1].param2 = 4
+meffects[1].param2 = 2
 
 meffects[2] = {}
 meffects[2].id = 19
@@ -890,7 +890,7 @@ end
 M[35] = {
 	name = "Defense Curl",
 	effects = meffects,
-	cooldown = 3,
+	cooldown = 4,
 	default = false,
 	type = 1,
 	targetting = 0,

@@ -12,6 +12,7 @@ function init(self)
 		gui.set_enabled(gui.get_node("player_mon"..i.."_shield"), false)
 		gui.set_enabled(gui.get_node("enemy_mon"..i.."_shield"), false)
 	end
+	gui.set_enabled(gui.get_node("enemy_boss_shield"), false)
 end
 
 function final(self)
@@ -62,15 +63,6 @@ function on_message(self, message_id, message, sender)
 		gui.set_text(gui.get_node("move_description"), message.desc)
 	end
 	if message_id == hash("update_hp") then
-		--[[
-		local current_hp = message.current
-		if current_hp > message.max then
-			current_hp = message.max
-		end
-		new_size = vmath.vector3((current_hp / message.max * 100), 10, 0)
-		gui.set_size(gui.get_node(message.target.."_health"), new_size)
-
-		--]]
 		local current_hp = message.current
 		local max_hp = message.max
 		local shield = message.shield
@@ -94,9 +86,10 @@ function on_message(self, message_id, message, sender)
 			local hp_size = vmath.vector3((current_hp / max_hp * 100), 10, 0)
 			gui.set_size(gui.get_node(message.target.."_health"), hp_size)
 			local pos = gui.get_position(gui.get_node(message.target.."_health"))
-			pos.x = pox.x + hp_size.x
+			pos.x = pos.x + hp_size.x / 2
 			local shield_size = vmath.vector3((shield / max_hp * 100), 10, 0)
 			gui.set_size(gui.get_node(message.target.."_shield"), shield_size)
+			gui.set_position(gui.get_node(message.target.."_shield"), pos)
 		end
 	end
 	if message_id == hash("update_turn") then
@@ -155,9 +148,6 @@ function on_input(self, action_id, action)
 end
 
 function on_reload(self)
-	-- Add reload-handling code here
-	-- Learn more: https://defold.com/manuals/hot-reload/
-	-- Remove this function if not needed
 end
 
 function remove_battle_text()

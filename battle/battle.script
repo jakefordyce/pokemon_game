@@ -474,7 +474,7 @@ function mon_can_act(mon)
 end
 
 function damage_defender(defender, damage)
-	shield_amount = defender.shield
+	local shield_amount = defender.shield
 	local remaining_damage = damage - shield_amount
 	defender.shield = defender.shield - damage
 	if defender.shield < 0 then
@@ -777,6 +777,7 @@ function load_enemy_data()
 	if game_state.enemy_mon1 ~= nil then
 		enemy_mon1 = game_state.enemy_mon1
 		enemy_mon1.currenthp = enemy_mon1.hp
+		enemy_mon1.shield = 0
 		enemy_mon1.turn = 0
 		enemy_mon1.reference = "enemy_mon1"
 		enemy_mon1.move1cd = 0
@@ -795,6 +796,7 @@ function load_enemy_data()
 	if game_state.enemy_mon2 ~= nil then
 		enemy_mon2 = game_state.enemy_mon2
 		enemy_mon2.currenthp = enemy_mon2.hp
+		enemy_mon2.shield = 0
 		enemy_mon2.turn = 0
 		enemy_mon2.reference = "enemy_mon2"
 		enemy_mon2.move1cd = 0
@@ -813,6 +815,7 @@ function load_enemy_data()
 	if game_state.enemy_mon3 ~= nil then
 		enemy_mon3 = game_state.enemy_mon3
 		enemy_mon3.currenthp = enemy_mon3.hp
+		enemy_mon3.shield = 0
 		enemy_mon3.turn = 0
 		enemy_mon3.reference = "enemy_mon3"
 		enemy_mon3.move1cd = 0
@@ -831,6 +834,7 @@ function load_enemy_data()
 	if game_state.enemy_mon4 ~= nil then
 		enemy_mon4 = game_state.enemy_mon4
 		enemy_mon4.currenthp = enemy_mon4.hp
+		enemy_mon4.shield = 0
 		enemy_mon4.turn = 0
 		enemy_mon4.reference = "enemy_mon4"
 		enemy_mon4.move1cd = 0
