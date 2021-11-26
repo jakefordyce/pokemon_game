@@ -84,5 +84,10 @@ M[19] = {
 	damage_text = "Shield",
 	category = 1
 }
+M[20] = {
+	sprite_name = "burn",
+	damage_text = "Burn",
+	category = 3
+}
 
 return M

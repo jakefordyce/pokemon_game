@@ -125,7 +125,9 @@ function start_handling_move(target)
 	
 	for index, effect in ipairs(selected_move.effects) do
 
-		if (effect.target < 3) then --self, enemy, ally, only affect target selected.
+		if effect.target == 0 then --self
+			timer.delay(delay_time, false, function() handle_move_effects(level, effect, current_turn_mon.reference, current_turn_mon) end)
+		elseif (effect.target == 1 or effect.target == 2) then --enemy, ally, only affect target selected.
 			timer.delay(delay_time, false, function() handle_move_effects(level, effect, target, current_turn_mon) end)
 		elseif (effect.target == 3) then -- all enemies
 			if string.match(current_turn_mon.reference, "^enemy") then -- an enemy mon using the move
@@ -205,10 +207,19 @@ function handle_move_effects(level, effect, target, move_user)
 		
 		if effect.id == 1 then --deal damage
 			local stat = move_user[effect.param2]
-			if mon_has_status_effect(move_user, 2) then
-				stat = stat / 2
-			elseif mon_has_status_effect(move_user, 3) then
-				stat = stat * 1.5
+			if string.match(effect.param2, "^attack") then
+				if mon_has_status_effect(move_user, 2) then
+					stat = stat / 2
+				elseif mon_has_status_effect(move_user, 3) then
+					stat = stat * 1.5
+				end
+			end
+			if string.match(effect.param2, "^defense") then
+				if mon_has_status_effect(move_user, 4) then
+					stat = stat / 2
+				elseif mon_has_status_effect(move_user, 5) then
+					stat = stat * 2
+				end
 			end
 			local power = effect.param1(level) * stat / 100
 			local defense = defender.defense
@@ -298,7 +309,7 @@ function handle_move_effects(level, effect, target, move_user)
 			end
 		elseif effect.id == 16 then --heal
 			local stat = move_user[effect.param2]
-			local power = effect.param1(level) * stat / 100
+			local power = math.floor(effect.param1(level) * stat / 100)
 			local crit_rng = math.random(1,100)
 			text_color = "green"
 			if effect.extra_crit ~= nil then
@@ -323,7 +334,7 @@ function handle_move_effects(level, effect, target, move_user)
 			end
 		elseif status_effects[effect.id] ~= nil and status_effects[effect.id].category > 1 then
 			local duration = effect.param2
-			if(should_apply_debuff(move_user, effectiveness, defender, effect.param1(level))) then
+			if(should_apply_debuff(move_user, effectiveness, defender, effect.param1(level)) or effect.target == 0) then
 				apply_status_effect(defender, effect.id, duration, move_user)
 				damage_text = status_effects[effect.id].damage_text
 			else
@@ -390,7 +401,7 @@ function apply_status_effect(defender, effect_id, duration, move_user)
 	effect.type = effect_id
 	effect.placed_by = move_user.reference
 	--if someone is applying a buff to themself then mark it to not reduce its duration at the end of this turn.
-	if(status_effects[effect_id].category == 1 and current_turn_mon.reference == defender.reference) then
+	if( current_turn_mon.reference == defender.reference) then --status_effects[effect_id].category == 1 and
 		effect.ignore_duration_reduction = true
 	else
 		effect.ignore_duration_reduction = false
