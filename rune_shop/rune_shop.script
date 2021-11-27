@@ -2,6 +2,7 @@ local game_state = require "common/game_state"
 local render_data = require "common/render"
 local spawned_rune_icons = {}
 local can_click = true
+local scroll_top = 0
 
 function init(self)
 	msg.post(".", "acquire_input_focus")
@@ -66,7 +67,8 @@ function display_player_runes(selling_runes)
 	local p = vmath.vector3()
 	p.y = 1000
 	p.x = 32
-
+	scroll_top = 0
+	local column_count = 1
 	for i, rune in ipairs(game_state.runes) do
 		if not selling_runes or rune.equipped_id == nil then
 			local icon = factory.create("#rune_factory",p, nil, {rune_id = i, menu_mode = 3})
@@ -74,9 +76,12 @@ function display_player_runes(selling_runes)
 			table.insert(spawned_rune_icons, icon)
 
 			p.x = p.x + 70 --each image is 64 wide. Also adding a little extra space.
-			if p.x > 620 then
-				p.x = 32
+			column_count = column_count + 1
+			if column_count > 8 then
+				column_count = 1
 				p.y = p.y - 70
+				p.x = 32
+				scroll_top = scroll_top + 70
 			end
 		end
 	end
@@ -86,7 +91,8 @@ function display_shop_runes()
 	local p = vmath.vector3()
 	p.y = 1000
 	p.x = 32
-
+	scroll_top = 0
+	local column_count = 1
 	for i, rune in ipairs(game_state.shop_runes) do
 
 		local icon = factory.create("#rune_factory",p, nil, {rune_id = i, menu_mode = 1})
@@ -94,17 +100,19 @@ function display_shop_runes()
 		table.insert(spawned_rune_icons, icon)
 
 		p.x = p.x + 70 --each image is 64 wide. Also adding a little extra space.
-		if p.x > 620 then
-			p.x = 32
+		column_count = column_count + 1
+		if column_count > 8 then
+			column_count = 1
 			p.y = p.y - 70
+			p.x = 32
+			scroll_top = scroll_top + 70
 		end
 	end
 end
 
 function limit(self, pos)
-	local top = 100 
 	local bottom = 0
-	pos.y = math.min(pos.y, top)
+	pos.y = math.min(pos.y, scroll_top)
 	pos.y = math.max(pos.y, bottom)
 	return pos
 end

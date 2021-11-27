@@ -47,6 +47,8 @@ function on_message(self, message_id, message, sender)
 	end
 	if message_id == hash("display_runes") then
 		clear_gos(spawned_rune_icons)
+		clear_gos(spawned_pokemon_icons)
+		go.set_position(vmath.vector3(self.current_pos.x, 0, 0))
 		current_rune = message.rune
 		display_runes_grid()
 	end
@@ -184,7 +186,7 @@ function display_pokedex_grid()
 
 			p.x = p.x + 70 --each image is 64 wide. Also adding a little extra space.
 			column_count = column_count + 1
-			if column_count > 9 then
+			if column_count > 8 then
 				column_count = 1
 				p.y = p.y - 70
 				p.x = 32
@@ -209,7 +211,7 @@ function display_pokemon_grid()
 
 		p.x = p.x + 70 --each image is 64 wide. Also adding a little extra space.
 		column_count = column_count + 1
-		if column_count > 9 then
+		if column_count > 8 then
 			column_count = 1
 			p.y = p.y - 70
 			p.x = 32
