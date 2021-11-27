@@ -118,7 +118,7 @@ function start_handling_move(target)
 	if string.match(current_turn_mon.reference, "^enemy") then
 		battle_text = "Enemy "
 	end
-	msg.post("gui", "set_battle_text", {text = battle_text..current_turn_mon.name.." used "..selected_move.name.."!"})
+	msg.post("gui", "set_battle_text", {text = battle_text..current_turn_mon.nickname.." used "..selected_move.name.."!"})
 	local delay_time = 0.0
 
 	level = current_turn_mon.known_moves[current_turn_mon["move"..selected_move_slot]].level

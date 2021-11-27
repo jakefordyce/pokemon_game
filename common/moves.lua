@@ -1266,4 +1266,61 @@ M[47] = {
 	end
 }
 
+
+meffects = {}
+meffects[1] = {}
+meffects[1].id = 1
+meffects[1].target = 1
+meffects[1].param1 = function(moveLevel)
+	damage = 250 + (moveLevel * 15)
+	return damage
+end
+meffects[1].param2 = "attack"
+
+meffects[2] = {}
+meffects[2].id = 15 --poison
+meffects[2].target = 1
+meffects[2].param1 = function(moveLevel)
+	return 50 + (moveLevel * 5)
+end
+meffects[2].param2 = 2
+
+M[48] = {
+	name = "Poison Jab",
+	effects = meffects,
+	cooldown = 4,
+	default = false,
+	type = 4,
+	targetting = 1,
+	description = function(moveLevel)
+		damage = 250 + (moveLevel * 15)
+		chance = 50 + (moveLevel * 5)
+		return "Attacks 1 enemy for "..damage.."% of Attack. Has a "..chance.."% chance of poisoning the enemy for 2 turns"
+	end
+}
+
+
+meffects = {}
+meffects[1] = {}
+meffects[1].id = 1
+meffects[1].target = 1
+meffects[1].param1 = function(moveLevel)
+	damage = 300 + (moveLevel * 18)
+	return damage
+end
+meffects[1].param2 = "attack"
+
+M[49] = {
+	name = "Horn Attack",
+	effects = meffects,
+	cooldown = 3,
+	default = false,
+	type = 1,
+	targetting = 1,
+	description = function(moveLevel)
+		damage = 300 + (moveLevel * 18)
+		return "Attacks an enemy for "..damage.."% of Attack."
+	end
+}
+
 return M

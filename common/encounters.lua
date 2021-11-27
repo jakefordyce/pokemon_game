@@ -11,6 +11,7 @@ local MYTHIC_CHANCE = 5
 
 local function generate_stats(mon)
 	mon.name = pbs[mon.pokedex].name
+	mon.nickname = pbs[mon.pokedex].name:upper():gsub("_", " ")
 	mon.hp =  pbs.stat_by_level(mon.pokedex, "hp", mon.level)
 	mon.attack = pbs.stat_by_level(mon.pokedex, "attack", mon.level)
 	mon.defense = pbs.stat_by_level(mon.pokedex, "defense", mon.level)
@@ -27,6 +28,7 @@ end
 
 local function generate_boss_stats(boss)
 	boss.name = boss_stats[boss.index].name
+	boss.nickname = boss_stats[boss.index].name:upper():gsub("_", " ")
 	boss.hp =  boss_stats.stat_by_level(boss.index, "hp", boss.level)
 	boss.attack = boss_stats.stat_by_level(boss.index, "attack", boss.level)
 	boss.defense = boss_stats.stat_by_level(boss.index, "defense", boss.level)
@@ -160,7 +162,7 @@ end
 areas = {}
 
 areas[3] = {
-	{10,19,29},
+	{10,19,29,32},
 	{13,16},
 	{1,4,7,63,66},
 	{92},

@@ -103,7 +103,11 @@ images {
   sprite_trim_mode: SPRITE_TRIM_MODE_OFF
 }
 images {
-  image: "/assets/battle_sprites/front/nidoran_f_back_original.png"
+  image: "/assets/battle_sprites/back/nidoran_f_back_original.png"
+  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
+}
+images {
+  image: "/assets/battle_sprites/back/nidoran_m_back_original.png"
   sprite_trim_mode: SPRITE_TRIM_MODE_OFF
 }
 margin: 0

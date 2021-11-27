@@ -222,8 +222,6 @@ function buy_rune()
 		}
 		
 		table.insert(game_state.runes, purchased_rune)
-		
-		--table.remove(game_state.shop_runes, selected_rune_index)
 
 		game_state.money = game_state.money - cost
 		gui.set_enabled(gui.get_node("selected_rune_panel"), false)

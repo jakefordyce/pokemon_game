@@ -305,7 +305,25 @@ M[29] = {
 }
 M[30] = {}
 M[31]={}
-M[32]={}
+
+moves = {}
+moves[1] = {["level"] = 1, ["id"] = 1}
+moves[2] = {["level"] = 1, ["id"] = 48}
+moves[3] = {["level"] = 6, ["id"] = 49}
+moves[4] = {["level"] = 9, ["id"] = 47}
+M[32] = {
+	name = "nidoran_m",
+	rarity = 1,
+	hp = 80,
+	attack = 95,
+	defense = 70,
+	spattack = 65,
+	spdefense = 65,
+	speed = 105,
+	type1 = 4,
+	type2 = 4,
+	moves = moves
+}
 M[33]={}
 M[34]={}
 M[35]={}
