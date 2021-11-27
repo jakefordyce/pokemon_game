@@ -235,7 +235,8 @@ end
 
 function sell_rune()
 	sell_price = runes.sell_price(selected_rune)
-	table.remove(game_state.runes, selected_rune_index)
+	table.remove(game_state.runes, selected_rune_index)--TODO: fix
+	game_state.fix_pokemon_rune_ids(selected_rune_index)
 	game_state.money = game_state.money + sell_price
 	gui.set_enabled(gui.get_node("selected_rune_panel"), false)
 	gui.set_enabled(gui.get_node("return_to_menu_button"), true)

@@ -281,13 +281,23 @@ function M.calculate_pokemon_stats()
 	end
 end
 
+function M.fix_pokemon_rune_ids(sold_rune_index)
+	for i, poke in ipairs(M.pokemon) do
+		for r=1,6 do
+			if poke["rune"..r] ~= nil and poke["rune"..r] > sold_rune_index then
+				poke["rune"..r] = poke["rune"..r] - 1
+			end
+		end
+	end
+end
+
 --PLAYER INFO--
---[[
+---[[
 M.position_x = 263 --starting values
 M.position_y = 761
 M.current_area = 1
 --]]
----[[
+--[[
 M.position_x = 416
 M.position_y = 51
 M.current_area = 5

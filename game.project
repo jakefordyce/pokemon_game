@@ -48,3 +48,9 @@ max_tile_count = 10000
 [factory]
 max_count = 1024
 
+[sprite]
+max_count = 512
+
+[label]
+max_count = 512
+

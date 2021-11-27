@@ -12,6 +12,7 @@ local current_move = "move1"
 local current_rune = 1
 local selected_rune = nil
 local current_menu = 1 --pokedex
+local scroll_top = 0
 
 function init(self)
 	msg.post(".", "acquire_input_focus")
@@ -36,6 +37,7 @@ function on_message(self, message_id, message, sender)
 	end
 	if message_id == hash("select_pokemon") then
 		current_mon = message.mon
+		clear_gos(spawned_pokemon_icons)
 	end
 	--this is sent from the GUI when a user selects one of their pokemon's moves.
 	if message_id == hash("display_pokemon_moves") then
@@ -168,6 +170,7 @@ end
 function display_pokedex_grid()
 	clear_gos(spawned_pokedex_icons)
 	clear_gos(spawned_pokemon_icons)
+	scroll_top = 0
 	local p = vmath.vector3()
 	p.y = 1000
 	p.x = 32
@@ -185,6 +188,7 @@ function display_pokedex_grid()
 				column_count = 1
 				p.y = p.y - 70
 				p.x = 32
+				scroll_top = scroll_top + 70
 			end
 		end
 	end
@@ -264,11 +268,12 @@ function display_move_list(mon)
 end
 
 function display_runes_grid()
+	scroll_top = 0
 	local p = vmath.vector3()
-	p.y = 450
+	p.y = 420
 	p.x = 32
 	mon = game_state.pokemon[current_mon]
-
+	local column_count = 1
 	for i, rune in ipairs(game_state.runes) do
 		if rune.equipped_id == nil and rune.slot == current_rune then
 			local icon = factory.create("#rune_icon_factory",p, nil, {rune_id = i})
@@ -276,14 +281,20 @@ function display_runes_grid()
 			table.insert(spawned_rune_icons, icon)
 
 			p.x = p.x + 70 --each image is 64 wide. Also adding a little extra space.
+			column_count = column_count + 1
+			if column_count > 8 then
+				column_count = 1
+				p.y = p.y - 70
+				p.x = 32
+				scroll_top = scroll_top + 70
+			end
 		end
 	end
 end
 
 function limit(self, pos)
-	local top = 100 
 	local bottom = 0
-	pos.y = math.min(pos.y, top)
+	pos.y = math.min(pos.y, scroll_top)
 	pos.y = math.max(pos.y, bottom)
 	return pos
 end

@@ -41,6 +41,10 @@ function init(self)
 	game_state.add_pokemon(280,7)
 	game_state.add_pokemon(304,7)
 	game_state.add_pokemon(363,7)
+	for i=1,101 do
+		game_state.add_pokemon(19,7)
+		game_state.generate_reward_runes()
+	end
 	--]]
 end
 
