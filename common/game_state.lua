@@ -303,8 +303,8 @@ M.position_x = 416
 M.position_y = 51
 M.current_area = 5
 --]]
-M.money = 3000 --DEV
---
+--M.money = 3000 --DEV
+
 M.stones = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0} -- 1 for each of the types in common/poke_types
 
 --List of all of the player's pokemon.

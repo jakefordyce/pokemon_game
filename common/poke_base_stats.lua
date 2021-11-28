@@ -343,7 +343,25 @@ M[48]={}
 M[49]={}
 M[50]={}
 M[51]={}
-M[52]={}
+
+moves = {}
+moves[1] = {["level"] = 1, ["id"] = 1}
+moves[2] = {["level"] = 1, ["id"] = 45}
+moves[3] = {["level"] = 6, ["id"] = 28}
+moves[4] = {["level"] = 9, ["id"] = 3}
+M[52] = {
+	name = "meowth",
+	rarity = 1,
+	hp = 75,
+	attack = 85,
+	defense = 70,
+	spattack = 70,
+	spdefense = 75,
+	speed = 120,
+	type1 = 1,
+	type2 = 1,
+	moves = moves
+}
 M[53]={}
 M[54]={}
 M[55]={}

@@ -1323,4 +1323,27 @@ M[49] = {
 	end
 }
 
+meffects = {}
+meffects[1] = {}
+meffects[1].id = 1
+meffects[1].target = 3
+meffects[1].param1 = function(moveLevel)
+	damage = 75 + (moveLevel * 5)
+	return damage
+end
+meffects[1].param2 = "attack"
+
+M[50] = {
+	name = "Gust",
+	effects = meffects,
+	cooldown = 0,
+	default = true,
+	type = 3,
+	targetting = 1,
+	description = function(moveLevel)
+		damage = 75 + (moveLevel * 5)
+		return "Attacks all enemies for "..damage.."% of Attack."
+	end
+}
+
 return M
