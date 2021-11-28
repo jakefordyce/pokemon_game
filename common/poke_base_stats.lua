@@ -351,7 +351,7 @@ moves[3] = {["level"] = 6, ["id"] = 28}
 moves[4] = {["level"] = 9, ["id"] = 3}
 M[52] = {
 	name = "meowth",
-	rarity = 1,
+	rarity = 2,
 	hp = 75,
 	attack = 85,
 	defense = 70,
