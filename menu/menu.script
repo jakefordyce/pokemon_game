@@ -35,6 +35,13 @@ function on_message(self, message_id, message, sender)
 		current_menu = 2
 		display_pokemon_grid()
 	end
+	if message_id == hash("redisplay_grid") then
+		if current_menu == 1 then
+			display_pokedex_grid()
+		elseif current_menu == 2 then
+			display_pokemon_grid()
+		end
+	end
 	if message_id == hash("select_pokemon") then
 		current_mon = message.mon
 		clear_gos(spawned_pokemon_icons)
@@ -54,11 +61,6 @@ function on_message(self, message_id, message, sender)
 	end
 	if message_id == hash("hide_runes") then
 		clear_gos(spawned_rune_icons)
-		if current_menu == 1 then
-			display_pokedex_grid()
-		elseif current_menu == 2 then
-			display_pokemon_grid()
-		end
 	end
 	if message_id == hash("select_rune") then
 		selected_rune = message.rune
