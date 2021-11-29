@@ -232,7 +232,7 @@ function display_preview(addable)
 	game_state.generate_preview_mon(pokedex, level)
 	mon = game_state.preview_mon
 	gui.set_text(gui.get_node("details_level"), level)
-	gui.set_text(gui.get_node("details_name"), mon.name)
+	gui.set_text(gui.get_node("details_name"), mon.nickname)
 	gui.set_text(gui.get_node("details_hp"), mon.hp)
 	gui.set_text(gui.get_node("details_attack"), mon.attack)
 	gui.set_text(gui.get_node("details_spattack"), mon.spattack)
