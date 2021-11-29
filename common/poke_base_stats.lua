@@ -243,6 +243,8 @@ M[15] = {}
 moves = {}
 moves[1] = {["level"] = 1, ["id"] = 1}
 moves[2] = {["level"] = 1, ["id"] = 16}
+moves[3] = {["level"] = 6, ["id"] = 51}
+moves[4] = {["level"] = 9, ["id"] = 50}
 M[16] = {
 	name = "pidgey",
 	rarity = 1,
@@ -262,6 +264,8 @@ M[18] = {}
 moves = {}
 moves[1] = {["level"] = 1, ["id"] = 1}
 moves[2] = {["level"] = 1, ["id"] = 14}
+moves[3] = {["level"] = 6, ["id"] = 29}
+moves[4] = {["level"] = 9, ["id"] = 52}
 M[19] = {
 	name = "rattata",
 	rarity = 1,
@@ -644,7 +648,25 @@ M[158] = {
 }
 M[159]={}
 M[160]={}
-M[161]={}
+
+moves = {}
+moves[1] = {["level"] = 1, ["id"] = 1}
+moves[2] = {["level"] = 1, ["id"] = 2}
+moves[3] = {["level"] = 6, ["id"] = 45}
+moves[4] = {["level"] = 9, ["id"] = 3}
+M[161]={
+	name = "sentret",
+	rarity = 1,
+	hp = 75,
+	attack = 90,
+	defense = 75,
+	spattack = 70,
+	spdefense = 90,
+	speed = 90,
+	type1 = 1,
+	type2 = 1,
+	moves = moves
+}
 M[162]={}
 M[163]={}
 M[164]={}

@@ -222,16 +222,22 @@ function handle_move_effects(level, effect, target, move_user)
 					elseif mon_has_status_effect(move_user, 3) then
 						stat = stat * 1.5
 					end
+					power = power + (effect.param3(level) * stat / 100)
 				elseif string.match(effect.param4, "^defense") then
 					if mon_has_status_effect(move_user, 4) then
 						stat = stat / 2
 					elseif mon_has_status_effect(move_user, 5) then
 						stat = stat * 2
 					end
+					power = power + (effect.param3(level) * stat / 100)
 				elseif string.match(effect.param4, "enemy_hp") then
 					stat = defender.hp
+					power = power + (effect.param3(level) * stat / 100)
+				elseif string.match(effect.param4, "speed") then
+					local bonus = (effect.param3(level) * stat / 10000) + 1
+					power = power * bonus
 				end
-				power = power + (effect.param3(level) * stat / 100)
+				
 			end
 			local defense = defender.defense
 			if mon_has_status_effect(defender, 4) then
