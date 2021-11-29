@@ -253,10 +253,16 @@ function on_input(self, action_id, action)
 		if(gui.pick_node(gui.get_node("substat1_decrease"),action.x,action.y) and node_enabled(gui.get_node("substat1_decrease"))) then
 			return true
 		end
+		if(gui.pick_node(gui.get_node("substat1_reforge"),action.x,action.y) and node_enabled(gui.get_node("substat1_reforge"))) then
+			return true
+		end
 		if(gui.pick_node(gui.get_node("substat2_increase"),action.x,action.y) and node_enabled(gui.get_node("substat2_increase"))) then
 			return true
 		end
 		if(gui.pick_node(gui.get_node("substat2_decrease"),action.x,action.y) and node_enabled(gui.get_node("substat2_decrease"))) then
+			return true
+		end
+		if(gui.pick_node(gui.get_node("substat2_reforge"),action.x,action.y) and node_enabled(gui.get_node("substat2_reforge"))) then
 			return true
 		end
 		if(gui.pick_node(gui.get_node("substat3_increase"),action.x,action.y) and node_enabled(gui.get_node("substat3_increase"))) then
@@ -265,16 +271,25 @@ function on_input(self, action_id, action)
 		if(gui.pick_node(gui.get_node("substat3_decrease"),action.x,action.y) and node_enabled(gui.get_node("substat3_decrease"))) then
 			return true
 		end
+		if(gui.pick_node(gui.get_node("substat3_reforge"),action.x,action.y) and node_enabled(gui.get_node("substat3_reforge"))) then
+			return true
+		end
 		if(gui.pick_node(gui.get_node("substat4_increase"),action.x,action.y) and node_enabled(gui.get_node("substat4_increase"))) then
 			return true
 		end
 		if(gui.pick_node(gui.get_node("substat4_decrease"),action.x,action.y) and node_enabled(gui.get_node("substat4_decrease"))) then
 			return true
 		end
+		if(gui.pick_node(gui.get_node("substat4_reforge"),action.x,action.y) and node_enabled(gui.get_node("substat4_reforge"))) then
+			return true
+		end
 		if(gui.pick_node(gui.get_node("substat5_increase"),action.x,action.y) and node_enabled(gui.get_node("substat5_increase"))) then
 			return true
 		end
 		if(gui.pick_node(gui.get_node("substat5_decrease"),action.x,action.y) and node_enabled(gui.get_node("substat5_decrease"))) then
+			return true
+		end
+		if(gui.pick_node(gui.get_node("substat5_reforge"),action.x,action.y) and node_enabled(gui.get_node("substat5_reforge"))) then
 			return true
 		end
 		if(gui.pick_node(gui.get_node("pay_button"),action.x,action.y) and node_enabled(gui.get_node("pay_button"))) then
@@ -436,12 +451,20 @@ function on_input(self, action_id, action)
 			decrease_substat(1)
 			return true
 		end
+		if(gui.pick_node(gui.get_node("substat1_reforge"),action.x,action.y) and node_enabled(gui.get_node("substat1_reforge"))) then
+			reforge_substat(1)
+			return true
+		end
 		if(gui.pick_node(gui.get_node("substat2_increase"),action.x,action.y) and node_enabled(gui.get_node("substat2_increase"))) then
 			increase_substat(2)
 			return true
 		end
 		if(gui.pick_node(gui.get_node("substat2_decrease"),action.x,action.y) and node_enabled(gui.get_node("substat2_decrease"))) then
 			decrease_substat(2)
+			return true
+		end
+		if(gui.pick_node(gui.get_node("substat2_reforge"),action.x,action.y) and node_enabled(gui.get_node("substat2_reforge"))) then
+			reforge_substat(2)
 			return true
 		end
 		if(gui.pick_node(gui.get_node("substat3_increase"),action.x,action.y) and node_enabled(gui.get_node("substat3_increase"))) then
@@ -452,6 +475,10 @@ function on_input(self, action_id, action)
 			decrease_substat(3)
 			return true
 		end
+		if(gui.pick_node(gui.get_node("substat3_reforge"),action.x,action.y) and node_enabled(gui.get_node("substat3_reforge"))) then
+			reforge_substat(3)
+			return true
+		end
 		if(gui.pick_node(gui.get_node("substat4_increase"),action.x,action.y) and node_enabled(gui.get_node("substat4_increase"))) then
 			increase_substat(4)
 			return true
@@ -460,12 +487,20 @@ function on_input(self, action_id, action)
 			decrease_substat(4)
 			return true
 		end
+		if(gui.pick_node(gui.get_node("substat4_reforge"),action.x,action.y) and node_enabled(gui.get_node("substat4_reforge"))) then
+			reforge_substat(4)
+			return true
+		end
 		if(gui.pick_node(gui.get_node("substat5_increase"),action.x,action.y) and node_enabled(gui.get_node("substat5_increase"))) then
 			increase_substat(5)
 			return true
 		end
 		if(gui.pick_node(gui.get_node("substat5_decrease"),action.x,action.y) and node_enabled(gui.get_node("substat5_decrease"))) then
 			decrease_substat(5)
+			return true
+		end
+		if(gui.pick_node(gui.get_node("substat5_reforge"),action.x,action.y) and node_enabled(gui.get_node("substat5_reforge"))) then
+			reforge_substat(5)
 			return true
 		end
 	end
@@ -526,6 +561,12 @@ function decrease_substat(substat_num)
 		display_rune_details()
 		game_state.calculate_pokemon_stats()
 	end
+end
+
+function reforge_substat(substat_num)
+	runes.reforge_rune(rune_to_enhance, substat_num)
+	display_rune_details()
+	game_state.calculate_pokemon_stats()
 end
 
 function upgrade_rune()

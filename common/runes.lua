@@ -107,6 +107,28 @@ function M.levelup_rune(rune)
 	end
 end
 
+function M.reforge_rune(rune, substat_num)
+	local dupe_found = true
+	local new_substat = rune.substats[substat_num].stat
+	while dupe_found == true do
+		new_substat = new_substat + 1
+		if new_substat > 11 then
+			new_substat = 4
+		end
+		dupe_found = false
+		if new_substat == rune.main_stat then
+			dupe_found = true
+		else
+			for i, ss in ipairs(rune.substats) do
+				if(ss.stat == new_substat) then
+					dupe_found = true
+				end
+			end
+		end
+	end
+	rune.substats[substat_num].stat = new_substat
+end
+
 function M.substat_value(stat, rank)
 	value = rank * 5
 	return value
