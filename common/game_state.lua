@@ -224,6 +224,14 @@ function M.mon_learned_move(mon_index)
 				move = {id = move.id, level = 0}
 				table.insert(mon.known_moves, move)
 				learned_a_move = true
+				-- see if there's an empty move slot so we can equip the move now.
+				local move_equipped = false
+				for pm=2,4 do
+					if not move_equipped and mon["move"..pm] == nil then
+						mon["move"..pm] = #mon.known_moves
+						move_equipped = true
+					end
+				end
 			end
 		end
 	end
@@ -302,8 +310,9 @@ M.money = 300
 M.position_x = 416
 M.position_y = 51
 M.current_area = 5
+M.money = 30000 --DEV
 --]]
---M.money = 3000 --DEV
+
 
 M.stones = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0} -- 1 for each of the types in common/poke_types
 
