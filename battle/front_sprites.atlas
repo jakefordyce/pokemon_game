@@ -3,7 +3,31 @@ images {
   sprite_trim_mode: SPRITE_TRIM_MODE_OFF
 }
 images {
+  image: "/assets/battle_sprites/front/aerodactyl_front_original.png"
+  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
+}
+images {
+  image: "/assets/battle_sprites/front/aggron_front_original.png"
+  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
+}
+images {
+  image: "/assets/battle_sprites/front/alakazam_front_original.png"
+  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
+}
+images {
   image: "/assets/battle_sprites/front/aron_front_original.png"
+  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
+}
+images {
+  image: "/assets/battle_sprites/front/articuno_front_original.png"
+  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
+}
+images {
+  image: "/assets/battle_sprites/front/bayleef_front_original.png"
+  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
+}
+images {
+  image: "/assets/battle_sprites/front/bellsprout_front_original.png"
   sprite_trim_mode: SPRITE_TRIM_MODE_OFF
 }
 images {
@@ -12,6 +36,14 @@ images {
 }
 images {
   image: "/assets/battle_sprites/front/bulbasaur_front_original.png"
+  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
+}
+images {
+  image: "/assets/battle_sprites/front/caterpie_front_original.png"
+  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
+}
+images {
+  image: "/assets/battle_sprites/front/chansey_front_original.png"
   sprite_trim_mode: SPRITE_TRIM_MODE_OFF
 }
 images {
@@ -31,7 +63,23 @@ images {
   sprite_trim_mode: SPRITE_TRIM_MODE_OFF
 }
 images {
+  image: "/assets/battle_sprites/front/clefable_front_original.png"
+  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
+}
+images {
+  image: "/assets/battle_sprites/front/clefairy_front_original.png"
+  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
+}
+images {
   image: "/assets/battle_sprites/front/cleffa_front_original.png"
+  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
+}
+images {
+  image: "/assets/battle_sprites/front/croconaw_front_original.png"
+  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
+}
+images {
+  image: "/assets/battle_sprites/front/cubone_front_original.png"
   sprite_trim_mode: SPRITE_TRIM_MODE_OFF
 }
 images {
@@ -39,67 +87,23 @@ images {
   sprite_trim_mode: SPRITE_TRIM_MODE_OFF
 }
 images {
-  image: "/assets/battle_sprites/front/gastly_front_original.png"
+  image: "/assets/battle_sprites/front/diglett_front_original.png"
   sprite_trim_mode: SPRITE_TRIM_MODE_OFF
 }
 images {
-  image: "/assets/battle_sprites/front/geodude_front_original.png"
+  image: "/assets/battle_sprites/front/ditto_front_original.png"
   sprite_trim_mode: SPRITE_TRIM_MODE_OFF
 }
 images {
-  image: "/assets/battle_sprites/front/houndour_front_original.png"
+  image: "/assets/battle_sprites/front/doduo_front_original.png"
   sprite_trim_mode: SPRITE_TRIM_MODE_OFF
 }
 images {
-  image: "/assets/battle_sprites/front/ivysaur_front_original.png"
+  image: "/assets/battle_sprites/front/dratini_front_original.png"
   sprite_trim_mode: SPRITE_TRIM_MODE_OFF
 }
 images {
-  image: "/assets/battle_sprites/front/machop_front_original.png"
-  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
-}
-images {
-  image: "/assets/battle_sprites/front/pichu_front_original.png"
-  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
-}
-images {
-  image: "/assets/battle_sprites/front/ralts_front_original.png"
-  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
-}
-images {
-  image: "/assets/battle_sprites/front/spheal_front_original.png"
-  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
-}
-images {
-  image: "/assets/battle_sprites/front/squirtle_front_original.png"
-  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
-}
-images {
-  image: "/assets/battle_sprites/front/totodile_front_original.png"
-  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
-}
-images {
-  image: "/assets/battle_sprites/front/venusaur_front_original.png"
-  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
-}
-images {
-  image: "/assets/battle_sprites/front/wartortle_front_original.png"
-  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
-}
-images {
-  image: "/assets/battle_sprites/front/caterpie_front_original.png"
-  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
-}
-images {
-  image: "/assets/battle_sprites/front/pidgey_front_original.png"
-  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
-}
-images {
-  image: "/assets/battle_sprites/front/rattata_front_original.png"
-  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
-}
-images {
-  image: "/assets/battle_sprites/front/weedle_front_original.png"
+  image: "/assets/battle_sprites/front/drowzee_front_original.png"
   sprite_trim_mode: SPRITE_TRIM_MODE_OFF
 }
 images {
@@ -107,7 +111,87 @@ images {
   sprite_trim_mode: SPRITE_TRIM_MODE_OFF
 }
 images {
+  image: "/assets/battle_sprites/front/ekans_front_original.png"
+  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
+}
+images {
+  image: "/assets/battle_sprites/front/elekid_front_original.png"
+  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
+}
+images {
+  image: "/assets/battle_sprites/front/exeggcute_front_original.png"
+  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
+}
+images {
+  image: "/assets/battle_sprites/front/farfetchd_front_original.png"
+  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
+}
+images {
+  image: "/assets/battle_sprites/front/feraligatr_front_original.png"
+  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
+}
+images {
   image: "/assets/battle_sprites/front/flareon_front_original.png"
+  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
+}
+images {
+  image: "/assets/battle_sprites/front/gardevoir_front_original.png"
+  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
+}
+images {
+  image: "/assets/battle_sprites/front/gastly_front_original.png"
+  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
+}
+images {
+  image: "/assets/battle_sprites/front/gengar_front_original.png"
+  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
+}
+images {
+  image: "/assets/battle_sprites/front/geodude_front_original.png"
+  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
+}
+images {
+  image: "/assets/battle_sprites/front/goldeen_front_original.png"
+  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
+}
+images {
+  image: "/assets/battle_sprites/front/golem_front_original.png"
+  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
+}
+images {
+  image: "/assets/battle_sprites/front/graveler_front_original.png"
+  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
+}
+images {
+  image: "/assets/battle_sprites/front/grimer_front_original.png"
+  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
+}
+images {
+  image: "/assets/battle_sprites/front/growlithe_front_original.png"
+  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
+}
+images {
+  image: "/assets/battle_sprites/front/haunter_front_original.png"
+  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
+}
+images {
+  image: "/assets/battle_sprites/front/horsea_front_original.png"
+  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
+}
+images {
+  image: "/assets/battle_sprites/front/houndoom_front_original.png"
+  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
+}
+images {
+  image: "/assets/battle_sprites/front/houndour_front_original.png"
+  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
+}
+images {
+  image: "/assets/battle_sprites/front/igglybuff_front_original.png"
+  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
+}
+images {
+  image: "/assets/battle_sprites/front/ivysaur_front_original.png"
   sprite_trim_mode: SPRITE_TRIM_MODE_OFF
 }
 images {
@@ -115,11 +199,91 @@ images {
   sprite_trim_mode: SPRITE_TRIM_MODE_OFF
 }
 images {
-  image: "/assets/battle_sprites/front/vaporeon_front_original.png"
+  image: "/assets/battle_sprites/front/kabuto_front_original.png"
+  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
+}
+images {
+  image: "/assets/battle_sprites/front/kadabra_front_original.png"
   sprite_trim_mode: SPRITE_TRIM_MODE_OFF
 }
 images {
   image: "/assets/battle_sprites/front/kangaskhan_front_original.png"
+  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
+}
+images {
+  image: "/assets/battle_sprites/front/kirlia_front_original.png"
+  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
+}
+images {
+  image: "/assets/battle_sprites/front/koffing_front_original.png"
+  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
+}
+images {
+  image: "/assets/battle_sprites/front/krabby_front_original.png"
+  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
+}
+images {
+  image: "/assets/battle_sprites/front/lairon_front_original.png"
+  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
+}
+images {
+  image: "/assets/battle_sprites/front/lapras_front_original.png"
+  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
+}
+images {
+  image: "/assets/battle_sprites/front/lickitung_front_original.png"
+  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
+}
+images {
+  image: "/assets/battle_sprites/front/machamp_front_original.png"
+  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
+}
+images {
+  image: "/assets/battle_sprites/front/machoke_front_original.png"
+  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
+}
+images {
+  image: "/assets/battle_sprites/front/machop_front_original.png"
+  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
+}
+images {
+  image: "/assets/battle_sprites/front/magby_front_original.png"
+  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
+}
+images {
+  image: "/assets/battle_sprites/front/magikarp_front_original.png"
+  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
+}
+images {
+  image: "/assets/battle_sprites/front/magnemite_front_original.png"
+  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
+}
+images {
+  image: "/assets/battle_sprites/front/mankey_front_original.png"
+  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
+}
+images {
+  image: "/assets/battle_sprites/front/meganium_front_original.png"
+  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
+}
+images {
+  image: "/assets/battle_sprites/front/meowth_front_original.png"
+  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
+}
+images {
+  image: "/assets/battle_sprites/front/mew_front_original.png"
+  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
+}
+images {
+  image: "/assets/battle_sprites/front/mewtwo_front_original.png"
+  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
+}
+images {
+  image: "/assets/battle_sprites/front/moltres_front_original.png"
+  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
+}
+images {
+  image: "/assets/battle_sprites/front/mr._mime_front_original.png"
   sprite_trim_mode: SPRITE_TRIM_MODE_OFF
 }
 images {
@@ -131,11 +295,183 @@ images {
   sprite_trim_mode: SPRITE_TRIM_MODE_OFF
 }
 images {
-  image: "/assets/battle_sprites/front/meowth_front_original.png"
+  image: "/assets/battle_sprites/front/oddish_front_original.png"
+  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
+}
+images {
+  image: "/assets/battle_sprites/front/omanyte_front_original.png"
+  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
+}
+images {
+  image: "/assets/battle_sprites/front/onix_front_original.png"
+  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
+}
+images {
+  image: "/assets/battle_sprites/front/paras_front_original.png"
+  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
+}
+images {
+  image: "/assets/battle_sprites/front/pichu_front_original.png"
+  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
+}
+images {
+  image: "/assets/battle_sprites/front/pidgey_front_original.png"
+  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
+}
+images {
+  image: "/assets/battle_sprites/front/pikachu_front_original.png"
+  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
+}
+images {
+  image: "/assets/battle_sprites/front/pinsir_front_original.png"
+  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
+}
+images {
+  image: "/assets/battle_sprites/front/poliwag_front_original.png"
+  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
+}
+images {
+  image: "/assets/battle_sprites/front/ponyta_front_original.png"
+  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
+}
+images {
+  image: "/assets/battle_sprites/front/porygon_front_original.png"
+  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
+}
+images {
+  image: "/assets/battle_sprites/front/psyduck_front_original.png"
+  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
+}
+images {
+  image: "/assets/battle_sprites/front/quilava_front_original.png"
+  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
+}
+images {
+  image: "/assets/battle_sprites/front/raichu_front_original.png"
+  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
+}
+images {
+  image: "/assets/battle_sprites/front/ralts_front_original.png"
+  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
+}
+images {
+  image: "/assets/battle_sprites/front/rattata_front_original.png"
+  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
+}
+images {
+  image: "/assets/battle_sprites/front/rhyhorn_front_original.png"
+  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
+}
+images {
+  image: "/assets/battle_sprites/front/sandshrew_front_original.png"
+  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
+}
+images {
+  image: "/assets/battle_sprites/front/scyther_front_original.png"
+  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
+}
+images {
+  image: "/assets/battle_sprites/front/sealeo_front_original.png"
+  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
+}
+images {
+  image: "/assets/battle_sprites/front/seel_front_original.png"
   sprite_trim_mode: SPRITE_TRIM_MODE_OFF
 }
 images {
   image: "/assets/battle_sprites/front/sentret_front_original.png"
+  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
+}
+images {
+  image: "/assets/battle_sprites/front/shellder_front_original.png"
+  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
+}
+images {
+  image: "/assets/battle_sprites/front/slowpoke_front_original.png"
+  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
+}
+images {
+  image: "/assets/battle_sprites/front/smoochum_front_original.png"
+  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
+}
+images {
+  image: "/assets/battle_sprites/front/snorlax_front_original.png"
+  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
+}
+images {
+  image: "/assets/battle_sprites/front/spearow_front_original.png"
+  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
+}
+images {
+  image: "/assets/battle_sprites/front/spheal_front_original.png"
+  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
+}
+images {
+  image: "/assets/battle_sprites/front/squirtle_front_original.png"
+  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
+}
+images {
+  image: "/assets/battle_sprites/front/staryu_front_original.png"
+  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
+}
+images {
+  image: "/assets/battle_sprites/front/tangela_front_original.png"
+  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
+}
+images {
+  image: "/assets/battle_sprites/front/tauros_front_original.png"
+  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
+}
+images {
+  image: "/assets/battle_sprites/front/tentacool_front_original.png"
+  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
+}
+images {
+  image: "/assets/battle_sprites/front/totodile_front_original.png"
+  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
+}
+images {
+  image: "/assets/battle_sprites/front/typhlosion_front_original.png"
+  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
+}
+images {
+  image: "/assets/battle_sprites/front/vaporeon_front_original.png"
+  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
+}
+images {
+  image: "/assets/battle_sprites/front/venonat_front_original.png"
+  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
+}
+images {
+  image: "/assets/battle_sprites/front/venusaur_front_original.png"
+  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
+}
+images {
+  image: "/assets/battle_sprites/front/voltorb_front_original.png"
+  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
+}
+images {
+  image: "/assets/battle_sprites/front/vulpix_front_original.png"
+  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
+}
+images {
+  image: "/assets/battle_sprites/front/walrein_front_original.png"
+  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
+}
+images {
+  image: "/assets/battle_sprites/front/wartortle_front_original.png"
+  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
+}
+images {
+  image: "/assets/battle_sprites/front/weedle_front_original.png"
+  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
+}
+images {
+  image: "/assets/battle_sprites/front/zapdos_front_original.png"
+  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
+}
+images {
+  image: "/assets/battle_sprites/front/zubat_front_original.png"
   sprite_trim_mode: SPRITE_TRIM_MODE_OFF
 }
 margin: 0
