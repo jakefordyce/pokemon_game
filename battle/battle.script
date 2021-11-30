@@ -214,6 +214,9 @@ function handle_move_effects(level, effect, target, move_user)
 				stat = defender.hp
 			end
 			local power = effect.param1(level) * stat / 100
+			if effect.bonus_vs_psn ~= nil and mon_has_status_effect(defender, 15) then
+				power = power * effect.bonus_vs_psn
+			end
 			if effect.param4 ~= nil then --damage based on multiple stats
 				stat = move_user[effect.param4]
 				if string.match(effect.param4, "^attack") then

@@ -1407,4 +1407,62 @@ M[52] = {
 	end
 }
 
+
+meffects = {}
+meffects[1] = {}
+meffects[1].id = 1
+meffects[1].target = 1
+meffects[1].param1 = function(moveLevel)
+	damage = 200 + (moveLevel * 10)
+	return damage
+end
+meffects[1].param2 = "attack"
+meffects[1].bonus_vs_psn = 2
+
+M[53] = {
+	name = "Venoshock",
+	effects = meffects,
+	cooldown = 3,
+	default = false,
+	type = 4,
+	targetting = 1,
+	description = function(moveLevel)
+		damage = 200 + (moveLevel * 10)
+		return "Attacks 1 enemy for "..damage.."% of Attack. Deals double damage against poisoned targets."
+	end
+}
+
+
+meffects = {}
+meffects[1] = {}
+meffects[1].id = 1
+meffects[1].target = 1
+meffects[1].param1 = function(moveLevel)
+	damage = 100 + (moveLevel * 5)
+	return damage
+end
+meffects[1].param2 = "attack"
+
+meffects[2] = {}
+meffects[2].id = 10 --reduce speed
+meffects[2].target = 1
+meffects[2].param1 = function(moveLevel)
+	return 25 + (5 * moveLevel)
+end
+meffects[2].param2 = 2
+
+M[54] = {
+	name = "String Shot",
+	effects = meffects,
+	cooldown = 0,
+	default = true,
+	type = 6,
+	targetting = 1,
+	description = function(moveLevel)
+		damage = 100 + (moveLevel * 5)
+		chance = 25 + (5 * moveLevel)
+		return "Attacks 1 enemy for "..damage.."% of Attack. Has a "..chance.."% chance of reducing the enemy's speed for 2 turns"
+	end
+}
+
 return M
