@@ -19,6 +19,7 @@ M[1] = {
 	default = true,
 	type = 1,
 	targetting = 1,
+	max_level = 5,
 	description = function(moveLevel)
 		damage = 95 + (moveLevel * 5)
 		return "Attacks 1 enemy for "..damage.."% of Attack."
@@ -234,6 +235,7 @@ M[9] = {
 	default = false,
 	type = 11,
 	targetting = 1,
+	max_level = 5,
 	description = function(moveLevel)
 		damage = 150 + (moveLevel * 10)
 		return "Attacks all enemies for "..damage.."% of Special Attack. Has an extra 25% chance of dealing a critical hit."

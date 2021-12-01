@@ -2,7 +2,9 @@ local game_state = require "common/game_state"
 local render_data = require "common/render"
 local moves = require "common/moves"
 local spawned_pokemon_icons = {}
+local spawned_moves = {}
 local scroll_top = 0
+local current_mon = nil
 
 function init(self)
 	msg.post(".", "acquire_input_focus")
@@ -19,7 +21,15 @@ function update(self, dt)
 end
 
 function on_message(self, message_id, message, sender)
-
+	if message_id == hash("select_pokemon") then
+		clear_gos(spawned_pokemon_icons)
+		current_mon = game_state.pokemon[message.mon]
+		msg.post("gui", "mon_selected", {mon = current_mon})
+		display_move_list(current_mon)
+	elseif message_id == hash("select_move") then
+		msg.post("gui", "move_selected", {move_id = message.move_id})
+		clear_gos(spawned_moves)
+	end
 end
 
 function on_input(self, action_id, action)
@@ -77,32 +87,11 @@ function display_move_list(mon)
 	p.x = 320
 
 	for i, m in ipairs(mon.known_moves) do
-		move_equipped = false
-		for e=1,4 do
-			if mon["move"..e] ~= nil and mon.known_moves[mon["move"..e]].id == m.id then
-				move_equipped = true
-			end
-		end
+		local move = factory.create("#move_factory",p, nil, {move_index = m.id, move_level = m.level})
+		go.set_parent(move, go.get_id("move_tutor"))
+		table.insert(spawned_moves, move)
 
-		--move1 has to be a "default" move. Also, "default" moves cannot go in other slots.
-		move_can_equip_in_slot = false
-		if(current_move == "move1") then
-			if(moves[m.id].default) then
-				move_can_equip_in_slot = true
-			end
-		else
-			if(moves[m.id].default == false) then
-				move_can_equip_in_slot = true
-			end
-		end
-
-		if (move_equipped == false) and move_can_equip_in_slot then
-			local move = factory.create("#move_factory",p, nil, {move_index = m.id})
-			go.set_parent(move, go.get_id("menu"))
-			table.insert(spawned_moves, move)
-
-			p.y = p.y - 100 --each image is 100px tall
-		end
+		p.y = p.y - 100 --each image is 100px tall
 	end	
 end
 
