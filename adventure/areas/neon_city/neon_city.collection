@@ -95,6 +95,44 @@ instances {
     z: 1.0
   }
 }
+instances {
+  id: "door3"
+  prototype: "/adventure/door.go"
+  position {
+    x: 578.0
+    y: 988.0
+    z: 0.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  component_properties {
+    id: "door"
+    properties {
+      id: "target_area"
+      value: "6.0"
+      type: PROPERTY_TYPE_NUMBER
+    }
+    properties {
+      id: "target_x"
+      value: "224.0"
+      type: PROPERTY_TYPE_NUMBER
+    }
+    properties {
+      id: "target_y"
+      value: "66.0"
+      type: PROPERTY_TYPE_NUMBER
+    }
+  }
+  scale3 {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+}
 collection_instances {
   id: "adventure"
   collection: "/adventure/adventure.collection"
