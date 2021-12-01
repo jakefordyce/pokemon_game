@@ -24,7 +24,7 @@ function init(self)
 	load_screen(area_names[game_state.current_area], nil)
 	math.randomseed(os.time())
 	math.random(); math.random(); math.random()
-	--[[
+	---[[
 	game_state.add_pokemon(1,5)
 	game_state.add_pokemon(4,5)
 	game_state.add_pokemon(7,5)
@@ -146,6 +146,9 @@ function on_message(self, message_id, message, sender)
 	end
 	if message_id == hash("exit_rune_shop") then
 		load_screen(area_names[game_state.current_area], "rune_shop")
+	end
+	if message_id == hash("load_move_tutor") then
+		load_screen("move_tutor", area_names[game_state.current_area])
 	end
 	if message_id == hash("load_boss_select") then
 		load_screen("boss_select", area_names[game_state.current_area])

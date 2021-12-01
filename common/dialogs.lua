@@ -85,4 +85,14 @@ M[17] = {
 	next = nil,
 	has_choices = false
 }
+M[18] = {
+	text = "MOVE TUTOR: Hello. Would you like me to help your pokemon improve their moves?",
+	next = nil,
+	has_choices = true
+}
+M[19] = {
+	text = "MOVE TUTOR: Be safe out there.",
+	next = nil,
+	has_choices = false
+}
 return M

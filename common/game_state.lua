@@ -300,7 +300,7 @@ function M.fix_pokemon_rune_ids(sold_rune_index)
 end
 
 --PLAYER INFO--
----[[
+--[[
 M.position_x = 263 --starting values
 M.position_y = 761
 M.current_area = 1
@@ -310,6 +310,12 @@ M.money = 300
 M.position_x = 416
 M.position_y = 51
 M.current_area = 5
+M.money = 30000 --DEV
+--]]
+---[[
+M.position_x = 210
+M.position_y = 108
+M.current_area = 6
 M.money = 30000 --DEV
 --]]
 

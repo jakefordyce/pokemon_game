@@ -1,0 +1,32 @@
+go.property("move_index", 1)
+local moves = require "common/moves"
+local types = require "common/poke_types"
+
+function init(self)
+	--TODO: use move level instead of 0
+	move = moves[self.move_index]
+	label.set_text("#move_description", move.description(0))
+	label.set_text("#move_name", move.name)
+	label.set_text("#move_cooldown", "CD: "..move.cooldown)
+	msg.post("#move_type_sprite", "play_animation", { id = hash("type_"..types[move.type].name.."_16") })
+end
+
+function final(self)
+end
+
+function update(self, dt)
+end
+
+function on_message(self, message_id, message, sender)
+	if message_id == hash("contact_point_response") then
+		if message.other_group == hash("cursor") then
+			msg.post("move_tutor", "swap_move", { move_id = self.move_index })
+		end
+	end
+end
+
+function on_input(self, action_id, action)
+end
+
+function on_reload(self)
+end
