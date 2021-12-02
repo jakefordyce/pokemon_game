@@ -24,11 +24,16 @@ function on_message(self, message_id, message, sender)
 	if message_id == hash("select_pokemon") then
 		clear_gos(spawned_pokemon_icons)
 		current_mon = game_state.pokemon[message.mon]
-		msg.post("gui", "mon_selected", {mon = current_mon})
+		msg.post("gui", "mon_selected", {mon = message.mon})
 		display_move_list(current_mon)
 	elseif message_id == hash("select_move") then
 		msg.post("gui", "move_selected", {move_id = message.move_id})
 		clear_gos(spawned_moves)
+	elseif message_id == hash("cancel_upgrade") then
+		display_move_list(current_mon)
+	elseif message_id == hash("reselect_pokemon") then
+		clear_gos(spawned_moves)
+		display_pokemon_grid()
 	end
 end
 

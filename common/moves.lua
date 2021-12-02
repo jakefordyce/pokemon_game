@@ -15,7 +15,9 @@ meffects[1].param2 = "attack"
 M[1] = {
 	name = "Tackle",
 	effects = meffects,
-	cooldown = 0,
+	cooldown = function(moveLevel)
+		return 0
+	end,
 	default = true,
 	type = 1,
 	targetting = 1,
@@ -39,10 +41,13 @@ meffects[1].param2 = 2
 M[2] = {
 	name = "Growl",
 	effects = meffects,
-	cooldown = 3,
+	cooldown = function(moveLevel)
+		return 3
+	end,
 	default = false,
 	type = 1,
 	targetting = 1,
+	max_level = 5,
 	description = function(moveLevel)
 		chance = 75 + (moveLevel * 5)
 		return "Has a "..chance.."% chance of reducing the Attack of all enemies for 2 turns."
@@ -63,10 +68,13 @@ meffects[1].extra_crit = 15
 M[3] = {
 	name = "Scratch",
 	effects = meffects,
-	cooldown = 0,
+	cooldown = function(moveLevel)
+		return 0
+	end,
 	default = true,
 	type = 1,
 	targetting = 1,
+	max_level = 5,
 	description = function(moveLevel)
 		damage = 125 + (moveLevel * 5)
 		return "Attacks 1 enemy for "..damage.."% of Attack. Has an extra 15% chance of dealing a critical hit."
@@ -86,10 +94,13 @@ meffects[1].param2 = "spattack"
 M[4] = {
 	name = "Vine Whip",
 	effects = meffects,
-	cooldown = 0,
+	cooldown = function(moveLevel)
+		return 0
+	end,
 	default = true,
 	type = 11,
 	targetting = 1,
+	max_level = 5,
 	description = function(moveLevel)
 		damage = 150 + (moveLevel * 10)
 		return "Attacks 1 enemy for "..damage.."% of Special Attack."
@@ -117,10 +128,13 @@ meffects[2].param2 = 2
 M[5] = {
 	name = "Bubble",
 	effects = meffects,
-	cooldown = 0,
+	cooldown = function(moveLevel)
+		return 0
+	end,
 	default = true,
 	type = 10,
 	targetting = 1,
+	max_level = 5,
 	description = function(moveLevel)
 		damage = 125 + (moveLevel * 5)
 		chance = 15 + (2 * moveLevel)
@@ -149,10 +163,13 @@ meffects[2].param2 = 2
 M[6] = {
 	name = "Ember",
 	effects = meffects,
-	cooldown = 0,
+	cooldown = function(moveLevel)
+		return 0
+	end,
 	default = true,
 	type = 9,
 	targetting = 1,
+	max_level = 5,
 	description = function(moveLevel)
 		damage = 125 + (moveLevel * 5)
 		chance = 15 + (moveLevel * 2)
@@ -173,10 +190,13 @@ meffects[1].param2 = 2
 M[7] = {
 	name = "Howl",
 	effects = meffects,
-	cooldown = 2,
+	cooldown = function(moveLevel)
+		return 0
+	end,
 	default = false,
 	type = 1,
 	targetting = 2,
+	max_level = 5,
 	description = function(moveLevel)
 		chance = 75 + (moveLevel * 5)
 		return "Has a "..chance.."% chance of increasing Attack of all allies."
@@ -206,10 +226,13 @@ meffects[2].param2 = 2
 M[8] = {
 	name = "Crunch",
 	effects = meffects,
-	cooldown = 4,
+	cooldown = function(moveLevel)
+		return 4
+	end,
 	default = false,
 	type = 15,
 	targetting = 1,
+	max_level = 5,
 	description = function(moveLevel)
 		chance = 75 + (moveLevel * 5)
 		damage = 200 + (moveLevel * 10)
@@ -231,11 +254,16 @@ meffects[1].extra_crit = 25
 M[9] = {
 	name = "Razor Leaf",
 	effects = meffects,
-	cooldown = 5,
+	cooldown = function(moveLevel)
+		if moveLevel > 5 then
+			return 5 - (moveLevel - 5)
+		end
+		return 5
+	end,
 	default = false,
 	type = 11,
 	targetting = 1,
-	max_level = 5,
+	max_level = 6,
 	description = function(moveLevel)
 		damage = 150 + (moveLevel * 10)
 		return "Attacks all enemies for "..damage.."% of Special Attack. Has an extra 25% chance of dealing a critical hit."
@@ -254,10 +282,13 @@ meffects[1].param2 = "attack"
 M[10] = {
 	name = "Mega Punch",
 	effects = meffects,
-	cooldown = 1,
+	cooldown = function(moveLevel)
+		return 1
+	end,
 	default = true,
 	type = 1,
 	targetting = 1,
+	max_level = 5,
 	description = function(moveLevel)
 		damage = 300
 		return "Boss Move: Attacks 1 enemy for "..damage.."% of Attack."
@@ -276,10 +307,13 @@ meffects[1].param2 = "attack"
 M[11] = {
 	name = "Mega Impact",
 	effects = meffects,
-	cooldown = 3,
+	cooldown = function(moveLevel)
+		return 1
+	end,
 	default = false,
 	type = 1,
 	targetting = 1,
+	max_level = 5,
 	description = function(moveLevel)
 		damage = 900
 		return "Boss Move: Attacks all enemies for "..damage.."% of Attack."
@@ -303,10 +337,13 @@ meffects[3] = meffects[1]
 M[12] = {
 	name = "Fire Spin",
 	effects = meffects,
-	cooldown = 3,
+	cooldown = function(moveLevel)
+		return 3
+	end,
 	default = false,
 	type = 9,
 	targetting = 1,
+	max_level = 5,
 	description = function(moveLevel)
 		damage = 50 + (moveLevel * 5)
 		return "Attacks all enemies 3 times for "..damage.."% of Special Attack."
@@ -326,10 +363,13 @@ meffects[1].param2 = 2
 M[13] = {
 	name = "Iron Defense",
 	effects = meffects,
-	cooldown = 3,
+	cooldown = function(moveLevel)
+		return 3
+	end,
 	default = false,
 	type = 1,
 	targetting = 2,
+	max_level = 5,
 	description = function(moveLevel)
 		chance = 75 + (moveLevel * 5)
 		return "Has a "..chance.."% chance of increasing Defense of all allies."
@@ -353,10 +393,13 @@ meffects[1].param4 = "attack"
 M[14] = {
 	name = "Super Fang",
 	effects = meffects,
-	cooldown = 3,
+	cooldown = function(moveLevel)
+		return 3
+	end,
 	default = false,
 	type = 1,
 	targetting = 1,
+	max_level = 5,
 	description = function(moveLevel)
 		damage = 10
 		attk_damage = 100 + (moveLevel * 5)
@@ -384,10 +427,13 @@ meffects[2].param2 = 25
 M[15] = {
 	name = "Energize",
 	effects = meffects,
-	cooldown = 4,
+	cooldown = function(moveLevel)
+		return 4
+	end,
 	default = false,
 	type = 12,
 	targetting = 2,
+	max_level = 5,
 	description = function(moveLevel)
 		chance = 75 + (5 + moveLevel)
 		return "Has a "..chance.."% chance of increasing speed of all allies for 2 turns and increasing the turn of all allies by 25%"
@@ -406,10 +452,13 @@ meffects[1].param2 = 2
 M[16] = {
 	name = "Sand Attack",
 	effects = meffects,
-	cooldown = 3,
+	cooldown = function(moveLevel)
+		return 3
+	end,
 	default = false,
 	type = 5,
 	targetting = 1,
+	max_level = 5,
 	description = function(moveLevel)
 		chance = 75 + (5 * moveLevel)
 		return "Has a "..chance.."% chance of reducing the accuracy of all enemies for 2 turns."
@@ -437,10 +486,13 @@ meffects[2].param2 = 2
 M[17] = {
 	name = "Bubblebeam",
 	effects = meffects,
-	cooldown = 4,
+	cooldown = function(moveLevel)
+		return 4
+	end,
 	default = false,
 	type = 10,
 	targetting = 1,
+	max_level = 5,
 	description = function(moveLevel)
 		chance = 50 + (5 * moveLevel)
 		damage = 150 + (10 * moveLevel)
@@ -463,10 +515,13 @@ meffects[1].ignore_def = 25
 M[18] = {
 	name = "Psywave",
 	effects = meffects,
-	cooldown = 5,
+	cooldown = function(moveLevel)
+		return 5
+	end,
 	default = false,
 	type = 13,
 	targetting = 1,
+	max_level = 5,
 	description = function(moveLevel)
 		damage = 150 + (10 * moveLevel)
 		return "Attacks all enemies for "..damage.."% of Special Attack. This attack ignores 25% of the target's defense."
@@ -487,10 +542,13 @@ meffects[1].extra_crit = 100
 M[19] = {
 	name = "Vital Throw",
 	effects = meffects,
-	cooldown = 5,
+	cooldown = function(moveLevel)
+		return 5
+	end,
 	default = false,
 	type = 2,
 	targetting = 1,
+	max_level = 5,
 	description = function(moveLevel)
 		damage = 200 + (10 * moveLevel)
 		return "Attacks an enemy for "..damage.."% of Attack. This attack will always crit."
@@ -509,10 +567,13 @@ meffects[1].param2 = 1
 M[20] = {
 	name = "Hypnosis",
 	effects = meffects,
-	cooldown = 3,
+	cooldown = function(moveLevel)
+		return 3
+	end,
 	default = false,
 	type = 15,
 	targetting = 1,
+	max_level = 5,
 	description = function(moveLevel)
 		chance = 75 + (5 * moveLevel)
 		return "Has a "..chance.."% chance of putting all enemies to sleep for 1 turns."
@@ -540,10 +601,13 @@ meffects[2].param2 = 25
 M[21] = {
 	name = "Rock Slide",
 	effects = meffects,
-	cooldown = 4,
+	cooldown = function(moveLevel)
+		return 4
+	end,
 	default = false,
 	type = 5,
 	targetting = 1,
+	max_level = 5,
 	description = function(moveLevel)
 		damage = 150 + (10 * moveLevel)
 		chance = 50 + (5 * moveLevel)
@@ -565,10 +629,13 @@ meffects[1].ignore_def = 100
 M[22] = {
 	name = "Magic Leaf",
 	effects = meffects,
-	cooldown = 4,
+	cooldown = function(moveLevel)
+		return 4
+	end,
 	default = false,
 	type = 11,
 	targetting = 1,
+	max_level = 5,
 	description = function(moveLevel)
 		damage = 150 + (10 * moveLevel)
 		return "Attacks an enemy for "..damage.."% of Special Attack. This attack ignores the target's defense."
@@ -588,10 +655,13 @@ meffects[1].param2 = 1
 M[23] = {
 	name = "Smokescreen",
 	effects = meffects,
-	cooldown = 3,
+	cooldown = function(moveLevel)
+		return 3
+	end,
 	default = false,
 	type = 1,
 	targetting = 2,
+	max_level = 5,
 	description = function(moveLevel)
 		chance = 75 + (moveLevel * 5)
 		return "Has a "..chance.."% chance of placing Block Debuff on all allies for 1 turn."
@@ -622,10 +692,13 @@ meffects[2].param2 = 1
 M[24] = {
 	name = "Clamp",
 	effects = meffects,
-	cooldown = 4,
+	cooldown = function(moveLevel)
+		return 4
+	end,
 	default = false,
 	type = 10,
 	targetting = 1,
+	max_level = 5,
 	description = function(moveLevel)
 		chance = 25 + (moveLevel * 5)
 		damage = 250 + (moveLevel * 15)
@@ -646,10 +719,13 @@ meffects[1].param2 = "spattack"
 M[25] = {
 	name = "Heal Pulse",
 	effects = meffects,
-	cooldown = 1,
+	cooldown = function(moveLevel)
+		return 1
+	end,
 	default = false,
 	type = 13,
 	targetting = 2,
+	max_level = 5,
 	description = function(moveLevel)
 		heal = 100 + (moveLevel * 5)
 		return "Heals all allies for "..heal.."% of Special Attack."
@@ -680,10 +756,13 @@ meffects[2].param2 = 2
 M[26] = {
 	name = "Aurora Beam",
 	effects = meffects,
-	cooldown = 4,
+	cooldown = function(moveLevel)
+		return 4
+	end,
 	default = false,
 	type = 14,
 	targetting = 1,
+	max_level = 5,
 	description = function(moveLevel)
 		damage = 200 + (moveLevel * 10)
 		return "Attacks 1 enemy for "..damage.."% of Special Attack then reduces that enemy's attack for 2 turns."
@@ -702,10 +781,13 @@ meffects[1].param2 = 2
 M[27] = {
 	name = "Leech Seed",
 	effects = meffects,
-	cooldown = 2,
+	cooldown = function(moveLevel)
+		return 2
+	end,
 	default = false,
 	type = 11,
 	targetting = 1,
+	max_level = 5,
 	description = function(moveLevel)
 		chance = 75 + (5 * moveLevel)
 		return "Has a "..chance.."% chance of placing a leech seed on the target for 2 turns."
@@ -726,10 +808,13 @@ meffects[1].extra_crit = 25
 M[28] = {
 	name = "Slash",
 	effects = meffects,
-	cooldown = 3,
+	cooldown = function(moveLevel)
+		return 3
+	end,
 	default = false,
 	type = 1,
 	targetting = 1,
+	max_level = 5,
 	description = function(moveLevel)
 		damage = 250 + (moveLevel * 15)
 		return "Attacks an enemy for "..damage.."% of Attack. Has an extra 25% chance of dealing a critical hit."
@@ -749,10 +834,13 @@ meffects[1].param2 = 2
 M[29] = {
 	name = "Tail Whip",
 	effects = meffects,
-	cooldown = 3,
+	cooldown = function(moveLevel)
+		return 3
+	end,
 	default = false,
 	type = 1,
 	targetting = 1,
+	max_level = 5,
 	description = function(moveLevel)
 		chance = 75 + (moveLevel * 5)
 		return "Has a "..chance.."% chance of reducing the Defense of all enemies for 2 turns."
@@ -772,13 +860,16 @@ meffects[1].param2 = 1
 M[30] = {
 	name = "Protect",
 	effects = meffects,
-	cooldown = 3,
+	cooldown = function(moveLevel)
+		return 3
+	end,
 	default = false,
 	type = 1,
 	targetting = 2,
+	max_level = 5,
 	description = function(moveLevel)
 		chance = 75 + (moveLevel * 5)
-		return "Has a "..chance.."% chance of placing Block Debuff on all allies for 1 turn."
+		return "Has a "..chance.."% chance of placing Protect on all allies for 1 turn."
 	end
 }
 
@@ -804,10 +895,13 @@ meffects[2].param2 = 1
 M[31] = {
 	name = "Thunder Wave",
 	effects = meffects,
-	cooldown = 4,
+	cooldown = function(moveLevel)
+		return 4
+	end,
 	default = false,
 	type = 12,
 	targetting = 1,
+	max_level = 5,
 	description = function(moveLevel)
 		chance = 25 + (5 * moveLevel)
 		damage = 150 + (10 * moveLevel)
@@ -828,10 +922,13 @@ meffects[1].param2 = "spattack"
 M[32] = {
 	name = "Psybeam",
 	effects = meffects,
-	cooldown = 3,
+	cooldown = function(moveLevel)
+		return 3
+	end,
 	default = false,
 	type = 13,
 	targetting = 1,
+	max_level = 5,
 	description = function(moveLevel)
 		damage = 300 + (moveLevel * 20)
 		return "Attacks an enemy for "..damage.."% of Special Attack."
@@ -852,10 +949,13 @@ meffects[1].ignore_def = 100
 M[33] = {
 	name = "Seismic Toss",
 	effects = meffects,
-	cooldown = 4,
+	cooldown = function(moveLevel)
+		return 4
+	end,
 	default = false,
 	type = 2,
 	targetting = 1,
+	max_level = 5,
 	description = function(moveLevel)
 		damage = 150 + (10 * moveLevel)
 		return "Attacks an enemy for "..damage.."% of Attack. This attack ignores the target's defense."
@@ -877,10 +977,13 @@ meffects[1].ignore_def = 25
 M[34] = {
 	name = "Nightshade",
 	effects = meffects,
-	cooldown = 5,
+	cooldown = function(moveLevel)
+		return 5
+	end,
 	default = false,
 	type = 15,
 	targetting = 1,
+	max_level = 5,
 	description = function(moveLevel)
 		damage = 150 + (10 * moveLevel)
 		return "Attacks all enemies for "..damage.."% of Special Attack. This attack ignores 25% of the target's defense."
@@ -915,10 +1018,13 @@ end
 M[35] = {
 	name = "Defense Curl",
 	effects = meffects,
-	cooldown = 4,
+	cooldown = function(moveLevel)
+		return 4
+	end,
 	default = false,
 	type = 1,
 	targetting = 0,
+	max_level = 5,
 	description = function(moveLevel)
 		chance = 75 + (moveLevel * 5)
 		shield = 20 + (moveLevel * 2)
@@ -939,10 +1045,13 @@ meffects[1].param2 = "hp"
 M[36] = {
 	name = "Synthesis",
 	effects = meffects,
-	cooldown = 3,
+	cooldown = function(moveLevel)
+		return 3
+	end,
 	default = false,
 	type = 11,
 	targetting = 2,
+	max_level = 5,
 	description = function(moveLevel)
 		heal = 30 + (moveLevel * 2)
 		return "Heals an ally for "..heal.."% of User's max HP."
@@ -970,10 +1079,13 @@ meffects[2].param2 = 2
 M[37] = {
 	name = "Flame Charge",
 	effects = meffects,
-	cooldown = 3,
+	cooldown = function(moveLevel)
+		return 3
+	end,
 	default = false,
 	type = 9,
 	targetting = 1,
+	max_level = 5,
 	description = function(moveLevel)
 		damage = 150 + (moveLevel * 10)
 		return "Attacks 1 enemy for "..damage.."% of Special Attack."
@@ -1004,10 +1116,13 @@ meffects[2].param2 = 2
 M[38] = {
 	name = "Moonblast",
 	effects = meffects,
-	cooldown = 4,
+	cooldown = function(moveLevel)
+		return 4
+	end,
 	default = false,
 	type = 15,
 	targetting = 1,
+	max_level = 5,
 	description = function(moveLevel)
 		damage = 200 + (moveLevel * 10)
 		return "Attacks 1 enemy for "..damage.."% of Special Attack then reduces that enemy's attack for 2 turns."
@@ -1037,10 +1152,13 @@ meffects[2].param2 = 25
 M[39] = {
 	name = "Headbutt",
 	effects = meffects,
-	cooldown = 3,
+	cooldown = function(moveLevel)
+		return 3
+	end,
 	default = false,
 	type = 1,
 	targetting = 1,
+	max_level = 5,
 	description = function(moveLevel)
 		chance = 50 + (5 * moveLevel)
 		damage = 250 + (moveLevel * 15)
@@ -1062,10 +1180,13 @@ meffects[1].param2 = "spattack"
 M[40] = {
 	name = "Psychic",
 	effects = meffects,
-	cooldown = 5,
+	cooldown = function(moveLevel)
+		return 5
+	end,
 	default = false,
 	type = 13,
 	targetting = 1,
+	max_level = 5,
 	description = function(moveLevel)
 		damage = 200 + (15 * moveLevel)
 		return "Attacks all enemies for "..damage.."% of Special Attack."
@@ -1094,10 +1215,13 @@ meffects[2].param2 = 1
 M[41] = {
 	name = "Rest",
 	effects = meffects,
-	cooldown = 4,
+	cooldown = function(moveLevel)
+		return 4
+	end,
 	default = false,
 	type = 1,
 	targetting = 0,
+	max_level = 5,
 	description = function(moveLevel)
 		heal = 40 + (moveLevel * 2)
 		return "User heals for "..heal.."% of max HP then falls asleep."
@@ -1118,10 +1242,13 @@ meffects[1].param2 = "spattack"
 M[42] = {
 	name = "Water Gun",
 	effects = meffects,
-	cooldown = 0,
+	cooldown = function(moveLevel)
+		return 0
+	end,
 	default = true,
 	type = 10,
 	targetting = 1,
+	max_level = 5,
 	description = function(moveLevel)
 		damage = 150 + (moveLevel * 5)
 		return "Attacks 1 enemy for "..damage.."% of Special Attack."
@@ -1150,10 +1277,13 @@ meffects[2].param2 = 25
 M[43] = {
 	name = "Bite",
 	effects = meffects,
-	cooldown = 0,
+	cooldown = function(moveLevel)
+		return 0
+	end,
 	default = true,
 	type = 15,
 	targetting = 1,
+	max_level = 5,
 	description = function(moveLevel)
 		damage = 125 + (5 * moveLevel)
 		chance = 25 + (5 * moveLevel)
@@ -1176,10 +1306,13 @@ meffects[1].max_hits = 4
 M[44] = {
 	name = "Fury Attack",
 	effects = meffects,
-	cooldown = 0,
+	cooldown = function(moveLevel)
+		return 0
+	end,
 	default = true,
 	type = 1,
 	targetting = 1,
+	max_level = 5,
 	description = function(moveLevel)
 		damage = 50 + (moveLevel * 5)
 		return "Attacks 1 enemy 2 to 4 times for "..damage.."% of Attack."
@@ -1201,10 +1334,13 @@ meffects[1].max_hits = 5
 M[45] = {
 	name = "Fury Swipes",
 	effects = meffects,
-	cooldown = 3,
+	cooldown = function(moveLevel)
+		return 3
+	end,
 	default = false,
 	type = 1,
 	targetting = 1,
+	max_level = 5,
 	description = function(moveLevel)
 		damage = 100 + (moveLevel * 7)
 		return "Attacks 1 enemy 2 to 5 times for "..damage.."% of Attack."
@@ -1225,10 +1361,13 @@ meffects[1].param2 = 2
 M[46] = {
 	name = "Charm",
 	effects = meffects,
-	cooldown = 3,
+	cooldown = function(moveLevel)
+		return 3
+	end,
 	default = false,
 	type = 1,
 	targetting = 1,
+	max_level = 5,
 	description = function(moveLevel)
 		chance = 75 + (moveLevel * 5)
 		return "Has a "..chance.."% chance of reducing the Attack of all enemies for 2 turns."
@@ -1257,10 +1396,13 @@ meffects[2].param2 = 2
 M[47] = {
 	name = "Poison Sting",
 	effects = meffects,
-	cooldown = 0,
+	cooldown = function(moveLevel)
+		return 0
+	end,
 	default = true,
 	type = 4,
 	targetting = 1,
+	max_level = 5,
 	description = function(moveLevel)
 		damage = 100 + (moveLevel * 5)
 		chance = 25 + (moveLevel * 5)
@@ -1290,10 +1432,13 @@ meffects[2].param2 = 2
 M[48] = {
 	name = "Poison Jab",
 	effects = meffects,
-	cooldown = 4,
+	cooldown = function(moveLevel)
+		return 4
+	end,
 	default = false,
 	type = 4,
 	targetting = 1,
+	max_level = 5,
 	description = function(moveLevel)
 		damage = 250 + (moveLevel * 15)
 		chance = 50 + (moveLevel * 5)
@@ -1315,10 +1460,13 @@ meffects[1].param2 = "attack"
 M[49] = {
 	name = "Horn Attack",
 	effects = meffects,
-	cooldown = 3,
+	cooldown = function(moveLevel)
+		return 3
+	end,
 	default = false,
 	type = 1,
 	targetting = 1,
+	max_level = 5,
 	description = function(moveLevel)
 		damage = 300 + (moveLevel * 18)
 		return "Attacks an enemy for "..damage.."% of Attack."
@@ -1338,10 +1486,13 @@ meffects[1].param2 = "attack"
 M[50] = {
 	name = "Gust",
 	effects = meffects,
-	cooldown = 0,
+	cooldown = function(moveLevel)
+		return 0
+	end,
 	default = true,
 	type = 3,
 	targetting = 1,
+	max_level = 5,
 	description = function(moveLevel)
 		damage = 75 + (moveLevel * 5)
 		return "Attacks all enemies for "..damage.."% of Attack."
@@ -1370,10 +1521,13 @@ meffects[2].param2 = 25
 M[51] = {
 	name = "Whirlwind",
 	effects = meffects,
-	cooldown = 4,
+	cooldown = function(moveLevel)
+		return 4
+	end,
 	default = false,
 	type = 3,
 	targetting = 1,
+	max_level = 5,
 	description = function(moveLevel)
 		damage = 150 + (10 * moveLevel)
 		chance = 50 + (5 * moveLevel)
@@ -1399,10 +1553,13 @@ meffects[1].param4 = "speed"
 M[52] = {
 	name = "Quick Attack",
 	effects = meffects,
-	cooldown = 0,
+	cooldown = function(moveLevel)
+		return 0
+	end,
 	default = true,
 	type = 1,
 	targetting = 1,
+	max_level = 5,
 	description = function(moveLevel)
 		damage = 50 + (moveLevel * 5)
 		return "Attacks 1 enemy for "..damage.."% of Attack. The damage is increased by 100% of user's Speed as a percentage."
@@ -1424,10 +1581,13 @@ meffects[1].bonus_vs_psn = 2
 M[53] = {
 	name = "Venoshock",
 	effects = meffects,
-	cooldown = 3,
+	cooldown = function(moveLevel)
+		return 3
+	end,
 	default = false,
 	type = 4,
 	targetting = 1,
+	max_level = 5,
 	description = function(moveLevel)
 		damage = 200 + (moveLevel * 10)
 		return "Attacks 1 enemy for "..damage.."% of Attack. Deals double damage against poisoned targets."
@@ -1456,10 +1616,13 @@ meffects[2].param2 = 2
 M[54] = {
 	name = "String Shot",
 	effects = meffects,
-	cooldown = 0,
+	cooldown = function(moveLevel)
+		return 0
+	end,
 	default = true,
 	type = 6,
 	targetting = 1,
+	max_level = 5,
 	description = function(moveLevel)
 		damage = 100 + (moveLevel * 5)
 		chance = 25 + (5 * moveLevel)

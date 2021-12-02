@@ -48,7 +48,8 @@ function on_message(self, message_id, message, sender)
 			waiting_for_target = false
 			clear_gos(spawned_target_icons)
 			msg.post("gui", "hide_mon_display")
-			current_turn_mon["move"..selected_move_slot.."cd"] = selected_move.cooldown
+			local move_level = current_turn_mon.known_moves[current_turn_mon["move"..selected_move_slot]].level
+			current_turn_mon["move"..selected_move_slot.."cd"] = selected_move.cooldown(move_level)
 			start_handling_move(message.target)
 			timer.delay(1, false, function() msg.post(".", "end_turn") end)
 		end
@@ -629,7 +630,8 @@ function choose_enemy_move()
 				selected_move = moves[current_turn_mon.known_moves[current_turn_mon["move"..random_move]].id]
 				selected_move_slot = random_move
 				is_move_chosen = true
-				current_turn_mon["move"..random_move.."cd"] = current_turn_mon["move"..random_move.."cd"] + selected_move.cooldown
+				local move_level = current_turn_mon.known_moves[current_turn_mon["move"..random_move]].level
+				current_turn_mon["move"..random_move.."cd"] = current_turn_mon["move"..random_move.."cd"] + selected_move.cooldown(move_level)
 			end
 		end
 	else -- bosses and good trainers
@@ -640,7 +642,8 @@ function choose_enemy_move()
 				selected_move = moves[current_turn_mon.known_moves[current_turn_mon["move"..priority_move]].id]
 				selected_move_slot = priority_move
 				is_move_chosen = true
-				current_turn_mon["move"..priority_move.."cd"] = current_turn_mon["move"..priority_move.."cd"] + selected_move.cooldown
+				local move_level = current_turn_mon.known_moves[current_turn_mon["move"..random_move]].level
+				current_turn_mon["move"..priority_move.."cd"] = current_turn_mon["move"..priority_move.."cd"] + selected_move.cooldown(move_level)
 			else
 				i = i + 1
 			end

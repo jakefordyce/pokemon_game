@@ -300,7 +300,7 @@ function M.fix_pokemon_rune_ids(sold_rune_index)
 end
 
 --PLAYER INFO--
---[[
+---[[
 M.position_x = 263 --starting values
 M.position_y = 761
 M.current_area = 1
@@ -312,7 +312,7 @@ M.position_y = 51
 M.current_area = 5
 M.money = 30000 --DEV
 --]]
----[[
+--[[
 M.position_x = 210
 M.position_y = 108
 M.current_area = 6
@@ -321,6 +321,7 @@ M.money = 30000 --DEV
 
 
 M.stones = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0} -- 1 for each of the types in common/poke_types
+--M.stones = {50,50,50,50,50,50,50,50,50,50,50,50,50,50,50} -- Testing values
 
 --List of all of the player's pokemon.
 M.pokemon = {}
