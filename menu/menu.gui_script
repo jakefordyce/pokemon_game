@@ -181,6 +181,9 @@ function on_input(self, action_id, action)
 		if(gui.pick_node(gui.get_node("pokemon_button"),action.x,action.y) and node_enabled(gui.get_node("pokemon_button"))) then
 			return true
 		end
+		if(gui.pick_node(gui.get_node("save_button"),action.x,action.y) and node_enabled(gui.get_node("save_button"))) then
+			return true
+		end
 		if(gui.pick_node(gui.get_node("details_exit_button"),action.x,action.y) and node_enabled(gui.get_node("details_exit_button"))) then
 			return true
 		end
@@ -312,6 +315,15 @@ function on_input(self, action_id, action)
 			msg.post("menu", "display_pokemon")
 			return true
 		end
+		if(gui.pick_node(gui.get_node("save_button"),action.x,action.y) and node_enabled(gui.get_node("save_button"))) then
+			local save_successful = game_state.save_game()
+			if save_successful then
+				gui.set_text(gui.get_node("save_label"), "SAVED")
+			else
+				gui.set_text(gui.get_node("save_label"), "SAVE ERROR")
+			end
+			return true
+		end
 		if(gui.pick_node(gui.get_node("details_exit_button"),action.x,action.y) and node_enabled(gui.get_node("details_exit_button"))) then
 			gui.set_enabled(gui.get_node("details_panel"), false)
 			gui.set_enabled(gui.get_node("current_rune_description"), false)
@@ -342,6 +354,7 @@ function on_input(self, action_id, action)
 		if(gui.pick_node(gui.get_node("return_to_main_button"),action.x,action.y) and node_enabled(gui.get_node("return_to_main_button"))) then
 			gui.set_enabled(gui.get_node("main"), true)
 			gui.set_enabled(gui.get_node("return_to_main_button"), false)
+			gui.set_text(gui.get_node("save_label"), "SAVE")
 			msg.post("menu", "return_to_main")
 			return true
 		end

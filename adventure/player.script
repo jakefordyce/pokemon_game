@@ -13,8 +13,8 @@ function init(self)
 	self.correction = vmath.vector3()
 	
 	position = vmath.vector3()
-	position.x = game_state.position_x
-	position.y = game_state.position_y
+	position.x = game_state.player.position_x
+	position.y = game_state.player.position_y
 	go.set_position(position)
 end
 
@@ -90,16 +90,16 @@ function on_message(self, message_id, message, sender)
 
 	if message_id == hash("open_menu") then
 		p = go.get_position()
-		game_state.position_x = p.x
-		game_state.position_y = p.y
+		game_state.player.position_x = p.x
+		game_state.player.position_y = p.y
 		msg.post("camera", "reset")
 		msg.post("main:/loader#main", "load_menu")
 	end
 
 	if message_id == hash("interact") then
 		p = go.get_position()
-		game_state.position_x = p.x
-		game_state.position_y = p.y
+		game_state.player.position_x = p.x
+		game_state.player.position_y = p.y
 
 		if self.last_dir.x > 0 then
 			p.x = p.x + 20
@@ -119,8 +119,8 @@ function on_message(self, message_id, message, sender)
 		if message.other_group == hash("tall_grass") then
 			if not game_state.dialog_is_displaying then
 				p = go.get_position()
-				game_state.position_x = p.x
-				game_state.position_y = p.y
+				game_state.player.position_x = p.x
+				game_state.player.position_y = p.y
 				encounter_tracker = encounter_tracker + 1
 				if encounter_tracker > 300 then
 					encounter_number = math.random(1,100)
@@ -136,10 +136,10 @@ function on_message(self, message_id, message, sender)
 		elseif message.other_group == hash("door") then
 			--TODO: also load position info
 			target = go.get(msg.url(nil, message.other_id, "door"), "target_area")
-			game_state.position_x = go.get(msg.url(nil, message.other_id, "door"), "target_x")
-			game_state.position_y = go.get(msg.url(nil, message.other_id, "door"), "target_y")
-			previous = game_state.current_area
-			game_state.current_area = target
+			game_state.player.position_x = go.get(msg.url(nil, message.other_id, "door"), "target_x")
+			game_state.player.position_y = go.get(msg.url(nil, message.other_id, "door"), "target_y")
+			previous = game_state.player.current_area
+			game_state.player.current_area = target
 			msg.post("camera", "reset")
 			msg.post("main:/loader#main", "load_area", {previous_area = previous})
 		else --something solid

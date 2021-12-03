@@ -275,7 +275,7 @@ meffects[1] = {}
 meffects[1].id = 1
 meffects[1].target = 1
 meffects[1].param1 = function(moveLevel)
-	return 300
+	return 200
 end
 meffects[1].param2 = "attack"
 
@@ -290,7 +290,7 @@ M[10] = {
 	targetting = 1,
 	max_level = 5,
 	description = function(moveLevel)
-		damage = 300
+		damage = 200
 		return "Boss Move: Attacks 1 enemy for "..damage.."% of Attack."
 	end
 }
@@ -300,7 +300,7 @@ meffects[1] = {}
 meffects[1].id = 1
 meffects[1].target = 3
 meffects[1].param1 = function(moveLevel)
-	return 900
+	return 250
 end
 meffects[1].param2 = "attack"
 
@@ -308,14 +308,14 @@ M[11] = {
 	name = "Mega Impact",
 	effects = meffects,
 	cooldown = function(moveLevel)
-		return 1
+		return 3
 	end,
 	default = false,
 	type = 1,
 	targetting = 1,
 	max_level = 5,
 	description = function(moveLevel)
-		damage = 900
+		damage = 250
 		return "Boss Move: Attacks all enemies for "..damage.."% of Attack."
 	end
 }

@@ -14,17 +14,17 @@ function init(self)
 	msg.post("@render:", "use_fixed_fit_projection", { near = -1, far = 1 })
 	msg.post(".", "acquire_input_focus")
 	game_state.calculate_pokemon_stats() --TODO: move to appropriate areas.
-	--load_screen(area_names[game_state.current_area], nil)
+	--load_screen(area_names[game_state.player.current_area], nil)
 	for i=1,1 do
 		game_state.items_found[i] = false
 	end
 	for i=1,1 do
 		game_state.trainers_defeated[i] = false
 	end
-	load_screen(area_names[game_state.current_area], nil)
+	load_screen(area_names[game_state.player.current_area], nil)
 	math.randomseed(os.time())
 	math.random(); math.random(); math.random()
-	--[[
+	--[[ Testing
 	game_state.add_pokemon(1,5)
 	game_state.add_pokemon(4,5)
 	game_state.add_pokemon(7,5)
@@ -50,11 +50,11 @@ function init(self)
 		game_state.generate_reward_runes()
 	end
 	--]]
+	game_state.load_game()
 end
 
 function on_input(self, action_id, action)
 	if action_id == hash("touch") and action.pressed then
-		--print("Touch!")
 	end
 end
 
@@ -67,7 +67,7 @@ function on_message(self, message_id, message, sender)
 		if message.battle_type == 3 then
 			load_screen("choose_team", "boss_select")
 		else
-			load_screen("choose_team", area_names[game_state.current_area])
+			load_screen("choose_team", area_names[game_state.player.current_area])
 		end
 	end
 	if message_id == hash("load_battle") then
@@ -79,7 +79,7 @@ function on_message(self, message_id, message, sender)
 			if(message.victory) then
 				load_screen("rewards", "battle")
 			else
-				load_screen(area_names[game_state.current_area], "battle")
+				load_screen(area_names[game_state.player.current_area], "battle")
 			end
 		elseif game_state.battle_type == 2 then
 			game_state.dialog_is_pending = true
@@ -91,7 +91,7 @@ function on_message(self, message_id, message, sender)
 				load_screen("rewards", "battle")
 			else
 				game_state.pending_dialog_id = game_state.loss_dialog_id
-				load_screen(area_names[game_state.current_area], "battle")
+				load_screen(area_names[game_state.player.current_area], "battle")
 			end
 		elseif game_state.battle_type == 3 then
 			game_state.dialog_is_pending = true
@@ -108,56 +108,56 @@ function on_message(self, message_id, message, sender)
 				load_screen("rewards", "battle")
 			else
 				game_state.pending_dialog_id = game_state.loss_dialog_id
-				load_screen(area_names[game_state.current_area], "battle")
+				load_screen(area_names[game_state.player.current_area], "battle")
 			end
 		end
 	end
 	if message_id == hash("end_rewards") then
-		load_screen(area_names[game_state.current_area], "rewards")
+		load_screen(area_names[game_state.player.current_area], "rewards")
 	end
 	if message_id == hash("run_away") then
-		load_screen(area_names[game_state.current_area], "choose_team")
+		load_screen(area_names[game_state.player.current_area], "choose_team")
 	end
 	if message_id == hash("load_area") then
-		load_screen(area_names[game_state.current_area], area_names[message.previous_area])
+		load_screen(area_names[game_state.player.current_area], area_names[message.previous_area])
 	end
 	if message_id == hash("load_menu") then
-		load_screen("menu", area_names[game_state.current_area])
+		load_screen("menu", area_names[game_state.player.current_area])
 	end	
 	if message_id == hash("close_menu") then
-		load_screen(area_names[game_state.current_area], "menu")
+		load_screen(area_names[game_state.player.current_area], "menu")
 	end
 	if message_id == hash("load_add_mon") then
-		load_screen("add_mon", area_names[game_state.current_area])
+		load_screen("add_mon", area_names[game_state.player.current_area])
 	end
 	if message_id == hash("close_add_mon") then
-		load_screen(area_names[game_state.current_area], "add_mon")
+		load_screen(area_names[game_state.player.current_area], "add_mon")
 	end
 	if message_id == hash("close_rewards") then
 		-- if the battle was against wild pokemon then allow the player to catch, otherwise return to adventure screen.
 		if game_state.battle_type == 1 then
 			load_screen("add_mon", "rewards")
 		else
-			load_screen(area_names[game_state.current_area], "rewards")
+			load_screen(area_names[game_state.player.current_area], "rewards")
 		end
 	end
 	if message_id == hash("load_rune_shop") then
-		load_screen("rune_shop", area_names[game_state.current_area])
+		load_screen("rune_shop", area_names[game_state.player.current_area])
 	end
 	if message_id == hash("exit_rune_shop") then
-		load_screen(area_names[game_state.current_area], "rune_shop")
+		load_screen(area_names[game_state.player.current_area], "rune_shop")
 	end
 	if message_id == hash("load_move_tutor") then
-		load_screen("move_tutor", area_names[game_state.current_area])
+		load_screen("move_tutor", area_names[game_state.player.current_area])
 	end
 	if message_id == hash("load_boss_select") then
-		load_screen("boss_select", area_names[game_state.current_area])
+		load_screen("boss_select", area_names[game_state.player.current_area])
 	end
 	if message_id == hash("close_boss_select") then
-		load_screen(area_names[game_state.current_area], "boss_select")
+		load_screen(area_names[game_state.player.current_area], "boss_select")
 	end
 	if message_id == hash("close_move_tutor") then
-		load_screen(area_names[game_state.current_area], "move_tutor")
+		load_screen(area_names[game_state.player.current_area], "move_tutor")
 	end
 end
 
@@ -168,7 +168,7 @@ function generate_enemy_team(battle_type, battle_id, level)
 	game_state.enemy_mon4 = nil
 	game_state.enemy_boss = nil
 	if battle_type == 1 then
-		encounters.load_wild_encounter(game_state.current_area)
+		encounters.load_wild_encounter(game_state.player.current_area)
 	elseif battle_type == 2 then
 		encounters.load_trainer_data(battle_id)
 	elseif battle_type == 3 then

@@ -5,18 +5,54 @@ local boss_stats = require "common/boss_stats"
 local M = {}
 
 --FLAGS--
-M.starters_chosen = false --DEV
-
+M.flags = {
+	starters_chosen = false --DEV
+}
 M.items_found = {}
-
 M.trainers_defeated = {}
-
 M.bill_bosses_defeated = {0}
 
-M.shop_runes = {}
-M.reward_runes = {}
+--PLAYER INFO--
+---[[ starting values
+M.player = {
+	position_x = 263, 
+	position_y = 761,
+	current_area = 1,
+	money = 300
+}
+--]]
+--[[ Testing Bill bosses
+M.player = {
+	position_x = 416,
+	position_y = 51,
+	current_area = 5,
+	money = 30000 --DEV
+}
+
+--]]
+--[[ Testing move tutor
+M.player = {
+	position_x = 210,
+	position_y = 108,
+	current_area = 6,
+	money = 30000 --DEV
+}
+--]]
+
+
+M.stones = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0} -- 1 for each of the types in common/poke_types
+--M.stones = {50,50,50,50,50,50,50,50,50,50,50,50,50,50,50} -- Testing values
+
+--List of all of the player's pokemon.
+M.pokemon = {}
+
+--List of all of the player's runes.
+M.runes = {}
+
 
 --TEMP STATE--
+M.shop_runes = {}
+M.reward_runes = {}
 M.dialog_is_displaying = false
 M.dialog_is_pending = false
 M.pending_dialog_id = nil
@@ -299,35 +335,45 @@ function M.fix_pokemon_rune_ids(sold_rune_index)
 	end
 end
 
---PLAYER INFO--
----[[
-M.position_x = 263 --starting values
-M.position_y = 761
-M.current_area = 1
-M.money = 300
---]]
---[[
-M.position_x = 416
-M.position_y = 51
-M.current_area = 5
-M.money = 30000 --DEV
---]]
---[[
-M.position_x = 210
-M.position_y = 108
-M.current_area = 6
-M.money = 30000 --DEV
---]]
+function M.save_game()
+	local save_data = {}
 
+	save_data.flags = M.flags
+	save_data.player = M.player
+	save_data.items_found = M.items_found
+	save_data.trainers_defeated = M.trainers_defeated
+	save_data.bill_bosses_defeated = M.bill_bosses_defeated
+	save_data.stones = M.stones
+	save_data.pokemon = M.pokemon
+	save_data.runes = M.runes
 
-M.stones = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0} -- 1 for each of the types in common/poke_types
---M.stones = {50,50,50,50,50,50,50,50,50,50,50,50,50,50,50} -- Testing values
+	local save_file_path = sys.get_save_file("Pokemon", "save_file")
+	--print("path "..save_file_path)
+	if not sys.save(save_file_path, save_data) then
+		print("unable to save")
+		return false
+	else
+		return true
+	end
+end
 
---List of all of the player's pokemon.
-M.pokemon = {}
+function M.load_game()
+	local save_file_path = sys.get_save_file("Pokemon", "save_file")
+	local save_data = sys.load(save_file_path)
+	if not next(save_data) then
+		print("no data found")
+	else
+		M.flags = save_data.flags
+		M.player = save_data.player
+		M.items_found = save_data.items_found
+		M.trainers_defeated = save_data.trainers_defeated
+		M.bill_bosses_defeated = save_data.bill_bosses_defeated
+		M.stones = save_data.stones
+		M.pokemon = save_data.pokemon
+		M.runes = save_data.runes
+	end
 
---List of all of the player's runes.
-M.runes = {}
+end
 
 
 return M

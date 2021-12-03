@@ -642,7 +642,7 @@ function choose_enemy_move()
 				selected_move = moves[current_turn_mon.known_moves[current_turn_mon["move"..priority_move]].id]
 				selected_move_slot = priority_move
 				is_move_chosen = true
-				local move_level = current_turn_mon.known_moves[current_turn_mon["move"..random_move]].level
+				local move_level = current_turn_mon.known_moves[current_turn_mon["move"..priority_move]].level
 				current_turn_mon["move"..priority_move.."cd"] = current_turn_mon["move"..priority_move.."cd"] + selected_move.cooldown(move_level)
 			else
 				i = i + 1

@@ -12,10 +12,10 @@ end
 function on_message(self, message_id, message, sender)
 	if message_id == hash("contact_point_response") then
 		
-		if game_state.starters_chosen == false and message_displayed == false then
+		if game_state.flags.starters_chosen == false and message_displayed == false then
 			msg.post("/adventure/gui", "load_dialog", {dialog_id = 17})
 			message_displayed = true
-		elseif game_state.starters_chosen == false and message_displayed == true then
+		elseif game_state.flags.starters_chosen == false and message_displayed == true then
 			--do nothing, let player collide
 		else
 			--starters have been chosen so this is not needed.

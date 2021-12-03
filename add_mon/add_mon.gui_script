@@ -12,7 +12,7 @@ local adding_mon = true
 function init(self)
 	msg.post(".", "acquire_input_focus")
 	gui.set_enabled(gui.get_node("preview_panel"), false)
-	if game_state.starters_chosen then
+	if game_state.flags.starters_chosen then
 		for i=5,16 do
 			gui.set_enabled(gui.get_node("addable"..i), false)
 			gui.set_enabled(gui.get_node("addable_bg"..i), false)
@@ -33,7 +33,7 @@ end
 
 function on_message(self, message_id, message, sender)
 	if message_id == hash("display_pokemon") then
-		if game_state.starters_chosen then
+		if game_state.flags.starters_chosen then
 			display_wild_mon()
 		else
 			display_starters()
@@ -45,10 +45,10 @@ end
 function on_input(self, action_id, action)
 	if(action_id == hash("touch") and action.released == true) then
 		if(gui.pick_node(gui.get_node("done_button"),action.x,action.y) and node_enabled(gui.get_node("done_button"))) then
-			if game_state.starters_chosen == false and #selected_mons < 4 then
+			if game_state.flags.starters_chosen == false and #selected_mons < 4 then
 				--need to choose 4 starters to continue
 			else
-				game_state.starters_chosen = true
+				game_state.flags.starters_chosen = true
 				for i=1,4 do
 					if selected_mons[i] ~= nil then
 						game_state.add_pokemon(addable_mons[selected_mons[i]].pokedex, addable_mons[selected_mons[i]].level)
@@ -168,7 +168,7 @@ function on_reload(self)
 end
 
 function load_mons()
-	if game_state.starters_chosen then
+	if game_state.flags.starters_chosen then
 		for i=1,4 do
 			if game_state["enemy_mon"..i] ~= nil then
 				new_mon = {
@@ -222,7 +222,7 @@ function display_preview(addable)
 	local level = 1
 	current_mon = addable
 	gui.set_enabled(gui.get_node("preview_panel"), true)
-	if game_state.starters_chosen then
+	if game_state.flags.starters_chosen then
 		pokedex = game_state["enemy_mon"..addable].pokedex
 		level = game_state["enemy_mon"..addable].level
 	else
