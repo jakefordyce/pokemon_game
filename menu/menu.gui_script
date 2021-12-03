@@ -527,7 +527,7 @@ end
 function display_rune_details()
 	gui.play_flipbook(gui.get_node("rune_sprite"), "rune_"..rune_to_enhance.slot.."_"..rune_to_enhance.rarity)
 	gui.set_text(gui.get_node("rune_level"), rune_to_enhance.level)
-	gui.set_text(gui.get_node("current_money_text"), "Money: $"..game_state.money)
+	gui.set_text(gui.get_node("current_money_text"), "Money: $"..game_state.player.money)
 
 	gui.set_enabled(gui.get_node("substats_remaining"), true)
 	gui.set_text(gui.get_node("substats_remaining"), "Substats: "..rune_to_enhance.substat_points)
@@ -586,10 +586,10 @@ end
 
 function upgrade_rune()
 	cost = runes.upgrade_cost(rune_to_enhance.level)
-	if game_state.money >= cost then
+	if game_state.player.money >= cost then
 		runes.levelup_rune(rune_to_enhance)
 		game_state.calculate_pokemon_stats()
-		game_state.money = game_state.money - cost
+		game_state.player.money = game_state.player.money - cost
 		display_rune_details()
 	end
 end

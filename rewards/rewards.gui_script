@@ -90,7 +90,7 @@ function display_money()
 	if game_state.battle_type == 2 then
 		reward_money = encounters.trainer_reward_money(game_state.battle_id)
 		gui.set_text(gui.get_node("money_reward"), "Money Gained: $"..reward_money)
-		game_state.money = game_state.money + reward_money
+		game_state.player.money = game_state.player.money + reward_money
 	else
 		gui.set_enabled(gui.get_node("money_reward"), false)
 	end

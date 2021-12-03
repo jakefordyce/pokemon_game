@@ -19,7 +19,7 @@ function on_message(self, message_id, message, sender)
 			go.delete(message.other_id)
 		end
 	elseif message_id == hash("dialog_end") then
-		game_state.money = game_state.money + 50
+		game_state.player.money = game_state.player.money + 50
 		game_state.items_found[1] = true
 		go.delete()
 	end

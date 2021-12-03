@@ -109,7 +109,7 @@ end
 
 function buy_rune()
 	cost = runes.buy_price(selected_rune)
-	if game_state.money >= cost then
+	if game_state.player.money >= cost then
 		local purchased_rune = {
 			slot = selected_rune.slot,
 			level = selected_rune.level,
@@ -122,7 +122,7 @@ function buy_rune()
 		
 		table.insert(game_state.runes, purchased_rune)
 
-		game_state.money = game_state.money - cost
+		game_state.player.money = game_state.player.money - cost
 		gui.set_enabled(gui.get_node("selected_rune_panel"), false)
 		gui.set_enabled(gui.get_node("return_to_menu_button"), true)
 		msg.post("rune_shop", "enable_clicking")
@@ -134,7 +134,7 @@ function sell_rune()
 	sell_price = runes.sell_price(selected_rune)
 	table.remove(game_state.runes, selected_rune_index)
 	game_state.fix_pokemon_rune_ids(selected_rune_index)
-	game_state.money = game_state.money + sell_price
+	game_state.player.money = game_state.player.money + sell_price
 	gui.set_enabled(gui.get_node("selected_rune_panel"), false)
 	gui.set_enabled(gui.get_node("return_to_menu_button"), true)
 	msg.post("rune_shop", "enable_clicking")
@@ -144,7 +144,7 @@ end
 function display_rune_details()
 	gui.play_flipbook(gui.get_node("rune_sprite"), "rune_"..selected_rune.slot.."_"..selected_rune.rarity)
 	gui.set_text(gui.get_node("rune_level"), selected_rune.level)
-	gui.set_text(gui.get_node("current_money_text"), "Money: $"..game_state.money)
+	gui.set_text(gui.get_node("current_money_text"), "Money: $"..game_state.player.money)
 	
 	if menu_mode == 1 then
 		gui.set_text(gui.get_node("cost_text"), "Cost: $"..runes.buy_price(selected_rune))
