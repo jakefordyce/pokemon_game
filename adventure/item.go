@@ -21,7 +21,7 @@ embedded_components {
   "mass: 0.0\n"
   "friction: 0.1\n"
   "restitution: 0.5\n"
-  "group: \"item\"\n"
+  "group: \"interactable\"\n"
   "mask: \"interaction\"\n"
   "mask: \"player\"\n"
   "embedded_collision_shape {\n"

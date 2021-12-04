@@ -41,7 +41,7 @@ embedded_components {
   "mass: 0.0\n"
   "friction: 0.0\n"
   "restitution: 0.5\n"
-  "group: \"pokedex_icon\"\n"
+  "group: \"clickable\"\n"
   "mask: \"cursor\"\n"
   "embedded_collision_shape {\n"
   "  shapes {\n"
