@@ -1630,4 +1630,99 @@ M[54] = {
 	end
 }
 
+
+meffects = {}
+meffects[1] = {}
+meffects[1].id = 1
+meffects[1].target = 1
+meffects[1].param1 = function(moveLevel)
+	damage = 125 + (moveLevel * 5)
+	return damage
+end
+meffects[1].param2 = "spattack"
+
+meffects[2] = {}
+meffects[2].id = 12 --decrease turn
+meffects[2].target = 1
+meffects[2].param1 = function(moveLevel)
+	return 25 + (5 * moveLevel)
+end
+meffects[2].param2 = 25
+
+M[55] = {
+	name = "Thunder shock",
+	effects = meffects,
+	cooldown = function(moveLevel)
+		return 0
+	end,
+	default = true,
+	type = 12,
+	targetting = 1,
+	max_level = 5,
+	description = function(moveLevel)
+		damage = 125 + (5 * moveLevel)
+		chance = 25 + (5 * moveLevel)
+		return "Attacks an enemy for "..damage.."% of Attack and has a "..chance.."% chance of reducing the enemy's turn meter by 25%."
+	end
+}
+
+
+meffects = {}
+meffects[1] = {}
+meffects[1].id = 1
+meffects[1].target = 1
+meffects[1].param1 = function(moveLevel)
+	damage = 150 + (moveLevel * 7.5)
+	return damage
+end
+meffects[1].param2 = "spattack"
+
+M[56] = {
+	name = "Telekinesis",
+	effects = meffects,
+	cooldown = function(moveLevel)
+		return 0
+	end,
+	default = true,
+	type = 13,
+	targetting = 1,
+	max_level = 5,
+	description = function(moveLevel)
+		damage = 150 + (moveLevel * 7.5)
+		return "Attacks an enemy for "..damage.."% of Special Attack."
+	end
+}
+
+
+meffects = {}
+meffects[1] = {}
+meffects[1].id = 1
+meffects[1].target = 1
+meffects[1].param1 = function(moveLevel)
+	return 2.5
+end
+meffects[1].param2 = "enemy_hp"
+meffects[1].param3 = function(moveLevel)
+	damage = 100 + (moveLevel * 5)
+	return damage
+end
+meffects[1].param4 = "attack"
+
+M[57] = {
+	name = "Low Kick",
+	effects = meffects,
+	cooldown = function(moveLevel)
+		return 0
+	end,
+	default = true,
+	type = 2,
+	targetting = 1,
+	max_level = 5,
+	description = function(moveLevel)
+		damage = 2.5
+		attk_damage = 100 + (moveLevel * 5)
+		return "Attacks 1 enemy for "..damage.."% of their Max HP plus "..attk_damage.."% of Attack."
+	end
+}
+
 return M
