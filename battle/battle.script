@@ -40,6 +40,9 @@ function on_message(self, message_id, message, sender)
 			selected_move = moves[current_turn_mon.known_moves[message.move].id]
 			display_targetting_icons()
 			waiting_for_target = true
+		else
+			waiting_for_target = false
+			clear_gos(spawned_target_icons)
 		end
 	end
 	if message_id == hash("target_selected") then
