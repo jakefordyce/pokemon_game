@@ -18,7 +18,17 @@ M.player = {
 	position_x = 263, 
 	position_y = 761,
 	current_area = 1,
-	money = 300
+	money = 300,
+	rating = 0
+}
+--]]
+--[[ Poke League testing
+M.player = {
+	position_x = 352, 
+	position_y = 67,
+	current_area = 7,
+	money = 300,
+	rating = 0
 }
 --]]
 --[[ Testing Bill bosses
@@ -26,7 +36,8 @@ M.player = {
 	position_x = 416,
 	position_y = 51,
 	current_area = 5,
-	money = 30000 --DEV
+	money = 30000,
+	rating = 0
 }
 
 --]]
@@ -35,7 +46,8 @@ M.player = {
 	position_x = 210,
 	position_y = 108,
 	current_area = 6,
-	money = 30000 --DEV
+	money = 30000,
+	rating = 0
 }
 --]]
 

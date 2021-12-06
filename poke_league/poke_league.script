@@ -1,0 +1,86 @@
+local game_state = require "common/game_state"
+local render_data = require "common/render"
+local encounters = require "common/encounters"
+local scroll_top = 0
+local spawned_trainers = {}
+local spawned_pokemon_icons = {}
+
+function init(self)
+	msg.post(".", "acquire_input_focus")
+	self.current_pos = go.get_position()
+	self.pressed_pos = go.get_position()
+	encounters.generate_league_trainers()
+	display_trainers()
+end
+
+function final(self)
+end
+
+function update(self, dt)
+end
+
+function on_message(self, message_id, message, sender)
+end
+
+function on_input(self, action_id, action)
+	if action.pressed then
+		self.drag = true		
+		self.current_pos = go.get_position()
+		self.pressed_pos = vmath.vector3(self.current_pos.x, action.y, 0)
+	elseif action.released then
+		self.drag = false
+		released_pos = vmath.vector3(self.current_pos.x, action.y, 0)
+		drag_distance = vmath.length(released_pos - self.pressed_pos)
+		if drag_distance < 20 then
+			local xpos = render_data.click_x(action.x)
+			local ypos = render_data.click_y(action.y)
+			p = vmath.vector3(xpos, ypos, 0)
+			factory.create("#cursor_factory",p)
+		end
+	end
+
+	if self.drag then
+		local pos = self.current_pos - self.pressed_pos + vmath.vector3(self.current_pos.x, action.y, 0)
+		go.set_position(limit(self, pos))
+	end
+end
+
+function on_reload(self)
+end
+
+function display_trainers()
+	local p = vmath.vector3()
+	p.y = 900
+	p.x = 320
+	
+	for i, m in ipairs(encounters.league_trainers) do
+		local trainer = factory.create("#trainer_factory",p, nil, {move_index = m.id, move_level = m.level})
+		go.set_parent(trainer, go.get_id("poke_league"))
+		table.insert(spawned_trainers, trainer)
+
+		p.y = p.y - 100 --each image is 100px tall
+	end	
+end
+
+-- rewrite
+function display_pokemon_grid()
+	clear_gos(spawned_pokemon_icons)
+	local p = vmath.vector3()
+	p.y = 1000
+	p.x = 32
+	local column_count = 1
+
+	for i, poke in ipairs(game_state.pokemon) do
+		local icon = factory.create("#pokemon_icon_factory",p, nil, {mon_id = i})
+		go.set_parent(icon, go.get_id("move_tutor"))
+		table.insert(spawned_pokemon_icons, icon)
+
+		p.x = p.x + 70 --each image is 64 wide. Also adding a little extra space.
+		column_count = column_count + 1
+		if column_count > 8 then
+			column_count = 1
+			p.y = p.y - 70
+			p.x = 32
+		end
+	end
+end

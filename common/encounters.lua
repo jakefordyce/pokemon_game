@@ -161,6 +161,10 @@ function M.load_boss_encounter(boss_index, level)
 	select_boss_moves(game_state["enemy_boss"])
 end
 
+function M.generate_league_trainers()
+	print(mon_builds[1][1].pokedex)
+end
+
 -- Wild Encounter Data
 areas = {}
 
@@ -202,5 +206,18 @@ trainers[1].mon4 = {
 	level = 2,
 	build_style = 1
 }
+
+-- League Data
+
+M.league_trainers = {}
+
+local mon_builds = {
+	{ -- Strikers
+	{ pokedex = 4, build_style = 1, moves = {6,12,28}, move_priority = {2,3,1} }
+	
+	}
+
+}
+
 
 return M
