@@ -6,5 +6,6 @@ M[3] = "route1"
 M[4] = "rune_shop_area"
 M[5] = "bill_house_exterior"
 M[6] = "move_tutor_area"
+M[7] = "poke_league_area"
 
 return M
