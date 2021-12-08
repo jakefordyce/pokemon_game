@@ -95,4 +95,24 @@ M[19] = {
 	next = nil,
 	has_choices = false
 }
+M[20] = {
+	text = "RECEPTIONIST: Welcome to Poke League. Are you interested in battling today?",
+	next = nil,
+	has_choices = true
+}
+M[21] = {
+	text = "RECEPTIONIST: Come back whenever you are ready.",
+	next = nil,
+	has_choices = false
+}
+M[22] = {
+	text = "RECEPTIONIST: Nice battle!",
+	next = nil,
+	has_choices = false
+}
+M[23] = {
+	text = "RECEPTIONIST: Don't let it get you down. These trainers are some of the best.",
+	next = nil,
+	has_choices = false
+}
 return M

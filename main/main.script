@@ -23,7 +23,7 @@ function init(self)
 	end
 	math.randomseed(os.time())
 	math.random(); math.random(); math.random()
-	--[[ Testing
+	---[[ Testing
 	game_state.add_pokemon(1,5)
 	game_state.add_pokemon(4,5)
 	game_state.add_pokemon(7,5)
@@ -158,6 +158,12 @@ function on_message(self, message_id, message, sender)
 	end
 	if message_id == hash("close_move_tutor") then
 		load_screen(area_names[game_state.player.current_area], "move_tutor")
+	end
+	if message_id == hash("load_poke_league") then
+		load_screen("poke_league", area_names[game_state.player.current_area])
+	end
+	if message_id == hash("close_poke_league") then
+		load_screen(area_names[game_state.player.current_area], "poke_league")
 	end
 end
 

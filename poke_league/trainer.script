@@ -1,7 +1,8 @@
-
+go.property("rating", 0)
 
 function init(self)
 	msg.post(".", "acquire_input_focus")
+	label.set_text("#rating", "Rating: "..self.rating)
 end
 
 function final(self)
@@ -11,6 +12,11 @@ function update(self, dt)
 end
 
 function on_message(self, message_id, message, sender)
+	if message_id == hash("contact_point_response") then
+		if message.other_group == hash("cursor") then
+			--TODO: select trainer. May not need to post back to poke_league
+		end
+	end
 end
 
 function on_input(self, action_id, action)

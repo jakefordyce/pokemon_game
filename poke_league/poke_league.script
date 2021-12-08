@@ -11,6 +11,7 @@ function init(self)
 	self.pressed_pos = go.get_position()
 	encounters.generate_league_trainers()
 	display_trainers()
+	display_pokemon_grid()
 end
 
 function final(self)
@@ -52,13 +53,15 @@ function display_trainers()
 	local p = vmath.vector3()
 	p.y = 900
 	p.x = 320
+	scroll_top = 0
 	
-	for i, m in ipairs(encounters.league_trainers) do
-		local trainer = factory.create("#trainer_factory",p, nil, {move_index = m.id, move_level = m.level})
+	for i, t in ipairs(encounters.league_trainers) do
+		local trainer = factory.create("#trainer_factory",p, nil, {rating = t.rating})
 		go.set_parent(trainer, go.get_id("poke_league"))
 		table.insert(spawned_trainers, trainer)
 
 		p.y = p.y - 100 --each image is 100px tall
+		scroll_top = scroll_top + 100
 	end	
 end
 
@@ -66,21 +69,32 @@ end
 function display_pokemon_grid()
 	clear_gos(spawned_pokemon_icons)
 	local p = vmath.vector3()
-	p.y = 1000
-	p.x = 32
-	local column_count = 1
+	p.y = 900
+	
 
-	for i, poke in ipairs(game_state.pokemon) do
-		local icon = factory.create("#pokemon_icon_factory",p, nil, {mon_id = i})
-		go.set_parent(icon, go.get_id("move_tutor"))
-		table.insert(spawned_pokemon_icons, icon)
+	for i, t in ipairs(encounters.league_trainers) do
+		p.x = 180
+		for j=1,4 do
+			local icon = factory.create("#pokemon_icon_factory",p, nil, {pokedex = t["mon"..j].pokedex, level = t["mon"..j].level})
+			go.set_parent(icon, go.get_id("poke_league"))
+			table.insert(spawned_pokemon_icons, icon)
 
-		p.x = p.x + 70 --each image is 64 wide. Also adding a little extra space.
-		column_count = column_count + 1
-		if column_count > 8 then
-			column_count = 1
-			p.y = p.y - 70
-			p.x = 32
+			p.x = p.x + 70 --each image is 64 wide. Also adding a little extra space.
 		end
+		p.y = p.y - 100 --each image is 100px tall
+	end
+end
+
+function limit(self, pos)
+	local bottom = 0
+	pos.y = math.min(pos.y, scroll_top)
+	pos.y = math.max(pos.y, bottom)
+	return pos
+end
+
+function clear_gos(id_table)
+	for i, v in ipairs(id_table) do
+		go.delete(v)
+		id_table[i] = nil
 	end
 end

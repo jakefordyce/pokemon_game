@@ -6,14 +6,14 @@ local M = {}
 
 --FLAGS--
 M.flags = {
-	starters_chosen = false --DEV
+	starters_chosen = true --DEV
 }
 M.items_found = {}
 M.trainers_defeated = {}
 M.bill_bosses_defeated = {0}
 
 --PLAYER INFO--
----[[ starting values
+--[[ starting values
 M.player = {
 	position_x = 263, 
 	position_y = 761,
@@ -22,7 +22,7 @@ M.player = {
 	rating = 0
 }
 --]]
---[[ Poke League testing
+---[[ Poke League testing
 M.player = {
 	position_x = 352, 
 	position_y = 67,

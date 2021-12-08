@@ -1,6 +1,6 @@
 components {
   id: "pokemon_icon"
-  component: "/move_tutor/pokemon_icon.script"
+  component: "/poke_league/pokemon_icon.script"
   position {
     x: 0.0
     y: 0.0
