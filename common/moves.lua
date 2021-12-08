@@ -329,9 +329,9 @@ meffects[1].param1 = function(moveLevel)
 	return damage
 end
 meffects[1].param2 = "spattack"
+meffects[1].min_hits = 3
+meffects[1].max_hits = 3
 
-meffects[2] = meffects[1]
-meffects[3] = meffects[1]
 
 
 M[12] = {

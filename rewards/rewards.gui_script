@@ -15,6 +15,7 @@ function init(self)
 	display_money()
 	display_runes()
 	display_stones()
+	display_rating()
 end
 
 function final(self)
@@ -87,7 +88,7 @@ function check_level_ups()
 end
 
 function display_money()
-	if game_state.battle_type == 2 then
+	if game_state.battle_type == 2 or game_state.battle_type == 4 then
 		reward_money = encounters.trainer_reward_money(game_state.battle_id)
 		gui.set_text(gui.get_node("money_reward"), "Money Gained: $"..reward_money)
 		game_state.player.money = game_state.player.money + reward_money
@@ -121,4 +122,13 @@ function display_stones()
 		gui.set_enabled(gui.get_node("stones_panel"), false)
 	end
 end
+
+function display_rating()
+	if game_state.battle_type == 4 then
+		gui.set_text(gui.get_node("rating_text"), "Rating Gained: "..game_state.rating_change)
+	else
+		gui.set_enabled(gui.get_node("rating_text"), false)
+	end
+end
+
 

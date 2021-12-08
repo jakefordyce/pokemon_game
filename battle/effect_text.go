@@ -53,7 +53,7 @@ embedded_components {
   "line_break: false\n"
   "text: \"Label\"\n"
   "font: \"/battle/battle.font\"\n"
-  "material: \"/builtins/fonts/label-df.material\"\n"
+  "material: \"/builtins/fonts/label.material\"\n"
   ""
   position {
     x: 0.0

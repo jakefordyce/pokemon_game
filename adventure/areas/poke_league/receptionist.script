@@ -18,9 +18,6 @@ function on_message(self, message_id, message, sender)
 	elseif message_id == hash("dialog_end") then
 		if message.dialog_id == 20 then
 			if message.choice then
-				game_state.pending_dialog_sender = go.get_id()
-				game_state.victory_dialog_id = 22
-				game_state.loss_dialog_id = 23
 				msg.post("/adventure/camera", "reset")
 				msg.post("main:/loader#main", "load_poke_league")
 			else

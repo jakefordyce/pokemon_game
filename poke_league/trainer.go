@@ -21,7 +21,7 @@ embedded_components {
   "mass: 0.0\n"
   "friction: 0.1\n"
   "restitution: 0.5\n"
-  "group: \"move\"\n"
+  "group: \"clickable\"\n"
   "mask: \"cursor\"\n"
   "embedded_collision_shape {\n"
   "  shapes {\n"

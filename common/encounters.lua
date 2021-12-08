@@ -79,8 +79,18 @@ end
 
 --This loads the last (up to) 4 moves the pokemon has learned while leveling up.
 local function select_moves(mon)
-	mon.known_moves = pbs.known_moves_by_level(mon.pokedex, mon.level)
-	equipped_moves = pbs.equipped_moves_by_level(mon.pokedex, mon.level)
+	local equipped_moves
+	if mon.chosen_moves == nil then
+		mon.known_moves = pbs.known_moves_by_level(mon.pokedex, mon.level)
+		equipped_moves = pbs.equipped_moves_by_level(mon.pokedex, mon.level)
+	else
+		mon.known_moves = {}
+		equipped_moves = {nil, nil, nil, nil}
+		for i=1,#mon.chosen_moves do
+			table.insert(mon.known_moves, { id = mon.chosen_moves[i], level = 0})
+			equipped_moves[i] = i
+		end
+	end
 
 	for i=1,4 do
 		mon["move"..i] = equipped_moves[i]
@@ -109,12 +119,22 @@ end
 function M.trainer_reward_money(trainer_index)
 	total_money = 0
 	for i=1,4 do
-		if trainers[trainer_index]["mon"..i] ~= nil then
+		if trainers[trainer_index]["mon"..i] ~= nil then --TODO: fix to work with league trainers
 			reward = math.floor(math.pow(3, (trainers[trainer_index]["mon"..i].level / 10) ) * 10)
 			total_money = total_money + reward
 		end
 	end
 	return total_money
+end
+
+function M.poke_league_rating_change(trainer_index, victory)
+	local enemy_rating = M.league_trainers[trainer_index].rating
+	local player_rating = game_state.player.rating
+	if victory then
+		return math.floor((enemy_rating - player_rating) / 10 ) + 10
+	else
+		return math.floor((enemy_rating - player_rating) / 10 ) - 10
+	end
 end
 
 function M.load_wild_encounter(area_index)
@@ -179,11 +199,22 @@ function M.generate_league_trainers()
 			pokemon.build_style = random_mon_from_role.build_style
 			pokemon.level = mon_level
 			pokemon.gear_rarity = gear_rarity
+			pokemon.chosen_moves = random_mon_from_role.moves
+			pokemon.move_priority = random_mon_from_role.move_priority
 			trainer["mon"..p] = pokemon
 		end
 		table.insert(M.league_trainers, trainer)
 	end
-	
+end
+
+function M.load_poke_league_encounter(trainer_index)
+	local league_trainer = M.league_trainers[trainer_index]
+	for i=1,4 do
+		game_state["enemy_mon"..i] = league_trainer["mon"..i]
+		generate_stats(game_state["enemy_mon"..i])
+		simulate_runes(game_state["enemy_mon"..i])
+		select_moves(game_state["enemy_mon"..i])
+	end
 end
 
 -- Wild Encounter Data

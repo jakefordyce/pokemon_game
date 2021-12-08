@@ -24,9 +24,9 @@ function init(self)
 	math.randomseed(os.time())
 	math.random(); math.random(); math.random()
 	---[[ Testing
-	game_state.add_pokemon(1,5)
-	game_state.add_pokemon(4,5)
-	game_state.add_pokemon(7,5)
+	game_state.add_pokemon(1,10)
+	game_state.add_pokemon(4,10)
+	game_state.add_pokemon(7,10)
 	game_state.add_pokemon(19,9)
 	game_state.add_pokemon(19,9)
 	game_state.add_pokemon(29,7)
@@ -66,6 +66,8 @@ function on_message(self, message_id, message, sender)
 		generate_enemy_team(message.battle_type, message.battle_id, message.level)
 		if message.battle_type == 3 then
 			load_screen("choose_team", "boss_select")
+		elseif message.battle_type == 4 then
+			load_screen("choose_team", "poke_league")
 		else
 			load_screen("choose_team", area_names[game_state.player.current_area])
 		end
@@ -104,6 +106,20 @@ function on_message(self, message_id, message, sender)
 					game_state.bill_bosses_defeated[game_state.battle_id] = this_battle
 				end
 				
+				game_state.pending_dialog_id = game_state.victory_dialog_id
+				load_screen("rewards", "battle")
+			else
+				game_state.pending_dialog_id = game_state.loss_dialog_id
+				load_screen(area_names[game_state.player.current_area], "battle")
+			end
+		elseif game_state.battle_type == 4 then
+			game_state.dialog_is_pending = true
+			game_state.rating_change = encounters.poke_league_rating_change(game_state.battle_id, message.victory)
+			game_state.player.rating = game_state.player.rating + game_state.rating_change
+			if game_state.player.rating < 0 then
+				game_state.player.rating = 0
+			end
+			if(message.victory) then
 				game_state.pending_dialog_id = game_state.victory_dialog_id
 				load_screen("rewards", "battle")
 			else
@@ -179,5 +195,7 @@ function generate_enemy_team(battle_type, battle_id, level)
 		encounters.load_trainer_data(battle_id)
 	elseif battle_type == 3 then
 		encounters.load_boss_encounter(battle_id, level)
+	elseif battle_type == 4 then
+		encounters.load_poke_league_encounter(battle_id)
 	end
 end

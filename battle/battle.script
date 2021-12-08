@@ -158,7 +158,7 @@ function start_handling_move(target)
 					end
 				end
 			end
-			delay_time = delay_time + 0.2
+			delay_time = delay_time + 0.25
 		end
 	end
 
@@ -603,22 +603,24 @@ function start_player_turn(turn_mon)
 end
 
 function start_enemy_turn(turn_mon)
-	reduce_all_cooldowns(turn_mon, 1)
-	activate_torments(turn_mon)
-	reduce_status_effect_durations(turn_mon, 1, 3)
-	local p = go.get_position(turn_mon.reference)
-	p.z = p.z - 1
-	scale = (game_state.battle_type == 3 and 4 or 2)
-	yshift = (game_state.battle_type == 3 and 128 or 32)
-	p.y = p.y - yshift
-	local turn_marker = factory.create("#turn_marker_factory",p, nil, nil, scale)
-	table.insert(spawned_turn_markers, turn_marker)
-	
-	if mon_can_act(turn_mon) then
-		timer.delay(1, false, choose_enemy_move)
-		timer.delay(2, false, function() msg.post(".", "end_turn") end)
-	else
-		timer.delay(.5, false, function() msg.post(".", "end_turn") end)
+	if not player_mons_are_fainted() then
+		reduce_all_cooldowns(turn_mon, 1)
+		activate_torments(turn_mon)
+		reduce_status_effect_durations(turn_mon, 1, 3)
+		local p = go.get_position(turn_mon.reference)
+		p.z = p.z - 1
+		scale = (game_state.battle_type == 3 and 4 or 2)
+		yshift = (game_state.battle_type == 3 and 128 or 32)
+		p.y = p.y - yshift
+		local turn_marker = factory.create("#turn_marker_factory",p, nil, nil, scale)
+		table.insert(spawned_turn_markers, turn_marker)
+		
+		if mon_can_act(turn_mon) then
+			timer.delay(1, false, choose_enemy_move)
+			timer.delay(2, false, function() msg.post(".", "end_turn") end)
+		else
+			timer.delay(.5, false, function() msg.post(".", "end_turn") end)
+		end
 	end
 end
 

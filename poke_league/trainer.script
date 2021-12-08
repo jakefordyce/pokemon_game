@@ -1,4 +1,6 @@
 go.property("rating", 0)
+go.property("trainer_index", 0)
+local game_state = require "common/game_state"
 
 function init(self)
 	msg.post(".", "acquire_input_focus")
@@ -14,7 +16,10 @@ end
 function on_message(self, message_id, message, sender)
 	if message_id == hash("contact_point_response") then
 		if message.other_group == hash("cursor") then
-			--TODO: select trainer. May not need to post back to poke_league
+			game_state.pending_dialog_sender = go.get_id()
+			game_state.victory_dialog_id = 22
+			game_state.loss_dialog_id = 23
+			msg.post("main:/loader#main", "load_choose_team", {battle_type = 4, battle_id = self.trainer_index})
 		end
 	end
 end

@@ -3973,9 +3973,9 @@ nodes {
   yanchor: YANCHOR_NONE
   pivot: PIVOT_N
   outline {
-    x: 1.0
-    y: 1.0
-    z: 1.0
+    x: 0.0
+    y: 0.0
+    z: 0.0
     w: 1.0
   }
   shadow {
@@ -4091,9 +4091,9 @@ nodes {
   yanchor: YANCHOR_NONE
   pivot: PIVOT_W
   outline {
-    x: 1.0
-    y: 1.0
-    z: 1.0
+    x: 0.0
+    y: 0.0
+    z: 0.0
     w: 1.0
   }
   shadow {
@@ -4154,9 +4154,9 @@ nodes {
   yanchor: YANCHOR_NONE
   pivot: PIVOT_CENTER
   outline {
-    x: 1.0
-    y: 1.0
-    z: 1.0
+    x: 0.0
+    y: 0.0
+    z: 0.0
     w: 1.0
   }
   shadow {
@@ -4532,9 +4532,9 @@ nodes {
     w: 1.0
   }
   color {
-    x: 0.8
-    y: 0.8
-    z: 0.8
+    x: 1.0
+    y: 1.0
+    z: 1.0
     w: 1.0
   }
   type: TYPE_TEXT
@@ -4546,9 +4546,9 @@ nodes {
   yanchor: YANCHOR_NONE
   pivot: PIVOT_N
   outline {
-    x: 1.0
-    y: 1.0
-    z: 1.0
+    x: 0.0
+    y: 0.0
+    z: 0.0
     w: 1.0
   }
   shadow {

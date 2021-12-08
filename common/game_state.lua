@@ -27,7 +27,7 @@ M.player = {
 	position_x = 352, 
 	position_y = 67,
 	current_area = 7,
-	money = 300,
+	money = 30000,
 	rating = 0
 }
 --]]
