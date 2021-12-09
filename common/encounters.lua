@@ -185,6 +185,9 @@ function M.load_boss_encounter(boss_index, level)
 end
 
 function M.generate_league_trainers()
+	for i=1,#M.league_trainers do
+		M.league_trainers[i] = nil
+	end
 	for i=1,11 do
 		local comp_num = math.random(1,#team_comps)
 		local trainer_rating = game_state.player.rating + ((6 - i) * 10) + math.random(1,5)

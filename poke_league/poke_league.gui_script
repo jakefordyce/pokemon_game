@@ -12,8 +12,26 @@ function on_message(self, message_id, message, sender)
 end
 
 function on_input(self, action_id, action)
-
+	if(action_id == hash("touch") and action.pressed == true) then
+		if(gui.pick_node(gui.get_node("close_button"),action.x,action.y) and node_enabled(gui.get_node("close_button"))) then
+			return true
+		end
+	elseif(action_id == hash("touch") and action.released == true) then
+		if(gui.pick_node(gui.get_node("close_button"),action.x,action.y) and node_enabled(gui.get_node("close_button"))) then
+			msg.post("main:/loader#main", "close_poke_league")
+			return true
+		end
+	end
 end
 
 function on_reload(self)
+end
+
+function node_enabled(node)
+	local parent = gui.get_parent(node)
+	local enabled = gui.is_enabled(node)
+	if parent then
+		return enabled and node_enabled(parent)
+	end
+	return enabled
 end

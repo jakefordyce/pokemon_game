@@ -27,7 +27,7 @@ embedded_components {
   "  shapes {\n"
   "    shape_type: TYPE_SPHERE\n"
   "    position {\n"
-  "      x: 270.0\n"
+  "      x: 200.0\n"
   "      y: 0.0\n"
   "      z: 0.0\n"
   "    }\n"
@@ -68,7 +68,7 @@ embedded_components {
   "blend_mode: BLEND_MODE_ALPHA\n"
   ""
   position {
-    x: 270.0
+    x: 200.0
     y: 0.0
     z: 0.0
   }
