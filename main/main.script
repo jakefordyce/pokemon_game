@@ -23,7 +23,7 @@ function init(self)
 	end
 	math.randomseed(os.time())
 	math.random(); math.random(); math.random()
-	---[[ Testing
+	--[[ Testing
 	game_state.add_pokemon(1,10)
 	game_state.add_pokemon(4,10)
 	game_state.add_pokemon(7,10)

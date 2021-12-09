@@ -117,10 +117,13 @@ function M.load_trainer_data(trainer_index)
 end
 
 function M.trainer_reward_money(trainer_index)
-	total_money = 0
+	local total_money = 0
 	for i=1,4 do
-		if trainers[trainer_index]["mon"..i] ~= nil then --TODO: fix to work with league trainers
+		if game_state.battle_type == 2 and trainers[trainer_index]["mon"..i] ~= nil then
 			reward = math.floor(math.pow(3, (trainers[trainer_index]["mon"..i].level / 10) ) * 10)
+			total_money = total_money + reward
+		elseif game_state.battle_type == 4 then
+			reward = math.floor(math.pow(3, (M.league_trainers[trainer_index]["mon"..i].level / 10) ) * 10)
 			total_money = total_money + reward
 		end
 	end

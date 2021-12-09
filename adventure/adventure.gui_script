@@ -68,6 +68,8 @@ function on_input(self, action_id, action)
 				msg.post("player", "button_down")
 			end
 		end
+	end
+	if(action_id == hash("touch") and action.released == true) then
 		if(gui.pick_node(gui.get_node("button_plus"),action.x,action.y) and not game_state.dialog_is_displaying) then
 			msg.post("player", "open_menu")
 		end
