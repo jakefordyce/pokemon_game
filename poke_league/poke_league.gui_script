@@ -1,7 +1,23 @@
+local game_state = require "common/game_state"
+local encounters = require "common/encounters"
+
 function init(self)
 	msg.post(".", "acquire_input_focus")
-	--local hp_size = vmath.vector3((current_hp / max_hp * 100), 10, 0)
-	--gui.set_size(gui.get_node(message.target.."_health"), hp_size)
+	local current_league_name = encounters.get_league_name(game_state.player.rating)
+	local next_league_rating = encounters.get_next_league_rating(game_state.player.rating)
+	local next_league_name = encounters.get_league_name(next_league_rating)
+	local next_league_progress
+	if game_state.player.rating < 1000 then
+		next_league_progress = (game_state.player.rating % 200) / 200
+	else
+		next_league_progress = 1
+	end
+	
+	gui.set_text(gui.get_node("current_league"), current_league_name)
+	gui.set_text(gui.get_node("next_league"), next_league_name)
+	gui.set_text(gui.get_node("player_rating"), game_state.player.rating.." / "..next_league_rating)
+	local bar_size = vmath.vector3((next_league_progress * 250), 25, 0)
+	gui.set_size(gui.get_node("player_rating_bar"), bar_size)
 end
 
 function final(self)

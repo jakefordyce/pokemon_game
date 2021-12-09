@@ -193,6 +193,8 @@ function M.generate_league_trainers()
 		local trainer_rating = game_state.player.rating + ((6 - i) * 10) + math.random(1,5)
 		if trainer_rating < 0 then
 			trainer_rating = 0
+		elseif trainer_rating > 1000 then
+			trainer_rating = 1000
 		end
 		local trainer = { rating = trainer_rating }
 		local mon_level = math.floor(trainer_rating / 10) + 5
@@ -282,6 +284,26 @@ mon_builds[1] = { -- Strikers
 	{ pokedex = 4, build_style = 1, moves = {6,12,28}, move_priority = {2,3,1} },
 }
 
+local league_names = {
+	"Iron", "Bronze", "Silver", "Gold", "Platinum", "Master"
+}
+
+function M.get_current_league_num(rating)
+	return math.floor(rating / 200) + 1
+end
+
+function M.get_league_name(rating)
+	return league_names[M.get_current_league_num(rating)]
+end
+
+function M.get_next_league_rating(rating)
+	local current_league = M.get_current_league_num(rating)
+	if current_league < 6 then
+		return (current_league * 200)
+	else
+		return (current_league - 1) * 200
+	end
+end
 
 
 return M
