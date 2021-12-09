@@ -3,7 +3,7 @@ local encounters = require "common/encounters"
 local moves = require "common/moves"
 local status_effects = require "common/status_effects"
 local types = require "common/poke_types"
-local player_mon1 = {}
+local player_mon1 = nil
 local player_mon2 = nil
 local player_mon3 = nil
 local player_mon4 = nil
@@ -61,7 +61,7 @@ function on_message(self, message_id, message, sender)
 		if current_turn_mon ~= nil then
 			msg.post("gui", "update_turn", {target=current_turn_mon.reference, current=current_turn_mon.turn, max=1000})
 		end
-		if player_mon1.turn > 1000 and not player_mon1.fainted then
+		if player_mon1 ~= nil and player_mon1.turn > 1000 and not player_mon1.fainted then
 			player_mon1.turn = player_mon1.turn - 1000
 			current_turn_mon = player_mon1
 			start_player_turn(player_mon1)
@@ -539,7 +539,7 @@ function enemies_are_fainted()
 end
 
 function player_mons_are_fainted()
-	fainted = player_mon1.fainted and 
+	fainted = (player_mon1 == nil or player_mon1.fainted) and 
 		(player_mon2 == nil or player_mon2.fainted) and 
 		(player_mon3 == nil or player_mon3.fainted) and 
 		(player_mon4 == nil or player_mon4.fainted)
@@ -705,19 +705,24 @@ end
 
 
 function load_player_mon_data()
-	player_mon1 = game_state.pokemon[game_state.player_mon1]
-	player_mon1.currenthp = player_mon1.hp
-	player_mon1.shield = 0
-	player_mon1.turn = 0
-	player_mon1.reference = "player_mon1"
-	player_mon1.move1cd = 0
-	player_mon1.move2cd = 0
-	player_mon1.move3cd = 0
-	player_mon1.move4cd = 0
-	player_mon1.status_effects = {}
-	player_mon1.fainted = false
-	msg.post("player_mon1#sprite", "play_animation", { id = hash(player_mon1.name.."_back_original") })
-	combatants["player_mon1"] = player_mon1
+	if game_state.player_mon1 ~= nil then
+		player_mon1 = game_state.pokemon[game_state.player_mon1]
+		player_mon1.currenthp = player_mon1.hp
+		player_mon1.shield = 0
+		player_mon1.turn = 0
+		player_mon1.reference = "player_mon1"
+		player_mon1.move1cd = 0
+		player_mon1.move2cd = 0
+		player_mon1.move3cd = 0
+		player_mon1.move4cd = 0
+		player_mon1.status_effects = {}
+		player_mon1.fainted = false
+		msg.post("player_mon1#sprite", "play_animation", { id = hash(player_mon1.name.."_back_original") })
+		combatants["player_mon1"] = player_mon1
+	else
+		msg.post("player_mon1", "disable")
+		msg.post("gui", "disable_mon", {mon = "player_mon1"})
+	end
 
 	if game_state.player_mon2 ~= nil then
 		player_mon2 = game_state.pokemon[game_state.player_mon2]
