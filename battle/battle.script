@@ -122,10 +122,26 @@ function start_handling_move(target)
 	if string.match(current_turn_mon.reference, "^enemy") then
 		battle_text = "Enemy "
 	end
-	msg.post("gui", "set_battle_text", {text = battle_text..current_turn_mon.nickname.." used "..selected_move.name.."!"})
-	local delay_time = 0.0
+	local hurt_in_confusion = false
+	if mon_has_status_effect(current_turn_mon, 22) then
+		local hurt_rng = math.random(1,100)
+		if hurt_rng <= 50 then
+			hurt_in_confusion = true
+		end
+	end
 
-	level = current_turn_mon.known_moves[current_turn_mon["move"..selected_move_slot]].level
+	local level = 0
+	
+	if hurt_in_confusion then
+		msg.post("gui", "set_battle_text", {text = battle_text..current_turn_mon.nickname.." hurt itself in confusion!"})
+		selected_move = moves[1]
+		target = current_turn_mon.reference
+	else
+		msg.post("gui", "set_battle_text", {text = battle_text..current_turn_mon.nickname.." used "..selected_move.name.."!"})
+		level = current_turn_mon.known_moves[current_turn_mon["move"..selected_move_slot]].level
+	end
+	
+	local delay_time = 0.0
 	
 	for index, effect in ipairs(selected_move.effects) do
 		local num_of_hits = 1
@@ -466,7 +482,7 @@ end
 function mon_can_act(mon)
 	can_act = true
 	for i, eff in ipairs(mon.status_effects) do
-		if eff.category == 4 then --loss of control
+		if eff.category == 4 and eff.type ~= 22 then --loss of control
 			can_act = false
 		end
 	end

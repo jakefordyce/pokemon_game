@@ -9,7 +9,7 @@ local M = {}
 -- 4 = loss of control - prevents actions in some way
 
 M= {}
---1 deal damage based on attack or sp.attack
+--1 deal damage
 M[2] = {
 	sprite_name = "attack_down",
 	damage_text = "Attack Down",
@@ -88,6 +88,16 @@ M[20] = {
 	sprite_name = "burn",
 	damage_text = "Burn",
 	category = 3
+}
+M[21] = {
+	sprite_name = "bleed",
+	damage_text = "Bleed",
+	category = 3
+}
+M[22] = {
+	sprite_name = "confusion",
+	damage_text = "Confusion",
+	category = 4
 }
 
 return M

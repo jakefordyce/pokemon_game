@@ -1725,4 +1725,193 @@ M[57] = {
 	end
 }
 
+meffects = {}
+meffects[1] = {}
+meffects[1].id = 1
+meffects[1].target = 1
+meffects[1].param1 = function(moveLevel)
+	damage = 100 + (moveLevel * 5)
+	return damage
+end
+meffects[1].param2 = "spattack"
+
+
+meffects[2] = {}
+meffects[2].id = 14
+meffects[2].target = 1
+meffects[2].param1 = function(moveLevel)
+	chance = 15 + (moveLevel * 2)
+	return chance
+end
+meffects[2].param2 = 1
+
+M[58] = {
+	name = "Lick",
+	effects = meffects,
+	cooldown = function(moveLevel)
+		return 0
+	end,
+	default = true,
+	type = 15,
+	targetting = 1,
+	max_level = 5,
+	description = function(moveLevel)
+		chance = 15 + (moveLevel * 2)
+		damage = 100 + (moveLevel * 5)
+		return "Attacks 1 enemy for "..damage.."% of Attack then has a "..chance.."% chance of stunning the enemy for 1 turn."
+	end
+}
+
+meffects = {}
+meffects[1] = {}
+meffects[1].id = 1
+meffects[1].target = 1
+meffects[1].param1 = function(moveLevel)
+	damage = 150 + (moveLevel * 7.5)
+	return damage
+end
+meffects[1].param2 = "attack"
+
+M[59] = {
+	name = "Rock Throw",
+	effects = meffects,
+	cooldown = function(moveLevel)
+		return 0
+	end,
+	default = true,
+	type = 5,
+	targetting = 1,
+	max_level = 5,
+	description = function(moveLevel)
+		damage = 150 + (moveLevel * 7.5)
+		return "Attacks an enemy for "..damage.."% of Attack."
+	end
+}
+
+meffects = {}
+meffects[1] = {}
+meffects[1].id = 1
+meffects[1].target = 1
+meffects[1].param1 = function(moveLevel)
+	damage = 50 + (moveLevel * 2.5)
+	return damage
+end
+meffects[1].param2 = "spattack"
+meffects[1].min_hits = 2
+meffects[1].max_hits = 4
+
+M[60] = {
+	name = "Leafage",
+	effects = meffects,
+	cooldown = function(moveLevel)
+		return 0
+	end,
+	default = true,
+	type = 11,
+	targetting = 1,
+	max_level = 5,
+	description = function(moveLevel)
+		damage = 50 + (moveLevel * 2.5)
+		return "Attacks 1 enemy 2 to 4 times for "..damage.."% of Special Attack."
+	end
+}
+
+meffects = {}
+meffects[1] = {}
+meffects[1].id = 1
+meffects[1].target = 1
+meffects[1].param1 = function(moveLevel)
+	damage = 150 + (moveLevel * 7.5)
+	return damage
+end
+meffects[1].param2 = "attack"
+
+M[61] = {
+	name = "Pound",
+	effects = meffects,
+	cooldown = function(moveLevel)
+		return 0
+	end,
+	default = true,
+	type = 1,
+	targetting = 1,
+	max_level = 5,
+	description = function(moveLevel)
+		damage = 150 + (moveLevel * 7.5)
+		return "Attacks 1 enemy for "..damage.."% of Attack."
+	end
+}
+
+meffects = {}
+meffects[1] = {}
+meffects[1].id = 1
+meffects[1].target = 1
+meffects[1].param1 = function(moveLevel)
+	damage = 125 + (moveLevel * 7.5)
+	return damage
+end
+meffects[1].param2 = "attack"
+
+meffects[2] = {}
+meffects[2].id = 21 --bleed
+meffects[2].target = 1
+meffects[2].param1 = function(moveLevel)
+	return 15 + (moveLevel * 2)
+end
+meffects[2].param2 = 2
+
+M[62] = {
+	name = "Metal Claw",
+	effects = meffects,
+	cooldown = function(moveLevel)
+		return 0
+	end,
+	default = true,
+	type = 7,
+	targetting = 1,
+	max_level = 5,
+	description = function(moveLevel)
+		damage = 125 + (moveLevel * 7.5)
+		chance = 15 + (moveLevel * 2)
+		return "Attacks 1 enemy for "..damage.."% of Attack. Has a "..chance.."% chance of making the target Bleed for 2 rounds."
+	end
+}
+
+meffects = {}
+meffects[1] = {}
+meffects[1].id = 1
+meffects[1].target = 1
+meffects[1].param1 = function(moveLevel)
+	damage = 125 + (moveLevel * 5)
+	return damage
+end
+meffects[1].param2 = "spattack"
+
+
+meffects[2] = {}
+meffects[2].id = 22
+meffects[2].target = 1
+meffects[2].param1 = function(moveLevel)
+	chance = 15 + (moveLevel * 2)
+	return chance
+end
+meffects[2].param2 = 1
+
+M[63] = {
+	name = "Confusion",
+	effects = meffects,
+	cooldown = function(moveLevel)
+		return 0
+	end,
+	default = true,
+	type = 13,
+	targetting = 1,
+	max_level = 5,
+	description = function(moveLevel)
+		chance = 15 + (moveLevel * 2)
+		damage = 125 + (moveLevel * 5)
+		return "Attacks 1 enemy for "..damage.."% of Attack then has a "..chance.."% chance of confusing the enemy for 1 turn."
+	end
+}
+
 return M

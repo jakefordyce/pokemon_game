@@ -428,6 +428,7 @@ moves = {}
 moves[1] = {["level"] = 1, ["id"] = 1}
 moves[2] = {["level"] = 1, ["id"] = 21}
 moves[3] = {["level"] = 7, ["id"] = 35}
+moves[4] = {["level"] = 10, ["id"] = 59}
 M[74] = {
 	name = "geodude",
 	rarity = 3,
@@ -463,6 +464,7 @@ moves = {}
 moves[1] = {["level"] = 1, ["id"] = 1}
 moves[2] = {["level"] = 1, ["id"] = 20}
 moves[3] = {["level"] = 7, ["id"] = 34}
+moves[4] = {["level"] = 10, ["id"] = 58}
 M[92] = {
 	name = "gastly",
 	rarity = 3,
@@ -593,6 +595,7 @@ moves = {}
 moves[1] = {["level"] = 1, ["id"] = 1}
 moves[2] = {["level"] = 1, ["id"] = 22}
 moves[3] = {["level"] = 7, ["id"] = 36}
+moves[4] = {["level"] = 10, ["id"] = 60}
 M[152] = {
 	name = "chikorita",
 	rarity = 3,
@@ -703,7 +706,8 @@ M[172] = {
 moves = {
 	{["level"] = 1, ["id"] = 1},
 	{["level"] = 1, ["id"] = 46},
-	{["level"] = 7, ["id"] = 38}
+	{["level"] = 7, ["id"] = 38},
+	{["level"] = 10, ["id"] = 61}
 }
 M[173] = {
 	name = "cleffa",
@@ -847,6 +851,7 @@ moves = {}
 moves[1] = {["level"] = 1, ["id"] = 1}
 moves[2] = {["level"] = 1, ["id"] = 25}
 moves[3] = {["level"] = 7, ["id"] = 40}
+moves[4] = {["level"] = 10, ["id"] = 63}
 M[280] = {
 	name = "ralts",
 	rarity = 3,
@@ -888,6 +893,7 @@ moves = {}
 moves[1] = {["level"] = 1, ["id"] = 1}
 moves[2] = {["level"] = 1, ["id"] = 13}
 moves[3] = {["level"] = 7, ["id"] = 39}
+moves[4] = {["level"] = 10, ["id"] = 62}
 M[304] = {
 	name = "aron",
 	rarity = 3,
