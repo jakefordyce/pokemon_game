@@ -45,12 +45,12 @@ function M.equipped_moves_by_level(pokedex, level)
 end
 
 function M.exp_reward_by_level(level)
-	return math.ceil(math.pow(1.05, (level - 1)) * 20)
+	return math.ceil(math.pow(1.05, (level - 1)) * 50)
 end
 
 function M.exp_to_next_level(level)
-	return math.ceil(math.pow(1.05, (level - 1)) * (50 + level) / 50 * 200)
-	--return math.ceil(math.pow(1.05, (level - 1)) * (50 + level) / 50 * 10) -- for testing
+	return math.ceil(math.pow(1.05, (level - 1)) * (20 + level) / 20 * 200)
+	--return math.ceil(math.pow(1.05, (level - 1)) * (20 + level) / 20 * 10) -- for testing
 end
 
 M.base_crit_chance = 5
@@ -481,7 +481,25 @@ M[92] = {
 M[93]={}
 M[94]={}
 M[95]={}
-M[96]={}
+
+moves = {}
+moves[1] = {["level"] = 1, ["id"] = 1}
+moves[2] = {["level"] = 1, ["id"] = 20}
+moves[3] = {["level"] = 7, ["id"] = 65}
+moves[4] = {["level"] = 10, ["id"] = 63}
+M[96] = {
+	name = "drowzee",
+	rarity = 2,
+	hp = 85,
+	attack = 70,
+	defense = 75,
+	spattack = 80,
+	spdefense = 105,
+	speed = 95,
+	type1 = 13,
+	type2 = 13,
+	moves = moves
+}
 M[97]={}
 M[98]={}
 M[99]={}
@@ -970,6 +988,7 @@ moves = {}
 moves[1] = {["level"] = 1, ["id"] = 1}
 moves[2] = {["level"] = 1, ["id"] = 26}
 moves[3] = {["level"] = 7, ["id"] = 41}
+moves[4] = {["level"] = 10, ["id"] = 64}
 M[363] = {
 	name = "spheal",
 	rarity = 3,

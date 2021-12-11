@@ -1914,4 +1914,59 @@ M[63] = {
 	end
 }
 
+meffects = {}
+meffects[1] = {}
+meffects[1].id = 1
+meffects[1].target = 3
+meffects[1].param1 = function(moveLevel)
+	damage = 75 + (moveLevel * 5)
+	return damage
+end
+meffects[1].param2 = "spattack"
+
+M[64] = {
+	name = "Powder Snow",
+	effects = meffects,
+	cooldown = function(moveLevel)
+		return 0
+	end,
+	default = true,
+	type = 14,
+	targetting = 1,
+	max_level = 5,
+	description = function(moveLevel)
+		damage = 75 + (moveLevel * 5)
+		return "Attacks all enemies for "..damage.."% of Special Attack."
+	end
+}
+
+meffects = {}
+meffects[1] = {}
+meffects[1].id = 1
+meffects[1].target = 1
+meffects[1].param1 = function(moveLevel)
+	damage = 150 + (moveLevel * 10)
+	return damage
+end
+meffects[1].param2 = "spattack"
+meffects[1].leech = 50
+meffects[1].bonus_vs_sleep = 2
+
+M[65] = {
+	name = "Dream Eater",
+	effects = meffects,
+	cooldown = function(moveLevel)
+		return 3
+	end,
+	default = false,
+	type = 13,
+	targetting = 1,
+	max_level = 5,
+	description = function(moveLevel)
+		damage = 150 + (moveLevel * 10)
+		leech = 50
+		return "Attacks an enemy for "..damage.."% of Special Attack. The user is healed for 50% of damage done. This attack deals double damage against sleeping targets."
+	end
+}
+
 return M

@@ -209,6 +209,10 @@ function handle_protections()
 	end
 end
 
+function handle_leech(mon, power)
+	
+end
+
 function handle_move_effects(level, effect, target, move_user)
 	if not combatants[target].fainted then
 		effectiveness = types.type_effectiveness(selected_move.type, combatants[target].type1, combatants[target].type2)
@@ -236,6 +240,9 @@ function handle_move_effects(level, effect, target, move_user)
 			local power = effect.param1(level) * stat / 100
 			if effect.bonus_vs_psn ~= nil and mon_has_status_effect(defender, 15) then
 				power = power * effect.bonus_vs_psn
+			end
+			if effect.bonus_vs_sleep ~= nil and mon_has_status_effect(defender, 11) then
+				power = power * effect.bonus_vs_sleep
 			end
 			if effect.param4 ~= nil then --damage based on multiple stats
 				stat = move_user[effect.param4]
@@ -284,16 +291,22 @@ function handle_move_effects(level, effect, target, move_user)
 			end
 
 			protector = mon_protector(defender)
+			local damage
 			if protector == nil then
-				local damage = math.floor(calc_damage(power, defense) * effectiveness / 100)
+				damage = math.floor(calc_damage(power, defense) * effectiveness / 100)
 				damage_text = damage
 				damage_defender(defender, damage)
 			else
 				local share_of_power = math.floor(power / 2)
-				local damage = math.floor(calc_damage(share_of_power, defense) * effectiveness / 100)
+				damage = math.floor(calc_damage(share_of_power, defense) * effectiveness / 100)
 				damage_text = damage
 				damage_defender(defender, damage)
 				table.insert(protections, { protector = protector, power = math.ceil(power / 2), ignore_def = effect.ignore_def})
+			end
+			if effect.leech ~= nil then
+				local leech_amount = math.ceil(damage * effect.leech / 100)
+				heal_defender(current_turn_mon, leech_amount)
+				display_damage_text(go.get_position(current_turn_mon.reference), leech_amount, "green")
 			end
 		elseif effect.id == 8 then --increase turn
 			local turn_amount = effect.param2 * 10
