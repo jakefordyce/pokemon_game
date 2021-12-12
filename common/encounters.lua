@@ -228,12 +228,22 @@ end
 
 -- Wild Encounter Data
 areas = {}
-
+--[[
 areas[3] = {
 	{10,19,29,32},
 	{13,16,52},
-	{1,4,7,63,66},
+	{1,4,7},
 	{92},
+	min_level = 2,
+	max_level = 5
+}
+--]]
+
+areas[3] = {
+	{48},
+	{48},
+	{48},
+	{48},
 	min_level = 2,
 	max_level = 5
 }

@@ -37,8 +37,14 @@ function on_message(self, message_id, message, sender)
 			if message.mon["move"..i] ~= nil then
 				gui.set_enabled(gui.get_node("move"..i.."_button"), true)
 				gui.set_text(gui.get_node("move"..i.."_text"), moves[message.mon.known_moves[message.mon["move"..i]].id].name)
-				if message.mon["move"..i.."cd"] > 0 then
+				if message.cooldowns_blocked and i > 1 then
 					gui.set_enabled(gui.get_node("move"..i.."_cd_overlay"), true)
+					gui.play_flipbook(gui.get_node("move"..i.."_cd_image"), "block_cooldowns_64")
+					gui.set_enabled(gui.get_node("move"..i.."_cd_text"), false)
+				elseif message.mon["move"..i.."cd"] > 0 then
+					gui.set_enabled(gui.get_node("move"..i.."_cd_overlay"), true)
+					gui.play_flipbook(gui.get_node("move"..i.."_cd_image"), "stopwatch")
+					gui.set_enabled(gui.get_node("move"..i.."_cd_text"), true)
 					gui.set_text(gui.get_node("move"..i.."_cd_text"), message.mon["move"..i.."cd"])
 				else
 					gui.set_enabled(gui.get_node("move"..i.."_cd_overlay"), false)

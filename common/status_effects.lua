@@ -99,5 +99,10 @@ M[22] = {
 	damage_text = "Confusion",
 	category = 4
 }
+M[23] = {
+	sprite_name = "block_cooldowns",
+	damage_text = "Block Cooldowns",
+	category = 4
+}
 
 return M

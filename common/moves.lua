@@ -1969,4 +1969,83 @@ M[65] = {
 	end
 }
 
+
+meffects = {}
+meffects[1] = {}
+meffects[1].id = 23 -- block cooldowns
+meffects[1].target = 3
+meffects[1].param1 = function(moveLevel)
+	return 75 + (5 * moveLevel)
+end
+meffects[1].param2 = 1
+
+M[66] = {
+	name = "Disable",
+	effects = meffects,
+	cooldown = function(moveLevel)
+		return 3
+	end,
+	default = false,
+	type = 1,
+	targetting = 1,
+	max_level = 5,
+	description = function(moveLevel)
+		chance = 75 + (5 * moveLevel)
+		return "Has a "..chance.."% chance of placing Block Cooldowns all enemies for 1 turns."
+	end
+}
+
+meffects = {}
+meffects[1] = {}
+meffects[1].id = 15
+meffects[1].target = 3
+meffects[1].param1 = function(moveLevel)
+	chance = 75 + (moveLevel * 5)
+	return chance
+end
+meffects[1].param2 = 2
+
+M[67] = {
+	name = "Poison Powder",
+	effects = meffects,
+	cooldown = function(moveLevel)
+		return 3
+	end,
+	default = false,
+	type = 4,
+	targetting = 1,
+	max_level = 5,
+	description = function(moveLevel)
+		chance = 75 + (moveLevel * 5)
+		return "Has a "..chance.."% chance of Poisoning all enemies for 2 turns."
+	end
+}
+
+meffects = {}
+meffects[1] = {}
+meffects[1].id = 1
+meffects[1].target = 1
+meffects[1].param1 = function(moveLevel)
+	damage = 100 + (moveLevel * 5)
+	return damage
+end
+meffects[1].param2 = "attack"
+meffects[1].leech = 50
+
+M[68] = {
+	name = "Leech Life",
+	effects = meffects,
+	cooldown = function(moveLevel)
+		return 0
+	end,
+	default = true,
+	type = 6,
+	targetting = 1,
+	max_level = 5,
+	description = function(moveLevel)
+		damage = 100 + (moveLevel * 5)
+		return "Attacks 1 enemy for "..damage.."% of Attack. The user is healed for half of the damage dealt."
+	end
+}
+
 return M

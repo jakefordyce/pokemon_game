@@ -35,7 +35,7 @@ end
 
 function on_message(self, message_id, message, sender)
 	if message_id == hash("move_selected") then
-		if(current_turn_mon["move"..message.slot.."cd"] == 0) then
+		if(current_turn_mon["move"..message.slot.."cd"] == 0 and (message.slot == 1 or not mon_has_status_effect(current_turn_mon, 23))) then
 			selected_move_slot = message.slot
 			selected_move = moves[current_turn_mon.known_moves[message.move].id]
 			display_targetting_icons()
@@ -495,7 +495,7 @@ end
 function mon_can_act(mon)
 	can_act = true
 	for i, eff in ipairs(mon.status_effects) do
-		if eff.category == 4 and eff.type ~= 22 then --loss of control
+		if eff.category == 4 and (eff.type ~= 22 and eff.type ~= 23) then --loss of control
 			can_act = false
 		end
 	end
@@ -625,7 +625,8 @@ function start_player_turn(turn_mon)
 	table.insert(spawned_turn_markers, turn_marker)
 	
 	if mon_can_act(turn_mon) then
-		msg.post("gui", "display_mon", {mon = turn_mon})
+		local cooldowns_blocked = mon_has_status_effect(turn_mon, 23)
+		msg.post("gui", "display_mon", { mon = turn_mon, cooldowns_blocked = cooldowns_blocked })
 	else
 		timer.delay(.5, false, function() msg.post(".", "end_turn") end)
 	end
@@ -654,35 +655,41 @@ function start_enemy_turn(turn_mon)
 end
 
 function choose_enemy_move()
-	is_move_chosen = false
 	local target = ""
-	if(current_turn_mon.move_priority == nil) then --wild encounters or bad trainers
-		while is_move_chosen == false do
-			random_move = math.random(1,4) -- choose a move at random
-			-- see if the move is off cooldown
-			if(current_turn_mon["move"..random_move] ~= nil and current_turn_mon["move"..random_move.."cd"] == 0) then
-				selected_move = moves[current_turn_mon.known_moves[current_turn_mon["move"..random_move]].id]
-				selected_move_slot = random_move
-				is_move_chosen = true
-				local move_level = current_turn_mon.known_moves[current_turn_mon["move"..random_move]].level
-				current_turn_mon["move"..random_move.."cd"] = current_turn_mon["move"..random_move.."cd"] + selected_move.cooldown(move_level)
+	if mon_has_status_effect(current_turn_mon, 23) then --cooldowns are blocked, can only use default.
+		selected_move = moves[current_turn_mon.known_moves[current_turn_mon["move1"]].id]
+		selected_move_slot = 1
+	else
+		local is_move_chosen = false
+		if(current_turn_mon.move_priority == nil) then --wild encounters or bad trainers
+			while is_move_chosen == false do
+				random_move = math.random(1,4) -- choose a move at random
+				-- see if the move is off cooldown
+				if(current_turn_mon["move"..random_move] ~= nil and current_turn_mon["move"..random_move.."cd"] == 0) then
+					selected_move = moves[current_turn_mon.known_moves[current_turn_mon["move"..random_move]].id]
+					selected_move_slot = random_move
+					is_move_chosen = true
+					local move_level = current_turn_mon.known_moves[current_turn_mon["move"..random_move]].level
+					current_turn_mon["move"..random_move.."cd"] = current_turn_mon["move"..random_move.."cd"] + selected_move.cooldown(move_level)
+				end
 			end
-		end
-	else -- bosses and good trainers
-		local i = 1
-		while is_move_chosen == false do
-			local priority_move = current_turn_mon.move_priority[i]
-			if current_turn_mon["move"..priority_move.."cd"] == 0 then
-				selected_move = moves[current_turn_mon.known_moves[current_turn_mon["move"..priority_move]].id]
-				selected_move_slot = priority_move
-				is_move_chosen = true
-				local move_level = current_turn_mon.known_moves[current_turn_mon["move"..priority_move]].level
-				current_turn_mon["move"..priority_move.."cd"] = current_turn_mon["move"..priority_move.."cd"] + selected_move.cooldown(move_level)
-			else
-				i = i + 1
+		else -- bosses and good trainers
+			local i = 1
+			while is_move_chosen == false do
+				local priority_move = current_turn_mon.move_priority[i]
+				if current_turn_mon["move"..priority_move.."cd"] == 0 then
+					selected_move = moves[current_turn_mon.known_moves[current_turn_mon["move"..priority_move]].id]
+					selected_move_slot = priority_move
+					is_move_chosen = true
+					local move_level = current_turn_mon.known_moves[current_turn_mon["move"..priority_move]].level
+					current_turn_mon["move"..priority_move.."cd"] = current_turn_mon["move"..priority_move.."cd"] + selected_move.cooldown(move_level)
+				else
+					i = i + 1
+				end
 			end
 		end
 	end
+	
 
 	is_target_chosen = false
 	local target_chosen

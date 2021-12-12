@@ -343,7 +343,25 @@ M[44]={}
 M[45]={}
 M[46]={}
 M[47]={}
-M[48]={}
+
+moves = {}
+moves[1] = {["level"] = 1, ["id"] = 1}
+moves[2] = {["level"] = 1, ["id"] = 67}
+moves[3] = {["level"] = 6, ["id"] = 66}
+moves[4] = {["level"] = 9, ["id"] = 68}
+M[48] = {
+	name = "venonat",
+	rarity = 2,
+	hp = 85,
+	attack = 85,
+	defense = 80,
+	spattack = 80,
+	spdefense = 85,
+	speed = 100,
+	type1 = 6,
+	type2 = 4,
+	moves = moves
+}
 M[49]={}
 M[50]={}
 M[51]={}
