@@ -174,7 +174,7 @@ function M.load_boss_encounter(boss_index, level)
 		game_state["enemy_mon"..i] = nil
 	end
 	game_state["enemy_boss"] = {
-		index = boss_index, --TODO: fix this
+		index = boss_index,
 		level = level,
 		gear_rarity = 5,
 		build_style = 1
@@ -228,7 +228,7 @@ end
 
 -- Wild Encounter Data
 areas = {}
----[[
+--[[ PROD
 areas[3] = {
 	{10,19,29,32},
 	{13,16,161},
@@ -239,12 +239,12 @@ areas[3] = {
 }
 --]]
 
---[[ TEST
+---[[ TEST
 areas[3] = {
-	{48},
-	{48},
-	{48},
-	{48},
+	{10,19,29,32},
+	{13,16,161},
+	{48,96,52, 1, 4, 7, 63, 66, 74, 92, 152, 155, 158, 172, 173, 228, 280, 304, 363},
+	{96},
 	min_level = 2,
 	max_level = 5
 }
