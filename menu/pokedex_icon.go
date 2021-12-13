@@ -99,3 +99,23 @@ embedded_components {
     w: 1.0
   }
 }
+embedded_components {
+  id: "caught_icon"
+  type: "sprite"
+  data: "tile_set: \"/adventure/misc.atlas\"\n"
+  "default_animation: \"pokeball_16\"\n"
+  "material: \"/builtins/materials/sprite.material\"\n"
+  "blend_mode: BLEND_MODE_ALPHA\n"
+  ""
+  position {
+    x: 24.0
+    y: 24.0
+    z: 0.2
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+}

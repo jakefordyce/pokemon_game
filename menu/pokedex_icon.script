@@ -1,9 +1,13 @@
 go.property("pokedex", 1)
 local pbs = require "common/poke_base_stats"
+local game_state = require "common/game_state"
 
 function init(self)
 	msg.post("#sprite", "play_animation", { id = hash(pbs[self.pokedex].name.."_front_original") })
 	msg.post("#background", "play_animation", { id = hash("poke_background_"..pbs[self.pokedex].rarity) })
+	if not game_state.pokedex[self.pokedex] then
+		msg.post("#caught_icon", "disable")
+	end
 end
 
 function final(self)
