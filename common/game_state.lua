@@ -6,14 +6,14 @@ local M = {}
 
 --FLAGS--
 M.flags = {
-	starters_chosen = false --DEV
+	starters_chosen = true --DEV
 }
 M.items_found = {}
 M.trainers_defeated = {}
 M.bill_bosses_defeated = {0}
 
 --PLAYER INFO--
----[[ starting values
+--[[ starting values
 M.player = {
 	position_x = 263, 
 	position_y = 761,
@@ -31,7 +31,7 @@ M.player = {
 	rating = 0
 }
 --]]
---[[ Testing Bill bosses
+---[[ Testing Bill bosses
 M.player = {
 	position_x = 416,
 	position_y = 51,
@@ -57,6 +57,9 @@ M.stones = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0} -- 1 for each of the types in common/
 
 --List of all of the player's pokemon.
 M.pokemon = {}
+
+--List of all of the pokemon the player has owned.
+M.pokedex = {}
 
 --List of all of the player's runes.
 M.runes = {}
@@ -89,6 +92,7 @@ M.battle_type = 1
 -- 1 - wild pokemon
 -- 2 - trainer
 -- 3 - boss fight
+-- 4 - poke league
 M.battle_id = 1
 
 M.preview_mon = {}
@@ -126,7 +130,7 @@ function M.add_pokemon(pokedex, level)
 		new_mon["move"..i] = equipped_moves[i]
 	end
 	table.insert(M.pokemon, new_mon)
-	
+	M.pokedex[pokedex] = true
 end
 
 function M.generate_shop_runes()
@@ -294,6 +298,7 @@ function M.evolve_pokemon(mon_index, target_pokedex)
 	mon.type2 = pbs[target_pokedex].type2
 	learned_moves = M.mon_learned_move(mon_index)
 	M.calculate_pokemon_stats()
+	M.pokedex[target_pokedex] = true
 end
 
 
@@ -347,6 +352,12 @@ function M.fix_pokemon_rune_ids(sold_rune_index)
 	end
 end
 
+function add_missing_pokedex_entries()
+	for i=1,#pbs do
+		M.pokedex[i] = M.pokedex[i] or false
+	end
+end
+
 function M.save_game()
 	local save_data = {}
 
@@ -358,6 +369,7 @@ function M.save_game()
 	save_data.stones = M.stones
 	save_data.pokemon = M.pokemon
 	save_data.runes = M.runes
+	save_data.pokedex = M.pokedex
 
 	local save_file_path = sys.get_save_file("Pokemon", "save_file")
 	--print("path "..save_file_path)
@@ -383,6 +395,12 @@ function M.load_game()
 		M.stones = save_data.stones
 		M.pokemon = save_data.pokemon
 		M.runes = save_data.runes
+		if save_data.pokedex ~= nil then
+			M.pokedex = save_data.pokedex
+			add_missing_pokedex_entries()
+		else
+			add_missing_pokedex_entries()
+		end
 	end
 
 end

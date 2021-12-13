@@ -125,6 +125,9 @@ function display_enemies()
 				else
 					gui.set_enabled(gui.get_node("enemy_mon"..i.."_type2"), false)
 				end
+				if not game_state.pokedex[game_state["enemy_mon"..i].pokedex] then
+					gui.set_enabled(gui.get_node("enemy_mon"..i.."_caught"), false)
+				end
 			else
 				gui.set_enabled(gui.get_node("enemy_mon"..i), false)
 			end
