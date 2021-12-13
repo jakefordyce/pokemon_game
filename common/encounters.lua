@@ -228,17 +228,18 @@ end
 
 -- Wild Encounter Data
 areas = {}
---[[
+---[[
 areas[3] = {
 	{10,19,29,32},
-	{13,16,52},
-	{1,4,7},
-	{92},
+	{13,16,161},
+	{48,96,52},
+	{96},
 	min_level = 2,
 	max_level = 5
 }
 --]]
 
+--[[ TEST
 areas[3] = {
 	{48},
 	{48},
@@ -247,6 +248,7 @@ areas[3] = {
 	min_level = 2,
 	max_level = 5
 }
+--]]
 
 -- Trainer Data
 trainers = {}
