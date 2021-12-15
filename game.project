@@ -3,7 +3,7 @@ title = Pokemon
 dependencies = 
 
 [bootstrap]
-main_collection = /main/main.collectionc
+main_collection = /entry/entry.collectionc
 render = /render/default.renderc
 
 [input]

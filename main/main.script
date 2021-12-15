@@ -1,20 +1,60 @@
 local game_state = require "common/game_state"
 local area_names = require "common/area_names"
 local encounters = require "common/encounters"
+local proxy_to_load
 
-local function load_screen(new_screen, old_screen)
+-- This function is called whenever we have tried to store a downloaded resource
+-- necessary for our collection proxy to load.
+local function resource_store_response(self, hexdigest, status)
+	if status == true then
+		-- Successfully loaded resource
+		print("Resource data stored: " .. hexdigest)
+
+		-- One less resource to go...
+		self.resources_pending = self.resources_pending - 1
+
+		-- That was all of them, time to load the proxied collection.
+		if self.resources_pending == 0 then
+			msg.post(proxy_to_load, "load") -- <8>
+		end
+	else
+		-- ERROR! Failed to store the data!
+		print("Failed to store resource data: " .. hexdigest)
+	end
+end
+
+local function load_screen(self, new_screen, old_screen)
 	if old_screen ~= nil then
 		msg.post("loader#"..old_screen, "unload")
 	end
-	msg.post("loader#"..new_screen, "load")
-	msg.post("loader#"..new_screen, "enable")
+
+	proxy_to_load = "loader#"..new_screen
+
+	local missing_resources = collectionproxy.missing_resources("loader#"..new_screen) -- <2>
+
+	print("missing resources: "..#missing_resources)
+	-- initiate a download request for each of the missing resources that has not yet been tried.
+	for _,resource_hash in ipairs(missing_resources) do
+		msg.post("#", "attempt_download", { resource_hash = resource_hash})
+	end
+
+	self.resources_pending = #missing_resources -- <3>
+
+	-- if we're running from editor all resources are there from the start.
+	if self.resources_pending == 0 then
+		msg.post("loader#"..new_screen, "load")
+	end
+	
+	--msg.post("loader#"..new_screen, "load")
+	--msg.post("loader#"..new_screen, "enable")
 end
 
 function init(self)
 	msg.post("@render:", "use_fixed_fit_projection", { near = -1, far = 1 })
 	msg.post(".", "acquire_input_focus")
+	self.resources_pending = 0
 	game_state.calculate_pokemon_stats()
-	--load_screen(area_names[game_state.player.current_area], nil)
+	
 	for i=1,1 do
 		game_state.items_found[i] = false
 	end
@@ -52,7 +92,7 @@ function init(self)
 	end
 	--]]
 	game_state.load_game()
-	load_screen(area_names[game_state.player.current_area], nil)
+	load_screen(self, area_names[game_state.player.current_area], nil)
 end
 
 function on_input(self, action_id, action)
@@ -67,23 +107,23 @@ function on_message(self, message_id, message, sender)
 		game_state.battle_level = message.level
 		generate_enemy_team(message.battle_type, message.battle_id, message.level)
 		if message.battle_type == 3 then
-			load_screen("choose_team", "boss_select")
+			load_screen(self, "choose_team", "boss_select")
 		elseif message.battle_type == 4 then
-			load_screen("choose_team", "poke_league")
+			load_screen(self, "choose_team", "poke_league")
 		else
-			load_screen("choose_team", area_names[game_state.player.current_area])
+			load_screen(self, "choose_team", area_names[game_state.player.current_area])
 		end
 	end
 	if message_id == hash("load_battle") then
-		load_screen("battle", "choose_team")
+		load_screen(self, "battle", "choose_team")
 	end
 	if message_id == hash("end_battle") then
 		if game_state.battle_type == 1 then
 			game_state.dialog_is_pending = false
 			if(message.victory) then
-				load_screen("rewards", "battle")
+				load_screen(self, "rewards", "battle")
 			else
-				load_screen(area_names[game_state.player.current_area], "battle")
+				load_screen(self, area_names[game_state.player.current_area], "battle")
 			end
 		elseif game_state.battle_type == 2 then
 			game_state.dialog_is_pending = true
@@ -92,10 +132,10 @@ function on_message(self, message_id, message, sender)
 				--this needs to be set in the trainer script
 				game_state.trainers_defeated[game_state.battle_id] = true
 				game_state.pending_dialog_id = game_state.victory_dialog_id
-				load_screen("rewards", "battle")
+				load_screen(self, "rewards", "battle")
 			else
 				game_state.pending_dialog_id = game_state.loss_dialog_id
-				load_screen(area_names[game_state.player.current_area], "battle")
+				load_screen(self, area_names[game_state.player.current_area], "battle")
 			end
 		elseif game_state.battle_type == 3 then
 			game_state.dialog_is_pending = true
@@ -109,10 +149,10 @@ function on_message(self, message_id, message, sender)
 				end
 				
 				game_state.pending_dialog_id = game_state.victory_dialog_id
-				load_screen("rewards", "battle")
+				load_screen(self, "rewards", "battle")
 			else
 				game_state.pending_dialog_id = game_state.loss_dialog_id
-				load_screen(area_names[game_state.player.current_area], "battle")
+				load_screen(self, area_names[game_state.player.current_area], "battle")
 			end
 		elseif game_state.battle_type == 4 then
 			game_state.dialog_is_pending = true
@@ -123,65 +163,85 @@ function on_message(self, message_id, message, sender)
 			end
 			if(message.victory) then
 				game_state.pending_dialog_id = game_state.victory_dialog_id
-				load_screen("rewards", "battle")
+				load_screen(self, "rewards", "battle")
 			else
 				game_state.pending_dialog_id = game_state.loss_dialog_id
-				load_screen(area_names[game_state.player.current_area], "battle")
+				load_screen(self, area_names[game_state.player.current_area], "battle")
 			end
 		end
 	end
 	if message_id == hash("end_rewards") then
-		load_screen(area_names[game_state.player.current_area], "rewards")
+		load_screen(self, area_names[game_state.player.current_area], "rewards")
 	end
 	if message_id == hash("run_away") then
-		load_screen(area_names[game_state.player.current_area], "choose_team")
+		load_screen(self, area_names[game_state.player.current_area], "choose_team")
 	end
 	if message_id == hash("load_area") then
-		load_screen(area_names[game_state.player.current_area], area_names[message.previous_area])
+		load_screen(self, area_names[game_state.player.current_area], area_names[message.previous_area])
 	end
 	if message_id == hash("load_menu") then
-		load_screen("menu", area_names[game_state.player.current_area])
+		load_screen(self, "menu", area_names[game_state.player.current_area])
 	end	
 	if message_id == hash("close_menu") then
-		load_screen(area_names[game_state.player.current_area], "menu")
+		load_screen(self, area_names[game_state.player.current_area], "menu")
 	end
 	if message_id == hash("load_add_mon") then
-		load_screen("add_mon", area_names[game_state.player.current_area])
+		load_screen(self, "add_mon", area_names[game_state.player.current_area])
 	end
 	if message_id == hash("close_add_mon") then
-		load_screen(area_names[game_state.player.current_area], "add_mon")
+		load_screen(self, area_names[game_state.player.current_area], "add_mon")
 	end
 	if message_id == hash("close_rewards") then
 		-- if the battle was against wild pokemon then allow the player to catch, otherwise return to adventure screen.
 		if game_state.battle_type == 1 then
-			load_screen("add_mon", "rewards")
+			load_screen(self, "add_mon", "rewards")
 		else
-			load_screen(area_names[game_state.player.current_area], "rewards")
+			load_screen(self, area_names[game_state.player.current_area], "rewards")
 		end
 	end
 	if message_id == hash("load_rune_shop") then
-		load_screen("rune_shop", area_names[game_state.player.current_area])
+		load_screen(self, "rune_shop", area_names[game_state.player.current_area])
 	end
 	if message_id == hash("exit_rune_shop") then
-		load_screen(area_names[game_state.player.current_area], "rune_shop")
+		load_screen(self, area_names[game_state.player.current_area], "rune_shop")
 	end
 	if message_id == hash("load_move_tutor") then
-		load_screen("move_tutor", area_names[game_state.player.current_area])
+		load_screen(self, "move_tutor", area_names[game_state.player.current_area])
 	end
 	if message_id == hash("load_boss_select") then
-		load_screen("boss_select", area_names[game_state.player.current_area])
+		load_screen(self, "boss_select", area_names[game_state.player.current_area])
 	end
 	if message_id == hash("close_boss_select") then
-		load_screen(area_names[game_state.player.current_area], "boss_select")
+		load_screen(self, area_names[game_state.player.current_area], "boss_select")
 	end
 	if message_id == hash("close_move_tutor") then
-		load_screen(area_names[game_state.player.current_area], "move_tutor")
+		load_screen(self, area_names[game_state.player.current_area], "move_tutor")
 	end
 	if message_id == hash("load_poke_league") then
-		load_screen("poke_league", area_names[game_state.player.current_area])
+		load_screen(self, "poke_league", area_names[game_state.player.current_area])
 	end
 	if message_id == hash("close_poke_league") then
-		load_screen(area_names[game_state.player.current_area], "poke_league")
+		load_screen(self, area_names[game_state.player.current_area], "poke_league")
+	elseif message_id == hash("attempt_download") then
+		local manifest = resource.get_current_manifest() -- <4>
+		
+		local base_url = "c:/Users/jake/Desktop/pokemon/" -- <5>
+		local file_to_read = base_url..message.resource_hash
+		local file = io.open(file_to_read, "rb")
+		local content = file:read("*a")
+		file:close()
+
+		if content ~= nil then -- <6>
+			-- We got the response ok.
+			print("storing " .. message.resource_hash)
+			resource.store_resource(manifest, content, message.resource_hash, resource_store_response) -- <7>
+		else
+			-- ERROR! Failed to download resource!
+			print("Failed to download resource: " .. message.resource_hash)
+		end
+	elseif message_id == hash("proxy_loaded") then
+		msg.post(sender, "init")
+		msg.post(sender, "enable")
 	end
 end
 

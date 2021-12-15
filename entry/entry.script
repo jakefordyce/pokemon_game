@@ -1,0 +1,105 @@
+local MANIFEST_FILENAME = "liveupdate.game.dmanifest"
+
+function init(self)
+	msg.post(".", "acquire_input_focus")
+	self.resources_pending = 0 -- <1>
+	msg.post("#", "attempt_download_manifest")
+	--msg.post("#", "attempt_load_resources")
+end
+
+function final(self)
+end
+
+function update(self, dt)
+end
+
+local function store_manifest_cb(self, status)
+	if status == resource.LIVEUPDATE_OK then
+		print("Successfully stored manifest!")
+	else
+		print("Failed to store manifest, status: ", status)
+	end
+end
+
+-- This function is called whenever we have tried to store a downloaded resource
+-- necessary for our collection proxy to load.
+local function resource_store_response(self, hexdigest, status)
+	if status == true then
+		-- Successfully loaded resource
+		print("Resource data stored: " .. hexdigest)
+
+		-- One less resource to go...
+		self.resources_pending = self.resources_pending - 1
+
+		-- That was all of them, time to load the proxied collection.
+		if self.resources_pending == 0 then
+			msg.post("#main", "load") -- <8>
+		end
+	else
+		-- ERROR! Failed to store the data!
+		print("Failed to store resource data: " .. hexdigest)
+	end
+end
+
+function on_message(self, message_id, message, sender)
+	if message_id == hash("attempt_load_resources") then
+		local missing_resources = collectionproxy.missing_resources("#main") -- <2>
+
+		print("missing resources: "..#missing_resources)
+		-- initiate a download request for each of the missing resources that has not yet been tried.
+		for _,resource_hash in ipairs(missing_resources) do
+			msg.post("#", "attempt_download", { resource_hash = resource_hash})
+		end
+
+		self.resources_pending = #missing_resources -- <3>
+
+		-- if we're running from editor all resources are there from the start.
+		if self.resources_pending == 0 then
+			msg.post("#main", "load")
+		end
+	elseif message_id == hash("attempt_download") then
+		local manifest = resource.get_current_manifest() -- <4>
+		---[[
+		local base_url = "c:/Users/jake/Desktop/pokemon/" -- <5>
+		local file_to_read = base_url..message.resource_hash
+		local file = io.open(file_to_read, "rb")
+		local content = file:read("*a")
+		file:close()
+		
+		if content ~= nil then -- <6>
+			-- We got the response ok.
+			print("storing " .. message.resource_hash)
+			resource.store_resource(manifest, content, message.resource_hash, resource_store_response) -- <7>
+		else
+			-- ERROR! Failed to download resource!
+			print("Failed to download resource: " .. message.resource_hash)
+		end
+		
+		--]]
+	elseif message_id == hash("proxy_loaded") then
+		msg.post(sender, "init")
+		msg.post(sender, "enable")
+	elseif message_id == hash("attempt_download_manifest") then
+		print("happens automatically")
+		local base_url = "c:/Users/jake/Desktop/pokemon/" -- <1>
+		local file_to_read = base_url..MANIFEST_FILENAME
+		local file = io.open(file_to_read, "rb")
+		local content = file:read("*a")
+		
+		if content ~= nil then
+			-- We got the response ok.
+			print("verifying and storing manifest " .. MANIFEST_FILENAME)
+			resource.store_manifest(content, store_manifest_cb) -- <2>
+		else
+			-- ERROR! Failed to download manifest!
+			print("Failed to download manifest: " .. MANIFEST_FILENAME)
+		end
+		msg.post("#", "attempt_load_resources")
+	end
+end
+
+function on_input(self, action_id, action)
+end
+
+function on_reload(self)
+end
