@@ -138,8 +138,8 @@ embedded_components {
   "blend_mode: BLEND_MODE_ALPHA\n"
   "line_break: false\n"
   "text: \"5\"\n"
-  "font: \"/menu/menu_details_outlined.font\"\n"
-  "material: \"/builtins/fonts/label.material\"\n"
+  "font: \"/assets/menu_details_outlined.font\"\n"
+  "material: \"/assets/fonts/font.material\"\n"
   ""
   position {
     x: 29.0

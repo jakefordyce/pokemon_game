@@ -1,11 +1,11 @@
 script: "/poke_league/poke_league.gui_script"
 fonts {
   name: "menu_details_outlined"
-  font: "/menu/menu_details_outlined.font"
+  font: "/assets/menu_details_outlined.font"
 }
 fonts {
   name: "menu_buttons"
-  font: "/menu/menu_buttons.font"
+  font: "/assets/menu_buttons.font"
 }
 background_color {
   x: 0.0

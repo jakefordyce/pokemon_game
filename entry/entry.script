@@ -2,7 +2,7 @@ local MANIFEST_FILENAME = "liveupdate.game.dmanifest"
 
 function init(self)
 	msg.post(".", "acquire_input_focus")
-	self.resources_pending = 0 -- <1>
+	self.resources_pending = 0
 	msg.post("#", "attempt_download_manifest")
 	--msg.post("#", "attempt_load_resources")
 end
@@ -58,38 +58,36 @@ function on_message(self, message_id, message, sender)
 			msg.post("#main", "load")
 		end
 	elseif message_id == hash("attempt_download") then
-		local manifest = resource.get_current_manifest() -- <4>
-		---[[
-		local base_url = "c:/Users/jake/Desktop/pokemon/" -- <5>
+		local manifest = resource.get_current_manifest()
+		local base_url = "c:/Users/jake/Desktop/pokemon/"
 		local file_to_read = base_url..message.resource_hash
 		local file = io.open(file_to_read, "rb")
 		local content = file:read("*a")
 		file:close()
 		
-		if content ~= nil then -- <6>
-			-- We got the response ok.
+		if content ~= nil then
 			print("storing " .. message.resource_hash)
-			resource.store_resource(manifest, content, message.resource_hash, resource_store_response) -- <7>
+			resource.store_resource(manifest, content, message.resource_hash, resource_store_response)
 		else
 			-- ERROR! Failed to download resource!
 			print("Failed to download resource: " .. message.resource_hash)
 		end
 		
-		--]]
 	elseif message_id == hash("proxy_loaded") then
 		msg.post(sender, "init")
 		msg.post(sender, "enable")
 	elseif message_id == hash("attempt_download_manifest") then
-		print("happens automatically")
-		local base_url = "c:/Users/jake/Desktop/pokemon/" -- <1>
+		local base_url = "c:/Users/jake/Desktop/pokemon/"
 		local file_to_read = base_url..MANIFEST_FILENAME
 		local file = io.open(file_to_read, "rb")
-		local content = file:read("*a")
-		
+		local content
+		if file ~= nil then
+			content = file:read("*a")
+		end
 		if content ~= nil then
 			-- We got the response ok.
 			print("verifying and storing manifest " .. MANIFEST_FILENAME)
-			resource.store_manifest(content, store_manifest_cb) -- <2>
+			resource.store_manifest(content, store_manifest_cb)
 		else
 			-- ERROR! Failed to download manifest!
 			print("Failed to download manifest: " .. MANIFEST_FILENAME)

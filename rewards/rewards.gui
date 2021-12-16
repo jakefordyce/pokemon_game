@@ -5,7 +5,7 @@ fonts {
 }
 fonts {
   name: "menu_details_outlined"
-  font: "/menu/menu_details_outlined.font"
+  font: "/assets/menu_details_outlined.font"
 }
 textures {
   name: "front_sprites"

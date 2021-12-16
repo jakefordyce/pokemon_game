@@ -18,7 +18,7 @@ embedded_components {
   type: "sprite"
   data: "tile_set: \"/menu/runes.atlas\"\n"
   "default_animation: \"rune_1_5\"\n"
-  "material: \"/builtins/materials/sprite.material\"\n"
+  "material: \"/assets/materials/sprite.material\"\n"
   "blend_mode: BLEND_MODE_ALPHA\n"
   ""
   position {
@@ -120,8 +120,8 @@ embedded_components {
   "blend_mode: BLEND_MODE_ALPHA\n"
   "line_break: false\n"
   "text: \"1\"\n"
-  "font: \"/menu/menu_details_outlined.font\"\n"
-  "material: \"/builtins/fonts/label.material\"\n"
+  "font: \"/assets/menu_details_outlined.font\"\n"
+  "material: \"/assets/fonts/font.material\"\n"
   ""
   position {
     x: 3.0
