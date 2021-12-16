@@ -105,7 +105,11 @@ function on_message(self, message_id, message, sender)
 				current_manifest_file = io.open(current_manifest_url, "w+b")
 				current_manifest_file:write(content)
 				current_manifest_file:flush()
+				os.remove(sys.get_save_file("60cc2a923a97e8eb7a2d00659c1f05a72d47db56", "liveupdate.arcd"))
+				os.remove(sys.get_save_file("60cc2a923a97e8eb7a2d00659c1f05a72d47db56", "liveupdate.arci"))
+				os.remove(sys.get_save_file("60cc2a923a97e8eb7a2d00659c1f05a72d47db56", "liveupdate.arci.tmp"))
 				sys.reboot()
+				return true
 			end
 			
 			--print("verifying and storing manifest " .. MANIFEST_FILENAME)
