@@ -1,6 +1,7 @@
 [project]
 title = Pokemon
 dependencies = 
+write_log = 1
 
 [bootstrap]
 main_collection = /entry/entry.collectionc

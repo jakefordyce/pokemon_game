@@ -83,11 +83,33 @@ function on_message(self, message_id, message, sender)
 		local content
 		if file ~= nil then
 			content = file:read("*a")
+			file:close()
 		end
 		if content ~= nil then
-			-- We got the response ok.
-			print("verifying and storing manifest " .. MANIFEST_FILENAME)
-			resource.store_manifest(content, store_manifest_cb)
+			-- We read the manifest. Compare to current manifest
+
+			local current_manifest_url = sys.get_application_path().."/game.dmanifest"
+			print("current manifest url: "..current_manifest_url)
+			local current_manifest_file = io.open(current_manifest_url, "rb")
+			local current_content
+			if (current_manifest_file ~= nil) then
+				current_content = current_manifest_file:read("*a")
+				current_manifest_file:close()
+			end
+			
+
+			if(current_content ~= nil and content == current_content) then
+				print("content the same")
+			elseif(current_content ~= nil and content ~= current_content) then
+				print("New manifest found. Saving new manifest and rebooting app.")
+				current_manifest_file = io.open(current_manifest_url, "w+b")
+				current_manifest_file:write(content)
+				current_manifest_file:flush()
+				sys.reboot()
+			end
+			
+			--print("verifying and storing manifest " .. MANIFEST_FILENAME)
+			--resource.store_manifest(content, store_manifest_cb)
 		else
 			-- ERROR! Failed to download manifest!
 			print("Failed to download manifest: " .. MANIFEST_FILENAME)
