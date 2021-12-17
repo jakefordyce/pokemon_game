@@ -77,7 +77,10 @@ function on_message(self, message_id, message, sender)
 		msg.post(sender, "init")
 		msg.post(sender, "enable")
 	elseif message_id == hash("attempt_download_manifest") then
-		local base_url = "c:/Users/jake/Desktop/pokemon/"
+		print("application path: "..sys.get_application_path())
+		print("save path: "..sys.get_save_file("Pokemon", "save_file"))
+		--local base_url = "c:/Users/jake/Desktop/pokemon/"
+		local base_url = "/storage/emulated/0/Download/pokemon/"
 		local file_to_read = base_url..MANIFEST_FILENAME
 		local file = io.open(file_to_read, "rb")
 		local content

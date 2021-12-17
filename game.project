@@ -32,6 +32,8 @@ bundle_identifier = com.example.todo
 
 [android]
 input_method = HiddenInputField
+debuggable = 1
+package = com.Jake.Pokemon
 
 [script]
 shared_state = 1
