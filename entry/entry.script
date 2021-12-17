@@ -1,4 +1,5 @@
 local MANIFEST_FILENAME = "liveupdate.game.dmanifest"
+local RESOURCE_FILES_BASE_URL = "/storage/emulated/0/Android/data/com.Jake.Pokemon/files/pokemon/"
 
 function init(self)
 	msg.post(".", "acquire_input_focus")
@@ -59,8 +60,8 @@ function on_message(self, message_id, message, sender)
 		end
 	elseif message_id == hash("attempt_download") then
 		local manifest = resource.get_current_manifest()
-		local base_url = "c:/Users/jake/Desktop/pokemon/"
-		local file_to_read = base_url..message.resource_hash
+		--local base_url = "c:/Users/jake/Desktop/pokemon/"
+		local file_to_read = RESOURCE_FILES_BASE_URL..message.resource_hash
 		local file = io.open(file_to_read, "rb")
 		local content = file:read("*a")
 		file:close()
@@ -80,8 +81,11 @@ function on_message(self, message_id, message, sender)
 		print("application path: "..sys.get_application_path())
 		print("save path: "..sys.get_save_file("Pokemon", "save_file"))
 		--local base_url = "c:/Users/jake/Desktop/pokemon/"
-		local base_url = "/storage/emulated/0/Download/pokemon/"
-		local file_to_read = base_url..MANIFEST_FILENAME
+		--local zip_file_url = "https://github.com/jakefordyce/pokemon_game/raw/live-update-setup/pokemon.zip"
+		
+		-- local base_url = "/storage/emulated/0/Download/pokemon/"
+		--local base_url = "/storage/emulated/0/Android/data/com.Jake.Pokemon/files/pokemon/"
+		local file_to_read = RESOURCE_FILES_BASE_URL..MANIFEST_FILENAME
 		local file = io.open(file_to_read, "rb")
 		local content
 		if file ~= nil then
