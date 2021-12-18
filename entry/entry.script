@@ -1,5 +1,4 @@
 local MANIFEST_FILENAME = "liveupdate.game.dmanifest"
-local RESOURCE_FILES_BASE_URL = "/storage/emulated/0/Android/data/com.Jake.Pokemon/files/pokemon/"
 
 function init(self)
 	msg.post(".", "acquire_input_focus")
@@ -60,8 +59,8 @@ function on_message(self, message_id, message, sender)
 		end
 	elseif message_id == hash("attempt_download") then
 		local manifest = resource.get_current_manifest()
-		--local base_url = "c:/Users/jake/Desktop/pokemon/"
-		local file_to_read = RESOURCE_FILES_BASE_URL..message.resource_hash
+		local base_url = "c:/Users/jake/Desktop/pokemon.zip/"
+		local file_to_read = message.resource_hash
 		local file = io.open(file_to_read, "rb")
 		local content = file:read("*a")
 		file:close()
@@ -80,12 +79,26 @@ function on_message(self, message_id, message, sender)
 	elseif message_id == hash("attempt_download_manifest") then
 		print("application path: "..sys.get_application_path())
 		print("save path: "..sys.get_save_file("Pokemon", "save_file"))
-		--local base_url = "c:/Users/jake/Desktop/pokemon/"
-		--local zip_file_url = "https://github.com/jakefordyce/pokemon_game/raw/live-update-setup/pokemon.zip"
+		local base_url = "https://github.com/jakefordyce/pokemon_game/raw/live-update-setup/pokemon/"
+		--local zip_file_url = "https://github.com/jakefordyce/pokemon_game/raw/live-update-setup/pokemon.zip" --this is wrong.
 		
-		-- local base_url = "/storage/emulated/0/Download/pokemon/"
-		--local base_url = "/storage/emulated/0/Android/data/com.Jake.Pokemon/files/pokemon/"
-		local file_to_read = RESOURCE_FILES_BASE_URL..MANIFEST_FILENAME
+		
+		local file_to_read = base_url..MANIFEST_FILENAME
+		http.request(file_to_read, "GET", function(self, id, response)
+			if response.status == 200 or response.status == 304 then -- <6>
+				-- We got the response ok.
+				print("manifest found on github")
+				local file_to_create = io.open(sys.get_application_path().."/"..MANIFEST_FILENAME, "rb")
+				file_to_create:write(response.response)
+				file_to_create:close()
+				--resource.store_resource(manifest, response.response, message.resource_hash, resource_store_response) -- <7>
+			else
+				-- ERROR! Failed to download resource!
+				print("Failed to get manifest from github")
+			end
+		end)
+
+		--[[
 		local file = io.open(file_to_read, "rb")
 		local content
 		if file ~= nil then
@@ -126,6 +139,7 @@ function on_message(self, message_id, message, sender)
 			print("Failed to download manifest: " .. MANIFEST_FILENAME)
 		end
 		msg.post("#", "attempt_load_resources")
+		--]]
 	end
 end
 
