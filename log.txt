@@ -8,9 +8,8 @@ DEBUG:SCRIPT: save path: C:\Users\jake\AppData\Roaming\Pokemon\save_file
 DEBUG:SCRIPT: Downloading	https://raw.githubusercontent.com/jakefordyce/pokemon_game/live-update-setup/pokemon.zip
 INFO:DLIB: SSDP: Started on address 172.29.80.1
 INFO:DLIB: SSDP: Started on address 192.168.1.13
+DEBUG:SCRIPT: response status304
 DEBUG:SCRIPT: 304: Archive zip file up-to-date
 DEBUG:SCRIPT: no data found
-DEBUG:SCRIPT: missing resources: 0
-DEBUG:SCRIPT: missing resources: 0
 INFO:DLIB: SSDP: Done on address 172.29.80.1
 INFO:DLIB: SSDP: Done on address 192.168.1.13

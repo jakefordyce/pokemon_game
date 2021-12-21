@@ -1,13 +1,11 @@
 local MANIFEST_FILENAME = "liveupdate.game.dmanifest"
 local LIVEUPDATE_URL = "https://raw.githubusercontent.com/jakefordyce/pokemon_game/live-update-setup/"
-local ZIP_FILENAME = 'pokemon.zip'
+local ZIP_FILENAME = 'resources.zip'
 local APP_SAVE_DIR = "pokemon"
 
 function init(self)
 	msg.post(".", "acquire_input_focus")
-	self.resources_pending = 0
-	msg.post("#", "attempt_download_manifest")
-	--msg.post("#", "attempt_load_resources")
+	msg.post("#", "attempt_download_resources")
 end
 
 function final(self)
@@ -48,79 +46,16 @@ local function store_archive_cb(self, path, status)
 		sys.reboot()
 	else
 		print("Failed to store live update archive, ", path)
-		-- remove the path
-	end
-end
-
-local function store_manifest_cb(self, status)
-	if status == resource.LIVEUPDATE_OK then
-		print("Successfully stored manifest!")
-	else
-		print("Failed to store manifest, status: ", status)
-	end
-end
-
--- This function is called whenever we have tried to store a downloaded resource
--- necessary for our collection proxy to load.
-local function resource_store_response(self, hexdigest, status)
-	if status == true then
-		-- Successfully loaded resource
-		print("Resource data stored: " .. hexdigest)
-
-		-- One less resource to go...
-		self.resources_pending = self.resources_pending - 1
-
-		-- That was all of them, time to load the proxied collection.
-		if self.resources_pending == 0 then
-			msg.post("#main", "load") -- <8>
-		end
-	else
-		-- ERROR! Failed to store the data!
-		print("Failed to store resource data: " .. hexdigest)
 	end
 end
 
 function on_message(self, message_id, message, sender)
-	if message_id == hash("attempt_load_resources") then
-		local missing_resources = collectionproxy.missing_resources("#main") -- <2>
-
-		print("missing resources: "..#missing_resources)
-		-- initiate a download request for each of the missing resources that has not yet been tried.
-		for _,resource_hash in ipairs(missing_resources) do
-			msg.post("#", "attempt_download", { resource_hash = resource_hash})
-		end
-
-		self.resources_pending = #missing_resources -- <3>
-
-		-- if we're running from editor all resources are there from the start.
-		if self.resources_pending == 0 then
-			msg.post("#main", "load")
-		end
-	elseif message_id == hash("attempt_download") then
-		local manifest = resource.get_current_manifest()
-		local base_url = sys.get_save_file(APP_SAVE_DIR, ZIP_FILENAME)
-		local file_to_read = message.resource_hash
-		local file = io.open(file_to_read, "rb")
-		local content = file:read("*a")
-		file:close()
-		
-		if content ~= nil then
-			print("storing " .. message.resource_hash)
-			resource.store_resource(manifest, content, message.resource_hash, resource_store_response)
-		else
-			-- ERROR! Failed to download resource!
-			print("Failed to download resource: " .. message.resource_hash)
-		end
-		
-	elseif message_id == hash("proxy_loaded") then
+	if message_id == hash("proxy_loaded") then
 		msg.post(sender, "init")
 		msg.post(sender, "enable")
-	elseif message_id == hash("attempt_download_manifest") then
+	elseif message_id == hash("attempt_download_resources") then
 		print("application path: "..sys.get_application_path())
 		print("save path: "..sys.get_save_file("Pokemon", "save_file"))
-
-		-- something to try if I come back to Defold.
-		--https://defold.com/ref/stable/resource/#resource.store_archive:path-callback
 
 		-- by supplying the ETag, we don't have to redownload the file again
 		-- if we already have downloaded it.

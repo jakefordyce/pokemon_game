@@ -1,10 +1,11 @@
 local game_state = require "common/game_state"
 local area_names = require "common/area_names"
 local encounters = require "common/encounters"
-local proxy_to_load
+--local proxy_to_load
 
 -- This function is called whenever we have tried to store a downloaded resource
 -- necessary for our collection proxy to load.
+--[[
 local function resource_store_response(self, hexdigest, status)
 	if status == true then
 		-- Successfully loaded resource
@@ -22,12 +23,14 @@ local function resource_store_response(self, hexdigest, status)
 		print("Failed to store resource data: " .. hexdigest)
 	end
 end
+--]]
 
 local function load_screen(self, new_screen, old_screen)
 	if old_screen ~= nil then
 		msg.post("loader#"..old_screen, "unload")
 	end
 
+	--[[
 	proxy_to_load = "loader#"..new_screen
 
 	local missing_resources = collectionproxy.missing_resources("loader#"..new_screen) -- <2>
@@ -42,8 +45,9 @@ local function load_screen(self, new_screen, old_screen)
 
 	-- if we're running from editor all resources are there from the start.
 	if self.resources_pending == 0 then
-		msg.post("loader#"..new_screen, "load")
-	end
+	--]]
+	msg.post("loader#"..new_screen, "load")
+	--end
 	
 	--msg.post("loader#"..new_screen, "load")
 	--msg.post("loader#"..new_screen, "enable")
@@ -63,7 +67,7 @@ function init(self)
 	end
 	math.randomseed(os.time())
 	math.random(); math.random(); math.random()
-	---[[ TEST
+	--[[ TEST
 	local test_level = 10
 	game_state.add_pokemon(1,test_level)
 	game_state.add_pokemon(4,test_level)
@@ -222,6 +226,8 @@ function on_message(self, message_id, message, sender)
 	end
 	if message_id == hash("close_poke_league") then
 		load_screen(self, area_names[game_state.player.current_area], "poke_league")
+	end
+	--[[
 	elseif message_id == hash("attempt_download") then
 		local manifest = resource.get_current_manifest() -- <4>
 		
@@ -239,7 +245,8 @@ function on_message(self, message_id, message, sender)
 			-- ERROR! Failed to download resource!
 			print("Failed to download resource: " .. message.resource_hash)
 		end
-	elseif message_id == hash("proxy_loaded") then
+		--]]
+	if message_id == hash("proxy_loaded") then
 		msg.post(sender, "init")
 		msg.post(sender, "enable")
 	end
