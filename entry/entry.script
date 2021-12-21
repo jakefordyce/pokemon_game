@@ -125,9 +125,9 @@ function on_message(self, message_id, message, sender)
 		-- by supplying the ETag, we don't have to redownload the file again
 		-- if we already have downloaded it.
 		local headers = get_http_request_headers(ZIP_FILENAME .. '.json')
-		--if not resource.is_using_liveupdate_data() then
+		if not resource.is_using_liveupdate_data() then
 			headers = {} -- live update data has been purged, and we need do a fresh download
-		--end
+		end
 
 		local path = sys.get_save_file(APP_SAVE_DIR, ZIP_FILENAME)
 		local options = {
@@ -158,54 +158,9 @@ function on_message(self, message_id, message, sender)
 			-- we can load the missing resources from the liveupdate archive
 			if resource.is_using_liveupdate_data() then
 				msg.post("#main", "load")
-				--msg.post(self.proxy, "load")
 			end
 		end,
 		headers, nil, options)
-
-		--msg.post("#", "attempt_load_resources")
-		--[[
-		local file = io.open(file_to_read, "rb")
-		local content
-		if file ~= nil then
-			content = file:read("*a")
-			file:close()
-		end
-		if content ~= nil then
-			-- We read the manifest. Compare to current manifest
-
-			local current_manifest_url = sys.get_application_path().."/game.dmanifest"
-			print("current manifest url: "..current_manifest_url)
-			local current_manifest_file = io.open(current_manifest_url, "rb")
-			local current_content
-			if (current_manifest_file ~= nil) then
-				current_content = current_manifest_file:read("*a")
-				current_manifest_file:close()
-			end
-			
-
-			if(current_content ~= nil and content == current_content) then
-				print("content the same")
-			elseif(current_content ~= nil and content ~= current_content) then
-				print("New manifest found. Saving new manifest and rebooting app.")
-				current_manifest_file = io.open(current_manifest_url, "w+b")
-				current_manifest_file:write(content)
-				current_manifest_file:flush()
-				os.remove(sys.get_save_file("60cc2a923a97e8eb7a2d00659c1f05a72d47db56", "liveupdate.arcd"))
-				os.remove(sys.get_save_file("60cc2a923a97e8eb7a2d00659c1f05a72d47db56", "liveupdate.arci"))
-				os.remove(sys.get_save_file("60cc2a923a97e8eb7a2d00659c1f05a72d47db56", "liveupdate.arci.tmp"))
-				sys.reboot()
-				return true
-			end
-			
-			--print("verifying and storing manifest " .. MANIFEST_FILENAME)
-			--resource.store_manifest(content, store_manifest_cb)
-		else
-			-- ERROR! Failed to download manifest!
-			print("Failed to download manifest: " .. MANIFEST_FILENAME)
-		end
-		msg.post("#", "attempt_load_resources")
-		--]]
 	end
 end
 
