@@ -5,7 +5,8 @@ local APP_SAVE_DIR = "pokemon"
 
 function init(self)
 	msg.post(".", "acquire_input_focus")
-	msg.post("#", "attempt_download_manifest")
+	-- msg.post("#", "attempt_download_manifest")
+	msg.post("#", "attempt_download_resources")
 end
 
 function final(self)
@@ -53,6 +54,7 @@ function on_message(self, message_id, message, sender)
 	if message_id == hash("proxy_loaded") then
 		msg.post(sender, "init")
 		msg.post(sender, "enable")
+		--[[
 	elseif message_id == hash("attempt_download_manifest") then
 		local manifest_url = LIVEUPDATE_URL .. MANIFEST_FILENAME
 		local manifest_path = sys.get_save_file(APP_SAVE_DIR, MANIFEST_FILENAME)
@@ -88,6 +90,7 @@ function on_message(self, message_id, message, sender)
 				print("Error when downloading", manifest_url, "to", manifest_path, ":", response.status, response.error)
 			end
 		end)
+		--]]
 	elseif message_id == hash("attempt_download_resources") then
 		print("application path: "..sys.get_application_path())
 		print("save path: "..sys.get_save_file("Pokemon", "save_file"))
@@ -117,6 +120,7 @@ function on_message(self, message_id, message, sender)
 				
 				-- register the path to the live update system
 				resource.store_archive(path, store_archive_cb)
+				os.remove(path)
 				-- at this point, the "path" has been moved internally to a different location
 
 				-- save the ETag for the next run
