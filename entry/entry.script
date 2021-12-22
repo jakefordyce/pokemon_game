@@ -110,6 +110,10 @@ function on_message(self, message_id, message, sender)
 		}
 
 		local resource_url = LIVEUPDATE_URL .. ZIP_FILENAME
+		local zip_found = io.open(path)
+		if zip_found then
+			zip_found:close()
+		end
 		
 		http.request(resource_url, "GET", function(self, id, response)
 			print("response status: "..response.status)
@@ -117,10 +121,12 @@ function on_message(self, message_id, message, sender)
 				print(string.format("%d: Archive zip file up-to-date", response.status))
 			elseif response.status == 200 and response.error == nil then
 				print("Downloading", resource_url)
-				
+
+				if zip_found then
+					os.remove(path)
+				end
 				-- register the path to the live update system
 				resource.store_archive(path, store_archive_cb)
-				os.remove(path)
 				-- at this point, the "path" has been moved internally to a different location
 
 				-- save the ETag for the next run
