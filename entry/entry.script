@@ -135,6 +135,7 @@ function on_message(self, message_id, message, sender)
 			elseif response.status == 200 and response.error == nil then
 				print("Downloading", resource_url)
 
+				os.remove(ref_file)
 				-- register the path to the live update system
 				resource.store_archive(path, store_archive_cb)
 				-- at this point, the "path" has been moved internally to a different location
