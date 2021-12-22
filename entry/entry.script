@@ -81,6 +81,9 @@ function on_message(self, message_id, message, sender)
 					sys.reboot()
 					return true
 				end
+			elseif response.status == 304 then
+				print("manifest the same")
+				msg.post("#", "attempt_download_resources")
 			else
 				print("Error when downloading", manifest_url, "to", manifest_path, ":", response.status, response.error)
 			end
