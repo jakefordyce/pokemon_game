@@ -72,7 +72,7 @@ function on_message(self, message_id, message, sender)
 				end
 				if(current_content ~= nil and online_manifest_content == current_content) then
 					print("manifest the same")
-					msg.post("#", attempt_download_resources)
+					msg.post("#", "attempt_download_resources")
 				elseif(current_content ~= nil and online_manifest_content ~= current_content) then
 					print("New manifest found. Saving new manifest and rebooting app.")
 					current_manifest_file = io.open(current_manifest_url, "w+b")
