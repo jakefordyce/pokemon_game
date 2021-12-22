@@ -5,7 +5,7 @@ local APP_SAVE_DIR = "pokemon"
 
 function init(self)
 	msg.post(".", "acquire_input_focus")
-	msg.post("#", "attempt_download_resources")
+	msg.post("#", "attempt_download_manifest")
 end
 
 function final(self)
@@ -53,6 +53,38 @@ function on_message(self, message_id, message, sender)
 	if message_id == hash("proxy_loaded") then
 		msg.post(sender, "init")
 		msg.post(sender, "enable")
+	elseif message_id == hash("attempt_download_manifest") then
+		local manifest_url = LIVEUPDATE_URL .. MANIFEST_FILENAME
+		local manifest_path = sys.get_save_file(APP_SAVE_DIR, MANIFEST_FILENAME)
+		print("checking manifest for changes")
+		http.request(manifest_url, "GET", function(self, id, response)
+			print("response status: "..response.status)
+			if response.status == 200 and response.error == nil then
+				local online_manifest_content = response.response
+				-- We read the current manifest. Compare to online manifest
+				local current_manifest_url = sys.get_application_path().."/game.dmanifest"
+				print("current manifest url: "..current_manifest_url)
+				local current_manifest_file = io.open(current_manifest_url, "rb")
+				local current_content
+				if (current_manifest_file ~= nil) then
+					current_content = current_manifest_file:read("*a")
+					current_manifest_file:close()
+				end
+				if(current_content ~= nil and online_manifest_content == current_content) then
+					print("manifest the same")
+					msg.post("#", attempt_download_resources)
+				elseif(current_content ~= nil and online_manifest_content ~= current_content) then
+					print("New manifest found. Saving new manifest and rebooting app.")
+					current_manifest_file = io.open(current_manifest_url, "w+b")
+					current_manifest_file:write(online_manifest_content)
+					current_manifest_file:flush()
+					sys.reboot()
+					return true
+				end
+			else
+				print("Error when downloading", manifest_url, "to", manifest_path, ":", response.status, response.error)
+			end
+		end)
 	elseif message_id == hash("attempt_download_resources") then
 		print("application path: "..sys.get_application_path())
 		print("save path: "..sys.get_save_file("Pokemon", "save_file"))
@@ -61,6 +93,7 @@ function on_message(self, message_id, message, sender)
 		-- if we already have downloaded it.
 		local headers = get_http_request_headers(ZIP_FILENAME .. '.json')
 		if not resource.is_using_liveupdate_data() then
+			print("not using liveupdate data")
 			headers = {} -- live update data has been purged, and we need do a fresh download
 		end
 
@@ -70,22 +103,23 @@ function on_message(self, message_id, message, sender)
 			ignore_cache = true -- we don't want to store a (potentially large) duplicate in our http cache
 		}
 
-		local url = LIVEUPDATE_URL .. ZIP_FILENAME
-		print("Downloading", url)
-		http.request(url, "GET", function(self, id, response)
-			print("response status"..response.status)
+		local resource_url = LIVEUPDATE_URL .. ZIP_FILENAME
+		
+		http.request(resource_url, "GET", function(self, id, response)
+			print("response status: "..response.status)
 			if response.status == 304 then
 				print(string.format("%d: Archive zip file up-to-date", response.status))
 			elseif response.status == 200 and response.error == nil then
-				-- register the path to the live update system
+				print("Downloading", resource_url)
 				
+				-- register the path to the live update system
 				resource.store_archive(path, store_archive_cb)
 				-- at this point, the "path" has been moved internally to a different location
 
 				-- save the ETag for the next run
 				store_http_response_headers(ZIP_FILENAME .. '.json', response.headers)
 			else
-				print("Error when downloading", url, "to", path, ":", response.status, response.error)
+				print("Error when downloading", resource_url, "to", path, ":", response.status, response.error)
 			end
 
 			-- If we got a 200, we would call store_archive_cb() then reboot

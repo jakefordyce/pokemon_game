@@ -3,13 +3,10 @@ INFO:ENGINE: Loading data from: build/default
 INFO:ENGINE: Initialised sound device 'default'
 DEBUG:SCRIPT: Listening for debugger on 0.0.0.0
 DEBUG:SCRIPT: Debugger connected from 127.0.0.1
-DEBUG:SCRIPT: application path: C:\Users\jake\AppData\Local\Defold\unpack\09da5fbf86f611727c6f533a6078c0d84f6b8da9\x86_64-win32\bin
-DEBUG:SCRIPT: save path: C:\Users\jake\AppData\Roaming\Pokemon\save_file
-DEBUG:SCRIPT: Downloading	https://raw.githubusercontent.com/jakefordyce/pokemon_game/live-update-setup/pokemon.zip
+DEBUG:SCRIPT: checking manifest for changes
 INFO:DLIB: SSDP: Started on address 172.29.80.1
 INFO:DLIB: SSDP: Started on address 192.168.1.13
-DEBUG:SCRIPT: response status304
-DEBUG:SCRIPT: 304: Archive zip file up-to-date
-DEBUG:SCRIPT: no data found
+DEBUG:SCRIPT: response status: 404
+DEBUG:SCRIPT: Error when downloading	https://raw.githubusercontent.com/jakefordyce/pokemon_game/live-update-setup/liveupdate.game.dmanifest	to	C:\Users\jake\AppData\Roaming\pokemon\liveupdate.game.dmanifest	:	404	nil
 INFO:DLIB: SSDP: Done on address 172.29.80.1
 INFO:DLIB: SSDP: Done on address 192.168.1.13
