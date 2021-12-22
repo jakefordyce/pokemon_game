@@ -108,10 +108,11 @@ function on_message(self, message_id, message, sender)
 
 		local path = sys.get_save_file(APP_SAVE_DIR, ZIP_FILENAME)
 		local alt_path = sys.get_save_file(APP_SAVE_DIR, ALT_ZIP_FILENAME)
+		local ref_file_path = sys.get_save_file(HASH_DIR, LIVEUPDATE_REF)
 		
 		local resource_url = LIVEUPDATE_URL .. ZIP_FILENAME
 		--clean up old zip files.
-		local ref_file = io.open(sys.get_save_file(HASH_DIR, LIVEUPDATE_REF))
+		local ref_file = io.open(ref_file_path)
 		if ref_file ~= nil then
 			local ref_file_content = ref_file:read()
 			if ref_file_content == path then
@@ -135,7 +136,7 @@ function on_message(self, message_id, message, sender)
 			elseif response.status == 200 and response.error == nil then
 				print("Downloading", resource_url)
 
-				os.remove(ref_file)
+				os.remove(ref_file_path)
 				-- register the path to the live update system
 				resource.store_archive(path, store_archive_cb)
 				-- at this point, the "path" has been moved internally to a different location
