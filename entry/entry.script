@@ -1,7 +1,10 @@
 local MANIFEST_FILENAME = "liveupdate.game.dmanifest"
 local LIVEUPDATE_URL = "https://raw.githubusercontent.com/jakefordyce/pokemon_game/live-update-setup/"
 local ZIP_FILENAME = 'resources.zip'
+local ALT_ZIP_FILENAME = 'resources1.zip'
 local APP_SAVE_DIR = "pokemon"
+local HASH_DIR = "60cc2a923a97e8eb7a2d00659c1f05a72d47db56"
+local LIVEUPDATE_REF = "liveupdate.ref"
 
 function init(self)
 	msg.post(".", "acquire_input_focus")
@@ -104,16 +107,26 @@ function on_message(self, message_id, message, sender)
 		end
 
 		local path = sys.get_save_file(APP_SAVE_DIR, ZIP_FILENAME)
+		local alt_path = sys.get_save_file(APP_SAVE_DIR, ALT_ZIP_FILENAME)
+		
+		local resource_url = LIVEUPDATE_URL .. ZIP_FILENAME
+		--clean up old zip files.
+		local ref_file = io.open(sys.get_save_file(HASH_DIR, LIVEUPDATE_REF))
+		if ref_file ~= nil then
+			local ref_file_content = ref_file:read()
+			if ref_file_content == path then
+				os.remove(alt_path)
+				path = alt_path
+			elseif ref_file_content == alt_path then
+				os.remove(path)
+			end
+			ref_file:close()
+		end
+
 		local options = {
 			path = path,        -- a temporary file on disc. will be removed upon successful liveupdate storage
 			ignore_cache = true -- we don't want to store a (potentially large) duplicate in our http cache
 		}
-
-		local resource_url = LIVEUPDATE_URL .. ZIP_FILENAME
-		local zip_found = io.open(path)
-		if zip_found then
-			zip_found:close()
-		end
 		
 		http.request(resource_url, "GET", function(self, id, response)
 			print("response status: "..response.status)
@@ -122,9 +135,6 @@ function on_message(self, message_id, message, sender)
 			elseif response.status == 200 and response.error == nil then
 				print("Downloading", resource_url)
 
-				if zip_found then
-					os.remove(path)
-				end
 				-- register the path to the live update system
 				resource.store_archive(path, store_archive_cb)
 				-- at this point, the "path" has been moved internally to a different location
