@@ -54,3 +54,7 @@ max_count = 512
 [label]
 max_count = 512
 
+[html5]
+show_fullscreen_button = 0
+show_made_with_defold = 0
+

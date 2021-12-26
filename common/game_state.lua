@@ -389,6 +389,7 @@ end
 function M.load_game()
 	local save_file_path = sys.get_save_file("Pokemon", "save_file")
 	local save_data = sys.load(save_file_path)
+
 	if not next(save_data) then
 		print("no data found")
 	else
