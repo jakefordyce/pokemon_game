@@ -207,10 +207,11 @@
 	
 	
 	
+    var dpi = window.devicePixelRatio || 1;
 		app_container.style.width = width + "px";
 		app_container.style.height = height + buttonHeight + "px";
-		game_canvas.width = width;
-		game_canvas.height = height;
+		game_canvas.width = width * dpi;
+		game_canvas.height = height * dpi;
 	}
 	resize_game_canvas();
 	window.addEventListener('resize', resize_game_canvas, false);
