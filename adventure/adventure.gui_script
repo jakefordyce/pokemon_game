@@ -68,6 +68,9 @@ function on_input(self, action_id, action)
 				msg.post("player", "button_down")
 			end
 		end
+		if(gui.pick_node(gui.get_node("button_b"),action.x,action.y) and not game_state.dialog_is_displaying) then
+			msg.post("player", "button_b")
+		end
 	end
 	if(action_id == hash("touch") and action.released == true) then
 		if(gui.pick_node(gui.get_node("button_plus"),action.x,action.y) and not game_state.dialog_is_displaying) then
@@ -93,6 +96,60 @@ function on_input(self, action_id, action)
 				msg.post("player", "interact")
 			end
 		end
+	end
+	if(action_id == hash("button_left") and not game_state.dialog_is_displaying) then
+		msg.post("player", "button_left")
+	end
+	if(action_id == hash("button_right") and not game_state.dialog_is_displaying) then
+		msg.post("player", "button_right")
+	end
+	if(action_id == hash("button_up")) then
+		if game_state.dialog_is_displaying then
+			if waiting_for_choice then
+				choice_is_yes = true
+				gui.set_enabled(gui.get_node("yes_cursor"), true)
+				gui.set_enabled(gui.get_node("no_cursor"), false)
+			end
+		else
+			msg.post("player", "button_up")
+		end
+	end
+	if(action_id == hash("button_down")) then
+		if game_state.dialog_is_displaying then
+			if waiting_for_choice then
+				choice_is_yes = false
+				gui.set_enabled(gui.get_node("yes_cursor"), false)
+				gui.set_enabled(gui.get_node("no_cursor"), true)
+			end
+		else
+			msg.post("player", "button_down")
+		end
+	end
+	if(action_id == hash("button_b")) then
+		msg.post("player", "button_b")
+	end
+	if(action_id == hash("button_a") and action.released == true) then
+		if game_state.dialog_is_displaying then
+			if waiting_for_choice then
+				game_state.dialog_is_displaying = false
+				gui.set_enabled(gui.get_node("choices_panel"), false)
+				msg.post(dialog_sender, "dialog_end", {dialog_id = current_dialog_id, choice = choice_is_yes})
+				waiting_for_choice = false
+			else
+				gui.set_enabled(gui.get_node("dialog_panel"), false)
+				game_state.dialog_is_displaying = false
+				if(current_dialog_id ~= nil and dialogs[current_dialog_id].next ~= nil)then
+					msg.post(".", "continue_dialog", {dialog_id = dialogs[current_dialog_id].next})
+				else
+					msg.post(dialog_sender, "dialog_end", {dialog_id = current_dialog_id})
+				end
+			end
+		else
+			msg.post("player", "interact")
+		end
+	end
+	if(action_id == hash("button_plus") and not game_state.dialog_is_displaying) then
+		msg.post("player", "open_menu")
 	end
 end
 

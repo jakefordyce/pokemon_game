@@ -1,3 +1,47 @@
+key_trigger {
+  input: KEY_KP_1
+  action: "button_b"
+}
+key_trigger {
+  input: KEY_A
+  action: "button_left"
+}
+key_trigger {
+  input: KEY_S
+  action: "button_down"
+}
+key_trigger {
+  input: KEY_D
+  action: "button_right"
+}
+key_trigger {
+  input: KEY_W
+  action: "button_up"
+}
+key_trigger {
+  input: KEY_LEFT
+  action: "button_left"
+}
+key_trigger {
+  input: KEY_DOWN
+  action: "button_down"
+}
+key_trigger {
+  input: KEY_RIGHT
+  action: "button_right"
+}
+key_trigger {
+  input: KEY_UP
+  action: "button_up"
+}
+key_trigger {
+  input: KEY_KP_2
+  action: "button_a"
+}
+key_trigger {
+  input: KEY_KP_ADD
+  action: "button_plus"
+}
 mouse_trigger {
   input: MOUSE_BUTTON_1
   action: "touch"
