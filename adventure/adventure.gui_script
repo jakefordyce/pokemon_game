@@ -39,7 +39,45 @@ function on_message(self, message_id, message, sender)
 end
 
 function on_input(self, action_id, action)
-	if(action_id == hash("touch")) then
+	if(action_id == hash("touch_multi")) then
+		for i, touchdata in ipairs(action.touch) do
+			print("multi-touch x: "..touchdata.x)
+			print("multi-touch y: "..touchdata.y)
+			if(gui.pick_node(gui.get_node("button_left"),touchdata.x,touchdata.y) and not game_state.dialog_is_displaying) then
+				msg.post("player", "button_left")
+			end
+			if(gui.pick_node(gui.get_node("button_right"),touchdata.x,touchdata.y) and not game_state.dialog_is_displaying) then
+				msg.post("player", "button_right")
+			end
+			if(gui.pick_node(gui.get_node("button_up"),touchdata.x,touchdata.y)) then
+				if game_state.dialog_is_displaying then
+					if waiting_for_choice then
+						choice_is_yes = true
+						gui.set_enabled(gui.get_node("yes_cursor"), true)
+						gui.set_enabled(gui.get_node("no_cursor"), false)
+					end
+				else
+					msg.post("player", "button_up")
+				end
+			end
+			if(gui.pick_node(gui.get_node("button_down"),touchdata.x,touchdata.y)) then
+				if game_state.dialog_is_displaying then
+					if waiting_for_choice then
+						choice_is_yes = false
+						gui.set_enabled(gui.get_node("yes_cursor"), false)
+						gui.set_enabled(gui.get_node("no_cursor"), true)
+					end
+				else
+					msg.post("player", "button_down")
+				end
+			end
+			if(gui.pick_node(gui.get_node("button_b"),touchdata.x,touchdata.y) and not game_state.dialog_is_displaying) then
+				msg.post("player", "button_b")
+			end
+		end
+	end
+		---[[
+	if(action_id == hash("touch"))then
 		if(gui.pick_node(gui.get_node("button_left"),action.x,action.y) and not game_state.dialog_is_displaying) then
 			msg.post("player", "button_left")
 		end
@@ -71,6 +109,7 @@ function on_input(self, action_id, action)
 		if(gui.pick_node(gui.get_node("button_b"),action.x,action.y) and not game_state.dialog_is_displaying) then
 			msg.post("player", "button_b")
 		end
+		--]]
 	end
 	if(action_id == hash("touch") and action.released == true) then
 		if(gui.pick_node(gui.get_node("button_plus"),action.x,action.y) and not game_state.dialog_is_displaying) then
