@@ -5,14 +5,15 @@ local boss_stats = require "common/boss_stats"
 local M = {}
 
 --FLAGS--
---[[ TEST
-M.flags = {
-	starters_chosen = true
-} --]]
 ---[[ PROD
 M.flags = {
 	starters_chosen = false
 } --]]
+--[[ TEST
+M.flags = {
+	starters_chosen = true
+} --]]
+
 
 M.items_found = {}
 M.trainers_defeated = {}
@@ -334,13 +335,19 @@ function M.calculate_pokemon_stats()
 				end
 			end
 		end
-
-		mon.attack = math.ceil(mon.attack + (runes_bonuses[9] * mon.attack / 100) + runes_bonuses[1])
-		mon.spattack = math.ceil(mon.spattack + (runes_bonuses[9] * mon.spattack / 100) + runes_bonuses[1])
-		mon.hp = math.ceil(mon.hp + (runes_bonuses[10] * mon.hp / 100) + runes_bonuses[2])
-		mon.defense = math.ceil(mon.defense + (runes_bonuses[11] * mon.defense / 100) + runes_bonuses[3])
-		mon.spdefense = math.ceil(mon.spdefense + (runes_bonuses[11] * mon.spdefense / 100) + runes_bonuses[3])
-		mon.speed = mon.speed + runes_bonuses[4]
+		--flat stats first. Percents after.
+		mon.attack = mon.attack + runes_bonuses[1]
+		mon.spattack = mon.spattack + runes_bonuses[1]
+		mon.hp = mon.hp + runes_bonuses[2]
+		mon.defense = mon.defense + runes_bonuses[3]
+		mon.spdefense = mon.spdefense + runes_bonuses[3]
+		
+		mon.attack = math.ceil(mon.attack + (runes_bonuses[9] * mon.attack / 100))
+		mon.spattack = math.ceil(mon.spattack + (runes_bonuses[9] * mon.spattack / 100))
+		mon.hp = math.ceil(mon.hp + (runes_bonuses[10] * mon.hp / 100))
+		mon.defense = math.ceil(mon.defense + (runes_bonuses[11] * mon.defense / 100))
+		mon.spdefense = math.ceil(mon.spdefense + (runes_bonuses[11] * mon.spdefense / 100))
+		mon.speed = math.ceil(mon.speed + (runes_bonuses[4] * mon.speed / 100))
 		mon.accuracy = mon.accuracy + runes_bonuses[5]
 		mon.resist = mon.resist + runes_bonuses[6]
 		mon.crit_chance = mon.crit_chance + runes_bonuses[7]

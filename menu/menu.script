@@ -262,7 +262,7 @@ function display_move_list(mon)
 		end
 		
 		if (move_equipped == false) and move_can_equip_in_slot then
-			local move = factory.create("#move_factory",p, nil, {move_index = m.id})
+			local move = factory.create("#move_factory",p, nil, {move_index = m.id, move_level = m.level})
 			go.set_parent(move, go.get_id("menu"))
 			table.insert(spawned_moves, move)
 

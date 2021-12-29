@@ -570,7 +570,25 @@ M[109]={}
 M[110]={}
 M[111]={}
 M[112]={}
-M[113]={}
+
+moves = {}
+moves[1] = {["level"] = 1, ["id"] = 1}
+moves[2] = {["level"] = 1, ["id"] = 74}
+moves[3] = {["level"] = 7, ["id"] = 46}
+moves[4] = {["level"] = 10, ["id"] = 61}
+M[113] = {
+	name = "chansey",
+	rarity = 4,
+	hp = 250,
+	attack = 20,
+	defense = 20,
+	spattack = 65,
+	spdefense = 105,
+	speed = 90,
+	type1 = 1,
+	type2 = 1,
+	moves = moves
+}
 M[114]={}
 M[115]={}
 M[116]={}
@@ -836,7 +854,26 @@ M[212]={}
 M[213]={}
 M[214]={}
 M[215]={}
-M[216]={}
+
+moves = {}
+moves[1] = {["level"] = 1, ["id"] = 1}
+moves[2] = {["level"] = 1, ["id"] = 45}
+moves[3] = {["level"] = 6, ["id"] = 28}
+moves[4] = {["level"] = 9, ["id"] = 3}
+moves[5] = {["level"] = 12, ["id"] = 41}
+M[216]={
+	name = "teddiursa",
+	rarity = 2,
+	hp = 90,
+	attack = 100,
+	defense = 80,
+	spattack = 80,
+	spdefense = 80,
+	speed = 95,
+	type1 = 1,
+	type2 = 1,
+	moves = moves
+}
 M[217]={}
 M[218]={}
 M[219]={}

@@ -147,12 +147,12 @@ end
 
 function M.description(rune)
 	desc_text = "" .. M.stat_names[rune.main_stat] .. " + " .. M.mainstat_value(rune.main_stat, rune.level)
-	if rune.main_stat > 6 then
+	if rune.main_stat > 6 or rune.main_stat == 4 then
 		desc_text = desc_text .. "%"
 	end
 	for i, ss in ipairs(rune.substats) do
 		desc_text = desc_text .. "\n" .. M.stat_names[ss.stat].." + " .. M.substat_value(ss.stat, ss.rank)
-		if ss.stat > 6 then
+		if ss.stat > 6 or ss.stat == 4 then
 			desc_text = desc_text .. "%"
 		end
 	end

@@ -1037,7 +1037,7 @@ meffects[1] = {}
 meffects[1].id = 16
 meffects[1].target = 2
 meffects[1].param1 = function(moveLevel)
-	heal = 30 + (moveLevel * 2)
+	heal = 15 + (moveLevel * 1)
 	return heal
 end
 meffects[1].param2 = "hp"
@@ -1053,7 +1053,7 @@ M[36] = {
 	targetting = 2,
 	max_level = 5,
 	description = function(moveLevel)
-		heal = 30 + (moveLevel * 2)
+		heal = 15 + (moveLevel * 1)
 		return "Heals an ally for "..heal.."% of User's max HP."
 	end
 }
@@ -2184,6 +2184,32 @@ M[73] = {
 	description = function(moveLevel)
 		damage = 150 + (moveLevel * 10)
 		return "Attacks 1 enemy for "..damage.."% of Attack."
+	end
+}
+
+meffects = {}
+meffects[1] = {}
+meffects[1].id = 16
+meffects[1].target = 2
+meffects[1].param1 = function(moveLevel)
+	heal = 25 + (moveLevel * 2)
+	return heal
+end
+meffects[1].param2 = "hp"
+
+M[74] = {
+	name = "Softboiled",
+	effects = meffects,
+	cooldown = function(moveLevel)
+		return 4
+	end,
+	default = false,
+	type = 1,
+	targetting = 2,
+	max_level = 5,
+	description = function(moveLevel)
+		heal = 25 + (moveLevel * 2)
+		return "Heals an ally for "..heal.."% of User's max HP."
 	end
 }
 
