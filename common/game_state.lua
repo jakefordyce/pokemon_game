@@ -7,12 +7,13 @@ local M = {}
 --FLAGS--
 --[[ TEST
 M.flags = {
-	--starters_chosen = true
+	starters_chosen = true
 } --]]
 ---[[ PROD
 M.flags = {
 	starters_chosen = false
 } --]]
+
 M.items_found = {}
 M.trainers_defeated = {}
 M.bill_bosses_defeated = {0}

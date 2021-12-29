@@ -486,7 +486,25 @@ M[79]={}
 M[80]={}
 M[81]={}
 M[82]={}
-M[83]={}
+
+moves = {}
+moves[1] = {["level"] = 1, ["id"] = 1}
+moves[2] = {["level"] = 1, ["id"] = 72}
+moves[3] = {["level"] = 6, ["id"] = 71}
+moves[4] = {["level"] = 9, ["id"] = 73}
+M[83] = {
+	name = "farfetchd",
+	rarity = 3,
+	hp = 90,
+	attack = 140,
+	defense = 80,
+	spattack = 85,
+	spdefense = 95,
+	speed = 92,
+	type1 = 1,
+	type2 = 3,
+	moves = moves
+}
 M[84]={}
 M[85]={}
 M[86]={}

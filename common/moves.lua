@@ -2127,4 +2127,64 @@ M[71] = {
 	end
 }
 
+
+meffects = {}
+meffects[1] = {}
+meffects[1].id = 3 --increase attack
+meffects[1].target = 4
+meffects[1].param1 = function(moveLevel)
+	return 75 + (5 * moveLevel)
+end
+meffects[1].param2 = 2
+
+meffects[2] = {}
+meffects[2].id = 8 --increase turn
+meffects[2].target = 4
+meffects[2].param1 = function(moveLevel)
+	return 100
+end
+meffects[2].param2 = 25
+
+M[72] = {
+	name = "Swords Dance",
+	effects = meffects,
+	cooldown = function(moveLevel)
+		return 3
+	end,
+	default = false,
+	type = 1,
+	targetting = 2,
+	max_level = 5,
+	description = function(moveLevel)
+		chance = 75 + (5 + moveLevel)
+		return "Has a "..chance.."% chance of increasing Attack of all allies for 2 turns and increasing the turn of all allies by 25%"
+	end
+}
+
+meffects = {}
+meffects[1] = {}
+meffects[1].id = 1
+meffects[1].target = 1
+meffects[1].param1 = function(moveLevel)
+	damage = 150 + (moveLevel * 10)
+	return damage
+end
+meffects[1].param2 = "attack"
+
+M[73] = {
+	name = "Cut",
+	effects = meffects,
+	cooldown = function(moveLevel)
+		return 0
+	end,
+	default = true,
+	type = 1,
+	targetting = 1,
+	max_level = 5,
+	description = function(moveLevel)
+		damage = 150 + (moveLevel * 10)
+		return "Attacks 1 enemy for "..damage.."% of Attack."
+	end
+}
+
 return M
