@@ -280,7 +280,25 @@ M[19] = {
 	moves = moves
 }
 M[20] = {}
-M[21] = {}
+
+moves = {}
+moves[1] = {["level"] = 1, ["id"] = 1}
+moves[2] = {["level"] = 1, ["id"] = 69}
+moves[3] = {["level"] = 6, ["id"] = 71}
+moves[4] = {["level"] = 9, ["id"] = 70}
+M[21] = {
+	name = "spearow",
+	rarity = 2,
+	hp = 85,
+	attack = 105,
+	defense = 65,
+	spattack = 65,
+	spdefense = 70,
+	speed = 108,
+	type1 = 3,
+	type2 = 3,
+	moves = moves
+}
 M[22] = {}
 M[23] = {}
 M[24] = {}

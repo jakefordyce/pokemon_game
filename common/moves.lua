@@ -2048,4 +2048,83 @@ M[68] = {
 	end
 }
 
+meffects = {}
+meffects[1] = {}
+meffects[1].id = 4
+meffects[1].target = 3
+meffects[1].param1 = function(moveLevel)
+	chance = 75 + (moveLevel * 5)
+	return chance
+end
+meffects[1].param2 = 2
+
+M[69] = {
+	name = "Leer",
+	effects = meffects,
+	cooldown = function(moveLevel)
+		return 3
+	end,
+	default = false,
+	type = 1,
+	targetting = 1,
+	max_level = 5,
+	description = function(moveLevel)
+		chance = 75 + (moveLevel * 5)
+		return "Has a "..chance.."% chance of reducing the Defense of all enemies for 2 turns."
+	end
+}
+
+meffects = {}
+meffects[1] = {}
+meffects[1].id = 1
+meffects[1].target = 1
+meffects[1].param1 = function(moveLevel)
+	damage = 150 + (moveLevel * 7.5)
+	return damage
+end
+meffects[1].param2 = "attack"
+
+M[70] = {
+	name = "Peck",
+	effects = meffects,
+	cooldown = function(moveLevel)
+		return 0
+	end,
+	default = true,
+	type = 3,
+	targetting = 1,
+	max_level = 5,
+	description = function(moveLevel)
+		damage = 150 + (moveLevel * 7.5)
+		return "Attacks 1 enemy for "..damage.."% of Attack."
+	end
+}
+
+meffects = {}
+meffects[1] = {}
+meffects[1].id = 1
+meffects[1].target = 1
+meffects[1].param1 = function(moveLevel)
+	damage = 200 + (moveLevel * 10)
+	return damage
+end
+meffects[1].param2 = "attack"
+meffects[1].extra_crit = 100
+
+M[71] = {
+	name = "Aerial Ace",
+	effects = meffects,
+	cooldown = function(moveLevel)
+		return 5
+	end,
+	default = false,
+	type = 3,
+	targetting = 1,
+	max_level = 5,
+	description = function(moveLevel)
+		damage = 200 + (10 * moveLevel)
+		return "Attacks an enemy for "..damage.."% of Attack. This attack will always crit."
+	end
+}
+
 return M
