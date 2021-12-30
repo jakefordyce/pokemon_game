@@ -7,5 +7,6 @@ M[4] = "rune_shop_area"
 M[5] = "bill_house_exterior"
 M[6] = "move_tutor_area"
 M[7] = "poke_league_area"
+M[8] = "neon_city_gym"
 
 return M
