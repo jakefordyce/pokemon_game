@@ -254,7 +254,7 @@ areas[3] = {
 trainers = {}
 
 trainers[1] = {}
-trainers[1].name = "Youngster Ben"
+trainers[1].name = "Ben"
 trainers[1].mon1 = {
 	pokedex = 19,
 	gear_rarity = 1,
@@ -277,6 +277,33 @@ trainers[1].mon4 = {
 	pokedex = 10,
 	gear_rarity = 1,
 	level = 2,
+	build_style = 1
+}
+
+trainers[2] = {}
+trainers[2].name = "Victoria"
+trainers[2].mon1 = {
+	pokedex = 173,
+	gear_rarity = 1,
+	level = 5,
+	build_style = 1
+}
+trainers[2].mon2 = {
+	pokedex = 161,
+	gear_rarity = 1,
+	level = 6,
+	build_style = 1
+}
+trainers[2].mon3 = {
+	pokedex = 216,
+	gear_rarity = 1,
+	level = 4,
+	build_style = 1
+}
+trainers[2].mon4 = {
+	pokedex = 161,
+	gear_rarity = 1,
+	level = 5,
 	build_style = 1
 }
 

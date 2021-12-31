@@ -115,4 +115,59 @@ M[23] = {
 	next = nil,
 	has_choices = false
 }
+M[24] = {
+	text = "WHITNEY: Hi! I'm Whitney! Welcome to my gym. Is this your first time in one of the new gyms?",
+	next = nil,
+	has_choices = true
+}
+M[25] = {
+	text = "WHITNEY: Oh my! It looks like you have defeated all of the other trainers here. You want to battle me? I'll warn you-I'm good!",
+	next = nil,
+	has_choices = false
+}
+M[26] = {
+	text = "WHITNEY: Well things work a little differently here. In each gym you are only allowed to use Pokemon that match the gym's type.",
+	next = 27,
+	has_choices = false
+}
+M[27] = {
+	text = "WHITNEY: For example: this is the Normal-type gym so you must only use Pokemon that are Normal type.",
+	next = 28,
+	has_choices = false
+}
+M[28] = {
+	text = "WHITNEY: Sounds fun right? When they told me this was where all the new trainers were going I had to come too.",
+	next = 29,
+	has_choices = false
+}
+M[29] = {
+	text = "WHITNEY: Oh a battle? Well you will have to defeat the rest of the trainers here first.",
+	next = nil,
+	has_choices = false
+}
+M[30] = {
+	text = "WHITNEY: Hey Don't feel bad. I used to cry when I lost battles. Keep training and you'll get there.",
+	next = nil,
+	has_choices = false
+}
+M[31] = {
+	text = "WHITNEY: ...Sniff...No I'm not crying. I've matured a lot. Here's your badge. You should be proud, very few trainers have one of those.",
+	next = nil,
+	has_choices = false
+}
+M[32] = {
+	text = "VICTORIA: I already only use Normal-type Pokemon so this Gym challenge should be easy.",
+	next = nil,
+	has_choices = false
+}
+M[33] = {
+	text = "VICTORIA: Oh, this may be harder than I thought...",
+	next = nil,
+	has_choices = false
+}
+M[34] = {
+	text = "VICTORIA: See, no sweat!",
+	next = nil,
+	has_choices = false
+}
 return M

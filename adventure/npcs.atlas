@@ -18,6 +18,14 @@ images {
   image: "/assets/adventure/npcs/league_receptionist_down_1.png"
   sprite_trim_mode: SPRITE_TRIM_MODE_OFF
 }
+images {
+  image: "/assets/adventure/npcs/whitney_down_1.png"
+  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
+}
+images {
+  image: "/assets/adventure/npcs/victoria_down_1.png"
+  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
+}
 margin: 0
 extrude_borders: 0
 inner_padding: 0
