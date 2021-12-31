@@ -1,5 +1,6 @@
 local game_state = require "common/game_state"
 local render_data = require "common/render"
+local areas = require "common/areas"
 local spawned_pokemon_icons = {}
 
 
@@ -53,18 +54,25 @@ function display_pokemon_grid()
 	p.y = 500
 	p.x = 32
 	local column_count = 1
+	local type_restriction = areas[game_state.player.current_area].poke_type_restriction
 	
 	for i, poke in ipairs(game_state.pokemon) do
-		local icon = factory.create("#pokemon_icon_factory",p, nil, {mon_id = i})
-		go.set_parent(icon, go.get_id("choose_team"))
-		table.insert(spawned_pokemon_icons, icon)
+		local add_mon_to_list = true
+		if type_restriction ~= nil then
+			add_mon_to_list = (poke.type1 == type_restriction or poke.type2 == type_restriction)
+		end
+		if add_mon_to_list then
+			local icon = factory.create("#pokemon_icon_factory",p, nil, {mon_id = i})
+			go.set_parent(icon, go.get_id("choose_team"))
+			table.insert(spawned_pokemon_icons, icon)
 
-		p.x = p.x + 70 --each image is 64 wide. Also adding a little extra space.
-		column_count = column_count + 1
-		if column_count > 9 then
-			column_count = 1
-			p.y = p.y - 70
-			p.x = 32
+			p.x = p.x + 70 --each image is 64 wide. Also adding a little extra space.
+			column_count = column_count + 1
+			if column_count > 9 then
+				column_count = 1
+				p.y = p.y - 70
+				p.x = 32
+			end
 		end
 	end
 end

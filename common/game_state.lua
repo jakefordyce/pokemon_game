@@ -5,11 +5,11 @@ local boss_stats = require "common/boss_stats"
 local M = {}
 
 --FLAGS--
---[[ PROD
+---[[ PROD
 M.flags = {
 	starters_chosen = false
 } --]]
----[[ TEST
+--[[ TEST
 M.flags = {
 	starters_chosen = true
 } --]]

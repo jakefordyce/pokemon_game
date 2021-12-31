@@ -1,5 +1,5 @@
 local game_state = require "common/game_state"
-local area_names = require "common/area_names"
+local areas = require "common/areas"
 local encounters = require "common/encounters"
 
 local function load_screen(new_screen, old_screen)
@@ -14,7 +14,7 @@ function init(self)
 	msg.post("@render:", "use_fixed_fit_projection", { near = -1, far = 1 })
 	msg.post(".", "acquire_input_focus")
 	game_state.calculate_pokemon_stats()
-	--load_screen(area_names[game_state.player.current_area], nil)
+	--load_screen(areas[game_state.player.current_area].name, nil)
 	for i=1,1 do
 		game_state.items_found[i] = false
 	end
@@ -23,7 +23,7 @@ function init(self)
 	end
 	math.randomseed(os.time())
 	math.random(); math.random(); math.random()
-	---[[ TEST
+	--[[ TEST
 	local test_level = 10
 	game_state.add_pokemon(1,test_level)
 	game_state.add_pokemon(4,test_level)
@@ -55,7 +55,7 @@ function init(self)
 	end
 	--]]
 	game_state.load_game()
-	load_screen(area_names[game_state.player.current_area], nil)
+	load_screen(areas[game_state.player.current_area].name, nil)
 end
 
 function on_input(self, action_id, action)
@@ -74,7 +74,7 @@ function on_message(self, message_id, message, sender)
 		elseif message.battle_type == 4 then
 			load_screen("choose_team", "poke_league")
 		else
-			load_screen("choose_team", area_names[game_state.player.current_area])
+			load_screen("choose_team", areas[game_state.player.current_area].name)
 		end
 	end
 	if message_id == hash("load_battle") then
@@ -86,7 +86,7 @@ function on_message(self, message_id, message, sender)
 			if(message.victory) then
 				load_screen("rewards", "battle")
 			else
-				load_screen(area_names[game_state.player.current_area], "battle")
+				load_screen(areas[game_state.player.current_area].name, "battle")
 			end
 		elseif game_state.battle_type == 2 then
 			game_state.dialog_is_pending = true
@@ -98,7 +98,7 @@ function on_message(self, message_id, message, sender)
 				load_screen("rewards", "battle")
 			else
 				game_state.pending_dialog_id = game_state.loss_dialog_id
-				load_screen(area_names[game_state.player.current_area], "battle")
+				load_screen(areas[game_state.player.current_area].name, "battle")
 			end
 		elseif game_state.battle_type == 3 then
 			game_state.dialog_is_pending = true
@@ -115,7 +115,7 @@ function on_message(self, message_id, message, sender)
 				load_screen("rewards", "battle")
 			else
 				game_state.pending_dialog_id = game_state.loss_dialog_id
-				load_screen(area_names[game_state.player.current_area], "battle")
+				load_screen(areas[game_state.player.current_area].name, "battle")
 			end
 		elseif game_state.battle_type == 4 then
 			game_state.dialog_is_pending = true
@@ -129,62 +129,62 @@ function on_message(self, message_id, message, sender)
 				load_screen("rewards", "battle")
 			else
 				game_state.pending_dialog_id = game_state.loss_dialog_id
-				load_screen(area_names[game_state.player.current_area], "battle")
+				load_screen(areas[game_state.player.current_area].name, "battle")
 			end
 		end
 	end
 	if message_id == hash("end_rewards") then
-		load_screen(area_names[game_state.player.current_area], "rewards")
+		load_screen(areas[game_state.player.current_area].name, "rewards")
 	end
 	if message_id == hash("run_away") then
-		load_screen(area_names[game_state.player.current_area], "choose_team")
+		load_screen(areas[game_state.player.current_area].name, "choose_team")
 	end
 	if message_id == hash("load_area") then
-		load_screen(area_names[game_state.player.current_area], area_names[message.previous_area])
+		load_screen(areas[game_state.player.current_area].name, areas[message.previous_area].name)
 	end
 	if message_id == hash("load_menu") then
-		load_screen("menu", area_names[game_state.player.current_area])
+		load_screen("menu", areas[game_state.player.current_area].name)
 	end	
 	if message_id == hash("close_menu") then
-		load_screen(area_names[game_state.player.current_area], "menu")
+		load_screen(areas[game_state.player.current_area].name, "menu")
 	end
 	if message_id == hash("load_add_mon") then
-		load_screen("add_mon", area_names[game_state.player.current_area])
+		load_screen("add_mon", areas[game_state.player.current_area].name)
 	end
 	if message_id == hash("close_add_mon") then
-		load_screen(area_names[game_state.player.current_area], "add_mon")
+		load_screen(areas[game_state.player.current_area].name, "add_mon")
 	end
 	if message_id == hash("close_rewards") then
 		-- if the battle was against wild pokemon then allow the player to catch, otherwise return to adventure screen.
 		if game_state.battle_type == 1 then
 			load_screen("add_mon", "rewards")
 		else
-			load_screen(area_names[game_state.player.current_area], "rewards")
+			load_screen(areas[game_state.player.current_area].name, "rewards")
 		end
 	end
 	if message_id == hash("load_rune_shop") then
-		load_screen("rune_shop", area_names[game_state.player.current_area])
+		load_screen("rune_shop", areas[game_state.player.current_area].name)
 	end
 	if message_id == hash("exit_rune_shop") then
-		load_screen(area_names[game_state.player.current_area], "rune_shop")
+		load_screen(areas[game_state.player.current_area].name, "rune_shop")
 	end
 	if message_id == hash("load_move_tutor") then
-		load_screen("move_tutor", area_names[game_state.player.current_area])
+		load_screen("move_tutor", areas[game_state.player.current_area].name)
 	end
 	if message_id == hash("load_boss_select") then
-		load_screen("boss_select", area_names[game_state.player.current_area])
+		load_screen("boss_select", areas[game_state.player.current_area].name)
 	end
 	if message_id == hash("close_boss_select") then
-		load_screen(area_names[game_state.player.current_area], "boss_select")
+		load_screen(areas[game_state.player.current_area].name, "boss_select")
 	end
 	if message_id == hash("close_move_tutor") then
-		load_screen(area_names[game_state.player.current_area], "move_tutor")
+		load_screen(areas[game_state.player.current_area].name, "move_tutor")
 	end
 	if message_id == hash("load_poke_league") then
-		load_screen("poke_league", area_names[game_state.player.current_area])
+		load_screen("poke_league", areas[game_state.player.current_area].name)
 	end
 	if message_id == hash("close_poke_league") then
-		load_screen(area_names[game_state.player.current_area], "poke_league")
+		load_screen(areas[game_state.player.current_area].name, "poke_league")
 	end
 end
 
