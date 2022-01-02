@@ -2229,7 +2229,7 @@ M[75] = {
 	name = "Stone Armor",
 	effects = meffects,
 	cooldown = function(moveLevel)
-		return 4
+		return 1
 	end,
 	default = false,
 	type = 1,

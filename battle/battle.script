@@ -416,29 +416,46 @@ function should_apply_debuff(move_user, effectiveness, defender, debuff_chance)
 end
 
 function apply_status_effect(defender, effect_obj, move_user)
-	local effect = {}
-	if effect_obj.charges ~= nil then
-		effect.has_charges = true
-		effect.duration = effect_obj.charges
+	if mon_has_status_effect(defender, effect_obj.id) and (status_effects[effect_obj.id].category == 1 or status_effects[effect_obj.id].category == 2)then
+		for i, eff in ipairs(defender.status_effects) do
+			if eff.type == effect_obj.id then
+				if effect_obj.charges ~= nil then
+					eff.duration = effect_obj.charges
+				else
+					eff.duration = effect_obj.param2
+				end
+				msg.post(eff.go_id, "update_duration", {duration = eff.duration})
+				eff.placed_by = move_user.reference
+				if( current_turn_mon.reference == defender.reference) then
+					eff.ignore_duration_reduction = true
+				end
+			end
+		end
 	else
-		effect.duration = effect_obj.param2
+		local effect = {}
+		if effect_obj.charges ~= nil then
+			effect.has_charges = true
+			effect.duration = effect_obj.charges
+		else
+			effect.duration = effect_obj.param2
+		end
+		effect.category = status_effects[effect_obj.id].category
+		effect.type = effect_obj.id
+		effect.placed_by = move_user.reference
+		--if someone is applying a buff to themself then mark it to not reduce its duration at the end of this turn.
+		if( current_turn_mon.reference == defender.reference) then --status_effects[effect_id].category == 1 and
+			effect.ignore_duration_reduction = true
+		else
+			effect.ignore_duration_reduction = false
+		end
+		local p = go.get_position(defender.reference)
+		p.y = p.y + 125
+		p.x = p.x - 10
+		local effect_go = factory.create("#status_effect_factory",p, nil, {duration = effect.duration, image = hash(status_effects[effect_obj.id].sprite_name)})
+		effect.go_id = effect_go
+		table.insert(defender.status_effects, effect)
+		position_status_effects(defender)
 	end
-	effect.category = status_effects[effect_obj.id].category
-	effect.type = effect_obj.id
-	effect.placed_by = move_user.reference
-	--if someone is applying a buff to themself then mark it to not reduce its duration at the end of this turn.
-	if( current_turn_mon.reference == defender.reference) then --status_effects[effect_id].category == 1 and
-		effect.ignore_duration_reduction = true
-	else
-		effect.ignore_duration_reduction = false
-	end
-	local p = go.get_position(defender.reference)
-	p.y = p.y + 125
-	p.x = p.x - 10
-	local effect_go = factory.create("#status_effect_factory",p, nil, {duration = effect.duration, image = hash(status_effects[effect_obj.id].sprite_name)})
-	effect.go_id = effect_go
-	table.insert(defender.status_effects, effect)
-	position_status_effects(defender)
 end
 
 function modify_turn_meter(defender, effect_id, amount)
