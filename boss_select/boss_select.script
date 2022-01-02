@@ -63,6 +63,9 @@ function on_reload(self)
 end
 
 function display_boss_fights(boss_index)
+	if game_state.bill_bosses_defeated[boss_index] == nil then
+		game_state.bill_bosses_defeated[boss_index] = 0
+	end
 	fights_unlocked = game_state.bill_bosses_defeated[boss_index] + 1
 
 	local p = vmath.vector3()
@@ -84,7 +87,7 @@ function display_bosses()
 	p.y = 950
 	p.x = 320
 
-	for i=1, 1 do
+	for i=1, 2 do
 		local boss_obj = factory.create("#boss_factory",p, nil, {boss_index = i})
 		go.set_parent(boss_obj, go.get_id("boss_select"))
 		table.insert(spawned_bosses, boss_obj)

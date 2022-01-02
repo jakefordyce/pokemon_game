@@ -2213,4 +2213,33 @@ M[74] = {
 	end
 }
 
+
+meffects = {}
+meffects[1] = {}
+meffects[1].id = 6
+meffects[1].target = 0
+meffects[1].param1 = function(moveLevel)
+	return 100
+end
+meffects[1].charges = 10
+meffects[1].charges_stack = false
+
+
+M[75] = {
+	name = "Stone Armor",
+	effects = meffects,
+	cooldown = function(moveLevel)
+		return 4
+	end,
+	default = false,
+	type = 1,
+	targetting = 0,
+	max_level = 5,
+	description = function(moveLevel)
+		chance = 100
+		reduction = 90
+		return "Boss Move: Has a "..chance.."% chance of adding armor to the user which reduces all damage taken by "..reduction.."%. Has 10 charges. 1 charge is lost every time the user is hit."
+	end
+}
+
 return M

@@ -5,7 +5,7 @@ local boss_stats = require "common/boss_stats"
 local encounters = require "common/encounters"
 
 function init(self)
-	
+	msg.post("#boss_sprite", "play_animation", { id = hash(boss_stats[self.boss_index].name.."_front_original") })
 	local minimum_reward = boss_stats.minimum_reward(self.boss_index, self.level)
 	local max_reward = boss_stats.maximum_reward(self.boss_index, self.level)
 	local reward_types = boss_stats.reward_stone_types(self.boss_index)

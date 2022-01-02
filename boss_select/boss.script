@@ -3,6 +3,7 @@ local types = require "common/poke_types"
 local boss_stats = require "common/boss_stats"
 
 function init(self)
+	msg.post("#boss_sprite", "play_animation", { id = hash(boss_stats[self.boss_index].name.."_front_original") })
 	type1 = boss_stats[self.boss_index].type1
 	type2 = boss_stats[self.boss_index].type2
 	msg.post("#boss_type1_sprite", "play_animation", { id = hash("type_"..types[type1].name.."_16") })

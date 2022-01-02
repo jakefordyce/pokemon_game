@@ -290,6 +290,11 @@ function handle_move_effects(level, effect, target, move_user)
 				text_color = "yellow"
 			end
 
+			if mon_has_status_effect(defender, 6) then
+				power = math.floor(power / 10)
+				reduce_status_effect_duration(defender, 1, 6)
+			end
+
 			protector = mon_protector(defender)
 			local damage
 			if protector == nil then
@@ -351,9 +356,8 @@ function handle_move_effects(level, effect, target, move_user)
 				damage_text = "missed"
 			end
 		elseif status_effects[effect.id] ~= nil and status_effects[effect.id].category > 1 then
-			local duration = effect.param2
 			if(should_apply_debuff(move_user, effectiveness, defender, effect.param1(level)) or effect.target == 0) then
-				apply_status_effect(defender, effect.id, duration, move_user)
+				apply_status_effect(defender, effect, move_user)
 				damage_text = status_effects[effect.id].damage_text
 			else
 				text_color = "red"
@@ -364,8 +368,7 @@ function handle_move_effects(level, effect, target, move_user)
 				end
 			end
 		elseif status_effects[effect.id] ~= nil and status_effects[effect.id].category == 1 then
-			local duration = effect.param2
-			apply_status_effect(defender, effect.id, duration, move_user)
+			apply_status_effect(defender, effect, move_user)
 			damage_text = status_effects[effect.id].damage_text
 		end
 		
@@ -412,11 +415,16 @@ function should_apply_debuff(move_user, effectiveness, defender, debuff_chance)
 	--return true --DEV: leaving this to make testing debuffs easier
 end
 
-function apply_status_effect(defender, effect_id, duration, move_user)
+function apply_status_effect(defender, effect_obj, move_user)
 	local effect = {}
-	effect.duration = duration
-	effect.category = status_effects[effect_id].category
-	effect.type = effect_id
+	if effect_obj.charges ~= nil then
+		effect.has_charges = true
+		effect.duration = effect_obj.charges
+	else
+		effect.duration = effect_obj.param2
+	end
+	effect.category = status_effects[effect_obj.id].category
+	effect.type = effect_obj.id
 	effect.placed_by = move_user.reference
 	--if someone is applying a buff to themself then mark it to not reduce its duration at the end of this turn.
 	if( current_turn_mon.reference == defender.reference) then --status_effects[effect_id].category == 1 and
@@ -427,7 +435,7 @@ function apply_status_effect(defender, effect_id, duration, move_user)
 	local p = go.get_position(defender.reference)
 	p.y = p.y + 125
 	p.x = p.x - 10
-	local effect_go = factory.create("#status_effect_factory",p, nil, {duration = duration, image = hash(status_effects[effect_id].sprite_name)})
+	local effect_go = factory.create("#status_effect_factory",p, nil, {duration = effect.duration, image = hash(status_effects[effect_obj.id].sprite_name)})
 	effect.go_id = effect_go
 	table.insert(defender.status_effects, effect)
 	position_status_effects(defender)
@@ -466,7 +474,7 @@ function reduce_status_effect_durations(mon, dur, category)
 		if(category == 5 and eff.ignore_duration_reduction) then
 			--prevent a pokemon who just buffed themself from immediately losing a turn of the buff at the end of their turn.
 			eff.ignore_duration_reduction = false
-		else
+		elseif not eff.has_charges then
 			if(category == 5 and eff.category ~= 3) or (category == 6 and eff.category ~= 1) or (category == eff.category) then
 				eff.duration = eff.duration - dur
 				msg.post(eff.go_id, "update_duration", {duration = eff.duration})
@@ -481,6 +489,25 @@ function reduce_status_effect_durations(mon, dur, category)
 	end
 	position_status_effects(mon)
 end
+
+function reduce_status_effect_duration(mon, dur, effect_id)
+	local status_effects_to_remove = {}
+	for i, eff in ipairs(mon.status_effects) do
+		if(eff.type == effect_id) then
+			eff.duration = eff.duration - dur
+			msg.post(eff.go_id, "update_duration", {duration = eff.duration})
+			if eff.duration < 1 then
+				table.insert(status_effects_to_remove, 1, i)
+			end
+		end
+	end
+	for i, setr in ipairs(status_effects_to_remove) do
+		table.remove(mon.status_effects, setr)
+	end
+	position_status_effects(mon)
+end
+
+
 
 function mon_has_status_effect(mon, effect_id)
 	has_status_effect = false

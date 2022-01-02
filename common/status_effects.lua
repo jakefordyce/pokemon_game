@@ -30,7 +30,11 @@ M[5] = {
 	damage_text = "Defense Up",
 	category = 1
 }
--- 6 - 
+M[6] = {
+	sprite_name = "defense_up",
+	damage_text = "Stone Armor",
+	category = 1
+}
 M[7] = {
 	sprite_name = "speed_up",
 	damage_text = "Speed Up",

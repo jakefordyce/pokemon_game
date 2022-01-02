@@ -25,6 +25,26 @@ M[1] = {
 	move_priority = {2, 1}
 }
 
+moves = {}
+moves[1] = {["level"] = 1, ["id"] = 10}
+moves[2] = {["level"] = 1, ["id"] = 75}
+
+M[2] = {
+	name = "nidoking",
+	hp = 1000,
+	attack = 120,
+	defense = 120,
+	spattack = 100,
+	spdefense = 100,
+	speed = 100,
+	accuracy = 0,
+	resist = 100,
+	type1 = 4,
+	type2 = 5,
+	moves = moves,
+	move_priority = {2, 1}
+}
+
 function M.exp_reward_by_level(level)
 	return math.ceil(math.pow(1.05, (level - 1)) * 20) * 2
 end
