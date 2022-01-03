@@ -305,8 +305,16 @@ function handle_move_effects(level, effect, target, move_user)
 				reduce_status_effect_duration(defender, 1, 6)
 			end
 
-			if effect.extra_damage_user_status ~= nil and mon_has_status_effect(move_user, 6) then
+			if effect.extra_damage_user_status ~= nil and mon_has_status_effect(move_user, effect.extra_damage_user_status) then
 				power = power + (power * effect.extra_damage_amount / 100)
+			end
+
+			if effect.extra_damage_target_status ~= nil and mon_has_status_effect(defender, effect.extra_damage_target_status) then
+				power = power + (power * effect.extra_damage_amount / 100)
+			end
+
+			if effect.extra_damage_target_status_count ~= nil then
+				power = power + (power * mon_count_status_effect(defender, effect.extra_damage_target_status_count) * effect.extra_damage_amount / 100)
 			end
 
 			protector = mon_protector(defender)
@@ -568,6 +576,16 @@ function mon_has_status_effect(mon, effect_id)
 	return has_status_effect
 end
 
+function mon_count_status_effect(mon, effect_id)
+	effect_count = 0
+	for i, eff in ipairs(mon.status_effects) do
+		if eff.type == effect_id or effect_id == 0 then
+			effect_count = effect_count + 1
+		end
+	end
+	return effect_count
+end
+
 function mon_can_act(mon)
 	can_act = true
 	for i, eff in ipairs(mon.status_effects) do
@@ -706,7 +724,7 @@ function start_player_turn(turn_mon)
 	local turn_marker = factory.create("#turn_marker_factory",p, nil, nil, 2.0)
 	table.insert(spawned_turn_markers, turn_marker)
 	
-	if mon_can_act(turn_mon) then
+	if mon_can_act(turn_mon) and not turn_mon.fainted then
 		local cooldowns_blocked = mon_has_status_effect(turn_mon, 23)
 		local mon_data = {
 			mon_reference = turn_mon.reference,
@@ -734,7 +752,7 @@ function start_enemy_turn(turn_mon)
 		local turn_marker = factory.create("#turn_marker_factory",p, nil, nil, scale)
 		table.insert(spawned_turn_markers, turn_marker)
 		
-		if mon_can_act(turn_mon) then
+		if mon_can_act(turn_mon) and not turn_mon.fainted then
 			timer.delay(1, false, choose_enemy_move)
 			timer.delay(2, false, function() msg.post(".", "end_turn") end)
 		else

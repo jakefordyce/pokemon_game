@@ -2424,4 +2424,64 @@ M[80] = {
 	end
 }
 
+
+meffects = {}
+meffects[1] = {}
+meffects[1].id = 1
+meffects[1].target = 3
+meffects[1].param1 = function(moveLevel)
+	damage = 100 + (moveLevel * 50)
+	return damage
+end
+meffects[1].param2 = "spattack"
+meffects[1].extra_damage_target_status = 20
+meffects[1].extra_damage_amount = 200
+
+
+M[81] = {
+	name = "Eruption",
+	effects = meffects,
+	cooldown = function(moveLevel)
+		return 0
+	end,
+	default = true,
+	type = 9,
+	targetting = 1,
+	max_level = 5,
+	description = function(moveLevel)
+		damage = 100 + (50 * moveLevel)
+		return "Boss Move: Attacks all enemies for "..damage.."% of Special Attack. Damage is increased if the target is burned."
+	end
+}
+
+meffects = {}
+meffects[1] = {}
+meffects[1].id = 1
+meffects[1].target = 3
+meffects[1].param1 = function(moveLevel)
+	damage = 50 + (moveLevel * 25)
+	return damage
+end
+meffects[1].param2 = "spattack"
+meffects[1].extra_damage_target_status_count = 0
+meffects[1].extra_damage_amount = 100
+meffects[1].leech = 200
+
+
+M[82] = {
+	name = "Feast on Misery",
+	effects = meffects,
+	cooldown = function(moveLevel)
+		return 4
+	end,
+	default = false,
+	type = 15,
+	targetting = 1,
+	max_level = 5,
+	description = function(moveLevel)
+		damage = 50 + (25 * moveLevel)
+		return "Boss Move: Attacks all enemies for "..damage.."% of Special Attack. Damage is increased based on the number of debuffs. User heals based on damage dealt."
+	end
+}
+
 return M

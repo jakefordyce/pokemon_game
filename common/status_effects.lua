@@ -119,5 +119,6 @@ M[26] = {
 	damage_text = "Heal Reduction",
 	category = 2
 }
+--27 apply status if target has status
 
 return M
