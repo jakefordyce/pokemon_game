@@ -229,6 +229,9 @@ function handle_move_effects(level, effect, target, move_user)
 		local damage_text = ""
 		local text_color = "white"
 		local defender = combatants[target]
+		if mon_has_status_effect(defender, 28) and effect_should_reflect(28, effect) then --reflect
+			defender = move_user
+		end
 		
 		if effect.id == 1 then --deal damage
 			local stat = move_user[effect.param2]
@@ -564,7 +567,24 @@ function reduce_status_effect_duration(mon, dur, effect_id)
 	position_status_effects(mon)
 end
 
+function effect_should_reflect(reflect_type, effect_obj)
+	local should_reflect = true
+	
+	if effect_obj.id == 1 or effect_obj.id == 12 then
+		should_reflect = true
+	elseif effect_obj.id == 8 or
+	effect_obj.id == 16 or
+	effect_obj.id == 19 or
+	effect_obj.id == 25 then
+		should_reflect = false
+	elseif status_effects[effect_obj.id].category > 1 then
+		should_reflect = true
+	else
+		should_reflect = false
+	end
 
+	return should_reflect
+end
 
 function mon_has_status_effect(mon, effect_id)
 	has_status_effect = false
@@ -644,7 +664,9 @@ function heal_defender(defender, damage)
 end
 
 function shield_defender(defender, damage)
-	defender.shield = defender.shield + damage
+	if damage > defender.shield then
+		defender.shield = damage
+	end
 	msg.post("gui", "update_hp", {target = defender.reference, current=defender.currenthp, max=defender.hp, shield=defender.shield})
 end
 

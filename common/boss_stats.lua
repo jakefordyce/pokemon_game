@@ -12,7 +12,7 @@ moves[2] = {["level"] = 1, ["id"] = 11}
 M[1] = {
 	name = "kangaskhan",
 	hp = 1000,
-	attack = 120,
+	attack = 160,
 	defense = 120,
 	spattack = 100,
 	spdefense = 100,
@@ -63,6 +63,28 @@ M[3] = {
 	resist = 100,
 	type1 = 9,
 	type2 = 15,
+	moves = moves,
+	move_priority = {2, 3, 4, 1}
+}
+
+moves = {}
+moves[1] = {["level"] = 1, ["id"] = 85}
+moves[2] = {["level"] = 1, ["id"] = 83}
+moves[3] = {["level"] = 1, ["id"] = 84}
+moves[4] = {["level"] = 1, ["id"] = 86}
+
+M[4] = {
+	name = "exeggutor",
+	hp = 1000,
+	attack = 100,
+	defense = 100,
+	spattack = 140,
+	spdefense = 160,
+	speed = 95,
+	accuracy = 100,
+	resist = 100,
+	type1 = 11,
+	type2 = 13,
 	moves = moves,
 	move_priority = {2, 3, 4, 1}
 }

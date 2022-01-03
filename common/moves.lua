@@ -1910,7 +1910,7 @@ M[63] = {
 	description = function(moveLevel)
 		chance = 15 + (moveLevel * 2)
 		damage = 125 + (moveLevel * 5)
-		return "Attacks 1 enemy for "..damage.."% of Attack then has a "..chance.."% chance of confusing the enemy for 1 turn."
+		return "Attacks 1 enemy for "..damage.."% of Special Attack then has a "..chance.."% chance of confusing the enemy for 1 turn."
 	end
 }
 
@@ -2481,6 +2481,136 @@ M[82] = {
 	description = function(moveLevel)
 		damage = 50 + (25 * moveLevel)
 		return "Boss Move: Attacks all enemies for "..damage.."% of Special Attack. Damage is increased based on the number of debuffs. User heals based on damage dealt."
+	end
+}
+
+meffects = {}
+meffects[1] = {}
+meffects[1].id = 28
+meffects[1].target = 0
+meffects[1].param1 = function(moveLevel)
+	return 100
+end
+meffects[1].param2 = 2
+
+meffects[2] = {}
+meffects[2].id = 19
+meffects[2].target = 0
+meffects[2].param1 = function(moveLevel)
+	chance = 100
+	return chance
+end
+meffects[2].param2 = 2 -- duration. Currently not using
+meffects[2].param3 = "hp"
+meffects[2].param4 = function(moveLevel)
+	shield = 10 + (moveLevel * 5)
+	return shield
+end
+
+M[83] = {
+	name = "Psychic Barrier",
+	effects = meffects,
+	cooldown = function(moveLevel)
+		return 4
+	end,
+	default = false,
+	type = 13,
+	targetting = 0,
+	max_level = 5,
+	description = function(moveLevel)
+		chance = 100
+		return "Boss Move: Has a "..chance.."% chance of placing Reflect on user which will redirect all moves back to their user for 2 turns. Also places a shield on the user."
+	end
+}
+
+meffects = {}
+meffects[1] = {}
+meffects[1].id = 17 --leech seed
+meffects[1].target = 3
+meffects[1].param1 = function(moveLevel)
+	return 100
+end
+meffects[1].param2 = 4
+meffects[1].min_hits = 2
+meffects[1].max_hits = 2
+
+M[84] = {
+	name = "Seed Cloud",
+	effects = meffects,
+	cooldown = function(moveLevel)
+		return 4
+	end,
+	default = false,
+	type = 11,
+	targetting = 1,
+	max_level = 5,
+	description = function(moveLevel)
+		chance = 100
+		return "Has a "..chance.."% chance of placing 2 leech seeds on all enemies for 4 turns."
+	end
+}
+
+meffects = {}
+meffects[1] = {}
+meffects[1].id = 1
+meffects[1].target = 1
+meffects[1].param1 = function(moveLevel)
+	damage = 200 + (moveLevel * 50)
+	return damage
+end
+meffects[1].param2 = "attack"
+meffects[1].leech = 100
+
+M[85] = {
+	name = "Mega Drain",
+	effects = meffects,
+	cooldown = function(moveLevel)
+		return 0
+	end,
+	default = true,
+	type = 11,
+	targetting = 1,
+	max_level = 5,
+	description = function(moveLevel)
+		damage = 200 + (moveLevel * 50)
+		return "Attacks 1 enemy for "..damage.."% of Special Attack. The user is healed for the damage dealt."
+	end
+}
+
+meffects = {}
+meffects[1] = {}
+meffects[1].id = 1
+meffects[1].target = 3
+meffects[1].param1 = function(moveLevel)
+	damage = 200 + (moveLevel * 50)
+	return damage
+end
+meffects[1].param2 = "spattack"
+
+
+meffects[2] = {}
+meffects[2].id = 22
+meffects[2].target = 3
+meffects[2].param1 = function(moveLevel)
+	chance = 50
+	return chance
+end
+meffects[2].param2 = 2
+
+M[86] = {
+	name = "Mass Confusion",
+	effects = meffects,
+	cooldown = function(moveLevel)
+		return 4
+	end,
+	default = false,
+	type = 13,
+	targetting = 1,
+	max_level = 5,
+	description = function(moveLevel)
+		chance = 50
+		damage = 200 + (moveLevel * 50)
+		return "Attacks all enemies for "..damage.."% of Special Attack then has a "..chance.."% chance of confusing the enemies for 2 turns."
 	end
 }
 

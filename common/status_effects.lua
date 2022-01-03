@@ -120,5 +120,10 @@ M[26] = {
 	category = 2
 }
 --27 apply status if target has status
+M[28] = {
+	sprite_name = "reflect",
+	damage_text = "Reflect",
+	category = 1
+}
 
 return M
