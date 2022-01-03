@@ -708,7 +708,14 @@ function start_player_turn(turn_mon)
 	
 	if mon_can_act(turn_mon) then
 		local cooldowns_blocked = mon_has_status_effect(turn_mon, 23)
-		msg.post("gui", "display_mon", { mon = turn_mon, cooldowns_blocked = cooldowns_blocked })
+		local mon_data = {
+			mon_reference = turn_mon.reference,
+			move1cd = turn_mon.move1cd,
+			move2cd = turn_mon.move2cd,
+			move3cd = turn_mon.move3cd,
+			move4cd = turn_mon.move4cd
+		}
+		msg.post("gui", "display_mon", { mon = mon_data, cooldowns_blocked = cooldowns_blocked })
 	else
 		timer.delay(.5, false, function() msg.post(".", "end_turn") end)
 	end

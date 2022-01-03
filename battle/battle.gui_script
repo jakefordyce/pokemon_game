@@ -28,16 +28,16 @@ function update(self, dt)
 end
 
 function on_message(self, message_id, message, sender)
-
 	--this is for player mons
 	if message_id == hash("display_mon") then
-		gui.set_text(gui.get_node("current_mon_name"), message.mon.name)
-		current_turn_mon = message.mon
+		--current_turn_mon = message.mon
+		current_turn_mon = game_state.pokemon[game_state[message.mon.mon_reference]]
+		gui.set_text(gui.get_node("current_mon_name"), current_turn_mon.name)
 		for i=1,4 do
-			if message.mon["move"..i] ~= nil then
+			if current_turn_mon["move"..i] ~= nil then
 				gui.set_enabled(gui.get_node("move"..i.."_button"), true)
-				gui.set_text(gui.get_node("move"..i.."_text"), moves[message.mon.known_moves[message.mon["move"..i]].id].name)
-				if message.cooldowns_blocked and i > 1 then
+				gui.set_text(gui.get_node("move"..i.."_text"), moves[current_turn_mon.known_moves[current_turn_mon["move"..i]].id].name)
+				if message.mon.cooldowns_blocked and i > 1 then
 					gui.set_enabled(gui.get_node("move"..i.."_cd_overlay"), true)
 					gui.play_flipbook(gui.get_node("move"..i.."_cd_image"), "block_cooldowns_64")
 					gui.set_enabled(gui.get_node("move"..i.."_cd_text"), false)
