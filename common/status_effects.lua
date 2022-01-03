@@ -108,5 +108,11 @@ M[23] = {
 	damage_text = "Block Cooldowns",
 	category = 4
 }
+M[24] = {
+	sprite_name = "poison",
+	damage_text = "Crippling Poison",
+	category = 3
+}
+--25 extra turn
 
 return M

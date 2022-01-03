@@ -26,9 +26,10 @@ M[1] = {
 }
 
 moves = {}
-moves[1] = {["level"] = 1, ["id"] = 10}
+moves[1] = {["level"] = 1, ["id"] = 77}
 moves[2] = {["level"] = 1, ["id"] = 75}
-
+moves[3] = {["level"] = 1, ["id"] = 76}
+moves[4] = {["level"] = 1, ["id"] = 78}
 M[2] = {
 	name = "nidoking",
 	hp = 1000,
@@ -42,7 +43,7 @@ M[2] = {
 	type1 = 4,
 	type2 = 5,
 	moves = moves,
-	move_priority = {2, 1}
+	move_priority = {3, 2, 4, 1}
 }
 
 function M.exp_reward_by_level(level)

@@ -20,6 +20,7 @@ local current_turn_mon = nil
 local combatants = {}
 local waiting_for_target = false
 local protections = {}
+local extra_turn_queue = {}
 
 function init(self)
 	msg.post(".", "acquire_input_focus")
@@ -61,44 +62,53 @@ function on_message(self, message_id, message, sender)
 		if current_turn_mon ~= nil then
 			msg.post("gui", "update_turn", {target=current_turn_mon.reference, current=current_turn_mon.turn, max=1000})
 		end
-		if player_mon1 ~= nil and player_mon1.turn > 1000 and not player_mon1.fainted then
-			player_mon1.turn = player_mon1.turn - 1000
-			current_turn_mon = player_mon1
-			start_player_turn(player_mon1)
-		elseif player_mon2 ~= nil and player_mon2.turn > 1000 and not player_mon2.fainted then
-			player_mon2.turn = player_mon2.turn - 1000
-			current_turn_mon = player_mon2
-			start_player_turn(player_mon2)
-		elseif player_mon3 ~= nil and player_mon3.turn > 1000 and not player_mon3.fainted then
-			player_mon3.turn = player_mon3.turn - 1000
-			current_turn_mon = player_mon3
-			start_player_turn(player_mon3)
-		elseif player_mon4 ~= nil and player_mon4.turn > 1000 and not player_mon4.fainted then
-			player_mon4.turn = player_mon4.turn - 1000
-			current_turn_mon = player_mon4
-			start_player_turn(player_mon4)
-		elseif enemy_boss ~= nil and enemy_boss.turn > 1000 and not enemy_boss.fainted then
-			enemy_boss.turn = enemy_boss.turn - 1000
-			current_turn_mon = enemy_boss
-			start_enemy_turn(enemy_boss)
-		elseif enemy_mon1 ~= nil and enemy_mon1.turn > 1000 and not enemy_mon1.fainted then
-			enemy_mon1.turn = enemy_mon1.turn - 1000
-			current_turn_mon = enemy_mon1
-			start_enemy_turn(enemy_mon1)
-		elseif enemy_mon2 ~= nil and enemy_mon2.turn > 1000 and not enemy_mon2.fainted then
-			enemy_mon2.turn = enemy_mon2.turn - 1000
-			current_turn_mon = enemy_mon2
-			start_enemy_turn(enemy_mon2)
-		elseif enemy_mon3 ~= nil and enemy_mon3.turn > 1000 and not enemy_mon3.fainted then
-			enemy_mon3.turn = enemy_mon3.turn - 1000
-			current_turn_mon = enemy_mon3
-			start_enemy_turn(enemy_mon3)
-		elseif enemy_mon4 ~= nil and enemy_mon4.turn > 1000 and not enemy_mon4.fainted then
-			enemy_mon4.turn = enemy_mon4.turn - 1000
-			current_turn_mon = enemy_mon4
-			start_enemy_turn(enemy_mon4)
+		if #extra_turn_queue == 0 then
+			if player_mon1 ~= nil and player_mon1.turn > 1000 and not player_mon1.fainted then
+				player_mon1.turn = player_mon1.turn - 1000
+				current_turn_mon = player_mon1
+				start_player_turn(player_mon1)
+			elseif player_mon2 ~= nil and player_mon2.turn > 1000 and not player_mon2.fainted then
+				player_mon2.turn = player_mon2.turn - 1000
+				current_turn_mon = player_mon2
+				start_player_turn(player_mon2)
+			elseif player_mon3 ~= nil and player_mon3.turn > 1000 and not player_mon3.fainted then
+				player_mon3.turn = player_mon3.turn - 1000
+				current_turn_mon = player_mon3
+				start_player_turn(player_mon3)
+			elseif player_mon4 ~= nil and player_mon4.turn > 1000 and not player_mon4.fainted then
+				player_mon4.turn = player_mon4.turn - 1000
+				current_turn_mon = player_mon4
+				start_player_turn(player_mon4)
+			elseif enemy_boss ~= nil and enemy_boss.turn > 1000 and not enemy_boss.fainted then
+				enemy_boss.turn = enemy_boss.turn - 1000
+				current_turn_mon = enemy_boss
+				start_enemy_turn(enemy_boss)
+			elseif enemy_mon1 ~= nil and enemy_mon1.turn > 1000 and not enemy_mon1.fainted then
+				enemy_mon1.turn = enemy_mon1.turn - 1000
+				current_turn_mon = enemy_mon1
+				start_enemy_turn(enemy_mon1)
+			elseif enemy_mon2 ~= nil and enemy_mon2.turn > 1000 and not enemy_mon2.fainted then
+				enemy_mon2.turn = enemy_mon2.turn - 1000
+				current_turn_mon = enemy_mon2
+				start_enemy_turn(enemy_mon2)
+			elseif enemy_mon3 ~= nil and enemy_mon3.turn > 1000 and not enemy_mon3.fainted then
+				enemy_mon3.turn = enemy_mon3.turn - 1000
+				current_turn_mon = enemy_mon3
+				start_enemy_turn(enemy_mon3)
+			elseif enemy_mon4 ~= nil and enemy_mon4.turn > 1000 and not enemy_mon4.fainted then
+				enemy_mon4.turn = enemy_mon4.turn - 1000
+				current_turn_mon = enemy_mon4
+				start_enemy_turn(enemy_mon4)
+			else
+				timer.delay(.1, false, increment_turns)
+			end
 		else
-			timer.delay(.1, false, increment_turns)
+			local extra_turn_mon = table.remove(extra_turn_queue)
+			if string.match(extra_turn_mon.reference, "^enemy") then
+				start_enemy_turn(extra_turn_mon)
+			else
+				start_player_turn(extra_turn_mon)
+			end
 		end
 	end
 	if message_id == hash("end_turn") then
@@ -295,6 +305,10 @@ function handle_move_effects(level, effect, target, move_user)
 				reduce_status_effect_duration(defender, 1, 6)
 			end
 
+			if effect.extra_damage_user_status ~= nil and mon_has_status_effect(move_user, 6) then
+				power = power + (power * effect.extra_damage_amount / 100)
+			end
+
 			protector = mon_protector(defender)
 			local damage
 			if protector == nil then
@@ -355,6 +369,9 @@ function handle_move_effects(level, effect, target, move_user)
 				text_color = "red"
 				damage_text = "missed"
 			end
+		elseif effect.id == 25 then --extra turn
+			table.insert(extra_turn_queue, defender)
+			damage_text = "Extra Turn"
 		elseif status_effects[effect.id] ~= nil and status_effects[effect.id].category > 1 then
 			if(should_apply_debuff(move_user, effectiveness, defender, effect.param1(level)) or effect.target == 0) then
 				apply_status_effect(defender, effect, move_user)
@@ -460,6 +477,9 @@ end
 
 function modify_turn_meter(defender, effect_id, amount)
 	defender.turn = defender.turn + amount
+	if defender.turn < 0 then
+		defender.turn = 0
+	end
 	msg.post("gui", "update_turn", {target=defender.reference, current=defender.turn, max=1000})
 end
 
@@ -761,7 +781,7 @@ function increment_mon_turn(mon)
 		if mon_has_status_effect(mon, 7) then
 			speed = speed * 1.3
 		end
-		if mon_has_status_effect(mon, 10) then
+		if mon_has_status_effect(mon, 10) or mon_has_status_effect(mon, 24) then
 			speed = speed / 1.3
 		end
 		mon.turn = mon.turn + speed

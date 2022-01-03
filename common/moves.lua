@@ -2224,12 +2224,18 @@ end
 meffects[1].charges = 10
 meffects[1].charges_stack = false
 
+meffects[2] = {}
+meffects[2].id = 25 -- extra turn
+meffects[2].target = 0
+meffects[2].param1 = function(moveLevel)
+	return 100
+end
 
 M[75] = {
 	name = "Stone Armor",
 	effects = meffects,
 	cooldown = function(moveLevel)
-		return 1
+		return 2
 	end,
 	default = false,
 	type = 1,
@@ -2239,6 +2245,104 @@ M[75] = {
 		chance = 100
 		reduction = 90
 		return "Boss Move: Has a "..chance.."% chance of adding armor to the user which reduces all damage taken by "..reduction.."%. Has 10 charges. 1 charge is lost every time the user is hit."
+	end
+}
+
+
+meffects = {}
+meffects[1] = {}
+meffects[1].id = 1
+meffects[1].target = 3
+meffects[1].param1 = function(moveLevel)
+	damage = 200 + (moveLevel * 50)
+	return damage
+end
+meffects[1].param2 = "attack"
+meffects[1].extra_damage_user_status = 6
+meffects[1].extra_damage_amount = 200
+
+
+M[76] = {
+	name = "Seismic Slam",
+	effects = meffects,
+	cooldown = function(moveLevel)
+		return 4
+	end,
+	default = false,
+	type = 5,
+	targetting = 1,
+	max_level = 5,
+	description = function(moveLevel)
+		damage = 200 + (50 * moveLevel)
+		return "Boss Move: Attacks all enemies for "..damage.."% of Attack. Damage is increased if the user has Stone Armor."
+	end
+}
+
+meffects = {}
+meffects[1] = {}
+meffects[1].id = 1
+meffects[1].target = 3
+meffects[1].param1 = function(moveLevel)
+	damage = 200 + (moveLevel * 50)
+	return damage
+end
+meffects[1].param2 = "attack"
+
+meffects[2] = {}
+meffects[2].id = 12 --decrease turn
+meffects[2].target = 3
+meffects[2].param1 = function(moveLevel)
+	return 100
+end
+meffects[2].param2 = 100
+
+M[77] = {
+	name = "Land Slide",
+	effects = meffects,
+	cooldown = function(moveLevel)
+		return 0
+	end,
+	default = true,
+	type = 5,
+	targetting = 1,
+	max_level = 5,
+	description = function(moveLevel)
+		damage = 200 + (50 * moveLevel)
+		return "Boss Move: Attacks all enemies for "..damage.."% of Attack and reduces the turn meter of all enemies by 100%."
+	end
+}
+
+meffects = {}
+meffects[1] = {}
+meffects[1].id = 1
+meffects[1].target = 3
+meffects[1].param1 = function(moveLevel)
+	damage = 100 + (moveLevel * 50)
+	return damage
+end
+meffects[1].param2 = "attack"
+
+meffects[2] = {}
+meffects[2].id = 24 --poison
+meffects[2].target = 3
+meffects[2].param1 = function(moveLevel)
+	return 100
+end
+meffects[2].param2 = 2
+
+M[78] = {
+	name = "Venomous Barbs",
+	effects = meffects,
+	cooldown = function(moveLevel)
+		return 3
+	end,
+	default = false,
+	type = 4,
+	targetting = 1,
+	max_level = 5,
+	description = function(moveLevel)
+		damage = 100 + (moveLevel * 50)
+		return "Boss Move: Attacks all enemies for "..damage.."% of Attack. Targets that take damage are badly poisoned for 2 turns."
 	end
 }
 
