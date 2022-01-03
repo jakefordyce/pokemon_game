@@ -5,11 +5,11 @@ local boss_stats = require "common/boss_stats"
 local M = {}
 
 --FLAGS--
---[[ PROD
+---[[ PROD
 M.flags = {
 	starters_chosen = false
 } --]]
----[[ TEST
+--[[ TEST
 M.flags = {
 	starters_chosen = true
 } --]]
@@ -20,7 +20,7 @@ M.trainers_defeated = {}
 M.bill_bosses_defeated = {0}
 
 --PLAYER INFO--
---[[ PROD
+---[[ PROD
 M.player = {
 	position_x = 263, 
 	position_y = 761,
@@ -38,7 +38,7 @@ M.player = {
 	rating = 0
 }
 --]]
----[[ Testing Bill bosses
+--[[ Testing Bill bosses
 M.player = {
 	position_x = 416,
 	position_y = 51,
