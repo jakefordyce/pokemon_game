@@ -46,6 +46,27 @@ M[2] = {
 	move_priority = {3, 2, 4, 1}
 }
 
+moves = {}
+moves[1] = {["level"] = 1, ["id"] = 77}
+moves[2] = {["level"] = 1, ["id"] = 79}
+moves[3] = {["level"] = 1, ["id"] = 80}
+moves[4] = {["level"] = 1, ["id"] = 78}
+M[3] = {
+	name = "houndoom",
+	hp = 1000,
+	attack = 100,
+	defense = 100,
+	spattack = 100,
+	spdefense = 100,
+	speed = 120,
+	accuracy = 200,
+	resist = 100,
+	type1 = 9,
+	type2 = 15,
+	moves = moves,
+	move_priority = {2, 3, 4, 1}
+}
+
 function M.exp_reward_by_level(level)
 	return math.ceil(math.pow(1.05, (level - 1)) * 20) * 2
 end

@@ -347,6 +347,9 @@ function handle_move_effects(level, effect, target, move_user)
 		elseif effect.id == 16 then --heal
 			local stat = move_user[effect.param2]
 			local power = math.floor(effect.param1(level) * stat / 100)
+			if mon_has_status_effect(defender, 26) then
+				power = 0
+			end
 			local crit_rng = math.random(1,100)
 			text_color = "green"
 			if effect.extra_crit ~= nil then
@@ -677,6 +680,9 @@ function activate_torments(turn_mon)
 			timer.delay(delay_time, false, function() display_damage_text(go.get_position(turn_mon.reference),damage_text, "white") end)
 			
 			if eff.type == 17 then
+				if mon_has_status_effect(combatants[eff.placed_by], 26) then
+					damage = 0 --this variable should have already been used to deal damage by this point.
+				end
 				heal_defender(combatants[eff.placed_by], damage)
 				timer.delay(delay_time, false, function() display_damage_text(go.get_position(eff.placed_by),damage_text, "green") end)
 			end

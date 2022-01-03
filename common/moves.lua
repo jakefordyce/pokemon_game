@@ -2342,7 +2342,85 @@ M[78] = {
 	max_level = 5,
 	description = function(moveLevel)
 		damage = 100 + (moveLevel * 50)
-		return "Boss Move: Attacks all enemies for "..damage.."% of Attack. Targets that take damage are badly poisoned for 2 turns."
+		return "Boss Move: Attacks all enemies for "..damage.."% of Attack. Targets that take damage are badly poisoned for 4 turns."
+	end
+}
+
+meffects = {}
+meffects[1] = {}
+meffects[1].id = 2
+meffects[1].target = 3
+meffects[1].param1 = function(moveLevel)
+	return 100
+end
+meffects[1].param2 = 4
+
+meffects[2] = {}
+meffects[2].id = 4
+meffects[2].target = 3
+meffects[2].param1 = function(moveLevel)
+	return 100
+end
+meffects[2].param2 = 4
+
+M[79] = {
+	name = "Impending Doom",
+	effects = meffects,
+	cooldown = function(moveLevel)
+		return 4
+	end,
+	default = false,
+	type = 15,
+	targetting = 1,
+	max_level = 5,
+	description = function(moveLevel)
+		chance = 100
+		return "Boss Move: Has a "..chance.."% chance of reducing the Attack and Defense of all enemies for 4 turns."
+	end
+}
+
+meffects = {}
+meffects[1] = {}
+meffects[1].id = 1
+meffects[1].target = 3
+meffects[1].param1 = function(moveLevel)
+	damage = 100 + (moveLevel * 50)
+	return damage
+end
+meffects[1].param2 = "spattack"
+
+meffects[2] = {}
+meffects[2].id = 20 --burn
+meffects[2].target = 3
+meffects[2].param1 = function(moveLevel)
+	return 100
+end
+meffects[2].param2 = 4
+meffects[2].min_hits = 2
+meffects[2].max_hits = 2
+
+meffects[3] = {}
+meffects[3].id = 26 --heal reduce
+meffects[3].target = 3
+meffects[3].param1 = function(moveLevel)
+	return 100
+end
+meffects[3].param2 = 4
+
+M[80] = {
+	name = "Infernal Flames",
+	effects = meffects,
+	cooldown = function(moveLevel)
+		return 4
+	end,
+	default = false,
+	type = 9,
+	targetting = 1,
+	max_level = 5,
+	description = function(moveLevel)
+		damage = 100 + (moveLevel * 50)
+		chance = 100
+		return "Attacks all enemies for "..damage.."% of Special Attack. Has a "..chance.."% chance of burning the enemies for 4 turns"
 	end
 }
 

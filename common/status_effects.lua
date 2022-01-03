@@ -114,5 +114,10 @@ M[24] = {
 	category = 3
 }
 --25 extra turn
+M[26] = {
+	sprite_name = "heal_reduction",
+	damage_text = "Heal Reduction",
+	category = 2
+}
 
 return M
