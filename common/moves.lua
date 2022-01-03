@@ -2224,18 +2224,12 @@ end
 meffects[1].charges = 10
 meffects[1].charges_stack = false
 
-meffects[2] = {}
-meffects[2].id = 25 -- extra turn
-meffects[2].target = 0
-meffects[2].param1 = function(moveLevel)
-	return 100
-end
 
 M[75] = {
 	name = "Stone Armor",
 	effects = meffects,
 	cooldown = function(moveLevel)
-		return 2
+		return 5
 	end,
 	default = false,
 	type = 1,
@@ -2261,12 +2255,18 @@ meffects[1].param2 = "attack"
 meffects[1].extra_damage_user_status = 6
 meffects[1].extra_damage_amount = 200
 
+meffects[2] = {}
+meffects[2].id = 25 -- extra turn
+meffects[2].target = 0
+meffects[2].param1 = function(moveLevel)
+	return 100
+end
 
 M[76] = {
 	name = "Seismic Slam",
 	effects = meffects,
 	cooldown = function(moveLevel)
-		return 4
+		return 5
 	end,
 	default = false,
 	type = 5,
@@ -2328,13 +2328,13 @@ meffects[2].target = 3
 meffects[2].param1 = function(moveLevel)
 	return 100
 end
-meffects[2].param2 = 2
+meffects[2].param2 = 4
 
 M[78] = {
 	name = "Venomous Barbs",
 	effects = meffects,
 	cooldown = function(moveLevel)
-		return 3
+		return 5
 	end,
 	default = false,
 	type = 4,

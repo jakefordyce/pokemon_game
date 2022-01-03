@@ -373,9 +373,18 @@ function handle_move_effects(level, effect, target, move_user)
 			table.insert(extra_turn_queue, defender)
 			damage_text = "Extra Turn"
 		elseif status_effects[effect.id] ~= nil and status_effects[effect.id].category > 1 then
-			if(should_apply_debuff(move_user, effectiveness, defender, effect.param1(level)) or effect.target == 0) then
+			if effect.target == 0 then
 				apply_status_effect(defender, effect, move_user)
 				damage_text = status_effects[effect.id].damage_text
+			elseif should_apply_debuff(move_user, effectiveness, defender, effect.param1(level)) then
+				--bosses are not fully affected by loss of control effects. Instead they just lose some turn meter.
+				if string.match(defender.reference, 'boss') and status_effects[effect.id].category == 4 then
+					damage_text = "turn reduce"
+					modify_turn_meter(defender, 12, -100)
+				else
+					apply_status_effect(defender, effect, move_user)
+					damage_text = status_effects[effect.id].damage_text
+				end
 			else
 				text_color = "red"
 				if mon_has_status_effect(defender, 13) then
@@ -660,6 +669,9 @@ function activate_torments(turn_mon)
 	for i, eff in ipairs(turn_mon.status_effects) do
 		if(eff.category == 3) then
 			local damage = math.ceil(turn_mon.hp * 5 / 100)
+			if mon_has_status_effect(turn_mon, 6) then
+				damage = math.floor(damage / 10)
+			end
 			local damage_text = damage
 			damage_defender(turn_mon, damage)
 			timer.delay(delay_time, false, function() display_damage_text(go.get_position(turn_mon.reference),damage_text, "white") end)
