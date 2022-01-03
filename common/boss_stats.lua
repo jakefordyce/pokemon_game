@@ -64,7 +64,7 @@ M[3] = {
 	type1 = 9,
 	type2 = 15,
 	moves = moves,
-	move_priority = {2, 4, 3, 1}
+	move_priority = {2, 3, 4, 1}
 }
 
 function M.exp_reward_by_level(level)
