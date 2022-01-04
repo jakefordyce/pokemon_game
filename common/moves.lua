@@ -2610,7 +2610,122 @@ M[86] = {
 	description = function(moveLevel)
 		chance = 50
 		damage = 200 + (moveLevel * 50)
-		return "Attacks all enemies for "..damage.."% of Special Attack then has a "..chance.."% chance of confusing the enemies for 2 turns."
+		return "Boss Move: Attacks all enemies for "..damage.."% of Special Attack then has a "..chance.."% chance of confusing the enemies for 2 turns."
+	end
+}
+
+meffects = {}
+meffects[1] = {}
+meffects[1].id = 29 --revive
+meffects[1].target = 4
+meffects[1].param1 = function(moveLevel) --chance
+	return 100
+end
+meffects[1].param2 = function(moveLevel) --health
+	return 100
+end
+
+M[87] = {
+	name = "Attract",
+	effects = meffects,
+	cooldown = function(moveLevel)
+		return 4
+	end,
+	default = false,
+	type = 12,
+	targetting = 3,
+	max_level = 5,
+	description = function(moveLevel)
+		chance = 100
+		return "Boss Move: Revives all magnemites."
+	end
+}
+
+meffects = {}
+meffects[1] = {}
+meffects[1].id = 4
+meffects[1].target = 3
+meffects[1].param1 = function(moveLevel)
+	chance = 75 + (moveLevel * 5)
+	return chance
+end
+meffects[1].param2 = 2
+
+M[88] = {
+	name = "Screech",
+	effects = meffects,
+	cooldown = function(moveLevel)
+		return 3
+	end,
+	default = false,
+	type = 1,
+	targetting = 1,
+	max_level = 5,
+	description = function(moveLevel)
+		chance = 75 + (moveLevel * 5)
+		return "Has a "..chance.."% chance of reducing the Defense of all enemies for 2 turns."
+	end
+}
+
+meffects = {}
+meffects[1] = {}
+meffects[1].id = 1
+meffects[1].target = 3
+meffects[1].param1 = function(moveLevel)
+	damage = 200 + (moveLevel * 50)
+	return damage
+end
+meffects[1].param2 = "spattack"
+
+meffects[2] = {}
+meffects[2].id = 12 --decrease turn
+meffects[2].target = 3
+meffects[2].param1 = function(moveLevel)
+	return 50
+end
+meffects[2].param2 = 100
+
+M[89] = {
+	name = "Static Discharge",
+	effects = meffects,
+	cooldown = function(moveLevel)
+		return 0
+	end,
+	default = true,
+	type = 12,
+	targetting = 1,
+	max_level = 5,
+	description = function(moveLevel)
+		damage = 200 + (50 * moveLevel)
+		return "Boss Move: Attacks all enemies for "..damage.."% of Special Attack and reduces the turn meter of all enemies by 100%."
+	end
+}
+
+meffects = {}
+meffects[1] = {}
+meffects[1].id = 1
+meffects[1].target = 3
+meffects[1].param1 = function(moveLevel)
+	damage = 200 + (moveLevel * 50)
+	return damage
+end
+meffects[1].param2 = "spattack"
+meffects[1].extra_damage_ally_count = 200
+
+
+M[90] = {
+	name = "Thunder Storm",
+	effects = meffects,
+	cooldown = function(moveLevel)
+		return 4
+	end,
+	default = false,
+	type = 12,
+	targetting = 1,
+	max_level = 5,
+	description = function(moveLevel)
+		damage = 200 + (10 * moveLevel)
+		return "Attacks all enemies for "..damage.."% of Special Attack. Damage increased based on number of healthy allies."
 	end
 }
 

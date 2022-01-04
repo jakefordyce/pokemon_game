@@ -114,6 +114,9 @@ function on_message(self, message_id, message, sender)
 	if message_id == hash("disable_mon") then
 		gui.set_enabled(gui.get_node(message.mon), false)
 	end	
+	if message_id == hash("enable_mon") then
+		gui.set_enabled(gui.get_node(message.mon), true)
+	end	
 end
 
 -- Learn more: https://defold.com/manuals/input/

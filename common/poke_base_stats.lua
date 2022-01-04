@@ -286,6 +286,7 @@ moves[1] = {["level"] = 1, ["id"] = 1}
 moves[2] = {["level"] = 1, ["id"] = 69}
 moves[3] = {["level"] = 6, ["id"] = 71}
 moves[4] = {["level"] = 9, ["id"] = 70}
+moves[5] = {["level"] = 10, ["id"] = 44}
 M[21] = {
 	name = "spearow",
 	rarity = 2,
@@ -484,7 +485,22 @@ M[77]={}
 M[78]={}
 M[79]={}
 M[80]={}
-M[81]={}
+
+moves = {}
+moves[1] = {["level"] = 1, ["id"] = 1}
+M[81] = {
+	name = "magnemite",
+	rarity = 2,
+	hp = 50,
+	attack = 55,
+	defense = 150,
+	spattack = 125,
+	spdefense = 90,
+	speed = 100,
+	type1 = 7,
+	type2 = 12,
+	moves = moves
+}
 M[82]={}
 
 moves = {}

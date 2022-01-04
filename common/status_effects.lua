@@ -125,5 +125,6 @@ M[28] = {
 	damage_text = "Reflect",
 	category = 1
 }
+--29 revive
 
 return M

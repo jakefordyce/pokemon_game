@@ -87,7 +87,7 @@ function display_bosses()
 	p.y = 950
 	p.x = 320
 
-	for i=1, 4 do
+	for i=1, 5 do
 		local boss_obj = factory.create("#boss_factory",p, nil, {boss_index = i})
 		go.set_parent(boss_obj, go.get_id("boss_select"))
 		table.insert(spawned_bosses, boss_obj)

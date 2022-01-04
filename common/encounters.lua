@@ -179,6 +179,38 @@ function M.load_boss_encounter(boss_index, level)
 		gear_rarity = 5,
 		build_style = 1
 	}
+
+	if boss_index == 5 then -- magneton
+		local moves = {}
+		moves[1] = {["level"] = 0, ["id"] = 55}
+		moves[2] = {["level"] = 0, ["id"] = 31}
+		moves[3] = {["level"] = 0, ["id"] = 88}
+		
+		game_state["enemy_mon1"] = {
+			pokedex = 81,
+			level = level,
+			gear_rarity = 5,
+			build_style = 1,
+			known_moves = moves,
+			move_priority = {3,2,1}
+		}
+		game_state["enemy_mon4"] = {
+			pokedex = 81,
+			level = level,
+			gear_rarity = 5,
+			build_style = 1,
+			known_moves = moves,
+			move_priority = {3,2,1}
+		}
+		for i=1,3 do
+			game_state["enemy_mon1"]["move"..i] = i
+			game_state["enemy_mon4"]["move"..i] = i
+		end
+		generate_stats(game_state["enemy_mon1"])
+		simulate_runes(game_state["enemy_mon1"])
+		generate_stats(game_state["enemy_mon4"])
+		simulate_runes(game_state["enemy_mon4"])
+	end
 	generate_boss_stats(game_state["enemy_boss"])
 	simulate_runes(game_state["enemy_boss"])
 	select_boss_moves(game_state["enemy_boss"])

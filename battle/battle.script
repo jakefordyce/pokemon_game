@@ -179,7 +179,7 @@ function start_handling_move(target)
 					effect_target = "^enemy"
 				end
 				for i, comb in pairs(combatants) do
-					if(string.match(comb.reference, effect_target) and not comb.fainted) then
+					if(string.match(comb.reference, effect_target))then-- and not comb.fainted) then
 						timer.delay(delay_time, false, function() handle_move_effects(level, effect, comb.reference, current_turn_mon) end)
 					end
 				end
@@ -224,7 +224,7 @@ function handle_leech(mon, power)
 end
 
 function handle_move_effects(level, effect, target, move_user)
-	if not combatants[target].fainted then
+	if not combatants[target].fainted or effect.id == 29 then
 		effectiveness = types.type_effectiveness(selected_move.type, combatants[target].type1, combatants[target].type2)
 		local damage_text = ""
 		local text_color = "white"
@@ -320,6 +320,10 @@ function handle_move_effects(level, effect, target, move_user)
 				power = power + (power * mon_count_status_effect(defender, effect.extra_damage_target_status_count) * effect.extra_damage_amount / 100)
 			end
 
+			if effect.extra_damage_ally_count ~= nil then
+				power = power + (power * mon_count_allies(defender) * effect.extra_damage_ally_count / 100)
+			end
+
 			protector = mon_protector(defender)
 			local damage
 			if protector == nil then
@@ -386,6 +390,12 @@ function handle_move_effects(level, effect, target, move_user)
 		elseif effect.id == 25 then --extra turn
 			table.insert(extra_turn_queue, defender)
 			damage_text = "Extra Turn"
+		elseif effect.id == 29 then --revive
+			if defender.fainted then
+				local power = math.floor(defender.hp * effect.param2(level) / 100)
+				revive_defender(defender, power)
+				damage_text = "revived"
+			end
 		elseif status_effects[effect.id] ~= nil and status_effects[effect.id].category > 1 then
 			if effect.target == 0 then
 				apply_status_effect(defender, effect, move_user)
@@ -587,7 +597,7 @@ function effect_should_reflect(reflect_type, effect_obj)
 end
 
 function mon_has_status_effect(mon, effect_id)
-	has_status_effect = false
+	local has_status_effect = false
 	for i, eff in ipairs(mon.status_effects) do
 		if eff.type == effect_id then
 			has_status_effect = true
@@ -597,7 +607,7 @@ function mon_has_status_effect(mon, effect_id)
 end
 
 function mon_count_status_effect(mon, effect_id)
-	effect_count = 0
+	local effect_count = 0
 	for i, eff in ipairs(mon.status_effects) do
 		if eff.type == effect_id or effect_id == 0 then
 			effect_count = effect_count + 1
@@ -606,8 +616,22 @@ function mon_count_status_effect(mon, effect_id)
 	return effect_count
 end
 
+function mon_count_allies(mon)
+	local ally_count = 0
+	local effect_target = "^player"
+	if string.match(current_turn_mon.reference, "^enemy") then -- an enemy mon using the move
+		effect_target = "^enemy"
+	end
+	for i, comb in pairs(combatants) do
+		if(string.match(comb.reference, effect_target) and not comb.fainted) then
+			ally_count = ally_count + 1
+		end
+	end
+	return ally_count - 1
+end
+
 function mon_can_act(mon)
-	can_act = true
+	local can_act = true
 	for i, eff in ipairs(mon.status_effects) do
 		if eff.category == 4 and (eff.type ~= 22 and eff.type ~= 23) then --loss of control
 			can_act = false
@@ -653,6 +677,14 @@ function damage_defender(defender, damage)
 	elseif player_mons_are_fainted() then
 		timer.delay(0.5, false, function() msg.post("main:/loader#main", "end_battle", {victory = false}) end)
 	end
+end
+
+function revive_defender(defender, damage)
+	heal_defender(defender, damage)
+	defender.fainted = false
+	defender.turn = 0
+	msg.post("gui", "enable_mon", {mon = defender.reference})
+	msg.post(defender.reference.."#sprite", "enable")
 end
 
 function heal_defender(defender, damage)
@@ -768,8 +800,8 @@ function start_enemy_turn(turn_mon)
 		reduce_status_effect_durations(turn_mon, 1, 3)
 		local p = go.get_position(turn_mon.reference)
 		p.z = p.z - 1
-		scale = (game_state.battle_type == 3 and 4 or 2)
-		yshift = (game_state.battle_type == 3 and 128 or 32)
+		scale = (string.match(turn_mon.reference, "boss") and 4 or 2)
+		yshift = (string.match(turn_mon.reference, "boss") and 128 or 32)
 		p.y = p.y - yshift
 		local turn_marker = factory.create("#turn_marker_factory",p, nil, nil, scale)
 		table.insert(spawned_turn_markers, turn_marker)

@@ -89,6 +89,27 @@ M[4] = {
 	move_priority = {2, 3, 4, 1}
 }
 
+moves = {}
+moves[1] = {["level"] = 1, ["id"] = 89}
+moves[2] = {["level"] = 1, ["id"] = 87}
+moves[3] = {["level"] = 1, ["id"] = 90}
+
+M[5] = {
+	name = "magneton",
+	hp = 1000,
+	attack = 100,
+	defense = 250,
+	spattack = 140,
+	spdefense = 100,
+	speed = 95,
+	accuracy = 100,
+	resist = 100,
+	type1 = 7,
+	type2 = 12,
+	moves = moves,
+	move_priority = {3, 2, 1}
+}
+
 function M.exp_reward_by_level(level)
 	return math.ceil(math.pow(1.05, (level - 1)) * 20) * 2
 end
