@@ -7,6 +7,7 @@ local M = {}
 -- 2 = debuff - decrease stats
 -- 3 = torment - takes damage each round
 -- 4 = loss of control - prevents actions in some way
+-- 5 = blessing - heals each round
 
 M= {}
 --1 deal damage
@@ -126,5 +127,20 @@ M[28] = {
 	category = 1
 }
 --29 revive
+M[30] = {
+	sprite_name = "block_buffs",
+	damage_text = "Block Buffs",
+	category = 2
+}
+M[31] = {
+	sprite_name = "drenched",
+	damage_text = "Drenched",
+	category = 2
+}
+M[32] = {
+	sprite_name = "healing",
+	damage_text = "Healing",
+	category = 5
+}
 
 return M

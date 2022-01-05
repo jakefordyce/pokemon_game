@@ -2420,7 +2420,7 @@ M[80] = {
 	description = function(moveLevel)
 		damage = 100 + (moveLevel * 50)
 		chance = 100
-		return "Attacks all enemies for "..damage.."% of Special Attack. Has a "..chance.."% chance of burning the enemies for 4 turns"
+		return "Boss Move: Attacks all enemies for "..damage.."% of Special Attack. Has a "..chance.."% chance of burning the enemies for 4 turns"
 	end
 }
 
@@ -2463,7 +2463,7 @@ meffects[1].param1 = function(moveLevel)
 	return damage
 end
 meffects[1].param2 = "spattack"
-meffects[1].extra_damage_target_status_count = 0
+meffects[1].extra_damage_target_status_count = -1
 meffects[1].extra_damage_amount = 100
 meffects[1].leech = 200
 
@@ -2546,7 +2546,7 @@ M[84] = {
 	max_level = 5,
 	description = function(moveLevel)
 		chance = 100
-		return "Has a "..chance.."% chance of placing 2 leech seeds on all enemies for 4 turns."
+		return "Boss Move: Has a "..chance.."% chance of placing 2 leech seeds on all enemies for 4 turns."
 	end
 }
 
@@ -2573,7 +2573,7 @@ M[85] = {
 	max_level = 5,
 	description = function(moveLevel)
 		damage = 200 + (moveLevel * 50)
-		return "Attacks 1 enemy for "..damage.."% of Special Attack. The user is healed for the damage dealt."
+		return "Boss Move: Attacks 1 enemy for "..damage.."% of Special Attack. The user is healed for the damage dealt."
 	end
 }
 
@@ -2725,7 +2725,133 @@ M[90] = {
 	max_level = 5,
 	description = function(moveLevel)
 		damage = 200 + (10 * moveLevel)
-		return "Attacks all enemies for "..damage.."% of Special Attack. Damage increased based on number of healthy allies."
+		return "Boss Move: Attacks all enemies for "..damage.."% of Special Attack. Damage increased based on number of healthy allies."
+	end
+}
+
+meffects = {}
+meffects[1] = {}
+meffects[1].id = 1
+meffects[1].target = 3
+meffects[1].param1 = function(moveLevel)
+	damage = 200 + (moveLevel * 50)
+	return damage
+end
+meffects[1].param2 = "spattack"
+meffects[1].ignore_def = 100
+meffects[1].extra_damage_target_status_count = 31
+meffects[1].extra_damage_amount = 100
+
+M[91] = {
+	name = "Piercing Cold",
+	effects = meffects,
+	cooldown = function(moveLevel)
+		return 4
+	end,
+	default = false,
+	type = 14,
+	targetting = 1,
+	max_level = 5,
+	description = function(moveLevel)
+		damage = 200 + (moveLevel * 50)
+		return "Boss Move: Attacks all enemies for "..damage.."% of Special Attack. This attack ignores defense."
+	end
+}
+
+meffects = {}
+meffects[1] = {}
+meffects[1].id = 1
+meffects[1].target = 3
+meffects[1].param1 = function(moveLevel)
+	damage = 200 + (moveLevel * 50)
+	return damage
+end
+meffects[1].param2 = "spattack"
+meffects[1].extra_damage_target_status_count = 31
+meffects[1].extra_damage_amount = 100
+
+meffects[2] = {}
+meffects[2].id = 30 --block buffs
+meffects[2].target = 3
+meffects[2].param1 = function(moveLevel)
+	return 100
+end
+meffects[2].param2 = 4
+
+M[92] = {
+	name = "Withering Cold",
+	effects = meffects,
+	cooldown = function(moveLevel)
+		return 4
+	end,
+	default = false,
+	type = 14,
+	targetting = 1,
+	max_level = 5,
+	description = function(moveLevel)
+		damage = 200 + (moveLevel * 50)
+		return "Boss Move: Attacks all enemies for "..damage.."% of Special Attack. Also places Block Buffs on all enemies."
+	end
+}
+
+meffects = {}
+meffects[1] = {}
+meffects[1].id = 32
+meffects[1].target = 0
+meffects[1].param1 = function(moveLevel)
+	return 100
+end
+meffects[1].param2 = 4
+meffects[1].min_hits = 2
+meffects[1].max_hits = 2
+
+M[93] = {
+	name = "Rejuvinating Rains",
+	effects = meffects,
+	cooldown = function(moveLevel)
+		return 4
+	end,
+	default = false,
+	type = 10,
+	targetting = 0,
+	max_level = 5,
+	description = function(moveLevel)
+		return "Boss Move: Places 2 Healing buffs for 4 rounds."
+	end
+}
+
+meffects = {}
+meffects[1] = {}
+meffects[1].id = 1
+meffects[1].target = 3
+meffects[1].param1 = function(moveLevel)
+	damage = 200 + (moveLevel * 50)
+	return damage
+end
+meffects[1].param2 = "spattack"
+
+meffects[2] = {}
+meffects[2].id = 31 --drenched
+meffects[2].target = 3
+meffects[2].param1 = function(moveLevel)
+	return 100
+end
+meffects[2].charges = 1
+meffects[2].charges_stack = true
+
+M[94] = {
+	name = "Deluge",
+	effects = meffects,
+	cooldown = function(moveLevel)
+		return 0
+	end,
+	default = true,
+	type = 10,
+	targetting = 1,
+	max_level = 5,
+	description = function(moveLevel)
+		damage = 200 + (moveLevel * 50)
+		return "Boss Move: Attacks all enemies for "..damage.."% of Special Attack. Also places a stack of Drenched on all enemies which increases damage they take from cold moves."
 	end
 }
 

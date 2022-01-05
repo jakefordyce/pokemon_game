@@ -418,8 +418,13 @@ function handle_move_effects(level, effect, target, move_user)
 				end
 			end
 		elseif status_effects[effect.id] ~= nil and status_effects[effect.id].category == 1 then
-			apply_status_effect(defender, effect, move_user)
-			damage_text = status_effects[effect.id].damage_text
+			if mon_has_status_effect(defender, 30) then
+				text_color = "red"
+				damage_text = "immune"
+			else
+				apply_status_effect(defender, effect, move_user)
+				damage_text = status_effects[effect.id].damage_text
+			end
 		end
 		
 		display_damage_text(go.get_position(defender.reference),damage_text, text_color)
@@ -470,7 +475,11 @@ function apply_status_effect(defender, effect_obj, move_user)
 		for i, eff in ipairs(defender.status_effects) do
 			if eff.type == effect_obj.id then
 				if effect_obj.charges ~= nil then
-					eff.duration = effect_obj.charges
+					if effect_obj.charges_stack then
+						eff.duration = eff.duration + effect_obj.charges
+					else
+						eff.duration = effect_obj.charges
+					end
 				else
 					eff.duration = effect_obj.param2
 				end
@@ -524,10 +533,18 @@ end
 function position_status_effects(mon)
 	local p = go.get_position(mon.reference)
 	p.y = p.y + 125
-	p.x = p.x - 10
+	p.x = p.x - 24
+	local original_x = p.x
+	local effect_count = 0
 	for i, eff in ipairs(mon.status_effects) do
 		go.set_position(p, eff.go_id)
 		p.x = p.x + 32
+		effect_count = effect_count + 1
+		if effect_count > 3 and not string.match(mon.reference, "boss") then
+			p.x = original_x
+			p.y = p.y + 32
+			effect_count = 0
+		end
 	end
 end
 
@@ -606,10 +623,15 @@ function mon_has_status_effect(mon, effect_id)
 	return has_status_effect
 end
 
+--effect_ids
+-- 0 = any status effect, good or bad
+-- -1 = any harmful effect
 function mon_count_status_effect(mon, effect_id)
 	local effect_count = 0
 	for i, eff in ipairs(mon.status_effects) do
-		if eff.type == effect_id or effect_id == 0 then
+		local cat = status_effects[eff.type].category
+		if eff.type == effect_id or effect_id == 0 
+		or (effect_id == -1 and (cat==2 or cat==3 or cat==4)) then
 			effect_count = effect_count + 1
 		end
 	end
@@ -763,6 +785,22 @@ function activate_torments(turn_mon)
 	end
 end
 
+function activate_blessings(turn_mon)
+	local delay_time = 0
+	for i, eff in ipairs(turn_mon.status_effects) do
+		if(eff.category == 5) then
+			local damage = math.ceil(turn_mon.hp * 5 / 100)
+			if mon_has_status_effect(turn_mon, 26) then
+				damage = 0
+			end
+			local damage_text = damage
+			heal_defender(turn_mon, damage)
+			timer.delay(delay_time, false, function() display_damage_text(go.get_position(turn_mon.reference),damage_text, "green") end)
+			delay_time = delay_time + 0.2
+		end
+	end
+end
+
 function load_data_for_battle()
 	load_player_mon_data()
 	load_enemy_data()
@@ -770,6 +808,7 @@ end
 
 function start_player_turn(turn_mon)
 	reduce_all_cooldowns(turn_mon, 1)
+	activate_blessings(turn_mon)
 	activate_torments(turn_mon)
 	reduce_status_effect_durations(turn_mon, 1, 3)
 	local p = go.get_position(turn_mon.reference)
@@ -796,6 +835,7 @@ end
 function start_enemy_turn(turn_mon)
 	if not player_mons_are_fainted() then
 		reduce_all_cooldowns(turn_mon, 1)
+		activate_blessings(turn_mon)
 		activate_torments(turn_mon)
 		reduce_status_effect_durations(turn_mon, 1, 3)
 		local p = go.get_position(turn_mon.reference)

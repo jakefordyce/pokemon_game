@@ -96,7 +96,7 @@ moves[3] = {["level"] = 1, ["id"] = 90}
 
 M[5] = {
 	name = "magneton",
-	hp = 1000,
+	hp = 600,
 	attack = 100,
 	defense = 250,
 	spattack = 140,
@@ -108,6 +108,29 @@ M[5] = {
 	type2 = 12,
 	moves = moves,
 	move_priority = {3, 2, 1}
+}
+
+moves = {}
+moves[1] = {["level"] = 1, ["id"] = 94}
+moves[2] = {["level"] = 1, ["id"] = 91}
+moves[3] = {["level"] = 1, ["id"] = 92}
+moves[4] = {["level"] = 1, ["id"] = 93}
+
+M[6] = {
+	name = "lapras",
+	hp = 1000,
+	attack = 100,
+	defense = 100,
+	spattack = 140,
+	spdefense = 100,
+	speed = 100,
+	accuracy = 200,
+	resist = 100,
+	type1 = 10,
+	type2 = 14,
+	moves = moves,
+	--move_priority = {3, 2, 4, 1}
+	move_priority = {4, 2, 1}
 }
 
 function M.exp_reward_by_level(level)
