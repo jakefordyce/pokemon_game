@@ -191,7 +191,7 @@ M[7] = {
 	name = "Howl",
 	effects = meffects,
 	cooldown = function(moveLevel)
-		return 0
+		return 3
 	end,
 	default = false,
 	type = 1,
@@ -1008,7 +1008,7 @@ meffects[2].param1 = function(moveLevel)
 	return chance
 end
 meffects[2].param2 = 2 -- duration. Currently not using
-meffects[2].param3 = "hp"
+meffects[2].param3 = "max_hp"
 meffects[2].param4 = function(moveLevel)
 	shield = 20 + (moveLevel * 2)
 	return shield
@@ -1040,7 +1040,7 @@ meffects[1].param1 = function(moveLevel)
 	heal = 15 + (moveLevel * 1)
 	return heal
 end
-meffects[1].param2 = "hp"
+meffects[1].param2 = "max_hp"
 
 M[36] = {
 	name = "Synthesis",
@@ -1202,7 +1202,7 @@ meffects[1].param1 = function(moveLevel)
 	heal = 40 + (moveLevel * 2)
 	return heal
 end
-meffects[1].param2 = "hp"
+meffects[1].param2 = "max_hp"
 
 meffects[2] = {}
 meffects[2].id = 11 -- sleep
@@ -2195,7 +2195,7 @@ meffects[1].param1 = function(moveLevel)
 	heal = 25 + (moveLevel * 2)
 	return heal
 end
-meffects[1].param2 = "hp"
+meffects[1].param2 = "max_hp"
 
 M[74] = {
 	name = "Softboiled",
@@ -2501,7 +2501,7 @@ meffects[2].param1 = function(moveLevel)
 	return chance
 end
 meffects[2].param2 = 2 -- duration. Currently not using
-meffects[2].param3 = "hp"
+meffects[2].param3 = "max_hp"
 meffects[2].param4 = function(moveLevel)
 	shield = 10 + (moveLevel * 5)
 	return shield
@@ -2633,7 +2633,7 @@ M[87] = {
 	end,
 	default = false,
 	type = 12,
-	targetting = 3,
+	targetting = 0,
 	max_level = 5,
 	description = function(moveLevel)
 		chance = 100
@@ -2852,6 +2852,133 @@ M[94] = {
 	description = function(moveLevel)
 		damage = 200 + (moveLevel * 50)
 		return "Boss Move: Attacks all enemies for "..damage.."% of Special Attack. Also places a stack of Drenched on all enemies which increases damage they take from cold moves."
+	end
+}
+
+meffects = {}
+meffects[1] = {}
+meffects[1].id = 33 -- remove debuffs
+meffects[1].target = 0
+meffects[1].param1 = function(moveLevel)
+	return 100
+end
+meffects[1].param2 = 0
+
+meffects[2] = {}
+meffects[2].id = 25 -- extra turn
+meffects[2].target = 0
+meffects[2].param1 = function(moveLevel)
+	return 100
+end
+
+M[95] = {
+	name = "Shed Exoskeleton",
+	effects = meffects,
+	cooldown = function(moveLevel)
+		return 2
+	end,
+	default = false,
+	type = 6,
+	targetting = 0,
+	max_level = 5,
+	description = function(moveLevel)
+		return "Boss Move: Removes all debuffs. Grants an extra turn."
+	end
+}
+
+meffects = {}
+meffects[1] = {}
+meffects[1].id = 34
+meffects[1].target = 0
+meffects[1].param1 = function(moveLevel)
+	return 100
+end
+meffects[1].charges = 0
+meffects[1].charges_stack = true
+
+M[96] = {
+	name = "Enrage",
+	effects = meffects,
+	cooldown = function(moveLevel)
+		return 8
+	end,
+	default = false,
+	type = 2,
+	targetting = 0,
+	max_level = 5,
+	description = function(moveLevel)
+		return "Boss Move: Adds Enrage status. Each time user is hit it will gain another stack of enraged."
+	end
+}
+
+meffects = {}
+meffects[1] = {}
+meffects[1].id = 1
+meffects[1].target = 1
+meffects[1].param1 = function(moveLevel)
+	damage = 200 + (moveLevel * 50)
+	return damage
+end
+meffects[1].param2 = "attack"
+meffects[1].extra_damage_per_user_charge = 34
+meffects[1].extra_damage_amount = 200
+meffects[1].blocks_revive = true
+
+meffects[2] = {}
+meffects[2].id = 35 -- remove specific status
+meffects[2].target = 0
+meffects[2].param1 = function(moveLevel)
+	return 100
+end
+meffects[2].param2 = 34
+
+
+M[97] = {
+	name = "Horn Toss",
+	effects = meffects,
+	cooldown = function(moveLevel)
+		return 8
+	end,
+	default = false,
+	type = 6,
+	targetting = 1,
+	max_level = 5,
+	description = function(moveLevel)
+		damage = 200 + (moveLevel * 50)
+		return "Boss Move: Attacks 1 enemy for "..damage.."% of Attack. Enemies fainted by this attack cannot be revived."
+	end
+}
+
+meffects = {}
+meffects[1] = {}
+meffects[1].id = 36 -- lower max hp
+meffects[1].target = 1
+meffects[1].param1 = function(moveLevel)
+	return 100
+end
+meffects[1].param2 = 10
+
+meffects[2] = {}
+meffects[2].id = 8 --increase turn
+meffects[2].target = 0
+meffects[2].param1 = function(moveLevel)
+	return 100
+end
+meffects[2].param2 = 50
+
+M[98] = {
+	name = "Hard Jab",
+	effects = meffects,
+	cooldown = function(moveLevel)
+		return 0
+	end,
+	default = true,
+	type = 6,
+	targetting = 1,
+	max_level = 5,
+	description = function(moveLevel)
+		hp_amount = 10
+		return "Boss Move: Lowers the target's Max HP by "..hp_amount.."% then boosts the user's turn by 50%"
 	end
 }
 

@@ -209,7 +209,7 @@ function handle_protections()
 				defense = defense * (100 - protection.ignore_def) / 100
 			end
 			local damage = calc_damage(power, defense)
-			timer.delay(delay_time, false, function() damage_defender(protector, damage) end)
+			timer.delay(delay_time, false, function() damage_defender(protector, damage, false) end)
 			timer.delay(delay_time, false, function() display_damage_text(go.get_position(protector.reference), damage, "white") end)
 		end
 		delay_time = delay_time + 0.3
@@ -248,7 +248,7 @@ function handle_move_effects(level, effect, target, move_user)
 					stat = stat * 2
 				end
 			elseif string.match(effect.param2, "enemy_hp") then
-				stat = defender.hp
+				stat = defender.max_hp
 			end
 			local power = effect.param1(level) * stat / 100
 			if effect.bonus_vs_psn ~= nil and mon_has_status_effect(defender, 15) then
@@ -274,7 +274,7 @@ function handle_move_effects(level, effect, target, move_user)
 					end
 					power = power + (effect.param3(level) * stat / 100)
 				elseif string.match(effect.param4, "enemy_hp") then
-					stat = defender.hp
+					stat = defender.max_hp
 					power = power + (effect.param3(level) * stat / 100)
 				elseif string.match(effect.param4, "speed") then
 					local bonus = (effect.param3(level) * stat / 10000) + 1
@@ -308,6 +308,10 @@ function handle_move_effects(level, effect, target, move_user)
 				reduce_status_effect_duration(defender, 1, 6)
 			end
 
+			if mon_has_status_effect(defender, 34) then
+				reduce_status_effect_duration(defender, -1, 34)
+			end
+
 			if effect.extra_damage_user_status ~= nil and mon_has_status_effect(move_user, effect.extra_damage_user_status) then
 				power = power + (power * effect.extra_damage_amount / 100)
 			end
@@ -324,17 +328,22 @@ function handle_move_effects(level, effect, target, move_user)
 				power = power + (power * mon_count_allies(defender) * effect.extra_damage_ally_count / 100)
 			end
 
+			if effect.extra_damage_per_user_charge ~= nil then
+				power = power + (power * mon_count_charges(move_user, effect.extra_damage_per_user_charge) * effect.extra_damage_amount / 100)
+			end
+
 			protector = mon_protector(defender)
 			local damage
+			local blocks_revive = effect.blocks_revive or false
 			if protector == nil then
 				damage = math.floor(calc_damage(power, defense) * effectiveness / 100)
 				damage_text = damage
-				damage_defender(defender, damage)
+				damage_defender(defender, damage, blocks_revive)
 			else
 				local share_of_power = math.floor(power / 2)
 				damage = math.floor(calc_damage(share_of_power, defense) * effectiveness / 100)
 				damage_text = damage
-				damage_defender(defender, damage)
+				damage_defender(defender, damage, blocks_revive)
 				table.insert(protections, { protector = protector, power = math.ceil(power / 2), ignore_def = effect.ignore_def})
 			end
 			if effect.leech ~= nil then
@@ -392,9 +401,36 @@ function handle_move_effects(level, effect, target, move_user)
 			damage_text = "Extra Turn"
 		elseif effect.id == 29 then --revive
 			if defender.fainted then
-				local power = math.floor(defender.hp * effect.param2(level) / 100)
-				revive_defender(defender, power)
-				damage_text = "revived"
+				if not defender.revive_blocked then
+					local power = math.floor(defender.max_hp * effect.param2(level) / 100)
+					revive_defender(defender, power)
+					damage_text = "revived"
+				else
+					damage_text = "revive blocked"
+				end
+			end
+		elseif effect.id == 33 then -- remove debuffs
+			local remove_rng = math.random(1,100)
+			if remove_rng <= effect.param1(level) then
+				remove_status_effects(defender, effect.param2, 1)
+				damage_text = "debuffs removed"
+			end
+		elseif effect.id == 35 then --remove specific status
+			local remove_rng = math.random(1,100)
+			if remove_rng <= effect.param1(level) then
+				remove_status_effect(defender, effect.param2)
+				damage_text = "status removed"
+			end
+		elseif effect.id == 36 then -- lower max hp
+			local effect_rng = math.random(1,100)
+			if effect_rng <= effect.param1(level) then
+				local reduction = 100 - effect.param2
+				defender.max_hp = math.ceil(defender.max_hp * reduction / 100)
+				if defender.currenthp > defender.max_hp then
+					defender.currenthp = defender.max_hp
+				end
+				msg.post("gui", "update_hp", {target=defender.reference, current=defender.currenthp, max=defender.max_hp, shield=defender.shield})
+				damage_text = "reduce max hp"
 			end
 		elseif status_effects[effect.id] ~= nil and status_effects[effect.id].category > 1 then
 			if effect.target == 0 then
@@ -515,6 +551,59 @@ function apply_status_effect(defender, effect_obj, move_user)
 		table.insert(defender.status_effects, effect)
 		position_status_effects(defender)
 	end
+end
+
+-- type
+-- 0 = all
+-- 1 = harmful
+-- 2 = helpful
+function remove_status_effects(mon, num_of_effects, type)
+	local status_effects_to_remove = {}
+	local effects_removed = 0
+	for i, eff in ipairs(mon.status_effects) do
+		if(type == 0) then
+			if effects_removed < num_of_effects or num_of_effects == 0 then
+				eff.duration = 0
+				msg.post(eff.go_id, "update_duration", {duration = eff.duration})
+				table.insert(status_effects_to_remove, 1, i)
+				effects_removed = effects_removed + 1
+			end
+		elseif(type == 1 and (eff.category == 2 or eff.category == 3 or eff.category == 4)) then
+			if effects_removed < num_of_effects or num_of_effects == 0 then
+				eff.duration = 0
+				msg.post(eff.go_id, "update_duration", {duration = eff.duration})
+				table.insert(status_effects_to_remove, 1, i)
+				effects_removed = effects_removed + 1
+			end
+		elseif(type == 2 and (eff.category == 1 or eff.category == 5)) then
+			if effects_removed < num_of_effects or num_of_effects == 0 then
+				eff.duration = 0
+				msg.post(eff.go_id, "update_duration", {duration = eff.duration})
+				table.insert(status_effects_to_remove, 1, i)
+				effects_removed = effects_removed + 1
+			end
+		end
+	end
+	for i, setr in ipairs(status_effects_to_remove) do
+		table.remove(mon.status_effects, setr)
+	end
+	position_status_effects(mon)
+end
+
+function remove_status_effect(mon, effect_id)
+	local status_effects_to_remove = {}
+	
+	for i, eff in ipairs(mon.status_effects) do
+		if(eff.type == effect_id) then
+			eff.duration = 0
+			msg.post(eff.go_id, "update_duration", {duration = eff.duration})
+			table.insert(status_effects_to_remove, 1, i)
+		end
+	end
+	for i, setr in ipairs(status_effects_to_remove) do
+		table.remove(mon.status_effects, setr)
+	end
+	position_status_effects(mon)
 end
 
 function modify_turn_meter(defender, effect_id, amount)
@@ -652,6 +741,17 @@ function mon_count_allies(mon)
 	return ally_count - 1
 end
 
+function mon_count_charges(mon, effect_id)
+	local charge_count = 0
+	for i, eff in ipairs(mon.status_effects) do
+		if eff.type == effect_id then
+			charge_count = charge_count + eff.duration
+		end
+	end
+	print("charges: "..charge_count)
+	return charge_count
+end
+
 function mon_can_act(mon)
 	local can_act = true
 	for i, eff in ipairs(mon.status_effects) do
@@ -662,7 +762,7 @@ function mon_can_act(mon)
 	return can_act
 end
 
-function damage_defender(defender, damage)
+function damage_defender(defender, damage, blocks_revive)
 	local shield_amount = defender.shield
 	local remaining_damage = damage - shield_amount
 	defender.shield = defender.shield - damage
@@ -684,6 +784,9 @@ function damage_defender(defender, damage)
 		defender.currenthp = 0
 		defender.fainted = true
 		defender.turn = 0
+		if blocks_revive then
+			defender.revive_blocked = true
+		end
 		msg.post("gui", "disable_mon", {mon = defender.reference})
 		msg.post(defender.reference.."#sprite", "disable")
 		for i, eff in ipairs(defender.status_effects) do
@@ -691,7 +794,7 @@ function damage_defender(defender, damage)
 			defender.status_effects[i] = nil
 		end
 	else
-		msg.post("gui", "update_hp", {target=defender.reference, current=defender.currenthp, max=defender.hp, shield=defender.shield})
+		msg.post("gui", "update_hp", {target=defender.reference, current=defender.currenthp, max=defender.max_hp, shield=defender.shield})
 	end
 
 	if enemies_are_fainted() then
@@ -711,17 +814,17 @@ end
 
 function heal_defender(defender, damage)
 	defender.currenthp = defender.currenthp + damage
-	if defender.currenthp > defender.hp then
-		defender.currenthp = defender.hp
+	if defender.currenthp > defender.max_hp then
+		defender.currenthp = defender.max_hp
 	end
-	msg.post("gui", "update_hp", {target=defender.reference, current=defender.currenthp, max=defender.hp, shield=defender.shield})
+	msg.post("gui", "update_hp", {target=defender.reference, current=defender.currenthp, max=defender.max_hp, shield=defender.shield})
 end
 
 function shield_defender(defender, damage)
 	if damage > defender.shield then
 		defender.shield = damage
 	end
-	msg.post("gui", "update_hp", {target = defender.reference, current=defender.currenthp, max=defender.hp, shield=defender.shield})
+	msg.post("gui", "update_hp", {target = defender.reference, current=defender.currenthp, max=defender.max_hp, shield=defender.shield})
 end
 
 function enemies_are_fainted()
@@ -765,12 +868,12 @@ function activate_torments(turn_mon)
 	local delay_time = 0
 	for i, eff in ipairs(turn_mon.status_effects) do
 		if(eff.category == 3) then
-			local damage = math.ceil(turn_mon.hp * 5 / 100)
+			local damage = math.ceil(turn_mon.max_hp * 5 / 100)
 			if mon_has_status_effect(turn_mon, 6) then
 				damage = math.floor(damage / 10)
 			end
 			local damage_text = damage
-			damage_defender(turn_mon, damage)
+			damage_defender(turn_mon, damage, false)
 			timer.delay(delay_time, false, function() display_damage_text(go.get_position(turn_mon.reference),damage_text, "white") end)
 			
 			if eff.type == 17 then
@@ -789,7 +892,7 @@ function activate_blessings(turn_mon)
 	local delay_time = 0
 	for i, eff in ipairs(turn_mon.status_effects) do
 		if(eff.category == 5) then
-			local damage = math.ceil(turn_mon.hp * 5 / 100)
+			local damage = math.ceil(turn_mon.max_hp * 5 / 100)
 			if mon_has_status_effect(turn_mon, 26) then
 				damage = 0
 			end
@@ -807,6 +910,8 @@ function load_data_for_battle()
 end
 
 function start_player_turn(turn_mon)
+	print(turn_mon.name.." current hp: "..turn_mon.currenthp)
+	print(turn_mon.name.." max hp: "..turn_mon.max_hp)
 	reduce_all_cooldowns(turn_mon, 1)
 	activate_blessings(turn_mon)
 	activate_torments(turn_mon)
@@ -945,6 +1050,7 @@ function load_player_mon_data()
 	if game_state.player_mon1 ~= nil then
 		player_mon1 = game_state.pokemon[game_state.player_mon1]
 		player_mon1.currenthp = player_mon1.hp
+		player_mon1.max_hp = player_mon1.hp
 		player_mon1.shield = 0
 		player_mon1.turn = 0
 		player_mon1.reference = "player_mon1"
@@ -964,6 +1070,7 @@ function load_player_mon_data()
 	if game_state.player_mon2 ~= nil then
 		player_mon2 = game_state.pokemon[game_state.player_mon2]
 		player_mon2.currenthp = player_mon2.hp
+		player_mon2.max_hp = player_mon2.hp
 		player_mon2.shield = 0
 		player_mon2.turn = 0
 		player_mon2.reference = "player_mon2"
@@ -983,6 +1090,7 @@ function load_player_mon_data()
 	if game_state.player_mon3 ~= nil then
 		player_mon3 = game_state.pokemon[game_state.player_mon3]
 		player_mon3.currenthp = player_mon3.hp
+		player_mon3.max_hp = player_mon3.hp
 		player_mon3.shield = 0
 		player_mon3.turn = 0
 		player_mon3.reference = "player_mon3"
@@ -1002,6 +1110,7 @@ function load_player_mon_data()
 	if game_state.player_mon4 ~= nil then
 		player_mon4 = game_state.pokemon[game_state.player_mon4]
 		player_mon4.currenthp = player_mon4.hp
+		player_mon4.max_hp = player_mon4.hp
 		player_mon4.shield = 0
 		player_mon4.turn = 0
 		player_mon4.reference = "player_mon4"
@@ -1023,6 +1132,7 @@ function load_enemy_data()
 	if game_state.enemy_mon1 ~= nil then
 		enemy_mon1 = game_state.enemy_mon1
 		enemy_mon1.currenthp = enemy_mon1.hp
+		enemy_mon1.max_hp = enemy_mon1.hp
 		enemy_mon1.shield = 0
 		enemy_mon1.turn = 0
 		enemy_mon1.reference = "enemy_mon1"
@@ -1042,6 +1152,7 @@ function load_enemy_data()
 	if game_state.enemy_mon2 ~= nil then
 		enemy_mon2 = game_state.enemy_mon2
 		enemy_mon2.currenthp = enemy_mon2.hp
+		enemy_mon2.max_hp = enemy_mon2.hp
 		enemy_mon2.shield = 0
 		enemy_mon2.turn = 0
 		enemy_mon2.reference = "enemy_mon2"
@@ -1061,6 +1172,7 @@ function load_enemy_data()
 	if game_state.enemy_mon3 ~= nil then
 		enemy_mon3 = game_state.enemy_mon3
 		enemy_mon3.currenthp = enemy_mon3.hp
+		enemy_mon3.max_hp = enemy_mon3.hp
 		enemy_mon3.shield = 0
 		enemy_mon3.turn = 0
 		enemy_mon3.reference = "enemy_mon3"
@@ -1080,6 +1192,7 @@ function load_enemy_data()
 	if game_state.enemy_mon4 ~= nil then
 		enemy_mon4 = game_state.enemy_mon4
 		enemy_mon4.currenthp = enemy_mon4.hp
+		enemy_mon4.max_hp = enemy_mon4.hp
 		enemy_mon4.shield = 0
 		enemy_mon4.turn = 0
 		enemy_mon4.reference = "enemy_mon4"
@@ -1099,6 +1212,7 @@ function load_enemy_data()
 	if game_state.enemy_boss ~= nil then
 		enemy_boss = game_state.enemy_boss
 		enemy_boss.currenthp = enemy_boss.hp
+		enemy_boss.max_hp = enemy_boss.hp
 		enemy_boss.shield = 0
 		enemy_boss.turn = 0
 		enemy_boss.reference = "enemy_boss"

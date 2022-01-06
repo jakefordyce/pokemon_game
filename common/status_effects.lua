@@ -142,5 +142,13 @@ M[32] = {
 	damage_text = "Healing",
 	category = 5
 }
+--33 remove debuffs
+M[34] = {
+	sprite_name = "enraged",
+	damage_text = "Enraged",
+	category = 1
+}
+--35 remove specific status
+--36 lower max hp
 
 return M
