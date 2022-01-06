@@ -151,8 +151,29 @@ M[7] = {
 	type1 = 6,
 	type2 = 2,
 	moves = moves,
-	--move_priority = {2,3,4,1}
-	move_priority = {1}
+	move_priority = {2,3,4,1}
+}
+
+moves = {}
+moves[1] = {["level"] = 1, ["id"] = 102}
+moves[2] = {["level"] = 1, ["id"] = 99}
+moves[3] = {["level"] = 1, ["id"] = 100}
+moves[4] = {["level"] = 1, ["id"] = 101}
+
+M[8] = {
+	name = "dragonite",
+	hp = 1000,
+	attack = 150,
+	defense = 200,
+	spattack = 150,
+	spdefense = 200,
+	speed = 105,
+	accuracy = 100,
+	resist = 100,
+	type1 = 8,
+	type2 = 3,
+	moves = moves,
+	move_priority = {2,4,3,1}
 }
 
 function M.exp_reward_by_level(level)

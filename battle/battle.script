@@ -312,6 +312,10 @@ function handle_move_effects(level, effect, target, move_user)
 				reduce_status_effect_duration(defender, -1, 34)
 			end
 
+			if mon_has_status_effect(defender, 37) then
+				power = power * 2
+			end
+
 			if effect.extra_damage_user_status ~= nil and mon_has_status_effect(move_user, effect.extra_damage_user_status) then
 				power = power + (power * effect.extra_damage_amount / 100)
 			end
@@ -412,7 +416,7 @@ function handle_move_effects(level, effect, target, move_user)
 		elseif effect.id == 33 then -- remove debuffs
 			local remove_rng = math.random(1,100)
 			if remove_rng <= effect.param1(level) then
-				remove_status_effects(defender, effect.param2, 1)
+				remove_status_effects(defender, effect.param2, -1)
 				damage_text = "debuffs removed"
 			end
 		elseif effect.id == 35 then --remove specific status
@@ -431,6 +435,13 @@ function handle_move_effects(level, effect, target, move_user)
 				end
 				msg.post("gui", "update_hp", {target=defender.reference, current=defender.currenthp, max=defender.max_hp, shield=defender.shield})
 				damage_text = "reduce max hp"
+			end
+		elseif effect.id == 38 then -- steal buffs
+			local remove_rng = math.random(1,100)
+			if remove_rng <= effect.param1(level) then
+				copy_status_effects(defender, move_user, effect.param2, effect.param3)
+				remove_status_effects(defender, effect.param2, effect.param3)
+				damage_text = "buffs stolen"
 			end
 		elseif status_effects[effect.id] ~= nil and status_effects[effect.id].category > 1 then
 			if effect.target == 0 then
@@ -555,8 +566,8 @@ end
 
 -- type
 -- 0 = all
--- 1 = harmful
--- 2 = helpful
+-- -1 = harmful
+-- -2 = helpful
 function remove_status_effects(mon, num_of_effects, type)
 	local status_effects_to_remove = {}
 	local effects_removed = 0
@@ -568,14 +579,14 @@ function remove_status_effects(mon, num_of_effects, type)
 				table.insert(status_effects_to_remove, 1, i)
 				effects_removed = effects_removed + 1
 			end
-		elseif(type == 1 and (eff.category == 2 or eff.category == 3 or eff.category == 4)) then
+		elseif(type == -1 and (eff.category == 2 or eff.category == 3 or eff.category == 4)) then
 			if effects_removed < num_of_effects or num_of_effects == 0 then
 				eff.duration = 0
 				msg.post(eff.go_id, "update_duration", {duration = eff.duration})
 				table.insert(status_effects_to_remove, 1, i)
 				effects_removed = effects_removed + 1
 			end
-		elseif(type == 2 and (eff.category == 1 or eff.category == 5)) then
+		elseif(type == -2 and (eff.category == 1 or eff.category == 5)) then
 			if effects_removed < num_of_effects or num_of_effects == 0 then
 				eff.duration = 0
 				msg.post(eff.go_id, "update_duration", {duration = eff.duration})
@@ -588,6 +599,30 @@ function remove_status_effects(mon, num_of_effects, type)
 		table.remove(mon.status_effects, setr)
 	end
 	position_status_effects(mon)
+end
+
+-- type
+-- 0 = all
+-- -1 = harmful
+-- -2 = helpful
+function copy_status_effects(effect_source_mon, effect_target_mon, num_of_effects, type)
+	local effects_copied = 0
+	for i, eff in ipairs(effect_source_mon.status_effects) do
+		if(type == 0) or
+		(type == -1 and (eff.category == 2 or eff.category == 3 or eff.category == 4)) or
+		(type == -2 and (eff.category == 1 or eff.category == 5)) then
+			if effects_copied < num_of_effects or num_of_effects == 0 then
+				local effect_obj = {}
+				effect_obj.id = eff.type
+				effect_obj.param2 = eff.duration
+				effect_obj.charges = eff.charges
+				effect_obj.charges_stack = eff.charges_stack
+				
+				apply_status_effect(effect_target_mon, effect_obj, combatants[eff.placed_by])
+				effects_copied = effects_copied + 1
+			end
+		end
+	end
 end
 
 function remove_status_effect(mon, effect_id)
@@ -623,6 +658,7 @@ function position_status_effects(mon)
 	local p = go.get_position(mon.reference)
 	p.y = p.y + 125
 	p.x = p.x - 24
+	p.z = 0.6
 	local original_x = p.x
 	local effect_count = 0
 	for i, eff in ipairs(mon.status_effects) do
@@ -748,7 +784,6 @@ function mon_count_charges(mon, effect_id)
 			charge_count = charge_count + eff.duration
 		end
 	end
-	print("charges: "..charge_count)
 	return charge_count
 end
 
@@ -910,8 +945,6 @@ function load_data_for_battle()
 end
 
 function start_player_turn(turn_mon)
-	print(turn_mon.name.." current hp: "..turn_mon.currenthp)
-	print(turn_mon.name.." max hp: "..turn_mon.max_hp)
 	reduce_all_cooldowns(turn_mon, 1)
 	activate_blessings(turn_mon)
 	activate_torments(turn_mon)
@@ -1255,7 +1288,8 @@ function display_targetting_icons()
 		if(game_state.battle_type == 3) then
 			effectiveness = types.type_effectiveness(selected_move.type, enemy_boss.type1, enemy_boss.type2)
 			local p = go.get_position("enemy_boss")
-			p.y = p.y + 128
+			p.y = p.y + 100
+			p.z = 1
 			local icon = factory.create("#target_icon_factory",p, nil, {effectiveness = effectiveness})
 			table.insert(spawned_target_icons, icon)
 		end

@@ -150,5 +150,10 @@ M[34] = {
 }
 --35 remove specific status
 --36 lower max hp
-
+M[37] = {
+	sprite_name = "weaken",
+	damage_text = "Weaken",
+	category = 2
+}
+--38 steal buffs
 return M

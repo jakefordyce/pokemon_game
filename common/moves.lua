@@ -2982,4 +2982,134 @@ M[98] = {
 	end
 }
 
+
+meffects = {}
+meffects[1] = {}
+meffects[1].id = 1
+meffects[1].target = 3
+meffects[1].param1 = function(moveLevel)
+	damage = 400 + (moveLevel * 200)
+	return damage
+end
+meffects[1].param2 = "attack"
+
+meffects[2] = {}
+meffects[2].id = 37 --weaken
+meffects[2].target = 0
+meffects[2].param1 = function(moveLevel)
+	return 100
+end
+meffects[2].param2 = 1
+
+M[99] = {
+	name = "Hyper Wave",
+	effects = meffects,
+	cooldown = function(moveLevel)
+		return 4
+	end,
+	default = false,
+	type = 1,
+	targetting = 1,
+	max_level = 5,
+	description = function(moveLevel)
+		damage = 400 + (moveLevel * 200)
+		return "Boss Move: Attacks all enemies for "..damage.."% of Attack. User is weakened after using the ability."
+	end
+}
+
+meffects = {}
+meffects[1] = {}
+meffects[1].id = 1
+meffects[1].target = 3
+meffects[1].param1 = function(moveLevel)
+	damage = 200 + (moveLevel * 50)
+	return damage
+end
+meffects[1].param2 = "attack"
+
+meffects[2] = {}
+meffects[2].id = 12 --decrease turn
+meffects[2].target = 3
+meffects[2].param1 = function(moveLevel)
+	return 100
+end
+meffects[2].param2 = 50
+
+M[100] = {
+	name = "Dazzling Flight",
+	effects = meffects,
+	cooldown = function(moveLevel)
+		return 4
+	end,
+	default = false,
+	type = 3,
+	targetting = 1,
+	max_level = 5,
+	description = function(moveLevel)
+		damage = 200 + (moveLevel * 50)
+		return "Boss Move: Attacks all enemies for "..damage.."% of Attack and reduces the turn meter of all enemies by 50%."
+	end
+}
+
+meffects = {}
+meffects[1] = {}
+meffects[1].id = 38 -- steal buffs
+meffects[1].target = 3
+meffects[1].param1 = function(moveLevel)
+	return 100
+end
+meffects[1].param2 = 0 --all
+meffects[1].param3 = -2 --helpful
+
+
+M[101] = {
+	name = "Dragon's Luck",
+	effects = meffects,
+	cooldown = function(moveLevel)
+		return 4
+	end,
+	default = false,
+	type = 8,
+	targetting = 1,
+	max_level = 5,
+	description = function(moveLevel)
+		return "Boss Move: Steals all buffs from targets."
+	end
+}
+
+meffects = {}
+meffects[1] = {}
+meffects[1].id = 1
+meffects[1].target = 1
+meffects[1].param1 = function(moveLevel)
+	damage = 250 + (moveLevel * 50)
+	return damage
+end
+meffects[1].param2 = "attack"
+
+
+meffects[2] = {}
+meffects[2].id = 14
+meffects[2].target = 1
+meffects[2].param1 = function(moveLevel)
+	return 100
+end
+meffects[2].param2 = 1
+
+M[102] = {
+	name = "Tornado",
+	effects = meffects,
+	cooldown = function(moveLevel)
+		return 0
+	end,
+	default = true,
+	type = 3,
+	targetting = 1,
+	max_level = 5,
+	description = function(moveLevel)
+		damage = 250 + (moveLevel * 50)
+		return "Boss Move: Attacks 1 enemy for "..damage.."% of Attack then stuns them for 1 turn."
+	end
+}
+
 return M

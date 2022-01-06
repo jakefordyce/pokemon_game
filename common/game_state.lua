@@ -399,7 +399,7 @@ function M.load_game()
 	local save_data = sys.load(save_file_path)
 
 	if not next(save_data) then
-		print("no data found")
+		print("no save data found")
 	else
 		M.flags = save_data.flags
 		M.player = save_data.player
