@@ -416,7 +416,7 @@ function handle_move_effects(level, effect, target, move_user)
 		elseif effect.id == 33 then -- remove debuffs
 			local remove_rng = math.random(1,100)
 			if remove_rng <= effect.param1(level) then
-				remove_status_effects(defender, effect.param2, -1)
+				remove_status_effects(defender, effect.param2, effect.param3)
 				damage_text = "debuffs removed"
 			end
 		elseif effect.id == 35 then --remove specific status
@@ -627,18 +627,24 @@ end
 
 function remove_status_effect(mon, effect_id)
 	local status_effects_to_remove = {}
-	
-	for i, eff in ipairs(mon.status_effects) do
-		if(eff.type == effect_id) then
-			eff.duration = 0
-			msg.post(eff.go_id, "update_duration", {duration = eff.duration})
-			table.insert(status_effects_to_remove, 1, i)
+
+	if effect_id == 19 then
+		mon.shield = 0
+		msg.post("gui", "update_hp", {target = mon.reference, current=mon.currenthp, max=mon.max_hp, shield=mon.shield})
+	else
+		for i, eff in ipairs(mon.status_effects) do
+			if(eff.type == effect_id) then
+				eff.duration = 0
+				msg.post(eff.go_id, "update_duration", {duration = eff.duration})
+				table.insert(status_effects_to_remove, 1, i)
+			end
 		end
+		for i, setr in ipairs(status_effects_to_remove) do
+			table.remove(mon.status_effects, setr)
+		end
+		position_status_effects(mon)
 	end
-	for i, setr in ipairs(status_effects_to_remove) do
-		table.remove(mon.status_effects, setr)
-	end
-	position_status_effects(mon)
+	
 end
 
 function modify_turn_meter(defender, effect_id, amount)

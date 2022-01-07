@@ -1063,7 +1063,7 @@ meffects[1] = {}
 meffects[1].id = 1
 meffects[1].target = 1
 meffects[1].param1 = function(moveLevel)
-	damage = 250 + (moveLevel * 15)
+	damage = 150 + (moveLevel * 10)
 	return damage
 end
 meffects[1].param2 = "spattack"
@@ -2862,7 +2862,8 @@ meffects[1].target = 0
 meffects[1].param1 = function(moveLevel)
 	return 100
 end
-meffects[1].param2 = 0
+meffects[1].param2 = 0 -- all
+meffects[1].param3 = -1 -- harmful
 
 meffects[2] = {}
 meffects[2].id = 25 -- extra turn
@@ -3109,6 +3110,191 @@ M[102] = {
 	description = function(moveLevel)
 		damage = 250 + (moveLevel * 50)
 		return "Boss Move: Attacks 1 enemy for "..damage.."% of Attack then stuns them for 1 turn."
+	end
+}
+
+meffects = {}
+meffects[1] = {}
+meffects[1].id = 1
+meffects[1].target = 1
+meffects[1].param1 = function(moveLevel)
+	damage = 150 + (moveLevel * 15)
+	return damage
+end
+meffects[1].param2 = "spattack"
+
+meffects[2] = {}
+meffects[2].id = 33 -- remove status effect
+meffects[2].target = 1
+meffects[2].param1 = function(moveLevel)
+	return 75 + (moveLevel * 5)
+end
+meffects[2].param2 = 1
+meffects[2].param3 = -2 -- helpful
+
+M[103] = {
+	name = "Incinerate",
+	effects = meffects,
+	cooldown = function(moveLevel)
+		return 3
+	end,
+	default = false,
+	type = 9,
+	targetting = 1,
+	max_level = 5,
+	description = function(moveLevel)
+		damage = 150 + (moveLevel * 15)
+		chance = 75 + (moveLevel * 5)
+		return "Attacks 1 enemy for "..damage.."% of Special Attack. Has a "..chance.."% chance of removing 1 helpful status effect."
+	end
+}
+
+meffects = {}
+meffects[1] = {}
+meffects[1].id = 35 -- remove specific status
+meffects[1].target = 1
+meffects[1].param1 = function(moveLevel)
+	return 75 + (moveLevel * 5)
+end
+meffects[1].param2 = 19 -- shield
+
+meffects[2] = {}
+meffects[2].id = 35 -- remove specific status
+meffects[2].target = 1
+meffects[2].param1 = function(moveLevel)
+	return 75 + (moveLevel * 5)
+end
+meffects[2].param2 = 5 -- defense up
+
+meffects[3] = {}
+meffects[3].id = 1
+meffects[3].target = 1
+meffects[3].param1 = function(moveLevel)
+	damage = 200 + (moveLevel * 15)
+	return damage
+end
+meffects[3].param2 = "attack"
+
+M[104] = {
+	name = "Brick Break",
+	effects = meffects,
+	cooldown = function(moveLevel)
+		return 4
+	end,
+	default = false,
+	type = 2,
+	targetting = 1,
+	max_level = 5,
+	description = function(moveLevel)
+		damage = 200 + (moveLevel * 15)
+		chance = 75 + (moveLevel * 5)
+		return "Removes an enemy's Shield and Defense up status effects then attacks them for "..damage.."% of Attack."
+	end
+}
+
+
+meffects = {}
+meffects[1] = {}
+meffects[1].id = 33 -- remove debuffs
+meffects[1].target = 4
+meffects[1].param1 = function(moveLevel)
+	return 50 + (moveLevel * 10)
+end
+meffects[1].param2 = 0 -- all
+meffects[1].param3 = -1 -- harmful
+
+
+M[105] = {
+	name = "Aromatherapy",
+	effects = meffects,
+	cooldown = function(moveLevel)
+		if moveLevel > 5 then
+			return 4
+		end
+		return 5
+	end,
+	default = false,
+	type = 11,
+	targetting = 2,
+	max_level = 6,
+	description = function(moveLevel)
+		return "Has a "..chance.." chance of removing all debuffs from all allies."
+	end
+}
+
+meffects = {}
+meffects[1] = {}
+meffects[1].id = 1
+meffects[1].target = 1
+meffects[1].param1 = function(moveLevel)
+	damage = 200 + (moveLevel * 10)
+	return damage
+end
+meffects[1].param2 = "spattack"
+
+meffects[2] = {}
+meffects[2].id = 20 --burn
+meffects[2].target = 1
+meffects[2].param1 = function(moveLevel)
+	return 50 + (moveLevel * 5)
+end
+meffects[2].param2 = 2
+meffects[2].min_hits = 2
+meffects[2].max_hits = 2
+
+M[106] = {
+	name = "Flamethrower",
+	effects = meffects,
+	cooldown = function(moveLevel)
+		if moveLevel > 5 then
+			return 4
+		end
+		return 5
+	end,
+	default = false,
+	type = 9,
+	targetting = 1,
+	max_level = 6,
+	description = function(moveLevel)
+		damage = 200 + (moveLevel * 10)
+		chance = 50 + (moveLevel * 5)
+		return "Attacks 1 enemy for "..damage.."% of Special Attack. Has a "..chance.."% chance of placing 2 Burns on the target for 2 turns."
+	end
+}
+
+meffects = {}
+meffects[1] = {}
+meffects[1].id = 1
+meffects[1].target = 1
+meffects[1].param1 = function(moveLevel)
+	damage = 150 + (moveLevel * 15)
+	return damage
+end
+meffects[1].param2 = "attack"
+
+meffects[2] = {}
+meffects[2].id = 33 -- remove status effect
+meffects[2].target = 1
+meffects[2].param1 = function(moveLevel)
+	return 50 + (moveLevel * 10)
+end
+meffects[2].param2 = 0
+meffects[2].param3 = -2 -- helpful
+
+M[107] = {
+	name = "Bulldoze",
+	effects = meffects,
+	cooldown = function(moveLevel)
+		return 4
+	end,
+	default = false,
+	type = 5,
+	targetting = 1,
+	max_level = 5,
+	description = function(moveLevel)
+		damage = 150 + (moveLevel * 15)
+		chance = 75 + (moveLevel * 5)
+		return "Attacks 1 enemy for "..damage.."% of Attack. Has a "..chance.."% chance of removing 1 helpful status effect."
 	end
 }
 
