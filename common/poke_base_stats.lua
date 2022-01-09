@@ -49,8 +49,8 @@ function M.exp_reward_by_level(level)
 end
 
 function M.exp_to_next_level(level)
-	return math.ceil(math.pow(1.05, (level - 1)) * (20 + level) / 20 * 200)
-	--return math.ceil(math.pow(1.05, (level - 1)) * (20 + level) / 20 * 10) -- for testing
+	return math.ceil(math.pow(1.05, (level - 1)) * (20 + level) / 20 * 200) -- PROD
+	--return math.ceil(math.pow(1.05, (level - 1)) * (20 + level) / 20 * 10) -- TEST
 end
 
 M.base_crit_chance = 5
@@ -176,7 +176,10 @@ M[7] = {
 	speed = 100,
 	type1 = 10,
 	type2 = 10,
-	moves = moves
+	moves = moves,
+	evolutions = {
+		{target = 8, stone_type1 = 10, stone_cost1 = 20}
+	}
 }
 M[8] = {
 	name = "wartortle",
@@ -189,7 +192,10 @@ M[8] = {
 	speed = 100,
 	type1 = 10,
 	type2 = 10,
-	moves = moves
+	moves = moves,
+	evolutions = {
+		{target = 9, stone_type1 = 10, stone_cost1 = 20}
+	}
 }
 M[9] = {
 	name = "blastoise",
@@ -218,9 +224,27 @@ M[10] = {
 	speed = 100,
 	type1 = 6,
 	type2 = 6,
+	moves = moves,
+	evolutions = {
+		{target = 11, stone_type1 = 6, stone_cost1 = 5}
+	}
+}
+moves = {}
+moves[1] = {["level"] = 1, ["id"] = 1}
+moves[2] = {["level"] = 1, ["id"] = 108}
+M[11] = {
+	name = "metapod",
+	rarity = 1,
+	hp = 80,
+	attack = 80,
+	defense = 110,
+	spattack = 60,
+	spdefense = 75,
+	speed = 100,
+	type1 = 6,
+	type2 = 6,
 	moves = moves
 }
-M[11] = {}
 M[12] = {}
 
 moves = {}
@@ -236,9 +260,27 @@ M[13] = {
 	speed = 105,
 	type1 = 6,
 	type2 = 4,
+	moves = moves,
+	evolutions = {
+		{target = 14, stone_type1 = 6, stone_cost1 = 5}
+	}
+}
+moves = {}
+moves[1] = {["level"] = 1, ["id"] = 1}
+moves[2] = {["level"] = 1, ["id"] = 108}
+M[14] = {
+	name = "kakuna",
+	rarity = 1,
+	hp = 80,
+	attack = 80,
+	defense = 100,
+	spattack = 60,
+	spdefense = 75,
+	speed = 105,
+	type1 = 6,
+	type2 = 4,
 	moves = moves
 }
-M[14] = {}
 M[15] = {}
 
 moves = {}

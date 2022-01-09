@@ -413,11 +413,11 @@ function handle_move_effects(level, effect, target, move_user)
 					damage_text = "revive blocked"
 				end
 			end
-		elseif effect.id == 33 then -- remove debuffs
+		elseif effect.id == 33 then -- remove status effects
 			local remove_rng = math.random(1,100)
 			if remove_rng <= effect.param1(level) then
 				remove_status_effects(defender, effect.param2, effect.param3)
-				damage_text = "debuffs removed"
+				damage_text = "statuses removed"
 			end
 		elseif effect.id == 35 then --remove specific status
 			local remove_rng = math.random(1,100)

@@ -3298,4 +3298,46 @@ M[107] = {
 	end
 }
 
+meffects = {}
+meffects[1] = {}
+meffects[1].id = 5
+meffects[1].target = 0
+meffects[1].param1 = function(moveLevel)
+	chance = 75 + (moveLevel * 5)
+	return chance
+end
+meffects[1].param2 = 2
+
+meffects[2] = {}
+meffects[2].id = 19
+meffects[2].target = 0
+meffects[2].param1 = function(moveLevel)
+	chance = 100
+	return chance
+end
+meffects[2].param2 = 2 -- duration. Currently not using
+meffects[2].param3 = "max_hp"
+meffects[2].param4 = function(moveLevel)
+	shield = 15 + (moveLevel * 2)
+	return shield
+end
+
+
+M[108] = {
+	name = "Harden",
+	effects = meffects,
+	cooldown = function(moveLevel)
+		return 3
+	end,
+	default = false,
+	type = 1,
+	targetting = 0,
+	max_level = 5,
+	description = function(moveLevel)
+		chance = 75 + (moveLevel * 5)
+		shield = 15 + (moveLevel * 2)
+		return "Has a "..chance.."% chance of increasing user's Defense for 2 turns. Also places a shield on the user for "..shield.."% of user's max HP"
+	end
+}
+
 return M

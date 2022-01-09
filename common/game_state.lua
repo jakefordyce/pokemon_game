@@ -1,6 +1,7 @@
 local pbs = require "common/poke_base_stats"
 local runes = require "common/runes"
 local boss_stats = require "common/boss_stats"
+local moves = require "common/moves"
 
 local M = {}
 
@@ -59,8 +60,8 @@ M.player = {
 --]]
 
 
-M.stones = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0} -- 1 for each of the types in common/poke_types
---M.stones = {50,50,50,50,50,50,50,50,50,50,50,50,50,50,50} -- Testing values
+M.stones = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0} -- PROD 1 for each of the types in common/poke_types
+--M.stones = {50,50,50,50,50,50,50,50,50,50,50,50,50,50,50} -- TEST
 
 --List of all of the player's pokemon.
 M.pokemon = {}
@@ -286,7 +287,7 @@ function M.mon_learned_move(mon_index)
 				-- see if there's an empty move slot so we can equip the move now.
 				local move_equipped = false
 				for pm=2,4 do
-					if not move_equipped and mon["move"..pm] == nil then
+					if not move_equipped and mon["move"..pm] == nil and not moves[move.id].default then
 						mon["move"..pm] = #mon.known_moves
 						move_equipped = true
 					end
@@ -301,6 +302,7 @@ function M.evolve_pokemon(mon_index, target_pokedex)
 	mon = M.pokemon[mon_index]
 	mon.pokedex = target_pokedex
 	mon.name = pbs[target_pokedex].name
+	mon.nickname = pbs[target_pokedex].name:upper():gsub("_", " ")
 	mon.type1 = pbs[target_pokedex].type1
 	mon.type2 = pbs[target_pokedex].type2
 	learned_moves = M.mon_learned_move(mon_index)
