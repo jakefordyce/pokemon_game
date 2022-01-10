@@ -576,7 +576,7 @@ M[20] = {
 	max_level = 5,
 	description = function(moveLevel)
 		chance = 75 + (5 * moveLevel)
-		return "Has a "..chance.."% chance of putting all enemies to sleep for 1 turns."
+		return "Has a "..chance.."% chance of putting all enemies to sleep for 1 turn."
 	end
 }
 
@@ -3337,6 +3337,117 @@ M[108] = {
 		chance = 75 + (moveLevel * 5)
 		shield = 15 + (moveLevel * 2)
 		return "Has a "..chance.."% chance of increasing user's Defense for 2 turns. Also places a shield on the user for "..shield.."% of user's max HP"
+	end
+}
+
+meffects = {}
+meffects[1] = {}
+meffects[1].id = 22 -- confuse
+meffects[1].target = 3
+meffects[1].param1 = function(moveLevel)
+	return 75 + (5 * moveLevel)
+end
+meffects[1].param2 = 1
+
+M[109] = {
+	name = "Supersonic",
+	effects = meffects,
+	cooldown = function(moveLevel)
+		return 3
+	end,
+	default = false,
+	type = 1,
+	targetting = 1,
+	max_level = 5,
+	description = function(moveLevel)
+		chance = 75 + (5 * moveLevel)
+		return "Has a "..chance.."% chance of confusing all enemies for 1 turn."
+	end
+}
+
+meffects = {}
+meffects[1] = {}
+meffects[1].id = 33 -- remove debuffs
+meffects[1].target = 3
+meffects[1].param1 = function(moveLevel)
+	return 50 + (moveLevel * 10)
+end
+meffects[1].param2 = 0 -- all
+meffects[1].param3 = -2 -- helpful
+
+meffects[2] = {}
+meffects[2].id = 33 -- remove debuffs
+meffects[2].target = 4
+meffects[2].param1 = function(moveLevel)
+	return 50 + (moveLevel * 10)
+end
+meffects[2].param2 = 0 -- all
+meffects[2].param3 = -2 -- helpful
+
+M[110] = {
+	name = "Haze",
+	effects = meffects,
+	cooldown = function(moveLevel)
+		return 3
+	end,
+	default = false,
+	type = 14,
+	targetting = 2,
+	max_level = 6,
+	description = function(moveLevel)
+		return "Has a "..chance.." chance of removing all buffs from all allies and all enemies."
+	end
+}
+
+meffects = {}
+meffects[1] = {}
+meffects[1].id = 10 --reduce speed
+meffects[1].target = 3
+meffects[1].param1 = function(moveLevel)
+	return 75 + (5 * moveLevel)
+end
+meffects[1].param2 = 2
+
+M[111] = {
+	name = "Mean Look",
+	effects = meffects,
+	cooldown = function(moveLevel)
+		return 3
+	end,
+	default = false,
+	type = 1,
+	targetting = 1,
+	max_level = 5,
+	description = function(moveLevel)
+		chance = 75 + (5 * moveLevel)
+		return "Has a "..chance.."% chance of reducing the speed of all enemies for 2 turns."
+	end
+}
+
+meffects = {}
+meffects[1] = {}
+meffects[1].id = 1
+meffects[1].target = 1
+meffects[1].param1 = function(moveLevel)
+	damage = 250 + (moveLevel * 15)
+	return damage
+end
+meffects[1].param2 = "attack"
+meffects[1].extra_crit = 25
+
+M[112] = {
+	name = "Air Cutter",
+	effects = meffects,
+	cooldown = function(moveLevel)
+		return 3
+	end,
+	default = false,
+	type = 3,
+	targetting = 1,
+	max_level = 5,
+	description = function(moveLevel)
+		damage = 250 + (moveLevel * 15)
+		return "Attacks an enemy for "..damage.."% of Attack. This attack has an extra 25% chance of critting."
 	end
 }
 
