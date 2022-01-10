@@ -730,10 +730,8 @@ function effect_should_reflect(reflect_type, effect_obj)
 	
 	if effect_obj.id == 1 or effect_obj.id == 12 then
 		should_reflect = true
-	elseif effect_obj.id == 8 or
-	effect_obj.id == 16 or
-	effect_obj.id == 19 or
-	effect_obj.id == 25 then
+	elseif effect_obj.id == 8 or effect_obj.id == 16 or effect_obj.id == 19 or effect_obj.id == 25 or effect_obj.id == 32 or
+	effect_obj.id == 33 or effect_obj.id == 35 or effect_obj.id == 38 then
 		should_reflect = false
 	elseif status_effects[effect_obj.id].category > 1 then
 		should_reflect = true

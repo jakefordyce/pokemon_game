@@ -3294,7 +3294,7 @@ M[107] = {
 	description = function(moveLevel)
 		damage = 150 + (moveLevel * 15)
 		chance = 75 + (moveLevel * 5)
-		return "Attacks 1 enemy for "..damage.."% of Attack. Has a "..chance.."% chance of removing 1 helpful status effect."
+		return "Attacks 1 enemy for "..damage.."% of Attack. Has a "..chance.."% chance of removing all helpful status effect."
 	end
 }
 
