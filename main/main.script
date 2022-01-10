@@ -23,7 +23,7 @@ function init(self)
 	end
 	math.randomseed(os.time())
 	math.random(); math.random(); math.random()
-	--[[ TEST
+	---[[ TEST
 	local test_level = 10
 	game_state.add_pokemon(1,test_level)
 	game_state.add_pokemon(4,test_level)
@@ -33,6 +33,7 @@ function init(self)
 	game_state.add_pokemon(21,test_level)
 	game_state.add_pokemon(29,test_level)
 	game_state.add_pokemon(32,test_level)
+	game_state.add_pokemon(41,test_level)
 	game_state.add_pokemon(48,test_level)
 	game_state.add_pokemon(63,test_level)
 	game_state.add_pokemon(66,test_level)

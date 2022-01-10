@@ -435,7 +435,7 @@ M[15] = {
 	targetting = 2,
 	max_level = 5,
 	description = function(moveLevel)
-		chance = 75 + (5 + moveLevel)
+		chance = 75 + (moveLevel * 5)
 		return "Has a "..chance.."% chance of increasing speed of all allies for 2 turns and increasing the turn of all allies by 25%"
 	end
 }
@@ -2133,7 +2133,7 @@ meffects[1] = {}
 meffects[1].id = 3 --increase attack
 meffects[1].target = 4
 meffects[1].param1 = function(moveLevel)
-	return 75 + (5 * moveLevel)
+	return 75 + (moveLevel * 5)
 end
 meffects[1].param2 = 2
 
@@ -2156,7 +2156,7 @@ M[72] = {
 	targetting = 2,
 	max_level = 5,
 	description = function(moveLevel)
-		chance = 75 + (5 + moveLevel)
+		chance = 75 + (moveLevel * 5)
 		return "Has a "..chance.."% chance of increasing Attack of all allies for 2 turns and increasing the turn of all allies by 25%"
 	end
 }

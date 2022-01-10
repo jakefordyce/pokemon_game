@@ -16,6 +16,7 @@ end
 
 function on_message(self, message_id, message, sender)
 	if message_id == hash("contact_point_response") then
+		print("contact point response")
 		if message.other_group == hash("cursor") then
 			msg.post("move_tutor", "select_pokemon", { mon = self.mon_id } )
 		end

@@ -417,7 +417,28 @@ M[37] = {
 M[38]={}
 M[39]={}
 M[40]={}
-M[41]={}
+
+moves = {}
+moves[1] = {["level"] = 1, ["id"] = 1}
+moves[2] = {["level"] = 1, ["id"] = 109}
+moves[3] = {["level"] = 6, ["id"] = 111}
+moves[4] = {["level"] = 8, ["id"] = 68}
+moves[5] = {["level"] = 10, ["id"] = 8}
+moves[6] = {["level"] = 12, ["id"] = 110}
+moves[7] = {["level"] = 14, ["id"] = 112}
+M[41] = {
+	name = "zubat",
+	rarity = 1,
+	hp = 75,
+	attack = 80,
+	defense = 70,
+	spattack = 65,
+	spdefense = 75,
+	speed = 110,
+	type1 = 15,
+	type2 = 3,
+	moves = moves
+}
 M[42]={}
 M[43]={}
 M[44]={}
