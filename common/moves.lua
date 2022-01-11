@@ -2491,7 +2491,7 @@ meffects[1].target = 0
 meffects[1].param1 = function(moveLevel)
 	return 100
 end
-meffects[1].param2 = 2
+meffects[1].param2 = 1
 
 meffects[2] = {}
 meffects[2].id = 19
@@ -2519,7 +2519,7 @@ M[83] = {
 	max_level = 5,
 	description = function(moveLevel)
 		chance = 100
-		return "Boss Move: Has a "..chance.."% chance of placing Reflect on user which will redirect all moves back to their user for 2 turns. Also places a shield on the user."
+		return "Boss Move: Has a "..chance.."% chance of placing Reflect on user which will redirect all moves back to their user for 1 turn. Also places a shield on the user."
 	end
 }
 
@@ -3448,6 +3448,74 @@ M[112] = {
 	description = function(moveLevel)
 		damage = 250 + (moveLevel * 15)
 		return "Attacks an enemy for "..damage.."% of Attack. This attack has an extra 25% chance of critting."
+	end
+}
+
+meffects = {
+	{
+		id = 11,
+		target = 3,
+		param1 = function(moveLevel)
+			return 75 + (moveLevel * 5)
+		end,
+		param2 = 1
+	}
+}
+M[113] = {
+	name = "Sleep Powder",
+	effects = meffects,
+	cooldown = function(moveLevel)
+		return 3
+	end,
+	default = false,
+	type = 6,
+	targetting = 1,
+	max_level = 5,
+	description = function(moveLevel)
+		chance = 75 + (moveLevel * 5)
+		return "Has a "..chance.."% chance of putting all enemies to sleep for 1 turn."
+	end
+}
+
+meffects = {
+	{
+		id = 3,
+		target = 4,
+		param1 = function(moveLevel)
+			return 50 + (moveLevel * 10)
+		end,
+		param2 = 2
+	},
+	{
+		id = 5,
+		target = 4,
+		param1 = function(moveLevel)
+			return 50 + (moveLevel * 10)
+		end,
+		param2 = 2
+	},
+	{
+		id = 7,
+		target = 4,
+		param1 = function(moveLevel)
+			return 50 + (moveLevel * 10)
+		end,
+		param2 = 2
+	}
+}
+M[114] = {
+	name = "Quiver Dance",
+	effects = meffects,
+	cooldown = function(moveLevel)
+		return 3
+	end,
+	default = false,
+	type = 6,
+	targetting = 1,
+	max_level = 5,
+	description = function(moveLevel)
+		chance = 50 + (moveLevel * 10)
+		return "Has a "..chance.."% chance of increasing Attack, Defense, and Speed of all allies for 2 turns."
 	end
 }
 

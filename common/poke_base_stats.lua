@@ -243,9 +243,35 @@ M[11] = {
 	speed = 100,
 	type1 = 6,
 	type2 = 6,
+	moves = moves,
+	evolutions = {
+		{target = 12, stone_type1 = 6, stone_cost1 = 5}
+	}
+}
+moves = {
+	{level = 1, id = 1},
+	{level = 1, id = 108},
+	{level = 4, id = 113},
+	{level = 4, id = 67},
+	{level = 6, id = 32},
+	{level = 8, id = 63},
+	{level = 9, id = 50},
+	{level = 10, id = 51},
+	{level = 12, id = 114}
+}
+M[12] = {
+	name = "butterfree",
+	rarity = 2,
+	hp = 95,
+	attack = 90,
+	defense = 90,
+	spattack = 120,
+	spdefense = 110,
+	speed = 100,
+	type1 = 6,
+	type2 = 3,
 	moves = moves
 }
-M[12] = {}
 
 moves = {}
 moves[1] = {["level"] = 1, ["id"] = 1}
@@ -299,9 +325,24 @@ M[16] = {
 	speed = 105,
 	type1 = 3,
 	type2 = 3,
+	moves = moves,
+	evolutions = {
+		{target = 17, stone_type1 = 3, stone_cost1 = 20}
+	}
+}
+M[17] = {
+	name = "pidgeotto",
+	rarity = 2,
+	hp = 90,
+	attack = 100,
+	defense = 90,
+	spattack = 75,
+	spdefense = 80,
+	speed = 105,
+	type1 = 3,
+	type2 = 3,
 	moves = moves
 }
-M[17] = {}
 M[18] = {}
 
 moves = {}
