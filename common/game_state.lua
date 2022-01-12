@@ -47,7 +47,6 @@ M.player = {
 	money = 30000,
 	rating = 0
 }
-
 --]]
 --[[ Testing move tutor
 M.player = {

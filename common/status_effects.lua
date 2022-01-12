@@ -156,4 +156,5 @@ M[37] = {
 	category = 2
 }
 --38 steal buffs
+--39 ally attack
 return M

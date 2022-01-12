@@ -2,6 +2,7 @@ local game_state = require "common/game_state"
 local moves = require "common/moves"
 local types = require "common/poke_types"
 local current_turn_mon = nil
+local battle_text_timer = 0
 
 function init(self)
 	msg.post(".", "acquire_input_focus")
@@ -22,9 +23,11 @@ function final(self)
 end
 
 function update(self, dt)
-	-- Add update code here
-	-- Learn more: https://defold.com/manuals/script/
-	-- Remove this function if not needed
+	if battle_text_timer > 0 then
+		battle_text_timer = battle_text_timer - 1
+	else
+		remove_battle_text()
+	end
 end
 
 function on_message(self, message_id, message, sender)
@@ -109,7 +112,7 @@ function on_message(self, message_id, message, sender)
 	end
 	if message_id == hash("set_battle_text") then
 		gui.set_text(gui.get_node("battle_text"), message.text)
-		timer.delay(1, false, remove_battle_text)
+		battle_text_timer = 60
 	end
 	if message_id == hash("disable_mon") then
 		gui.set_enabled(gui.get_node(message.mon), false)

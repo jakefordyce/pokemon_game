@@ -3519,4 +3519,29 @@ M[114] = {
 	end
 }
 
+meffects = {
+	{
+		id = 39,
+		target = 1,
+		param1 = function(moveLevel)
+			return 100
+		end,
+		param2 = 3 --num of allies? not currently used.
+	}
+}
+M[115] = {
+	name = "Stampede",
+	effects = meffects,
+	cooldown = function(moveLevel)
+		return 1
+	end,
+	default = false,
+	type = 1,
+	targetting = 1,
+	max_level = 0,
+	description = function(moveLevel)
+		return "The user and all allies will attack the target with their default move."
+	end
+}
+
 return M

@@ -21,6 +21,7 @@ local combatants = {}
 local waiting_for_target = false
 local protections = {}
 local extra_turn_queue = {}
+local move_queue = {}
 
 function init(self)
 	msg.post(".", "acquire_input_focus")
@@ -54,8 +55,15 @@ function on_message(self, message_id, message, sender)
 			msg.post("gui", "hide_mon_display")
 			local move_level = current_turn_mon.known_moves[current_turn_mon["move"..selected_move_slot]].level
 			current_turn_mon["move"..selected_move_slot.."cd"] = selected_move.cooldown(move_level)
-			start_handling_move(message.target)
-			timer.delay(1, false, function() msg.post(".", "end_turn") end)
+
+			local move_to_add = {
+				move_user = current_turn_mon,
+				target = message.target,
+				move_obj = selected_move,
+				move_slot = selected_move_slot
+			}
+			table.insert(move_queue, move_to_add)
+			handle_move_queue()
 		end
 	end
 	if message_id == hash("find_next_turn") then
@@ -127,13 +135,28 @@ function on_reload(self)
 	-- Learn more: https://defold.com/manuals/hot-reload/
 end
 
-function start_handling_move(target)
+function handle_move_queue()
+	if(#move_queue > 0 )then
+		start_handling_move(move_queue[1])
+		table.remove(move_queue, 1)
+		timer.delay(1, false, function() handle_move_queue() end)
+	else
+		msg.post(".", "end_turn")
+	end
+end
+
+function start_handling_move(move)
+	local move_user = move.move_user
+	local target = move.target
+	local move_obj = move.move_obj
+	local move_slot = move.move_slot
+	
 	local battle_text = ""
-	if string.match(current_turn_mon.reference, "^enemy") then
+	if string.match(move_user.reference, "^enemy") then
 		battle_text = "Enemy "
 	end
 	local hurt_in_confusion = false
-	if mon_has_status_effect(current_turn_mon, 22) then
+	if mon_has_status_effect(move_user, 22) then
 		local hurt_rng = math.random(1,100)
 		if hurt_rng <= 50 then
 			hurt_in_confusion = true
@@ -143,44 +166,44 @@ function start_handling_move(target)
 	local level = 0
 	
 	if hurt_in_confusion then
-		msg.post("gui", "set_battle_text", {text = battle_text..current_turn_mon.nickname.." hurt itself in confusion!"})
-		selected_move = moves[1]
-		target = current_turn_mon.reference
+		msg.post("gui", "set_battle_text", {text = battle_text..move_user.nickname.." hurt itself in confusion!"})
+		move_obj = moves[1]
+		target = move_user.reference
 	else
-		msg.post("gui", "set_battle_text", {text = battle_text..current_turn_mon.nickname.." used "..selected_move.name.."!"})
-		level = current_turn_mon.known_moves[current_turn_mon["move"..selected_move_slot]].level
+		msg.post("gui", "set_battle_text", {text = battle_text..move_user.nickname.." used "..move_obj.name.."!"})
+		level = move_user.known_moves[move_user["move"..move_slot]].level
 	end
 	
 	local delay_time = 0.0
 	
-	for index, effect in ipairs(selected_move.effects) do
+	for index, effect in ipairs(move_obj.effects) do
 		local num_of_hits = 1
 		if effect.min_hits ~= nil then
 			num_of_hits = math.random(effect.min_hits, effect.max_hits)
 		end
 		for i=1,num_of_hits do
 			if effect.target == 0 then --self
-				timer.delay(delay_time, false, function() handle_move_effects(level, effect, current_turn_mon.reference, current_turn_mon) end)
+				timer.delay(delay_time, false, function() handle_move_effects(level, effect, move_user.reference, move_user, move_obj) end)
 			elseif (effect.target == 1 or effect.target == 2) then --enemy, ally, only affect target selected.
-				timer.delay(delay_time, false, function() handle_move_effects(level, effect, target, current_turn_mon) end)
+				timer.delay(delay_time, false, function() handle_move_effects(level, effect, target, move_user, move_obj) end)
 			elseif (effect.target == 3) then -- all enemies
 				local effect_target = "^enemy"
-				if string.match(current_turn_mon.reference, "^enemy") then -- an enemy mon using the move
+				if string.match(move_user.reference, "^enemy") then -- an enemy mon using the move
 					effect_target = "^player"
 				end
 				for i, comb in pairs(combatants) do
 					if(string.match(comb.reference, effect_target) and not comb.fainted) then
-						timer.delay(delay_time, false, function() handle_move_effects(level, effect, comb.reference, current_turn_mon) end)
+						timer.delay(delay_time, false, function() handle_move_effects(level, effect, comb.reference, move_user, move_obj) end)
 					end
 				end
 			elseif (effect.target == 4) then -- all allies
 				local effect_target = "^player"
-				if string.match(current_turn_mon.reference, "^enemy") then -- an enemy mon using the move
+				if string.match(move_user.reference, "^enemy") then -- an enemy mon using the move
 					effect_target = "^enemy"
 				end
 				for i, comb in pairs(combatants) do
 					if(string.match(comb.reference, effect_target))then-- and not comb.fainted) then
-						timer.delay(delay_time, false, function() handle_move_effects(level, effect, comb.reference, current_turn_mon) end)
+						timer.delay(delay_time, false, function() handle_move_effects(level, effect, comb.reference, move_user, move_obj) end)
 					end
 				end
 			end
@@ -219,13 +242,16 @@ function handle_protections()
 	end
 end
 
-function handle_leech(mon, power)
-	
-end
-
-function handle_move_effects(level, effect, target, move_user)
+function handle_move_effects(level, effect, target, move_user, move_obj)
+	local move_type = move_obj.type
 	if not combatants[target].fainted or effect.id == 29 then
-		effectiveness = types.type_effectiveness(selected_move.type, combatants[target].type1, combatants[target].type2)
+		effectiveness = types.type_effectiveness(move_type, combatants[target].type1, combatants[target].type2)
+
+		-- Same Type Attack Bonus.
+		if(move_type ~= 1 and (move_type == move_user.type1 or move_type == move_user.type2)) then
+			effectiveness = effectiveness * 1.25
+		end
+		
 		local damage_text = ""
 		local text_color = "white"
 		local defender = combatants[target]
@@ -352,13 +378,16 @@ function handle_move_effects(level, effect, target, move_user)
 			end
 			if effect.leech ~= nil then
 				local leech_amount = math.ceil(damage * effect.leech / 100)
-				heal_defender(current_turn_mon, leech_amount)
-				display_damage_text(go.get_position(current_turn_mon.reference), leech_amount, "green")
+				heal_defender(move_user, leech_amount)
+				display_damage_text(go.get_position(move_user.reference), leech_amount, "green")
 			end
 		elseif effect.id == 8 then --increase turn
-			local turn_amount = effect.param2 * 10
-			damage_text = "turn boost"
-			modify_turn_meter(defender, effect.id, turn_amount)
+			local effect_rng = math.random(1,100)
+			if effect_rng <= effect.param1(level) then
+				local turn_amount = effect.param2 * 10
+				damage_text = "turn boost"
+				modify_turn_meter(defender, effect.id, turn_amount)
+			end
 		elseif effect.id == 12 then --decrease turn
 			local turn_amount = effect.param2 * -10
 			damage_text = "turn reduce"
@@ -374,7 +403,15 @@ function handle_move_effects(level, effect, target, move_user)
 			end
 		elseif effect.id == 16 then --heal
 			local stat = move_user[effect.param2]
+			if string.match(effect.param2, "^attack") then
+				if mon_has_status_effect(move_user, 2) then
+					stat = stat / 2
+				elseif mon_has_status_effect(move_user, 3) then
+					stat = stat * 1.5
+				end
+			end
 			local power = math.floor(effect.param1(level) * stat / 100)
+			
 			if mon_has_status_effect(defender, 26) then
 				power = 0
 			end
@@ -401,8 +438,11 @@ function handle_move_effects(level, effect, target, move_user)
 				damage_text = "missed"
 			end
 		elseif effect.id == 25 then --extra turn
-			table.insert(extra_turn_queue, defender)
-			damage_text = "Extra Turn"
+			local effect_rng = math.random(1,100)
+			if effect_rng <= effect.param1(level) then
+				table.insert(extra_turn_queue, defender)
+				damage_text = "Extra Turn"
+			end
 		elseif effect.id == 29 then --revive
 			if defender.fainted then
 				if not defender.revive_blocked then
@@ -443,6 +483,11 @@ function handle_move_effects(level, effect, target, move_user)
 				remove_status_effects(defender, effect.param2, effect.param3)
 				damage_text = "buffs stolen"
 			end
+		elseif effect.id == 39 then -- ally attack
+			local effect_rng = math.random(1,100)
+			if effect_rng <= effect.param1(level) then
+				queue_ally_attacks(move_user, defender)
+			end
 		elseif status_effects[effect.id] ~= nil and status_effects[effect.id].category > 1 then
 			if effect.target == 0 then
 				apply_status_effect(defender, effect, move_user)
@@ -469,8 +514,11 @@ function handle_move_effects(level, effect, target, move_user)
 				text_color = "red"
 				damage_text = "immune"
 			else
-				apply_status_effect(defender, effect, move_user)
-				damage_text = status_effects[effect.id].damage_text
+				local buff_rng = math.random(1,100)
+				if buff_rng <= effect.param1(level) then
+					apply_status_effect(defender, effect, move_user)
+					damage_text = status_effects[effect.id].damage_text
+				end
 			end
 		end
 		
@@ -532,7 +580,7 @@ function apply_status_effect(defender, effect_obj, move_user)
 				end
 				msg.post(eff.go_id, "update_duration", {duration = eff.duration})
 				eff.placed_by = move_user.reference
-				if( current_turn_mon.reference == defender.reference) then
+				if(move_user.reference == defender.reference) then
 					eff.ignore_duration_reduction = true
 				end
 			end
@@ -549,7 +597,7 @@ function apply_status_effect(defender, effect_obj, move_user)
 		effect.type = effect_obj.id
 		effect.placed_by = move_user.reference
 		--if someone is applying a buff to themself then mark it to not reduce its duration at the end of this turn.
-		if( current_turn_mon.reference == defender.reference) then --status_effects[effect_id].category == 1 and
+		if(move_user.reference == defender.reference) then --status_effects[effect_id].category == 1 and
 			effect.ignore_duration_reduction = true
 		else
 			effect.ignore_duration_reduction = false
@@ -770,7 +818,7 @@ end
 function mon_count_allies(mon)
 	local ally_count = 0
 	local effect_target = "^player"
-	if string.match(current_turn_mon.reference, "^enemy") then -- an enemy mon using the move
+	if string.match(mon.reference, "^enemy") then -- an enemy mon using the move
 		effect_target = "^enemy"
 	end
 	for i, comb in pairs(combatants) do
@@ -779,6 +827,24 @@ function mon_count_allies(mon)
 		end
 	end
 	return ally_count - 1
+end
+
+function queue_ally_attacks(move_user, defender)
+	local effect_target = "^player"
+	if string.match(move_user.reference, "^enemy") then -- an enemy mon using the move
+		effect_target = "^enemy"
+	end
+	for i, comb in pairs(combatants) do
+		if(string.match(comb.reference, effect_target) and not comb.fainted) then
+			local pending_attack = {
+				move_user = comb,
+				move_obj = moves[comb.known_moves[comb.move1].id],
+				move_slot = 1,
+				target = defender.reference
+			}
+			table.insert(move_queue, pending_attack)
+		end
+	end
 end
 
 function mon_count_charges(mon, effect_id)
@@ -990,7 +1056,7 @@ function start_enemy_turn(turn_mon)
 		
 		if mon_can_act(turn_mon) and not turn_mon.fainted then
 			timer.delay(1, false, choose_enemy_move)
-			timer.delay(2, false, function() msg.post(".", "end_turn") end)
+			--timer.delay(2, false, function() msg.post(".", "end_turn") end)
 		else
 			timer.delay(.5, false, function() msg.post(".", "end_turn") end)
 		end
@@ -1050,8 +1116,16 @@ function choose_enemy_move()
 		local target_chosen = math.random(1,4)
 		target = combatants["enemy_mon"..target_chosen].reference
 	end
-	
-	start_handling_move(target)
+
+	local move_to_add = {
+		move_user = current_turn_mon,
+		target = target,
+		move_obj = selected_move,
+		move_slot = selected_move_slot
+	}
+	table.insert(move_queue, move_to_add)
+	handle_move_queue()
+	--start_handling_move(target)
 end
 
 function increment_mon_turn(mon)

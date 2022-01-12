@@ -745,7 +745,27 @@ M[124]={}
 M[125]={}
 M[126]={}
 M[127]={}
-M[128]={}
+
+moves = {
+	{level = 1, id = 1},
+	{level = 1, id = 115},
+	{level = 6, id = 29},
+	{level = 8, id = 44},
+	{level = 10, id = 49}
+}
+M[128] = {
+	name = "tauros",
+	rarity = 4,
+	hp = 100,
+	attack = 140,
+	defense = 125,
+	spattack = 60,
+	spdefense = 95,
+	speed = 110,
+	type1 = 1,
+	type2 = 1,
+	moves = moves
+}
 M[129]={}
 M[130]={}
 M[131]={}

@@ -78,18 +78,19 @@ M[15] = {
 }
 
 function M.type_effectiveness(attacking_type, defending_type1, defending_type2)
-	effectiveness = 100
+	numerator = 2
+	denominator = 2
 	for i, s in ipairs(M[attacking_type].strengths) do
 		if(s == defending_type1 or s == defending_type2) then
-			effectiveness = effectiveness + 50
+			numerator = numerator + 1
 		end
 	end
 	for i, w in ipairs(M[attacking_type].weaknesses) do
 		if(w == defending_type1 or w == defending_type2) then
-			effectiveness = effectiveness - 50
+			denominator = denominator + 1
 		end
 	end
-	return effectiveness
+	return numerator / denominator * 100
 end
 
 
