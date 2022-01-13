@@ -1567,17 +1567,18 @@ M[52] = {
 }
 
 
-meffects = {}
-meffects[1] = {}
-meffects[1].id = 1
-meffects[1].target = 1
-meffects[1].param1 = function(moveLevel)
-	damage = 200 + (moveLevel * 10)
-	return damage
-end
-meffects[1].param2 = "attack"
-meffects[1].bonus_vs_psn = 2
-
+meffects = {
+	{
+		id = 1,
+		target = 1,
+		param1 = function(moveLevel)
+			return 200 + (moveLevel * 15)
+		end,
+		param2 = "attack",
+		extra_damage_target_status = 15,
+		extra_damage_amount = 100
+	}
+}
 M[53] = {
 	name = "Venoshock",
 	effects = meffects,
@@ -1589,7 +1590,7 @@ M[53] = {
 	targetting = 1,
 	max_level = 5,
 	description = function(moveLevel)
-		damage = 200 + (moveLevel * 10)
+		damage = 200 + (moveLevel * 15)
 		return "Attacks 1 enemy for "..damage.."% of Attack. Deals double damage against poisoned targets."
 	end
 }
@@ -3533,7 +3534,7 @@ M[115] = {
 	name = "Stampede",
 	effects = meffects,
 	cooldown = function(moveLevel)
-		return 1
+		return 4
 	end,
 	default = false,
 	type = 1,
@@ -3541,6 +3542,75 @@ M[115] = {
 	max_level = 0,
 	description = function(moveLevel)
 		return "The user and all allies will attack the target with their default move."
+	end
+}
+
+meffects = {
+	{
+		id = 1,
+		target = 1,
+		param1 = function(moveLevel)
+			damage = 100 + (moveLevel * 5)
+			return damage
+		end,
+		param2 = "attack",
+		min_hits = 2,
+		max_hits = 2
+	},
+	{
+		id = 15,
+		target = 1,
+		param1 = function(moveLevel)
+			return 50 + (moveLevel * 10)
+		end,
+		param2 = 2,
+		min_hits = 2,
+		max_hits = 2
+	}
+}
+M[116] = {
+	name = "Twineedle",
+	effects = meffects,
+	cooldown = function(moveLevel)
+		return 4
+	end,
+	default = false,
+	type = 6,
+	targetting = 1,
+	max_level = 5,
+	description = function(moveLevel)
+		damage = 100 + (moveLevel * 5)
+		chance = 50 + (moveLevel * 10)
+		return "Attacks 1 enemy 2 times for "..damage.."% of Attack. Each hit has a "..chance.."% chance of poisoning the enemy for 2 turns"
+	end
+}
+
+meffects = {
+	{
+		id = 1,
+		target = 3,
+		param1 = function(moveLevel)
+			damage = 50 + (moveLevel * 5)
+			return damage
+		end,
+		param2 = "attack",
+		min_hits = 2,
+		max_hits = 5
+	}
+}
+M[117] = {
+	name = "Pin Missile",
+	effects = meffects,
+	cooldown = function(moveLevel)
+		return 3
+	end,
+	default = false,
+	type = 6,
+	targetting = 1,
+	max_level = 5,
+	description = function(moveLevel)
+		damage = 50 + (moveLevel * 5)
+		return "Attacks all enemies 2 to 5 times for "..damage.."% of Attack."
 	end
 }
 

@@ -75,7 +75,7 @@ M[1] = {
 	type2 = 11,
 	moves = moves,
 	evolutions = {
-		{target = 2, stone_type1 = 11, stone_cost1 = 20}
+		{target = 2, stone_type1 = 11, stone_cost1 = 10}
 	}
 }
 M[2] = {
@@ -91,7 +91,7 @@ M[2] = {
 	type2 = 11,
 	moves = moves,
 	evolutions = {
-		{target = 3, stone_type1 = 11, stone_cost1 = 20}
+		{target = 3, stone_type1 = 11, stone_cost1 = 10}
 	}
 }
 M[3] = {
@@ -127,7 +127,7 @@ M[4] = {
 	type2 = 9,
 	moves = moves,
 	evolutions = {
-		{target = 5, stone_type1 = 9, stone_cost1 = 20}
+		{target = 5, stone_type1 = 9, stone_cost1 = 10}
 	}
 }
 M[5] = {
@@ -143,7 +143,7 @@ M[5] = {
 	type2 = 9,
 	moves = moves,
 	evolutions = {
-		{target = 6, stone_type1 = 9, stone_cost1 = 10, stone_type2 = 8, stone_cost2 = 10}
+		{target = 6, stone_type1 = 9, stone_cost1 = 5, stone_type2 = 8, stone_cost2 = 5}
 	}
 }
 M[6] = {
@@ -178,7 +178,7 @@ M[7] = {
 	type2 = 10,
 	moves = moves,
 	evolutions = {
-		{target = 8, stone_type1 = 10, stone_cost1 = 20}
+		{target = 8, stone_type1 = 10, stone_cost1 = 10}
 	}
 }
 M[8] = {
@@ -194,7 +194,7 @@ M[8] = {
 	type2 = 10,
 	moves = moves,
 	evolutions = {
-		{target = 9, stone_type1 = 10, stone_cost1 = 20}
+		{target = 9, stone_type1 = 10, stone_cost1 = 10}
 	}
 }
 M[9] = {
@@ -305,9 +305,33 @@ M[14] = {
 	speed = 105,
 	type1 = 6,
 	type2 = 4,
+	moves = moves,
+	evolutions = {
+		{target = 15, stone_type1 = 6, stone_cost1 = 5}
+	}
+}
+moves = {
+	{level = 1, id = 1},
+	{level = 1, id = 108},
+	{level = 4, id = 116},
+	{level = 6, id = 53},
+	{level = 8, id = 47},
+	{level = 9, id = 44},
+	{level = 10, id = 117}
+}
+M[15] = {
+	name = "beedrill",
+	rarity = 2,
+	hp = 90,
+	attack = 125,
+	defense = 90,
+	spattack = 80,
+	spdefense = 105,
+	speed = 110,
+	type1 = 6,
+	type2 = 4,
 	moves = moves
 }
-M[15] = {}
 
 moves = {}
 moves[1] = {["level"] = 1, ["id"] = 1}
