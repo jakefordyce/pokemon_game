@@ -3614,4 +3614,99 @@ M[117] = {
 	end
 }
 
+meffects = {
+	{
+		id = 1,
+		target = 1,
+		param1 = function(moveLevel)
+			damage = 200 + (moveLevel * 12)
+			return damage
+		end,
+		param2 = "attack"
+	},
+	{
+		id = 4,
+		target = 1,
+		param1 = function(moveLevel)
+			chance = 75 + (moveLevel * 5)
+			return chance
+		end,
+		param2 = 2
+	}
+}
+M[118] = {
+	name = "Acid",
+	effects = meffects,
+	cooldown = function(moveLevel)
+		return 4
+	end,
+	default = false,
+	type = 4,
+	targetting = 1,
+	max_level = 5,
+	description = function(moveLevel)
+		chance = 75 + (moveLevel * 5)
+		damage = 200 + (moveLevel * 12)
+		return "Attacks 1 enemy for "..damage.."% of Attack then has a "..chance.."% chance of reducing that enemy's defense."
+	end
+}
+
+
+meffects = {
+	{
+		id = 1,
+		target = 1,
+		param1 = function(moveLevel)
+			damage = 50 + (moveLevel * 5)
+			return damage
+		end,
+		param2 = "attack",
+		min_hits = 2,
+		max_hits = 4
+	}
+}
+
+M[119] = {
+	name = "Wrap",
+	effects = meffects,
+	cooldown = function(moveLevel)
+		return 0
+	end,
+	default = true,
+	type = 1,
+	targetting = 1,
+	max_level = 5,
+	description = function(moveLevel)
+		damage = 50 + (moveLevel * 5)
+		return "Attacks 1 enemy 2 to 4 times for "..damage.."% of Attack."
+	end
+}
+
+meffects = {
+	{
+		id = 14,
+		target = 1,
+		param1 = function(moveLevel)
+			chance = 75 + (moveLevel * 5)
+			return chance
+		end,
+		param2 = 1
+	}
+}
+M[120] = {
+	name = "Glare",
+	effects = meffects,
+	cooldown = function(moveLevel)
+		return 3
+	end,
+	default = false,
+	type = 1,
+	targetting = 1,
+	max_level = 5,
+	description = function(moveLevel)
+		chance = 75 + (moveLevel * 5)
+		return "Has a "..chance.."% chance of stunning the enemy for 1 turn."
+	end
+}
+
 return M

@@ -409,7 +409,28 @@ M[21] = {
 	moves = moves
 }
 M[22] = {}
-M[23] = {}
+
+moves = {
+	{level = 1, id = 1},
+	{level = 1, id = 118},
+	{level = 4, id = 120},
+	{level = 6, id = 88},
+	{level = 8, id = 119},
+	{level = 9, id = 47}
+}
+M[23] = {
+	name = "ekans",
+	rarity = 2,
+	hp = 65,
+	attack = 105,
+	defense = 75,
+	spattack = 70,
+	spdefense = 95,
+	speed = 105,
+	type1 = 4,
+	type2 = 4,
+	moves = moves
+}
 M[24] = {}
 M[25] = {}
 M[26] = {}
