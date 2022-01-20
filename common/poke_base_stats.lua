@@ -57,11 +57,13 @@ M.base_crit_chance = 5
 M.base_crit_damage = 100
 
 --List of all pokemon by pokedex ID.
-moves = {}
-moves[1] = {["level"] = 1, ["id"] = 1}
-moves[2] = {["level"] = 1, ["id"] = 9}
-moves[3] = {["level"] = 7, ["id"] = 27}
-moves[4] = {["level"] = 10, ["id"] = 4}
+moves = {
+	{level = 1, id = 1},
+	{level = 1, id = 9},
+	{level = 7, id = 27},
+	{level = 10, id = 4},
+	{level = 12, id = 121}
+}
 M[1] = {
 	name = "bulbasaur",
 	rarity = 3,
@@ -351,7 +353,7 @@ M[16] = {
 	type2 = 3,
 	moves = moves,
 	evolutions = {
-		{target = 17, stone_type1 = 3, stone_cost1 = 20}
+		{target = 17, stone_type1 = 3, stone_cost1 = 10}
 	}
 }
 M[17] = {
@@ -432,7 +434,27 @@ M[23] = {
 	moves = moves
 }
 M[24] = {}
-M[25] = {}
+
+moves = {
+	{level = 1, id = 1},
+	{level = 1, id = 15},
+	{level = 7, id = 31},
+	{level = 10, id = 55},
+	{level = 12, id = 122}
+}
+M[25] = {
+	name = "pikachu",
+	rarity = 3,
+	hp = 85,
+	attack = 80,
+	defense = 75,
+	spattack = 125,
+	spdefense = 105,
+	speed = 115,
+	type1 = 12,
+	type2 = 12,
+	moves = moves
+}
 M[26] = {}
 M[27] = {}
 M[28] = {}
@@ -982,10 +1004,11 @@ M[170]={}
 M[171]={}
 
 moves = {
-	{["level"] = 1, ["id"] = 1},
-	{["level"] = 1, ["id"] = 15},
-	{["level"] = 7, ["id"] = 31},
-	{["level"] = 10, ["id"] = 55},
+	{level = 1, id = 1},
+	{level = 1, id = 15},
+	{level = 7, id = 31},
+	{level = 10, id = 55},
+	{level = 12, id = 122}
 }
 M[172] = {
 	name = "pichu",
@@ -998,7 +1021,10 @@ M[172] = {
 	speed = 115,
 	type1 = 12,
 	type2 = 12,
-	moves = moves
+	moves = moves,
+	evolutions = {
+		{target = 25, stone_type1 = 12, stone_cost1 = 10}
+	}
 }
 
 moves = {

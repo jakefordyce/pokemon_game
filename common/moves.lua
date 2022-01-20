@@ -3709,4 +3709,68 @@ M[120] = {
 	end
 }
 
+meffects = {
+	{
+		id = 1,
+		target = 3,
+		param1 = function(moveLevel)
+			damage = 175 + (moveLevel * 10)
+			return damage
+		end,
+		param2 = "spattack"
+	}
+}
+M[121] = {
+	name = "Seed Bomb",
+	effects = meffects,
+	cooldown = function(moveLevel)
+		return 4
+	end,
+	default = false,
+	type = 11,
+	targetting = 1,
+	max_level = 6,
+	description = function(moveLevel)
+		damage = 175 + (moveLevel * 10)
+		return "Attacks all enemies for "..damage.."% of Special Attack."
+	end
+}
+
+meffects = {
+	{
+		id = 1,
+		target = 1,
+		param1 = function(moveLevel)
+			damage = 300 + (moveLevel * 18)
+			return damage
+		end,
+		param2 = "spattack"
+	},
+	{
+		id = 14,
+		target = 1,
+		param1 = function(moveLevel)
+			chance = 15 + (moveLevel * 2)
+			return chance
+		end,
+		param2 = 1
+	}
+}
+M[122] = {
+	name = "Thunderbolt",
+	effects = meffects,
+	cooldown = function(moveLevel)
+		return 4
+	end,
+	default = false,
+	type = 12,
+	targetting = 1,
+	max_level = 5,
+	description = function(moveLevel)
+		chance = 15 + (moveLevel * 2)
+		damage = 300 + (moveLevel * 18)
+		return "Attacks 1 enemy for "..damage.."% of Special Attack then has a "..chance.."% chance of stunning the enemy for 1 turn."
+	end
+}
+
 return M

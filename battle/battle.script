@@ -261,13 +261,13 @@ function handle_move_effects(level, effect, target, move_user, move_obj)
 		
 		if effect.id == 1 then --deal damage
 			local stat = move_user[effect.param2]
-			if string.match(effect.param2, "^attack") then
+			if string.match(effect.param2, "attack") then
 				if mon_has_status_effect(move_user, 2) then
 					stat = stat / 2
 				elseif mon_has_status_effect(move_user, 3) then
 					stat = stat * 1.5
 				end
-			elseif string.match(effect.param2, "^defense") then
+			elseif string.match(effect.param2, "defense") then
 				if mon_has_status_effect(move_user, 4) then
 					stat = stat / 2
 				elseif mon_has_status_effect(move_user, 5) then
@@ -285,14 +285,14 @@ function handle_move_effects(level, effect, target, move_user, move_obj)
 			end
 			if effect.param4 ~= nil then --damage based on multiple stats
 				stat = move_user[effect.param4]
-				if string.match(effect.param4, "^attack") then
+				if string.match(effect.param4, "attack") then
 					if mon_has_status_effect(move_user, 2) then
 						stat = stat / 2
 					elseif mon_has_status_effect(move_user, 3) then
 						stat = stat * 1.5
 					end
 					power = power + (effect.param3(level) * stat / 100)
-				elseif string.match(effect.param4, "^defense") then
+				elseif string.match(effect.param4, "defense") then
 					if mon_has_status_effect(move_user, 4) then
 						stat = stat / 2
 					elseif mon_has_status_effect(move_user, 5) then
@@ -403,7 +403,7 @@ function handle_move_effects(level, effect, target, move_user, move_obj)
 			end
 		elseif effect.id == 16 then --heal
 			local stat = move_user[effect.param2]
-			if string.match(effect.param2, "^attack") then
+			if string.match(effect.param2, "attack") then
 				if mon_has_status_effect(move_user, 2) then
 					stat = stat / 2
 				elseif mon_has_status_effect(move_user, 3) then
