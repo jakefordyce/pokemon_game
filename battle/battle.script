@@ -2,11 +2,8 @@ local game_state = require "common/game_state"
 local encounters = require "common/encounters"
 local moves = require "common/moves"
 local status_effects = require "common/status_effects"
+local passive_effects = require "common/passive_effects"
 local types = require "common/poke_types"
-local player_mon1 = nil
-local player_mon2 = nil
-local player_mon3 = nil
-local player_mon4 = nil
 local enemy_mon1 = nil
 local enemy_mon2 = nil
 local enemy_mon3 = nil
@@ -37,7 +34,9 @@ end
 
 function on_message(self, message_id, message, sender)
 	if message_id == hash("move_selected") then
-		if(current_turn_mon["move"..message.slot.."cd"] == 0 and (message.slot == 1 or not mon_has_status_effect(current_turn_mon, 23))) then
+		local move = moves[current_turn_mon.known_moves[message.move].id]
+		if(current_turn_mon["move"..message.slot.."cd"] == 0 and (message.slot == 1 or not mon_has_status_effect(current_turn_mon, 23))
+		and move.passive == nil) then
 			selected_move_slot = message.slot
 			selected_move = moves[current_turn_mon.known_moves[message.move].id]
 			display_targetting_icons()
@@ -71,22 +70,22 @@ function on_message(self, message_id, message, sender)
 			msg.post("gui", "update_turn", {target=current_turn_mon.reference, current=current_turn_mon.turn, max=1000})
 		end
 		if #extra_turn_queue == 0 then
-			if player_mon1 ~= nil and player_mon1.turn > 1000 and not player_mon1.fainted then
-				player_mon1.turn = player_mon1.turn - 1000
-				current_turn_mon = player_mon1
-				start_player_turn(player_mon1)
-			elseif player_mon2 ~= nil and player_mon2.turn > 1000 and not player_mon2.fainted then
-				player_mon2.turn = player_mon2.turn - 1000
-				current_turn_mon = player_mon2
-				start_player_turn(player_mon2)
-			elseif player_mon3 ~= nil and player_mon3.turn > 1000 and not player_mon3.fainted then
-				player_mon3.turn = player_mon3.turn - 1000
-				current_turn_mon = player_mon3
-				start_player_turn(player_mon3)
-			elseif player_mon4 ~= nil and player_mon4.turn > 1000 and not player_mon4.fainted then
-				player_mon4.turn = player_mon4.turn - 1000
-				current_turn_mon = player_mon4
-				start_player_turn(player_mon4)
+			if combatants["player_mon1"] ~= nil and combatants["player_mon1"].turn > 1000 and not combatants["player_mon1"].fainted then
+				combatants["player_mon1"].turn = combatants["player_mon1"].turn - 1000
+				current_turn_mon = combatants["player_mon1"]
+				start_player_turn(combatants["player_mon1"])
+			elseif combatants["player_mon2"] ~= nil and combatants["player_mon2"].turn > 1000 and not combatants["player_mon2"].fainted then
+				combatants["player_mon2"].turn = combatants["player_mon2"].turn - 1000
+				current_turn_mon = combatants["player_mon2"]
+				start_player_turn(combatants["player_mon2"])
+			elseif combatants["player_mon3"] ~= nil and combatants["player_mon3"].turn > 1000 and not combatants["player_mon3"].fainted then
+				combatants["player_mon3"].turn = combatants["player_mon3"].turn - 1000
+				current_turn_mon = combatants["player_mon3"]
+				start_player_turn(combatants["player_mon3"])
+			elseif combatants["player_mon4"] ~= nil and combatants["player_mon4"].turn > 1000 and not combatants["player_mon4"].fainted then
+				combatants["player_mon4"].turn = combatants["player_mon4"].turn - 1000
+				current_turn_mon = combatants["player_mon4"]
+				start_player_turn(combatants["player_mon4"])
 			elseif enemy_boss ~= nil and enemy_boss.turn > 1000 and not enemy_boss.fainted then
 				enemy_boss.turn = enemy_boss.turn - 1000
 				current_turn_mon = enemy_boss
@@ -177,42 +176,43 @@ function start_handling_move(move)
 	local delay_time = 0.0
 	
 	for index, effect in ipairs(move_obj.effects) do
-		local num_of_hits = 1
-		if effect.min_hits ~= nil then
-			num_of_hits = math.random(effect.min_hits, effect.max_hits)
-		end
-		for i=1,num_of_hits do
-			if effect.target == 0 then --self
-				timer.delay(delay_time, false, function() handle_move_effects(level, effect, move_user.reference, move_user, move_obj) end)
-			elseif (effect.target == 1 or effect.target == 2) then --enemy, ally, only affect target selected.
-				timer.delay(delay_time, false, function() handle_move_effects(level, effect, target, move_user, move_obj) end)
-			elseif (effect.target == 3) then -- all enemies
-				local effect_target = "^enemy"
-				if string.match(move_user.reference, "^enemy") then -- an enemy mon using the move
-					effect_target = "^player"
-				end
-				for i, comb in pairs(combatants) do
-					if(string.match(comb.reference, effect_target) and not comb.fainted) then
-						timer.delay(delay_time, false, function() handle_move_effects(level, effect, comb.reference, move_user, move_obj) end)
-					end
-				end
-			elseif (effect.target == 4) then -- all allies
-				local effect_target = "^player"
-				if string.match(move_user.reference, "^enemy") then -- an enemy mon using the move
-					effect_target = "^enemy"
-				end
-				for i, comb in pairs(combatants) do
-					if(string.match(comb.reference, effect_target))then-- and not comb.fainted) then
-						timer.delay(delay_time, false, function() handle_move_effects(level, effect, comb.reference, move_user, move_obj) end)
-					end
-				end
+		if effect.passive == nil then
+			local num_of_hits = 1
+			if effect.min_hits ~= nil then
+				num_of_hits = math.random(effect.min_hits, effect.max_hits)
 			end
-			delay_time = delay_time + 0.25
+			for i=1,num_of_hits do
+				if effect.target == 0 then --self
+					timer.delay(delay_time, false, function() handle_move_effects(level, effect, move_user.reference, move_user, move_obj) end)
+				elseif (effect.target == 1 or effect.target == 2) then --enemy, ally, only affect target selected.
+					timer.delay(delay_time, false, function() handle_move_effects(level, effect, target, move_user, move_obj) end)
+				elseif (effect.target == 3) then -- all enemies
+					local effect_target = "^enemy"
+					if string.match(move_user.reference, "^enemy") then -- an enemy mon using the move
+						effect_target = "^player"
+					end
+					for i, comb in pairs(combatants) do
+						if(string.match(comb.reference, effect_target) and not comb.fainted) then
+							timer.delay(delay_time, false, function() handle_move_effects(level, effect, comb.reference, move_user, move_obj) end)
+						end
+					end
+				elseif (effect.target == 4) then -- all allies
+					local effect_target = "^player"
+					if string.match(move_user.reference, "^enemy") then -- an enemy mon using the move
+						effect_target = "^enemy"
+					end
+					for i, comb in pairs(combatants) do
+						if(string.match(comb.reference, effect_target))then-- and not comb.fainted) then
+							timer.delay(delay_time, false, function() handle_move_effects(level, effect, comb.reference, move_user, move_obj) end)
+						end
+					end
+				end
+				delay_time = delay_time + 0.25
+			end
 		end
 	end
 
 	timer.delay(delay_time, false, function() handle_protections() end)
-	
 end
 
 function handle_protections()
@@ -527,6 +527,28 @@ function handle_move_effects(level, effect, target, move_user, move_obj)
 	end
 end
 
+function handle_start_turn_passives(mon)
+	local damage_text = ""
+	local text_color = "white"
+	local delay_time = 0.0
+	for m=1,4 do
+		if mon["move"..m] ~= nil then
+			local move =  moves[mon.known_moves[mon["move"..m]].id]
+			for i, effect in ipairs(move.effects) do
+				if effect.passive ~= nil and effect.trigger == 1 then
+					if effect.id == 1 then
+						
+						reduce_status_effect_durations(mon, 1, 6)
+						damage_text = passive_effects[effect.id].damage_text
+					end
+					timer.delay(delay_time, false, function() display_damage_text(go.get_position(mon.reference),damage_text, text_color) end)
+					delay_time = delay_time + 0.25	
+				end
+			end
+		end
+	end
+end
+
 function mon_protector(mon)
 	protector = nil
 	for i, eff in ipairs(mon.status_effects) do
@@ -800,6 +822,7 @@ function mon_has_status_effect(mon, effect_id)
 	return has_status_effect
 end
 
+
 --effect_ids
 -- 0 = any status effect, good or bad
 -- -1 = any harmful effect
@@ -946,10 +969,10 @@ function enemies_are_fainted()
 end
 
 function player_mons_are_fainted()
-	fainted = (player_mon1 == nil or player_mon1.fainted) and 
-		(player_mon2 == nil or player_mon2.fainted) and 
-		(player_mon3 == nil or player_mon3.fainted) and 
-		(player_mon4 == nil or player_mon4.fainted)
+	fainted = (combatants["player_mon1"] == nil or combatants["player_mon1"].fainted) and 
+	(combatants["player_mon2"] == nil or combatants["player_mon2"].fainted) and 
+		(combatants["player_mon3"] == nil or combatants["player_mon3"].fainted) and 
+		(combatants["player_mon4"] == nil or combatants["player_mon4"].fainted)
 
 	return fainted
 end
@@ -1017,6 +1040,7 @@ end
 function start_player_turn(turn_mon)
 	reduce_all_cooldowns(turn_mon, 1)
 	activate_blessings(turn_mon)
+	handle_start_turn_passives(turn_mon)
 	activate_torments(turn_mon)
 	reduce_status_effect_durations(turn_mon, 1, 3)
 	local p = go.get_position(turn_mon.reference)
@@ -1074,7 +1098,8 @@ function choose_enemy_move()
 			while is_move_chosen == false do
 				random_move = math.random(1,4) -- choose a move at random
 				-- see if the move is off cooldown
-				if(current_turn_mon["move"..random_move] ~= nil and current_turn_mon["move"..random_move.."cd"] == 0) then
+				local move = moves[current_turn_mon.known_moves[current_turn_mon["move"..random_move]].id]
+				if(current_turn_mon["move"..random_move] ~= nil and current_turn_mon["move"..random_move.."cd"] == 0 and move.passive == nil) then
 					selected_move = moves[current_turn_mon.known_moves[current_turn_mon["move"..random_move]].id]
 					selected_move_slot = random_move
 					is_move_chosen = true
@@ -1086,7 +1111,8 @@ function choose_enemy_move()
 			local i = 1
 			while is_move_chosen == false do
 				local priority_move = current_turn_mon.move_priority[i]
-				if current_turn_mon["move"..priority_move.."cd"] == 0 then
+				local move = moves[current_turn_mon.known_moves[current_turn_mon["move"..priority_move]].id]
+				if current_turn_mon["move"..priority_move.."cd"] == 0 and move.passive == nil then
 					selected_move = moves[current_turn_mon.known_moves[current_turn_mon["move"..priority_move]].id]
 					selected_move_slot = priority_move
 					is_move_chosen = true
@@ -1156,86 +1182,28 @@ function increment_turns()
 	msg.post(".", "find_next_turn")
 end
 
-
 function load_player_mon_data()
-	if game_state.player_mon1 ~= nil then
-		player_mon1 = game_state.pokemon[game_state.player_mon1]
-		player_mon1.currenthp = player_mon1.hp
-		player_mon1.max_hp = player_mon1.hp
-		player_mon1.shield = 0
-		player_mon1.turn = 0
-		player_mon1.reference = "player_mon1"
-		player_mon1.move1cd = 0
-		player_mon1.move2cd = 0
-		player_mon1.move3cd = 0
-		player_mon1.move4cd = 0
-		player_mon1.status_effects = {}
-		player_mon1.fainted = false
-		msg.post("player_mon1#sprite", "play_animation", { id = hash(player_mon1.name.."_back_original") })
-		combatants["player_mon1"] = player_mon1
-	else
-		msg.post("player_mon1", "disable")
-		msg.post("gui", "disable_mon", {mon = "player_mon1"})
-	end
-
-	if game_state.player_mon2 ~= nil then
-		player_mon2 = game_state.pokemon[game_state.player_mon2]
-		player_mon2.currenthp = player_mon2.hp
-		player_mon2.max_hp = player_mon2.hp
-		player_mon2.shield = 0
-		player_mon2.turn = 0
-		player_mon2.reference = "player_mon2"
-		player_mon2.move1cd = 0
-		player_mon2.move2cd = 0
-		player_mon2.move3cd = 0
-		player_mon2.move4cd = 0
-		player_mon2.status_effects = {}
-		player_mon2.fainted = false
-		msg.post("player_mon2#sprite", "play_animation", { id = hash(player_mon2.name.."_back_original") })
-		combatants["player_mon2"] = player_mon2
-	else
-		msg.post("player_mon2", "disable")
-		msg.post("gui", "disable_mon", {mon = "player_mon2"})
-	end
-
-	if game_state.player_mon3 ~= nil then
-		player_mon3 = game_state.pokemon[game_state.player_mon3]
-		player_mon3.currenthp = player_mon3.hp
-		player_mon3.max_hp = player_mon3.hp
-		player_mon3.shield = 0
-		player_mon3.turn = 0
-		player_mon3.reference = "player_mon3"
-		player_mon3.move1cd = 0
-		player_mon3.move2cd = 0
-		player_mon3.move3cd = 0
-		player_mon3.move4cd = 0
-		player_mon3.status_effects = {}
-		player_mon3.fainted = false
-		msg.post("player_mon3#sprite", "play_animation", { id = hash(player_mon3.name.."_back_original") })
-		combatants["player_mon3"] = player_mon3
-	else
-		msg.post("player_mon3", "disable")
-		msg.post("gui", "disable_mon", {mon = "player_mon3"})
-	end
-
-	if game_state.player_mon4 ~= nil then
-		player_mon4 = game_state.pokemon[game_state.player_mon4]
-		player_mon4.currenthp = player_mon4.hp
-		player_mon4.max_hp = player_mon4.hp
-		player_mon4.shield = 0
-		player_mon4.turn = 0
-		player_mon4.reference = "player_mon4"
-		player_mon4.move1cd = 0
-		player_mon4.move2cd = 0
-		player_mon4.move3cd = 0
-		player_mon4.move4cd = 0
-		player_mon4.status_effects = {}
-		player_mon4.fainted = false
-		msg.post("player_mon4#sprite", "play_animation", { id = hash(player_mon4.name.."_back_original") })
-		combatants["player_mon4"] = player_mon4
-	else
-		msg.post("player_mon4", "disable")
-		msg.post("gui", "disable_mon", {mon = "player_mon4"})
+	for i=1,4 do
+		if game_state["player_mon"..i] ~= nil then
+			local mon = game_state.pokemon[game_state["player_mon"..i]]
+			combatants["player_mon"..i] = mon
+			combatants["player_mon"..i].currenthp = mon.hp
+			combatants["player_mon"..i].max_hp = mon.hp
+			combatants["player_mon"..i].shield = 0
+			combatants["player_mon"..i].turn = 0
+			combatants["player_mon"..i].reference = "player_mon"..i
+			combatants["player_mon"..i].move1cd = 0
+			combatants["player_mon"..i].move2cd = 0
+			combatants["player_mon"..i].move3cd = 0
+			combatants["player_mon"..i].move4cd = 0
+			combatants["player_mon"..i].status_effects = {}
+			combatants["player_mon"..i].fainted = false
+			combatants["player_mon"..i].passive_effects = {}
+			msg.post("player_mon"..i.."#sprite", "play_animation", { id = hash(mon.name.."_back_original") })
+		else
+			msg.post("player_mon"..i, "disable")
+			msg.post("gui", "disable_mon", {mon = "player_mon"..i})
+		end
 	end
 end
 

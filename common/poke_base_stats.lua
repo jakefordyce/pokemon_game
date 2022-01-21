@@ -162,11 +162,13 @@ M[6] = {
 	moves = moves
 }
 
-moves = {}
-moves[1] = {["level"] = 1, ["id"] = 1}
-moves[2] = {["level"] = 1, ["id"] = 17}
-moves[3] = {["level"] = 7, ["id"] = 30}
-moves[4] = {["level"] = 10, ["id"] = 42}
+moves = {
+	{level = 1, id = 1},
+	{level = 1, id = 17},
+	{level = 7, id = 30},
+	{level = 10, id = 42},
+	{level = 12, id = 123}
+}
 M[7] = {
 	name = "squirtle",
 	rarity = 3,

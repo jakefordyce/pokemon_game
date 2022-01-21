@@ -3219,6 +3219,7 @@ M[105] = {
 	targetting = 2,
 	max_level = 6,
 	description = function(moveLevel)
+		chance = 50 + (moveLevel * 10)
 		return "Has a "..chance.." chance of removing all debuffs from all allies."
 	end
 }
@@ -3770,6 +3771,29 @@ M[122] = {
 		chance = 15 + (moveLevel * 2)
 		damage = 300 + (moveLevel * 18)
 		return "Attacks 1 enemy for "..damage.."% of Special Attack then has a "..chance.."% chance of stunning the enemy for 1 turn."
+	end
+}
+
+meffects = {
+	{
+		passive = true,
+		trigger = 1, --start of turn
+		id = 1
+	}
+}
+M[123] = {
+	name = "Rapid Spin",
+	passive = true,
+	effects = meffects,
+	cooldown = function(moveLevel)
+		return 1
+	end,
+	default = false,
+	type = 1,
+	targetting = 0,
+	max_level = 0,
+	description = function(moveLevel)
+		return "(Passive) At the beginning of the user's turn the duration of all harmful status effects is reduced by 1."
 	end
 }
 
