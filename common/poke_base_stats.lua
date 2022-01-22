@@ -337,11 +337,14 @@ M[15] = {
 	moves = moves
 }
 
-moves = {}
-moves[1] = {["level"] = 1, ["id"] = 1}
-moves[2] = {["level"] = 1, ["id"] = 16}
-moves[3] = {["level"] = 6, ["id"] = 51}
-moves[4] = {["level"] = 9, ["id"] = 50}
+moves = {
+	{level = 1, id = 1},
+	{level = 1, id = 16},
+	{level = 6, id = 51},
+	{level = 9, id = 50},
+	{level = 10, id = 52},
+	{level = 12, id = 124}
+}
 M[16] = {
 	name = "pidgey",
 	rarity = 1,
@@ -369,9 +372,24 @@ M[17] = {
 	speed = 105,
 	type1 = 3,
 	type2 = 3,
+	moves = moves,
+	evolutions = {
+		{target = 18, stone_type1 = 3, stone_cost1 = 10}
+	}
+}
+M[18] = {
+	name = "pidgeot",
+	rarity = 3,
+	hp = 100,
+	attack = 110,
+	defense = 100,
+	spattack = 85,
+	spdefense = 95,
+	speed = 105,
+	type1 = 3,
+	type2 = 3,
 	moves = moves
 }
-M[18] = {}
 
 moves = {}
 moves[1] = {["level"] = 1, ["id"] = 1}

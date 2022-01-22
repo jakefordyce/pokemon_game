@@ -3778,6 +3778,9 @@ meffects = {
 	{
 		passive = true,
 		trigger = 1, --start of turn
+		chance = function(level)
+			return 50 + (level * 10)
+		end,
 		id = 1
 	}
 }
@@ -3791,9 +3794,47 @@ M[123] = {
 	default = false,
 	type = 1,
 	targetting = 0,
-	max_level = 0,
+	max_level = 5,
 	description = function(moveLevel)
-		return "(Passive) At the beginning of the user's turn the duration of all harmful status effects is reduced by 1."
+		local chance = 50 + (level * 10)
+		return "(Passive) At the beginning of the user's turn there is a "..chance.."% chance that the duration of all harmful status effects will be reduced by 1."
+	end
+}
+
+
+meffects = {
+	{
+		id = 1,
+		target = 1,
+		param1 = function(moveLevel)
+			damage = 250 + (moveLevel * 15)
+			return damage
+		end,
+		param2 = "attack"
+	},
+	{
+		id = 12,
+		target = 1,
+		param1 = function(moveLevel)
+			return 50 + (moveLevel * 5)
+		end,
+		param2 = 100
+	}
+}
+M[124] = {
+	name = "Twister",
+	effects = meffects,
+	cooldown = function(moveLevel)
+		return 3
+	end,
+	default = false,
+	type = 8,
+	targetting = 1,
+	max_level = 5,
+	description = function(moveLevel)
+		chance = 50 + (moveLevel * 5)
+		damage = 250 + (moveLevel * 15)
+		return "Attacks an enemy for "..damage.."% of Attack. Has a "..chance.."% chance of decreasing the enemy's turn by 100%."
 	end
 }
 

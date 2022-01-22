@@ -531,18 +531,23 @@ function handle_start_turn_passives(mon)
 	local damage_text = ""
 	local text_color = "white"
 	local delay_time = 0.0
+	local passive_chance
 	for m=1,4 do
 		if mon["move"..m] ~= nil then
 			local move =  moves[mon.known_moves[mon["move"..m]].id]
+			local level = mon.known_moves[mon["move"..m]].level
 			for i, effect in ipairs(move.effects) do
 				if effect.passive ~= nil and effect.trigger == 1 then
-					if effect.id == 1 then
-						
-						reduce_status_effect_durations(mon, 1, 6)
-						damage_text = passive_effects[effect.id].damage_text
+					passive_chance = effect.chance(level)
+					if math.random(1,100) <= passive_chance then
+						if effect.id == 1 then
+							
+							reduce_status_effect_durations(mon, 1, 6)
+							damage_text = passive_effects[effect.id].damage_text
+						end
+						timer.delay(delay_time, false, function() display_damage_text(go.get_position(mon.reference),damage_text, text_color) end)
+						delay_time = delay_time + 0.25
 					end
-					timer.delay(delay_time, false, function() display_damage_text(go.get_position(mon.reference),damage_text, text_color) end)
-					delay_time = delay_time + 0.25	
 				end
 			end
 		end
