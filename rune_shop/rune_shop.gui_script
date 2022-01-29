@@ -153,7 +153,7 @@ function display_rune_details()
 	end
 	
 	value_text = "+ " .. runes.mainstat_value(selected_rune.main_stat, selected_rune.level)
-	if selected_rune.main_stat > 6 then
+	if selected_rune.main_stat > 6 or selected_rune.main_stat == 4 then
 		value_text = value_text .. "%"
 	end
 	
@@ -165,7 +165,7 @@ function display_rune_details()
 	end
 	for i,ss in ipairs(selected_rune.substats) do
 		value_text = "+ " .. runes.substat_value(ss.stat, ss.rank)
-		if ss.stat > 6 then
+		if ss.stat > 6 or ss.stat == 4 then
 			value_text = value_text .. "%"
 		end
 		gui.set_enabled(gui.get_node("substat"..i), true)

@@ -69,11 +69,30 @@ local function simulate_runes(mon)
 		mon.accuracy = mon.accuracy + (effective_level * 0.009)
 		mon.resist = mon.resist + (effective_level * 0.009)
 
-		mon.hp = mon.hp + (mon.hp * (effective_level * (0.001) * (mon.gear_rarity - 1)))
-		mon.attack = mon.attack + (mon.attack * (effective_level *  (0.001) * (mon.gear_rarity - 1)))
-		mon.spattack = mon.spattack + (mon.spattack * (effective_level *  (0.001) * (mon.gear_rarity - 1)))
-		mon.defense = mon.defense + (mon.defense * (effective_level *  (0.001) * (mon.gear_rarity - 1)))
-		mon.spdefense = mon.spdefense + (mon.spdefense * (effective_level *  (0.001) * (mon.gear_rarity - 1)))
+		mon.hp = mon.hp + (mon.hp * (0.06 * (mon.gear_rarity - 1)))
+		mon.attack = mon.attack + (mon.attack * (0.06 * (mon.gear_rarity - 1)))
+		mon.spattack = mon.spattack + (mon.spattack * (0.06 * (mon.gear_rarity - 1)))
+		mon.defense = mon.defense + (mon.defense * (0.06 * (mon.gear_rarity - 1)))
+		mon.spdefense = mon.spdefense + (mon.spdefense * (0.06 * (mon.gear_rarity - 1)))
+		mon.accuracy = mon.accuracy + (6 * (mon.gear_rarity - 1))
+		mon.resist = mon.resist + (6 * (mon.gear_rarity - 1))
+	elseif mon.build_style == 2 then -- very fast then high damage
+		mon.hp = mon.hp + (mon.hp * (effective_level * (0.002)))
+		mon.attack = mon.attack + (mon.attack * (effective_level * 0.009))
+		mon.spattack = mon.spattack + (mon.spattack * (effective_level * 0.009))
+		mon.defense = mon.defense + (mon.defense * (effective_level * 0.004))
+		mon.spdefense = mon.spdefense + (mon.spdefense * (effective_level * 0.004))
+		mon.accuracy = mon.accuracy + (effective_level * 0.002)
+		mon.resist = mon.resist + (effective_level * 0.003)
+		mon.speed = mon.speed + (mon.speed * (effective_level * 0.025))
+
+		mon.hp = mon.hp + (mon.hp * (0.06 * (mon.gear_rarity - 1)))
+		mon.attack = mon.attack + (mon.attack * (0.06 * (mon.gear_rarity - 1)))
+		mon.spattack = mon.spattack + (mon.spattack * (0.06 * (mon.gear_rarity - 1)))
+		mon.defense = mon.defense + (mon.defense * (0.06 * (mon.gear_rarity - 1)))
+		mon.spdefense = mon.spdefense + (mon.spdefense * (0.06 * (mon.gear_rarity - 1)))
+		mon.speed = mon.speed + (mon.speed * (0.06 * (mon.gear_rarity - 1)))
+		mon.resist = mon.resist + (6 * (mon.gear_rarity - 1))
 	end
 end
 
@@ -356,7 +375,7 @@ mon_builds[5] = {} --Platinum
 mon_builds[6] = {} --Master
 
 mon_builds[1][1] = { -- Strikers
-	{ pokedex = 4, build_style = 1, moves = {6,12,28}, move_priority = {2,3,1} },
+	{ pokedex = 4, build_style = 1, moves = {6,12,28,106}, move_priority = {4,2,3,1} },
 	{ pokedex = 32, build_style = 1, moves = {47,48,49}, move_priority = {3,2,1} },
 	{ pokedex = 63, build_style = 1, moves = {56,18,32}, move_priority = {3,2,1} },
 	{ pokedex = 66, build_style = 1, moves = {57,19,33}, move_priority = {2,3,1} },
