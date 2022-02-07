@@ -391,11 +391,13 @@ M[18] = {
 	moves = moves
 }
 
-moves = {}
-moves[1] = {["level"] = 1, ["id"] = 1}
-moves[2] = {["level"] = 1, ["id"] = 14}
-moves[3] = {["level"] = 6, ["id"] = 29}
-moves[4] = {["level"] = 9, ["id"] = 52}
+moves = {
+	{level = 1, id = 1},
+	{level = 1, id = 14},
+	{level = 6, id = 29},
+	{level = 9, id = 52},
+	{level = 10, id = 43}
+}
 M[19] = {
 	name = "rattata",
 	rarity = 1,
@@ -407,9 +409,24 @@ M[19] = {
 	speed = 110,
 	type1 = 1,
 	type2 = 1,
+	moves = moves,
+	evolutions = {
+		{target = 20, stone_type1 = 1, stone_cost1 = 10}
+	}
+}
+M[20] = {
+	name = "raticate",
+	rarity = 2,
+	hp = 95,
+	attack = 120,
+	defense = 105,
+	spattack = 75,
+	spdefense = 90,
+	speed = 110,
+	type1 = 1,
+	type2 = 1,
 	moves = moves
 }
-M[20] = {}
 
 moves = {}
 moves[1] = {["level"] = 1, ["id"] = 1}
