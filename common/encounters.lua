@@ -241,7 +241,7 @@ function M.generate_league_trainers()
 	end
 	local league_num = M.get_current_league_num(game_state.player.rating)
 	for i=1,11 do
-		local comp_num = math.random(1,#team_comps)
+		local comp_num = math.random(1,#team_comps[league_num])
 		local trainer_rating = game_state.player.rating + ((6 - i) * 10) + math.random(1,5)
 		if trainer_rating < 0 then
 			trainer_rating = 0
@@ -252,7 +252,7 @@ function M.generate_league_trainers()
 		local mon_level = math.floor(trainer_rating / 10) + 5
 		local gear_rarity = math.ceil(trainer_rating / 200)
 		for p=1,4 do
-			local role = team_comps[comp_num][p]
+			local role = team_comps[league_num][comp_num][p]
 			local random_mon_from_role = mon_builds[league_num][role][math.random(1, #mon_builds[league_num][role])]
 			local pokemon = {}
 			pokemon.pokedex = random_mon_from_role.pokedex
@@ -364,7 +364,10 @@ M.league_trainers = {}
 
 team_comps = {}
 
-team_comps[1] = {1,1,1,1} -- 4 strikers
+--these are the team compositions. It lists the role of each member of a team.
+--the specific pokemon to fill the role is chosen at random from those listed in mon_builds.
+--[league][comp]
+team_comps[1][1] = {1,1,1,1} -- 4 strikers
 
 mon_builds = {}
 mon_builds[1] = {} --Iron
@@ -374,6 +377,7 @@ mon_builds[4] = {} --Gold
 mon_builds[5] = {} --Platinum
 mon_builds[6] = {} --Master
 
+--[league][build]
 mon_builds[1][1] = { -- Strikers
 	{ pokedex = 4, build_style = 1, moves = {6,12,28,106}, move_priority = {4,2,3,1} },
 	{ pokedex = 32, build_style = 1, moves = {47,48,49}, move_priority = {3,2,1} },
