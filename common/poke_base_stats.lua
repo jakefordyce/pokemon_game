@@ -445,9 +445,24 @@ M[21] = {
 	speed = 108,
 	type1 = 3,
 	type2 = 3,
+	moves = moves,
+	evolutions = {
+		{target = 22, stone_type1 = 3, stone_cost1 = 10}
+	}
+}
+M[22] = {
+	name = "fearow",
+	rarity = 2,
+	hp = 100,
+	attack = 120,
+	defense = 80,
+	spattack = 80,
+	spdefense = 85,
+	speed = 110,
+	type1 = 3,
+	type2 = 3,
 	moves = moves
 }
-M[22] = {}
 
 moves = {
 	{level = 1, id = 1},
