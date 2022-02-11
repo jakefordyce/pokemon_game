@@ -396,7 +396,8 @@ moves = {
 	{level = 1, id = 14},
 	{level = 6, id = 29},
 	{level = 9, id = 52},
-	{level = 10, id = 43}
+	{level = 10, id = 43},
+	{level = 12, id = 125}
 }
 M[19] = {
 	name = "rattata",
@@ -483,9 +484,24 @@ M[23] = {
 	speed = 105,
 	type1 = 4,
 	type2 = 4,
+	moves = moves,
+	evolutions = {
+		{target = 24, stone_type1 = 4, stone_cost1 = 10}
+	}
+}
+M[24] = {
+	name = "arbok",
+	rarity = 2,
+	hp = 85,
+	attack = 125,
+	defense = 95,
+	spattack = 90,
+	spdefense = 115,
+	speed = 105,
+	type1 = 4,
+	type2 = 4,
 	moves = moves
 }
-M[24] = {}
 
 moves = {
 	{level = 1, id = 1},
@@ -678,12 +694,14 @@ M[63] = {
 M[64]={}
 M[65]={}
 
-moves = {}
-moves[1] = {["level"] = 1, ["id"] = 1}
-moves[2] = {["level"] = 1, ["id"] = 19}
-moves[3] = {["level"] = 7, ["id"] = 33}
-moves[4] = {["level"] = 10, ["id"] = 57}
-moves[5] = {["level"] = 12, ["id"] = 104}
+moves = {
+	{level = 1, id = 1},
+	{level = 1, id = 19},
+	{level = 7, id = 33},
+	{level = 10, id = 57},
+	{level = 12, id = 104},
+	{level = 14, id = 125}
+}
 M[66] = {
 	name = "machop",
 	rarity = 3,
@@ -695,9 +713,24 @@ M[66] = {
 	speed = 95,
 	type1 = 2,
 	type2 = 2,
+	moves = moves,
+	evolutions = {
+		{target = 67, stone_type1 = 2, stone_cost1 = 10}
+	}
+}
+M[67]={
+	name = "machoke",
+	rarity = 3,
+	hp = 100,
+	attack = 130,
+	defense = 110,
+	spattack = 70,
+	spdefense = 80,
+	speed = 95,
+	type1 = 2,
+	type2 = 2,
 	moves = moves
 }
-M[67]={}
 M[68]={}
 M[69]={}
 M[70]={}

@@ -3837,5 +3837,30 @@ M[124] = {
 		return "Attacks an enemy for "..damage.."% of Attack. Has a "..chance.."% chance of decreasing the enemy's turn by 100%."
 	end
 }
-
+meffects = {
+	{
+		id = 40,
+		target = 4,
+		param1 = function(moveLevel)
+			chance = 75 + (moveLevel * 5)
+			return chance
+		end,
+		param2 = 2
+	}
+}
+M[125] = {
+	name = "Focus Energy",
+	effects = meffects,
+	cooldown = function(moveLevel)
+		return 3
+	end,
+	default = false,
+	type = 1,
+	targetting = 2,
+	max_level = 5,
+	description = function(moveLevel)
+		chance = 75 + (moveLevel * 5)
+		return "Has a "..chance.."% chance of increasing Crit Chance of all allies by 25% for 2 turns."
+	end
+}
 return M

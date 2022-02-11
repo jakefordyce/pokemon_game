@@ -367,6 +367,7 @@ team_comps = {}
 --these are the team compositions. It lists the role of each member of a team.
 --the specific pokemon to fill the role is chosen at random from those listed in mon_builds.
 --[league][comp]
+team_comps[1] = {}
 team_comps[1][1] = {1,1,1,1} -- 4 strikers
 
 mon_builds = {}

@@ -157,4 +157,9 @@ M[37] = {
 }
 --38 steal buffs
 --39 ally attack
+M[40] = {
+	sprite_name = "crit_chance_up",
+	damage_text = "Crit Chance Up",
+	category = 1
+}
 return M

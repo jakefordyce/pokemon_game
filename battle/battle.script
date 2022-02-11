@@ -324,6 +324,9 @@ function handle_move_effects(level, effect, target, move_user, move_obj)
 			if effect.extra_crit ~= nil then
 				crit_rng = crit_rng - effect.extra_crit
 			end
+			if mon_has_status_effect(move_user, 40) then
+				crit_rng = crit_rng - 25
+			end
 			if crit_rng <= move_user.crit_chance then
 				power = math.floor(power * (1 + (move_user.crit_damage / 100)))
 				text_color = "yellow"
