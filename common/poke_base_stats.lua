@@ -521,9 +521,24 @@ M[25] = {
 	speed = 115,
 	type1 = 12,
 	type2 = 12,
+	moves = moves,
+	evolutions = {
+		{target = 26, stone_type1 = 12, stone_cost1 = 10}
+	}
+}
+M[26] = {
+	name = "raichu",
+	rarity = 3,
+	hp = 95,
+	attack = 85,
+	defense = 95,
+	spattack = 135,
+	spdefense = 110,
+	speed = 115,
+	type1 = 12,
+	type2 = 12,
 	moves = moves
 }
-M[26] = {}
 M[27] = {}
 M[28] = {}
 
