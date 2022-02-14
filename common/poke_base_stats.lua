@@ -583,7 +583,27 @@ M[32] = {
 }
 M[33]={}
 M[34]={}
-M[35]={}
+
+moves = {
+	{level = 1, id = 1},
+	{level = 1, id = 46},
+	{level = 7, id = 38},
+	{level = 10, id = 61},
+	{level = 12, id = 126}
+}
+M[35] = {
+	name = "clefairy",
+	rarity = 3,
+	hp = 105,
+	attack = 80,
+	defense = 90,
+	spattack = 105,
+	spdefense = 105,
+	speed = 95,
+	type1 = 1,
+	type2 = 1,
+	moves = moves
+}
 M[36]={}
 
 moves = {}
@@ -1128,10 +1148,11 @@ M[172] = {
 }
 
 moves = {
-	{["level"] = 1, ["id"] = 1},
-	{["level"] = 1, ["id"] = 46},
-	{["level"] = 7, ["id"] = 38},
-	{["level"] = 10, ["id"] = 61}
+	{level = 1, id = 1},
+	{level = 1, id = 46},
+	{level = 7, id = 38},
+	{level = 10, id = 61},
+	{level = 12, id = 126}
 }
 M[173] = {
 	name = "cleffa",
@@ -1144,7 +1165,10 @@ M[173] = {
 	speed = 95,
 	type1 = 1,
 	type2 = 1,
-	moves = moves
+	moves = moves,
+	evolutions = {
+		{target = 35, stone_type1 = 1, stone_cost1 = 10}
+	}
 }
 M[174]={}
 M[175]={}

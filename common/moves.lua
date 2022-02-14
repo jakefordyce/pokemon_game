@@ -3863,4 +3863,39 @@ M[125] = {
 		return "Has a "..chance.."% chance of increasing Crit Chance of all allies by 25% for 2 turns."
 	end
 }
+
+meffects = {
+	{
+		id = 16,
+		target = 2,
+		param1 = function(moveLevel)
+			return 15 + (moveLevel * 1)
+		end,
+		param2 = "max_hp"
+	},
+	{
+		id = 16,
+		target = 0,
+		param1 = function(moveLevel)
+			return 15 + (moveLevel * 1)
+		end,
+		param2 = "max_hp"
+	}
+}
+M[126] = {
+	name = "Life Dew",
+	effects = meffects,
+	cooldown = function(moveLevel)
+		return 4
+	end,
+	default = false,
+	type = 10,
+	targetting = 2,
+	max_level = 5,
+	description = function(moveLevel)
+		heal = 15 + (moveLevel * 1)
+		return "Heals user and an ally for "..heal.."% of User's max HP."
+	end
+}
+
 return M
