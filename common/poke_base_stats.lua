@@ -724,11 +724,14 @@ M[60]={}
 M[61]={}
 M[62]={}
 
-moves = {}
-moves[1] = {["level"] = 1, ["id"] = 1}
-moves[2] = {["level"] = 1, ["id"] = 18}
-moves[3] = {["level"] = 7, ["id"] = 32}
-moves[4] = {["level"] = 10, ["id"] = 56}
+moves = {
+	{level = 1, id = 1},
+	{level = 1, id = 18},
+	{level = 7, id = 32},
+	{level = 10, id = 56},
+	{level = 12, id = 127},
+	{level = 14, id = 40}
+}
 M[63] = {
 	name = "abra",
 	rarity = 3,
@@ -740,10 +743,40 @@ M[63] = {
 	speed = 110,
 	type1 = 13,
 	type2 = 13,
+	moves = moves,
+	evolutions = {
+		{target = 64, stone_type1 = 13, stone_cost1 = 10}
+	}
+}
+M[64]={
+	name = "kadabra",
+	rarity = 3,
+	hp = 85,
+	attack = 80,
+	defense = 75,
+	spattack = 135,
+	spdefense = 105,
+	speed = 110,
+	type1 = 13,
+	type2 = 13,
+	moves = moves,
+	evolutions = {
+		{target = 65, stone_type1 = 13, stone_cost1 = 10}
+	}
+}
+M[65]={
+	name = "alakazam",
+	rarity = 3,
+	hp = 95,
+	attack = 90,
+	defense = 90,
+	spattack = 140,
+	spdefense = 110,
+	speed = 110,
+	type1 = 13,
+	type2 = 13,
 	moves = moves
 }
-M[64]={}
-M[65]={}
 
 moves = {
 	{level = 1, id = 1},

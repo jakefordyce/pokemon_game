@@ -3898,4 +3898,30 @@ M[126] = {
 	end
 }
 
+meffects = {
+	{
+		id = 28,
+		target = 4,
+		param1 = function(moveLevel)
+			return 50 + (moveLevel * 10)
+		end,
+		param2 = 1
+	}
+}
+M[127] = {
+	name = "Reflect",
+	effects = meffects,
+	cooldown = function(moveLevel)
+		return 5
+	end,
+	default = false,
+	type = 13,
+	targetting = 0,
+	max_level = 5,
+	description = function(moveLevel)
+		chance = 50 + (moveLevel * 10)
+		return "Has a "..chance.."% chance of placing Reflect on all allies for 1 turn."
+	end
+}
+
 return M
