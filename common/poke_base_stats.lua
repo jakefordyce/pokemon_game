@@ -1159,12 +1159,13 @@ M[149]={}
 M[150]={}
 M[151]={}
 
-moves = {}
-moves[1] = {["level"] = 1, ["id"] = 1}
-moves[2] = {["level"] = 1, ["id"] = 22}
-moves[3] = {["level"] = 7, ["id"] = 36}
-moves[4] = {["level"] = 10, ["id"] = 60}
-moves[5] = {["level"] = 12, ["id"] = 105}
+moves = {
+	{level = 1, id = 1},
+	{level = 1, id = 22},
+	{level = 7, id = 36},
+	{level = 10, id = 60},
+	{level = 12, id = 105}
+}
 M[152] = {
 	name = "chikorita",
 	rarity = 3,
@@ -1176,16 +1177,49 @@ M[152] = {
 	speed = 100,
 	type1 = 11,
 	type2 = 11,
+	moves = moves,
+	evolutions = {
+		{target = 153, stone_type1 = 11, stone_cost1 = 10}
+	}
+}
+M[153]={
+	name = "bayleaf",
+	rarity = 3,
+	hp = 95,
+	attack = 90,
+	defense = 100,
+	spattack = 100,
+	spdefense = 100,
+	speed = 100,
+	type1 = 11,
+	type2 = 11,
+	moves = moves,
+	evolutions = {
+		{target = 154, stone_type1 = 11, stone_cost1 = 10}
+	}
+}
+M[154]={
+	name = "meganium",
+	rarity = 3,
+	hp = 105,
+	attack = 100,
+	defense = 110,
+	spattack = 110,
+	spdefense = 110,
+	speed = 100,
+	type1 = 11,
+	type2 = 11,
 	moves = moves
 }
-M[153]={}
-M[154]={}
 
-moves = {}
-moves[1] = {["level"] = 1, ["id"] = 1}
-moves[2] = {["level"] = 1, ["id"] = 23}
-moves[3] = {["level"] = 7, ["id"] = 37}
-moves[4] = {["level"] = 10, ["id"] = 6}
+moves = {
+	{level = 1, id = 1},
+	{level = 1, id = 23},
+	{level = 7, id = 37},
+	{level = 9, id = 6},
+	{level = 10, id = 52},
+	{level = 12, id = 130}
+}
 M[155] = {
 	name = "cyndaquil",
 	rarity = 3,
@@ -1197,6 +1231,38 @@ M[155] = {
 	speed = 110,
 	type1 = 9,
 	type2 = 9,
+	moves = moves,
+	evolutions = {
+		{target = 156, stone_type1 = 9, stone_cost1 = 10}
+	}
+}
+M[156]={
+	name = "quilava",
+	rarity = 3,
+	hp = 90,
+	attack = 95,
+	defense = 90,
+	spattack = 110,
+	spdefense = 90,
+	speed = 110,
+	type1 = 9,
+	type2 = 9,
+	moves = moves,
+	evolutions = {
+		{target = 157, stone_type1 = 9, stone_cost1 = 10}
+	}
+}
+M[157]={
+	name = "typhlosion",
+	rarity = 3,
+	hp = 100,
+	attack = 105,
+	defense = 100,
+	spattack = 120,
+	spdefense = 100,
+	speed = 110,
+	type1 = 9,
+	type2 = 9,
 	moves = moves
 }
 
@@ -1205,8 +1271,6 @@ moves[1] = {["level"] = 1, ["id"] = 1}
 moves[2] = {["level"] = 1, ["id"] = 24}
 moves[3] = {["level"] = 7, ["id"] = 29}
 moves[4] = {["level"] = 10, ["id"] = 42}
-M[156]={}
-M[157]={}
 M[158] = {
 	name = "totodile",
 	rarity = 3,

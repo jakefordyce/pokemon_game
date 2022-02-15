@@ -1088,7 +1088,7 @@ M[37] = {
 	max_level = 5,
 	description = function(moveLevel)
 		damage = 150 + (moveLevel * 10)
-		return "Attacks 1 enemy for "..damage.."% of Special Attack."
+		return "Attacks 1 enemy for "..damage.."% of Special Attack then increases the user's speed for 2 rounds."
 	end
 }
 
@@ -3929,7 +3929,7 @@ meffects = {
 		id = 23,
 		target = 1,
 		param1 = function(moveLevel)
-			return 75 + (5 * moveLevel)
+			return 75 + (moveLevel * 5)
 		end,
 		param2 = 2
 	}
@@ -3945,7 +3945,7 @@ M[128] = {
 	targetting = 1,
 	max_level = 5,
 	description = function(moveLevel)
-		chance = 75 + (5 * moveLevel)
+		chance = 75 + (moveLevel * 5)
 		return "Has a "..chance.."% chance of placing Block Cooldowns on an enemy for 2 turns."
 	end
 }
@@ -3955,7 +3955,7 @@ meffects = {
 		id = 1,
 		target = 1,
 		param1 = function(moveLevel)
-			return 200 + (15 * moveLevel)
+			return 200 + (moveLevel * 15)
 		end,
 		param2 = "spattack",
 		extra_damage_target_status = -4,
@@ -3973,8 +3973,34 @@ M[129] = {
 	targetting = 1,
 	max_level = 5,
 	description = function(moveLevel)
-		damage = 200 + (15 * moveLevel)
+		damage = 200 + (moveLevel * 15)
 		return "Attacks an enemy for "..damage.."% of Special Attack. Damage is doubled if the target has a Loss of Control status effect."
+	end
+}
+
+meffects = {
+	{
+		id = 20,
+		target = 3,
+		param1 = function(moveLevel)
+			return 75 + (moveLevel * 5)
+		end,
+		param2 = 2
+	}
+}
+M[130] = {
+	name = "Inferno",
+	effects = meffects,
+	cooldown = function(moveLevel)
+		return 3
+	end,
+	default = false,
+	type = 9,
+	targetting = 1,
+	max_level = 5,
+	description = function(moveLevel)
+		chance = 75 + (moveLevel * 5)
+		return "Has a "..chance.."% chance of Burning all enemies for 2 turns."
 	end
 }
 
