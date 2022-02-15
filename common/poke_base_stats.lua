@@ -620,14 +620,13 @@ M[36]={
 	type2 = 1,
 	moves = moves
 }
-M[37] = {}
 moves = {}
 moves[1] = {["level"] = 1, ["id"] = 1}
 moves[2] = {["level"] = 1, ["id"] = 103}
 moves[3] = {["level"] = 6, ["id"] = 66}
 moves[4] = {["level"] = 8, ["id"] = 6}
 moves[5] = {["level"] = 10, ["id"] = 106}
-M[38] = {
+M[37] = {
 	name = "vulpix",
 	rarity = 2,
 	hp = 70,
@@ -640,8 +639,9 @@ M[38] = {
 	type2 = 9,
 	moves = moves
 }
-M[39]={}
+M[38] = {}
 
+M[39]={}
 M[40]={}
 
 moves = {}
