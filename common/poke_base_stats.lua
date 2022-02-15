@@ -1183,7 +1183,7 @@ M[152] = {
 	}
 }
 M[153]={
-	name = "bayleaf",
+	name = "bayleef",
 	rarity = 3,
 	hp = 95,
 	attack = 90,
