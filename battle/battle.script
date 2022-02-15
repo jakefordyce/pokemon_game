@@ -823,10 +823,17 @@ function effect_should_reflect(reflect_type, effect_obj)
 	return should_reflect
 end
 
+--effect_ids
+-- 0 = any status effect, good or bad
+-- -1 = buff
+-- -2 = debuff
+-- -3 = torment
+-- -4 = loss of control
 function mon_has_status_effect(mon, effect_id)
 	local has_status_effect = false
 	for i, eff in ipairs(mon.status_effects) do
-		if eff.type == effect_id then
+		local cat = status_effects[eff.type].category
+		if eff.type == effect_id or (math.abs(effect_id) == cat) or effect_id == 0 then
 			has_status_effect = true
 		end
 	end

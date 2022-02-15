@@ -813,21 +813,37 @@ M[67]={
 	speed = 95,
 	type1 = 2,
 	type2 = 2,
+	moves = moves,
+	evolutions = {
+		{target = 68, stone_type1 = 2, stone_cost1 = 10}
+	}
+}
+M[68]={
+	name = "machamp",
+	rarity = 3,
+	hp = 110,
+	attack = 140,
+	defense = 120,
+	spattack = 80,
+	spdefense = 90,
+	speed = 95,
+	type1 = 2,
+	type2 = 2,
 	moves = moves
 }
-M[68]={}
 M[69]={}
 M[70]={}
 M[71]={}
 M[72]={}
 M[73]={}
 
-moves = {}
-moves[1] = {["level"] = 1, ["id"] = 1}
-moves[2] = {["level"] = 1, ["id"] = 21}
-moves[3] = {["level"] = 7, ["id"] = 35}
-moves[4] = {["level"] = 10, ["id"] = 59}
-moves[5] = {["level"] = 10, ["id"] = 107}
+moves = {
+	{level = 1, id = 1},
+	{level = 1, id = 21},
+	{level = 7, id = 35},
+	{level = 10, id = 59},
+	{level = 12, id = 107}
+}
 M[74] = {
 	name = "geodude",
 	rarity = 3,
@@ -839,10 +855,40 @@ M[74] = {
 	speed = 95,
 	type1 = 5,
 	type2 = 5,
+	moves = moves,
+	evolutions = {
+		{target = 75, stone_type1 = 5, stone_cost1 = 10}
+	}
+}
+M[75]={
+	name = "graveler",
+	rarity = 3,
+	hp = 105,
+	attack = 100,
+	defense = 135,
+	spattack = 70,
+	spdefense = 80,
+	speed = 95,
+	type1 = 5,
+	type2 = 5,
+	moves = moves,
+	evolutions = {
+		{target = 76, stone_type1 = 5, stone_cost1 = 10}
+	}
+}
+M[76]={
+	name = "golem",
+	rarity = 3,
+	hp = 115,
+	attack = 110,
+	defense = 145,
+	spattack = 80,
+	spdefense = 90,
+	speed = 95,
+	type1 = 5,
+	type2 = 5,
 	moves = moves
 }
-M[75]={}
-M[76]={}
 M[77]={}
 M[78]={}
 M[79]={}
@@ -892,11 +938,14 @@ M[89]={}
 M[90]={}
 M[91]={}
 
-moves = {}
-moves[1] = {["level"] = 1, ["id"] = 1}
-moves[2] = {["level"] = 1, ["id"] = 20}
-moves[3] = {["level"] = 7, ["id"] = 34}
-moves[4] = {["level"] = 10, ["id"] = 58}
+moves = {
+	{level = 1, id = 1},
+	{level = 1, id = 20},
+	{level = 7, id = 34},
+	{level = 10, id = 58},
+	{level = 12, id = 128},
+	{level = 14, id = 129}
+}
 M[92] = {
 	name = "gastly",
 	rarity = 3,
@@ -908,10 +957,41 @@ M[92] = {
 	speed = 105,
 	type1 = 15,
 	type2 = 4,
+	moves = moves,
+	evolutions = {
+		{target = 93, stone_type1 = 15, stone_cost1 = 5, stone_type2 = 4, stone_cost2 = 5}
+	}
+}
+M[93]={
+	name = "haunter",
+	rarity = 3,
+	hp = 75,
+	attack = 70,
+	defense = 120,
+	spattack = 120,
+	spdefense = 120,
+	speed = 105,
+	type1 = 15,
+	type2 = 4,
+	moves = moves,
+	evolutions = {
+		{target = 94, stone_type1 = 15, stone_cost1 = 5, stone_type2 = 4, stone_cost2 = 5}
+	}
+}
+M[94]={
+	name = "gengar",
+	rarity = 3,
+	hp = 85,
+	attack = 80,
+	defense = 130,
+	spattack = 130,
+	spdefense = 130,
+	speed = 105,
+	type1 = 15,
+	type2 = 4,
 	moves = moves
 }
-M[93]={}
-M[94]={}
+
 M[95]={}
 
 moves = {}

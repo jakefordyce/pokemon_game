@@ -3924,4 +3924,58 @@ M[127] = {
 	end
 }
 
+meffects = {
+	{
+		id = 23,
+		target = 1,
+		param1 = function(moveLevel)
+			return 75 + (5 * moveLevel)
+		end,
+		param2 = 2
+	}
+}
+M[128] = {
+	name = "Spite",
+	effects = meffects,
+	cooldown = function(moveLevel)
+		return 3
+	end,
+	default = false,
+	type = 15,
+	targetting = 1,
+	max_level = 5,
+	description = function(moveLevel)
+		chance = 75 + (5 * moveLevel)
+		return "Has a "..chance.."% chance of placing Block Cooldowns on an enemy for 2 turns."
+	end
+}
+
+meffects = {
+	{
+		id = 1,
+		target = 1,
+		param1 = function(moveLevel)
+			return 200 + (15 * moveLevel)
+		end,
+		param2 = "spattack",
+		extra_damage_target_status = -4,
+		extra_damage_amount = 100
+	}
+}
+M[129] = {
+	name = "Hex",
+	effects = meffects,
+	cooldown = function(moveLevel)
+		return 3
+	end,
+	default = false,
+	type = 15,
+	targetting = 1,
+	max_level = 5,
+	description = function(moveLevel)
+		damage = 200 + (15 * moveLevel)
+		return "Attacks an enemy for "..damage.."% of Special Attack. Damage is doubled if the target has a Loss of Control status effect."
+	end
+}
+
 return M
