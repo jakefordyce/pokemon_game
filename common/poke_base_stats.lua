@@ -511,22 +511,6 @@ moves = {
 	{level = 12, id = 122}
 }
 M[25] = {
-	name = "pichu",
-	rarity = 3,
-	hp = 75,
-	attack = 70,
-	defense = 65,
-	spattack = 110,
-	spdefense = 100,
-	speed = 115,
-	type1 = 12,
-	type2 = 12,
-	moves = moves,
-	evolutions = {
-		{target = 26, stone_type1 = 12, stone_cost1 = 10}
-	}
-}
-M[26] = {
 	name = "pikachu",
 	rarity = 3,
 	hp = 85,
@@ -539,10 +523,10 @@ M[26] = {
 	type2 = 12,
 	moves = moves,
 	evolutions = {
-		{target = 27, stone_type1 = 12, stone_cost1 = 10}
+		{target = 26, stone_type1 = 12, stone_cost1 = 10}
 	}
 }
-M[27] = {
+M[26] = {
 	name = "raichu",
 	rarity = 3,
 	hp = 95,
@@ -555,7 +539,7 @@ M[27] = {
 	type2 = 12,
 	moves = moves
 }
-
+M[27] = {}
 M[28] = {}
 
 moves = {}
@@ -608,22 +592,6 @@ moves = {
 	{level = 12, id = 126}
 }
 M[35] = {
-	name = "cleffa",
-	rarity = 3,
-	hp = 95,
-	attack = 70,
-	defense = 80,
-	spattack = 95,
-	spdefense = 95,
-	speed = 95,
-	type1 = 1,
-	type2 = 1,
-	moves = moves,
-	evolutions = {
-		{target = 36, stone_type1 = 1, stone_cost1 = 10}
-	}
-}
-M[36] = {
 	name = "clefairy",
 	rarity = 3,
 	hp = 105,
@@ -636,10 +604,10 @@ M[36] = {
 	type2 = 1,
 	moves = moves,
 	evolutions = {
-		{target = 37, stone_type1 = 1, stone_cost1 = 10}
+		{target = 36, stone_type1 = 1, stone_cost1 = 10}
 	}
 }
-M[37]={
+M[36]={
 	name = "clefable",
 	rarity = 3,
 	hp = 115,
@@ -652,7 +620,7 @@ M[37]={
 	type2 = 1,
 	moves = moves
 }
-
+M[37] = {}
 moves = {}
 moves[1] = {["level"] = 1, ["id"] = 1}
 moves[2] = {["level"] = 1, ["id"] = 103}
@@ -1170,8 +1138,54 @@ M[168]={}
 M[169]={}
 M[170]={}
 M[171]={}
-M[172]={}
-M[173]={}
+
+moves = {
+	{level = 1, id = 1},
+	{level = 1, id = 15},
+	{level = 7, id = 31},
+	{level = 10, id = 55},
+	{level = 12, id = 122}
+}
+M[172] = {
+	name = "pichu",
+	rarity = 3,
+	hp = 75,
+	attack = 70,
+	defense = 65,
+	spattack = 110,
+	spdefense = 100,
+	speed = 115,
+	type1 = 12,
+	type2 = 12,
+	moves = moves,
+	evolutions = {
+		{target = 25, stone_type1 = 12, stone_cost1 = 10}
+	}
+}
+
+moves = {
+	{level = 1, id = 1},
+	{level = 1, id = 46},
+	{level = 7, id = 38},
+	{level = 10, id = 61},
+	{level = 12, id = 126}
+}
+M[173] = {
+	name = "cleffa",
+	rarity = 3,
+	hp = 95,
+	attack = 70,
+	defense = 80,
+	spattack = 95,
+	spdefense = 95,
+	speed = 95,
+	type1 = 1,
+	type2 = 1,
+	moves = moves,
+	evolutions = {
+		{target = 36, stone_type1 = 1, stone_cost1 = 10}
+	}
+}
 M[174]={}
 M[175]={}
 M[176]={}
