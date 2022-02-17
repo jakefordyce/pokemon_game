@@ -4004,4 +4004,123 @@ M[130] = {
 	end
 }
 
+meffects = {
+	{
+		id = 1,
+		target = 3,
+		param1 = function(moveLevel)
+			damage = 175 + (moveLevel * 10)
+			return damage
+		end,
+		param2 = "spattack"
+	}
+}
+M[131] = {
+	name = "Aqua Tail",
+	effects = meffects,
+	cooldown = function(moveLevel)
+		return 4
+	end,
+	default = false,
+	type = 10,
+	targetting = 1,
+	max_level = 6,
+	description = function(moveLevel)
+		damage = 175 + (moveLevel * 10)
+		return "Attacks all enemies for "..damage.."% of Special Attack."
+	end
+}
+
+meffects = {
+	{
+		id = 1,
+		target = 1,
+		param1 = function(moveLevel)
+			damage = 300 + (moveLevel * 18)
+			return damage
+		end,
+		param2 = "attack"
+	}
+}
+M[132] = {
+	name = "Fire Fang",
+	effects = meffects,
+	cooldown = function(moveLevel)
+		return 3
+	end,
+	default = false,
+	type = 9,
+	targetting = 1,
+	max_level = 5,
+	description = function(moveLevel)
+		damage = 300 + (moveLevel * 18)
+		return "Attacks an enemy for "..damage.."% of Attack."
+	end
+}
+
+meffects = {
+	{
+		id = 1,
+		target = 1,
+		param1 = function(moveLevel)
+			return 200 + (moveLevel * 12)
+		end,
+		param2 = "spattack",
+		leech = 75
+	}
+}
+M[133] = {
+	name = "Draining Kiss",
+	effects = meffects,
+	cooldown = function(moveLevel)
+		return 4
+	end,
+	default = false,
+	type = 1,
+	targetting = 1,
+	max_level = 5,
+	description = function(moveLevel)
+		damage = 200 + (moveLevel * 12)
+		leech = 75
+		return "Attacks an enemy for "..damage.."% of Special Attack. The user is healed for "..leech.."% of damage done."
+	end
+}
+
+meffects = {
+	{
+		id = 1,
+		target = 1,
+		param1 = function(moveLevel)
+			damage = 200 + (moveLevel * 12)
+			return damage
+		end,
+		param2 = "attack"
+	},
+	{
+		id = 4,
+		target = 1,
+		param1 = function(moveLevel)
+			chance = 75 + (moveLevel * 5)
+			return chance
+		end,
+		param2 = 2
+	}
+}
+M[134] = {
+	name = "Iron Tail",
+	effects = meffects,
+	cooldown = function(moveLevel)
+		return 4
+	end,
+	default = false,
+	type = 7,
+	targetting = 1,
+	max_level = 5,
+	description = function(moveLevel)
+		chance = 75 + (moveLevel * 5)
+		damage = 200 + (moveLevel * 12)
+		return "Attacks 1 enemy for "..damage.."% of Attack then has a "..chance.."% chance of reducing that enemy's defense."
+	end
+}
+
 return M

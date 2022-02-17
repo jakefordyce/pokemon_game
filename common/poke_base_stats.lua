@@ -1266,11 +1266,14 @@ M[157]={
 	moves = moves
 }
 
-moves = {}
-moves[1] = {["level"] = 1, ["id"] = 1}
-moves[2] = {["level"] = 1, ["id"] = 24}
-moves[3] = {["level"] = 7, ["id"] = 29}
-moves[4] = {["level"] = 10, ["id"] = 42}
+moves = {
+	{level = 1, id = 1},
+	{level = 1, id = 24},
+	{level = 7, id = 29},
+	{level = 9, id = 42},
+	{level = 10, id = 43},
+	{level = 12, id = 131}
+}
 M[158] = {
 	name = "totodile",
 	rarity = 3,
@@ -1282,10 +1285,40 @@ M[158] = {
 	speed = 100,
 	type1 = 10,
 	type2 = 10,
+	moves = moves,
+	evolutions = {
+		{target = 159, stone_type1 = 10, stone_cost1 = 10}
+	}
+}
+M[159]={
+	name = "croconaw",
+	rarity = 3,
+	hp = 90,
+	attack = 120,
+	defense = 95,
+	spattack = 100,
+	spdefense = 90,
+	speed = 100,
+	type1 = 10,
+	type2 = 10,
+	moves = moves,
+	evolutions = {
+		{target = 160, stone_type1 = 10, stone_cost1 = 10}
+	}
+}
+M[160]={
+	name = "feraligatr",
+	rarity = 3,
+	hp = 100,
+	attack = 130,
+	defense = 105,
+	spattack = 110,
+	spdefense = 100,
+	speed = 100,
+	type1 = 10,
+	type2 = 10,
 	moves = moves
 }
-M[159]={}
-M[160]={}
 
 moves = {}
 moves[1] = {["level"] = 1, ["id"] = 1}
@@ -1437,11 +1470,15 @@ M[225]={}
 M[226]={}
 M[227]={}
 
-moves = {}
-moves[1] = {["level"] = 1, ["id"] = 1}
-moves[2] = {["level"] = 1, ["id"] = 8}
-moves[3] = {["level"] = 7, ["id"] = 7}
-moves[4] = {["level"] = 10, ["id"] = 43}
+moves = {
+	{level = 1, id = 1},
+	{level = 1, id = 8},
+	{level = 7, id = 7},
+	{level = 9, id = 43},
+	{level = 10, id = 6},
+	{level = 12, id = 130},
+	{level = 14, id = 132}
+}
 M[228] = {
 	name = "houndour",
 	rarity = 3,
@@ -1453,9 +1490,24 @@ M[228] = {
 	speed = 105,
 	type1 = 9,
 	type2 = 15,
+	moves = moves,
+	evolutions = {
+		{target = 229, stone_type1 = 9, stone_cost1 = 5, stone_type2 = 15, stone_cost2 = 5}
+	}
+}
+M[229]={
+	name = "houndoom",
+	rarity = 3,
+	hp = 90,
+	attack = 125,
+	defense = 90,
+	spattack = 135,
+	spdefense = 100,
+	speed = 105,
+	type1 = 9,
+	type2 = 15,
 	moves = moves
 }
-M[229]={}
 M[230]={}
 M[231]={}
 M[232]={}
@@ -1507,11 +1559,14 @@ M[277]={}
 M[278]={}
 M[279]={}
 
-moves = {}
-moves[1] = {["level"] = 1, ["id"] = 1}
-moves[2] = {["level"] = 1, ["id"] = 25}
-moves[3] = {["level"] = 7, ["id"] = 40}
-moves[4] = {["level"] = 10, ["id"] = 63}
+moves = {
+	{level = 1, id = 1},
+	{level = 1, id = 25},
+	{level = 7, id = 40},
+	{level = 10, id = 63},
+	{level = 12, id = 133},
+	{level = 14, id = 126}
+}
 M[280] = {
 	name = "ralts",
 	rarity = 3,
@@ -1523,10 +1578,40 @@ M[280] = {
 	speed = 100,
 	type1 = 13,
 	type2 = 13,
+	moves = moves,
+	evolutions = {
+		{target = 281, stone_type1 = 13, stone_cost1 = 10}
+	}
+}
+M[281]={
+	name = "kirlia",
+	rarity = 3,
+	hp = 90,
+	attack = 70,
+	defense = 80,
+	spattack = 130,
+	spdefense = 120,
+	speed = 100,
+	type1 = 13,
+	type2 = 13,
+	moves = moves,
+	evolutions = {
+		{target = 282, stone_type1 = 13, stone_cost1 = 10}
+	}
+}
+M[282]={
+	name = "gardevoir",
+	rarity = 3,
+	hp = 100,
+	attack = 80,
+	defense = 90,
+	spattack = 140,
+	spdefense = 130,
+	speed = 100,
+	type1 = 13,
+	type2 = 13,
 	moves = moves
 }
-M[281]={}
-M[282]={}
 M[283]={}
 M[284]={}
 M[285]={}
@@ -1549,11 +1634,14 @@ M[301]={}
 M[302]={}
 M[303]={}
 
-moves = {}
-moves[1] = {["level"] = 1, ["id"] = 1}
-moves[2] = {["level"] = 1, ["id"] = 13}
-moves[3] = {["level"] = 7, ["id"] = 39}
-moves[4] = {["level"] = 10, ["id"] = 62}
+moves = {
+	{level = 1, id = 1},
+	{level = 1, id = 13},
+	{level = 7, id = 39},
+	{level = 10, id = 62},
+	{level = 12, id = 21},
+	{level = 14, id = 134}
+}
 M[304] = {
 	name = "aron",
 	rarity = 3,
@@ -1565,10 +1653,40 @@ M[304] = {
 	speed = 90,
 	type1 = 7,
 	type2 = 5,
+	moves = moves,
+	evolutions = {
+		{target = 305, stone_type1 = 7, stone_cost1 = 5, stone_type2 = 5, stone_cost2 = 5}
+	}
+}
+M[305]={
+	name = "lairon",
+	rarity = 3,
+	hp = 90,
+	attack = 105,
+	defense = 170,
+	spattack = 75,
+	spdefense = 75,
+	speed = 90,
+	type1 = 7,
+	type2 = 5,
+	moves = moves,
+	evolutions = {
+		{target = 306, stone_type1 = 7, stone_cost1 = 5, stone_type2 = 5, stone_cost2 = 5}
+	}
+}
+M[306]={
+	name = "aggron",
+	rarity = 3,
+	hp = 100,
+	attack = 115,
+	defense = 180,
+	spattack = 85,
+	spdefense = 85,
+	speed = 90,
+	type1 = 7,
+	type2 = 5,
 	moves = moves
 }
-M[305]={}
-M[306]={}
 M[307]={}
 M[308]={}
 M[309]={}
