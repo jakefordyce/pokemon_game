@@ -4123,4 +4123,59 @@ M[134] = {
 	end
 }
 
+meffects = {
+	{
+		id = 1,
+		target = 1,
+		param1 = function(moveLevel)
+			return 20 + (moveLevel * 1.2)
+		end,
+		param2 = "max_hp"
+	}
+}
+M[135] = {
+	name = "Body Slam",
+	effects = meffects,
+	cooldown = function(moveLevel)
+		return 4
+	end,
+	default = false,
+	type = 1,
+	targetting = 1,
+	max_level = 5,
+	description = function(moveLevel)
+		damage = 20 + (moveLevel * 1.2)
+		return "Attacks an enemy for "..damage.."% of User's Max HP."
+	end
+}
+
+meffects = {
+	{
+		id = 1,
+		target = 3,
+		param1 = function(moveLevel)
+			return 250 + (moveLevel * 12.5)
+		end,
+		param2 = "spattack"
+	}
+}
+M[136] = {
+	name = "Blizzard",
+	effects = meffects,
+	cooldown = function(moveLevel)
+		if moveLevel > 5 then
+			return 5
+		end
+		return 6
+	end,
+	default = false,
+	type = 1,
+	targetting = 1,
+	max_level = 6,
+	description = function(moveLevel)
+		damage = 250 + (moveLevel * 12.5)
+		return "Attacks all enemies for "..damage.."% of Special Attack."
+	end
+}
+
 return M

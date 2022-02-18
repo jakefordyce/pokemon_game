@@ -1744,11 +1744,14 @@ M[360]={}
 M[361]={}
 M[362]={}
 
-moves = {}
-moves[1] = {["level"] = 1, ["id"] = 1}
-moves[2] = {["level"] = 1, ["id"] = 26}
-moves[3] = {["level"] = 7, ["id"] = 41}
-moves[4] = {["level"] = 10, ["id"] = 64}
+moves = {
+	{level = 1, id = 1},
+	{level = 1, id = 26},
+	{level = 7, id = 41},
+	{level = 10, id = 64},
+	{level = 12, id = 135},
+	{level = 14, id = 136}
+}
 M[363] = {
 	name = "spheal",
 	rarity = 3,
@@ -1762,8 +1765,32 @@ M[363] = {
 	type2 = 14,
 	moves = moves
 }
-M[364]={}
-M[365]={}
+M[364]={
+	name = "sealeo",
+	rarity = 3,
+	hp = 130,
+	attack = 75,
+	defense = 90,
+	spattack = 90,
+	spdefense = 90,
+	speed = 95,
+	type1 = 14,
+	type2 = 14,
+	moves = moves
+}
+M[365]={
+	name = "walrein",
+	rarity = 3,
+	hp = 140,
+	attack = 85,
+	defense = 100,
+	spattack = 100,
+	spdefense = 100,
+	speed = 95,
+	type1 = 14,
+	type2 = 14,
+	moves = moves
+}
 M[366]={}
 M[367]={}
 M[368]={}
