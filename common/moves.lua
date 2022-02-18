@@ -3796,7 +3796,7 @@ M[123] = {
 	targetting = 0,
 	max_level = 5,
 	description = function(moveLevel)
-		local chance = 50 + (level * 10)
+		local chance = 50 + (moveLevel * 10)
 		return "(Passive) At the beginning of the user's turn there is a "..chance.."% chance that the duration of all harmful status effects will be reduced by 1."
 	end
 }
@@ -4137,7 +4137,7 @@ M[135] = {
 	name = "Body Slam",
 	effects = meffects,
 	cooldown = function(moveLevel)
-		return 4
+		return 5
 	end,
 	default = false,
 	type = 1,
