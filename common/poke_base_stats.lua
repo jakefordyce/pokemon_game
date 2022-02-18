@@ -1763,7 +1763,10 @@ M[363] = {
 	speed = 95,
 	type1 = 14,
 	type2 = 14,
-	moves = moves
+	moves = moves,
+	evolutions = {
+		{target = 364, stone_type1 = 14, stone_cost1 = 10}
+	}
 }
 M[364]={
 	name = "sealeo",
@@ -1776,7 +1779,10 @@ M[364]={
 	speed = 95,
 	type1 = 14,
 	type2 = 14,
-	moves = moves
+	moves = moves,
+	evolutions = {
+		{target = 365, stone_type1 = 14, stone_cost1 = 10}
+	}
 }
 M[365]={
 	name = "walrein",
