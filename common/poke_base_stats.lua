@@ -542,11 +542,12 @@ M[26] = {
 M[27] = {}
 M[28] = {}
 
-moves = {}
-moves[1] = {["level"] = 1, ["id"] = 1}
-moves[2] = {["level"] = 1, ["id"] = 45}
-moves[3] = {["level"] = 6, ["id"] = 2}
-moves[4] = {["level"] = 9, ["id"] = 47}
+moves = {
+	{level = 1, id = 1},
+	{level = 1, id = 45},
+	{level = 6, id = 2},
+	{level = 9, id = 47}
+}
 M[29] = {
 	name = "nidoran_f",
 	rarity = 1,
@@ -560,14 +561,39 @@ M[29] = {
 	type2 = 4,
 	moves = moves
 }
-M[30] = {}
-M[31]={}
+M[30] = {
+	name = "nidorina",
+	rarity = 1,
+	hp = 100,
+	attack = 95,
+	defense = 95,
+	spattack = 75,
+	spdefense = 80,
+	speed = 95,
+	type1 = 4,
+	type2 = 4,
+	moves = moves
+}
+M[31]={
+	name = "nidoqueen",
+	rarity = 1,
+	hp = 110,
+	attack = 115,
+	defense = 105,
+	spattack = 85,
+	spdefense = 105,
+	speed = 95,
+	type1 = 4,
+	type2 = 5,
+	moves = moves
+}
 
-moves = {}
-moves[1] = {["level"] = 1, ["id"] = 1}
-moves[2] = {["level"] = 1, ["id"] = 48}
-moves[3] = {["level"] = 6, ["id"] = 49}
-moves[4] = {["level"] = 9, ["id"] = 47}
+moves = {
+	{level = 1, id = 1},
+	{level = 1, id = 48},
+	{level = 6, id = 49},
+	{level = 9, id = 47}
+}
 M[32] = {
 	name = "nidoran_m",
 	rarity = 1,
@@ -581,8 +607,32 @@ M[32] = {
 	type2 = 4,
 	moves = moves
 }
-M[33]={}
-M[34]={}
+M[33]={
+	name = "nidorino",
+	rarity = 1,
+	hp = 90,
+	attack = 110,
+	defense = 85,
+	spattack = 75,
+	spdefense = 75,
+	speed = 105,
+	type1 = 4,
+	type2 = 4,
+	moves = moves
+}
+M[34]={
+	name = "nidoking",
+	rarity = 1,
+	hp = 105,
+	attack = 125,
+	defense = 90,
+	spattack = 95,
+	spdefense = 90,
+	speed = 105,
+	type1 = 4,
+	type2 = 4,
+	moves = moves
+}
 
 moves = {
 	{level = 1, id = 1},
