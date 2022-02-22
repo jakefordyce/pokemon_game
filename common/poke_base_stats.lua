@@ -546,7 +546,9 @@ moves = {
 	{level = 1, id = 1},
 	{level = 1, id = 45},
 	{level = 6, id = 2},
-	{level = 9, id = 47}
+	{level = 9, id = 47},
+	{level = 11, id = 137},
+	{level = 13, id = 138}
 }
 M[29] = {
 	name = "nidoran_f",
@@ -592,7 +594,9 @@ moves = {
 	{level = 1, id = 1},
 	{level = 1, id = 48},
 	{level = 6, id = 49},
-	{level = 9, id = 47}
+	{level = 9, id = 47},
+	{level = 11, id = 137},
+	{level = 13, id = 138}
 }
 M[32] = {
 	name = "nidoran_m",

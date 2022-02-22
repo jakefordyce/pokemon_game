@@ -4178,4 +4178,69 @@ M[136] = {
 	end
 }
 
+meffects = {
+	{
+		id = 1,
+		target = 1,
+		param1 = function(moveLevel)
+			damage = 400 + (moveLevel * 28)
+			return damage
+		end,
+		param2 = "spattack"
+	},
+	{
+		id = 4,
+		target = 1,
+		param1 = function(moveLevel)
+			chance = 75 + (moveLevel * 5)
+			return chance
+		end,
+		param2 = 2
+	}
+}
+M[137] = {
+	name = "Earth Power",
+	effects = meffects,
+	cooldown = function(moveLevel)
+		return 5
+	end,
+	default = false,
+	type = 5,
+	targetting = 1,
+	max_level = 5,
+	description = function(moveLevel)
+		chance = 75 + (moveLevel * 5)
+		damage = 400 + (moveLevel * 28)
+		return "Attacks 1 enemy for "..damage.."% of Special Attack then has a "..chance.."% chance of reducing that enemy's defense for 2 turns."
+	end
+}
+
+meffects = {
+	{
+		id = 15,
+		target = 1,
+		param1 = function(moveLevel)
+			return 50 + (moveLevel * 10)
+		end,
+		param2 = 4,
+		min_hits = 2,
+		max_hits = 2
+	}
+}
+M[138] = {
+	name = "Toxic",
+	effects = meffects,
+	cooldown = function(moveLevel)
+		return 4
+	end,
+	default = false,
+	type = 4,
+	targetting = 1,
+	max_level = 5,
+	description = function(moveLevel)
+		chance = 50 + (moveLevel * 10)
+		return "Has a "..chance.."% chance of poisoning an enemy 2 times for 4 turns"
+	end
+}
+
 return M
