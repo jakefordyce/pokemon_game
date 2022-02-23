@@ -4243,4 +4243,27 @@ M[138] = {
 	end
 }
 
+meffects = {
+	{
+		id = 3, target = 4,
+		param1 = function(lvl) return 75 + (lvl * 5) end,
+		param2 = 2
+	}
+}
+M[139] = {
+	name = "Nasty Plot",
+	effects = meffects,
+	cooldown = function(moveLevel)
+		return 3
+	end,
+	default = false,
+	type = 15,
+	targetting = 2,
+	max_level = 5,
+	description = function(moveLevel)
+		chance = 75 + (moveLevel * 5)
+		return "Has a "..chance.."% chance of increasing Attack of all allies."
+	end
+}
+
 return M

@@ -749,11 +749,15 @@ M[49]={}
 M[50]={}
 M[51]={}
 
-moves = {}
-moves[1] = {["level"] = 1, ["id"] = 1}
-moves[2] = {["level"] = 1, ["id"] = 45}
-moves[3] = {["level"] = 6, ["id"] = 28}
-moves[4] = {["level"] = 9, ["id"] = 3}
+moves = {
+	{level = 1, id = 1},
+	{level = 1, id = 45},
+	{level = 6, id = 28},
+	{level = 8, id = 3},
+	{level = 9, id = 43},
+	{level = 11, id = 88},
+	{level = 13, id = 139}
+}
 M[52] = {
 	name = "meowth",
 	rarity = 2,
@@ -765,9 +769,24 @@ M[52] = {
 	speed = 120,
 	type1 = 1,
 	type2 = 1,
+	moves = moves,
+	evolutions = {
+		{target = 53, stone_type1 = 1, stone_cost1 = 10}
+	}
+}
+M[53]={
+	name = "persian",
+	rarity = 2,
+	hp = 95,
+	attack = 105,
+	defense = 90,
+	spattack = 90,
+	spdefense = 95,
+	speed = 120,
+	type1 = 1,
+	type2 = 1,
 	moves = moves
 }
-M[53]={}
 M[54]={}
 M[55]={}
 M[56]={}
