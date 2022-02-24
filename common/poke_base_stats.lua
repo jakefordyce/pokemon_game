@@ -539,8 +539,45 @@ M[26] = {
 	type2 = 12,
 	moves = moves
 }
-M[27] = {}
-M[28] = {}
+
+moves = {
+	{level = 1, id = 1},
+	{level = 1, id = 16},
+	{level = 6, id = 45},
+	{level = 8, id = 3},
+	{level = 10, id = 28},
+	{level = 12, id = 107},
+	{level = 14, id = 123}
+}
+M[27] = {
+	name = "sandshrew",
+	rarity = 2,
+	hp = 85,
+	attack = 95,
+	defense = 105,
+	spattack = 55,
+	spdefense = 60,
+	speed = 98,
+	type1 = 5,
+	type2 = 5,
+	moves = moves,
+	evolutions = {
+		{target = 28, stone_type1 = 5, stone_cost1 = 10}
+	}
+}
+M[28] = {
+	name = "sandslash",
+	rarity = 2,
+	hp = 105,
+	attack = 115,
+	defense = 125,
+	spattack = 75,
+	spdefense = 80,
+	speed = 98,
+	type1 = 5,
+	type2 = 5,
+	moves = moves
+}
 
 moves = {
 	{level = 1, id = 1},
