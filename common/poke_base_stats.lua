@@ -711,12 +711,13 @@ M[36]={
 	type2 = 1,
 	moves = moves
 }
-moves = {}
-moves[1] = {["level"] = 1, ["id"] = 1}
-moves[2] = {["level"] = 1, ["id"] = 103}
-moves[3] = {["level"] = 6, ["id"] = 66}
-moves[4] = {["level"] = 8, ["id"] = 6}
-moves[5] = {["level"] = 10, ["id"] = 106}
+moves = {
+	{level = 1, id = 1},
+	{level = 1, id = 103},
+	{level = 6, id = 66},
+	{level = 8, id = 6},
+	{level = 10, id = 106}
+}
 M[37] = {
 	name = "vulpix",
 	rarity = 2,
@@ -728,9 +729,24 @@ M[37] = {
 	speed = 105,
 	type1 = 9,
 	type2 = 9,
+	moves = moves,
+	evolutions = {
+		{target = 38, stone_type1 = 9, stone_cost1 = 10}
+	}
+}
+M[38] = {
+	name = "ninetails",
+	rarity = 2,
+	hp = 85,
+	attack = 90,
+	defense = 90,
+	spattack = 105,
+	spdefense = 120,
+	speed = 105,
+	type1 = 9,
+	type2 = 9,
 	moves = moves
 }
-M[38] = {}
 
 M[39]={}
 M[40]={}

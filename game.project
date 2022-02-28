@@ -49,7 +49,7 @@ max_tile_count = 10000
 max_count = 1024
 
 [sprite]
-max_count = 512
+max_count = 1024
 
 [label]
 max_count = 512
