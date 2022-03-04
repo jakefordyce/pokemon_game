@@ -747,7 +747,13 @@ M[38] = {
 	type2 = 9,
 	moves = moves
 }
-
+moves = {
+	{level = 1, id = 1},
+	{level = 1, id = 140},
+	{level = 6, id = 135},
+	{level = 8, id = 61},
+	{level = 10, id = 35}
+}
 M[39]={
 	name = "jigglypuff",
 	rarity = 3,
@@ -1548,6 +1554,13 @@ M[173] = {
 	evolutions = {
 		{target = 36, stone_type1 = 1, stone_cost1 = 10}
 	}
+}
+moves = {
+	{level = 1, id = 1},
+	{level = 1, id = 140},
+	{level = 6, id = 135},
+	{level = 8, id = 61},
+	{level = 10, id = 35}
 }
 M[174]={
 	name = "igglybuff",

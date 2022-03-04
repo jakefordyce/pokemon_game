@@ -4266,4 +4266,29 @@ M[139] = {
 	end
 }
 
+meffects = {
+	{
+		id = 11, target = 3,
+		param1 = function(moveLevel)
+			return 75 + (5 * moveLevel)
+		end,
+		param2 = 1
+	}
+}
+M[140] = {
+	name = "Sing",
+	effects = meffects,
+	cooldown = function(moveLevel)
+		return 3
+	end,
+	default = false,
+	type = 1,
+	targetting = 1,
+	max_level = 5,
+	description = function(moveLevel)
+		chance = 75 + (5 * moveLevel)
+		return "Has a "..chance.."% chance of putting all enemies to sleep for 1 turn."
+	end
+}
+
 return M
