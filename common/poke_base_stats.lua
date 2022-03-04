@@ -748,8 +748,35 @@ M[38] = {
 	moves = moves
 }
 
-M[39]={}
-M[40]={}
+M[39]={
+	name = "jigglypuff",
+	rarity = 3,
+	hp = 150,
+	attack = 80,
+	defense = 60,
+	spattack = 85,
+	spdefense = 70,
+	speed = 88,
+	type1 = 1,
+	type2 = 1,
+	moves = moves,
+	evolutions = {
+		{target = 40, stone_type1 = 1, stone_cost1 = 10}
+	}
+}
+M[40]={
+	name = "wigglytuff",
+	rarity = 3,
+	hp = 160,
+	attack = 90,
+	defense = 70,
+	spattack = 100,
+	spdefense = 80,
+	speed = 88,
+	type1 = 1,
+	type2 = 1,
+	moves = moves
+}
 
 moves = {}
 moves[1] = {["level"] = 1, ["id"] = 1}
@@ -1522,7 +1549,22 @@ M[173] = {
 		{target = 36, stone_type1 = 1, stone_cost1 = 10}
 	}
 }
-M[174]={}
+M[174]={
+	name = "igglybuff",
+	rarity = 3,
+	hp = 140,
+	attack = 70,
+	defense = 50,
+	spattack = 75,
+	spdefense = 60,
+	speed = 88,
+	type1 = 1,
+	type2 = 1,
+	moves = moves,
+	evolutions = {
+		{target = 39, stone_type1 = 1, stone_cost1 = 10}
+	}
+}
 M[175]={}
 M[176]={}
 M[177]={}

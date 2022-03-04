@@ -534,6 +534,14 @@ images {
   image: "/assets/battle_sprites/back/ninetails_back_original.png"
   sprite_trim_mode: SPRITE_TRIM_MODE_OFF
 }
+images {
+  image: "/assets/battle_sprites/back/jigglypuff_back_original.png"
+  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
+}
+images {
+  image: "/assets/battle_sprites/back/wigglytuff_back_original.png"
+  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
+}
 margin: 0
 extrude_borders: 2
 inner_padding: 0
