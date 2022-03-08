@@ -42,6 +42,14 @@ key_trigger {
   input: KEY_KP_ADD
   action: "button_plus"
 }
+key_trigger {
+  input: KEY_J
+  action: "button_b"
+}
+key_trigger {
+  input: KEY_K
+  action: "button_a"
+}
 mouse_trigger {
   input: MOUSE_BUTTON_1
   action: "touch"
