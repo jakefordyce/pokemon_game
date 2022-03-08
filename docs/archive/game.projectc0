@@ -5,6 +5,7 @@ write_log = 0
 compress_archive = 1
 publisher = unnamed
 developer = unnamed
+title_as_file_name = Pokemon
 
 [display]
 width = 640
@@ -81,11 +82,8 @@ game_binding = /input/game.input_bindingc
 use_accelerometer = 0
 
 [sprite]
-max_count = 512
+max_count = 1024
 subpixels = 1
-
-[spine]
-max_count = 128
 
 [model]
 max_count = 128
