@@ -803,11 +803,29 @@ M[41] = {
 	speed = 110,
 	type1 = 15,
 	type2 = 3,
-	moves = moves
+	moves = moves,
+	evolutions = {
+		{target = 42, stone_type1 = 15, stone_cost1 = 5, stone_type2 = 3, stone_cost2 = 5}
+	}
 }
-M[42]={}
-M[43]={}
+M[42]={
+	name = "golbat",
+	rarity = 2,
+	hp = 85,
+	attack = 95,
+	defense = 85,
+	spattack = 75,
+	spdefense = 90,
+	speed = 110,
+	type1 = 15,
+	type2 = 3,
+	moves = moves,
+	evolutions = {
+		{target = 169, stone_type1 = 15, stone_cost1 = 5, stone_type2 = 3, stone_cost2 = 5}
+	}
+}
 
+M[43]={}
 M[44]={}
 M[45]={}
 M[46]={}
@@ -1504,7 +1522,27 @@ M[165]={}
 M[166]={}
 M[167]={}
 M[168]={}
-M[169]={}
+moves = {}
+moves[1] = {["level"] = 1, ["id"] = 1}
+moves[2] = {["level"] = 1, ["id"] = 109}
+moves[3] = {["level"] = 6, ["id"] = 111}
+moves[4] = {["level"] = 8, ["id"] = 68}
+moves[5] = {["level"] = 10, ["id"] = 8}
+moves[6] = {["level"] = 12, ["id"] = 110}
+moves[7] = {["level"] = 14, ["id"] = 112}
+M[169] = {
+	name = "crobat",
+	rarity = 3,
+	hp = 95,
+	attack = 105,
+	defense = 95,
+	spattack = 85,
+	spdefense = 100,
+	speed = 115,
+	type1 = 15,
+	type2 = 3,
+	moves = moves
+}
 M[170]={}
 M[171]={}
 
