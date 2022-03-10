@@ -1497,11 +1497,16 @@ M[160]={
 	moves = moves
 }
 
-moves = {}
-moves[1] = {["level"] = 1, ["id"] = 1}
-moves[2] = {["level"] = 1, ["id"] = 2}
-moves[3] = {["level"] = 6, ["id"] = 45}
-moves[4] = {["level"] = 9, ["id"] = 3}
+moves = {
+	{level = 1, id = 1},
+	{level = 1, id = 2},
+	{level = 6, id = 45},
+	{level = 8, id = 3},
+	{level = 9, id = 52},
+	{level = 11, id = 35},
+	{level = 13, id = 135},
+	{level = 15, id = 41}
+}
 M[161]={
 	name = "sentret",
 	rarity = 1,
@@ -1515,7 +1520,19 @@ M[161]={
 	type2 = 1,
 	moves = moves
 }
-M[162]={}
+M[162]={
+	name = "furret",
+	rarity = 1,
+	hp = 115,
+	attack = 100,
+	defense = 95,
+	spattack = 80,
+	spdefense = 90,
+	speed = 105,
+	type1 = 1,
+	type2 = 1,
+	moves = moves
+}
 M[163]={}
 M[164]={}
 M[165]={}
