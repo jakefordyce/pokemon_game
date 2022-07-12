@@ -59,8 +59,8 @@ M.player = {
 --]]
 
 
-M.stones = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0} -- PROD 1 for each of the types in common/poke_types
---M.stones = {50,50,50,50,50,50,50,50,50,50,50,50,50,50,50} -- TEST
+--M.stones = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0} -- PROD 1 for each of the types in common/poke_types
+M.stones = {50,50,50,50,50,50,50,50,50,50,50,50,50,50,50} -- TEST
 
 --List of all of the player's pokemon.
 M.pokemon = {}
@@ -398,7 +398,8 @@ end
 function M.load_game()
 	local save_file_path = sys.get_save_file("Pokemon", "save_file")
 	local save_data = sys.load(save_file_path)
-
+	--print("path "..save_file_path)
+	
 	if not next(save_data) then
 		print("no save data found")
 	else

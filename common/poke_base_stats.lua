@@ -1187,9 +1187,24 @@ M[96] = {
 	speed = 95,
 	type1 = 13,
 	type2 = 13,
+	moves = moves,
+	evolutions = {
+		{target = 97, stone_type1 = 13, stone_cost1 = 10}
+	}
+}
+M[97]={
+	name = "hypno",
+	rarity = 2,
+	hp = 105,
+	attack = 90,
+	defense = 90,
+	spattack = 95,
+	spdefense = 125,
+	speed = 95,
+	type1 = 13,
+	type2 = 13,
 	moves = moves
 }
-M[97]={}
 M[98]={}
 M[99]={}
 M[100]={}
