@@ -847,9 +847,24 @@ M[48] = {
 	speed = 100,
 	type1 = 6,
 	type2 = 4,
+	moves = moves,
+	evolutions = {
+		{target = 49, stone_type1 = 6, stone_cost1 = 5, stone_type2 = 4, stone_cost2 = 5}
+	}
+}
+M[49]={
+	name = "venomoth",
+	rarity = 2,
+	hp = 95,
+	attack = 90,
+	defense = 85,
+	spattack = 105,
+	spdefense = 100,
+	speed = 105,
+	type1 = 6,
+	type2 = 4,
 	moves = moves
 }
-M[49]={}
 M[50]={}
 M[51]={}
 
