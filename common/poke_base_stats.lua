@@ -1099,9 +1099,24 @@ M[81] = {
 	speed = 100,
 	type1 = 7,
 	type2 = 12,
+	moves = moves,
+	evolutions = {
+		{target = 82, stone_type1 = 7, stone_cost1 = 5, stone_type2 = 12, stone_cost2 = 5}
+	}
+}
+M[82]={
+	name = "magneton",
+	rarity = 2,
+	hp = 70,
+	attack = 70,
+	defense = 165,
+	spattack = 140,
+	spdefense = 110,
+	speed = 100,
+	type1 = 7,
+	type2 = 12,
 	moves = moves
 }
-M[82]={}
 
 moves = {}
 moves[1] = {["level"] = 1, ["id"] = 1}
@@ -1726,9 +1741,24 @@ M[216]={
 	speed = 95,
 	type1 = 1,
 	type2 = 1,
+	moves = moves,
+	evolutions = {
+		{target = 217, stone_type1 = 1, stone_cost1 = 10}
+	}
+}
+M[217]={
+	name = "ursaring",
+	rarity = 3,
+	hp = 105,
+	attack = 145,
+	defense = 105,
+	spattack = 80,
+	spdefense = 80,
+	speed = 100,
+	type1 = 1,
+	type2 = 1,
 	moves = moves
 }
-M[217]={}
 M[218]={}
 M[219]={}
 M[220]={}
