@@ -1236,11 +1236,12 @@ M[110]={}
 M[111]={}
 M[112]={}
 
-moves = {}
-moves[1] = {["level"] = 1, ["id"] = 1}
-moves[2] = {["level"] = 1, ["id"] = 74}
-moves[3] = {["level"] = 7, ["id"] = 46}
-moves[4] = {["level"] = 10, ["id"] = 61}
+moves = {
+	{level = 1, id = 1},
+	{level = 1, id = 74},
+	{level = 7, id = 46},
+	{level= 10, id = 61}
+}
 M[113] = {
 	name = "chansey",
 	rarity = 4,
@@ -1252,7 +1253,10 @@ M[113] = {
 	speed = 90,
 	type1 = 1,
 	type2 = 1,
-	moves = moves
+	moves = moves,
+	evolutions = {
+		{target = 242, stone_type1 = 1, stone_cost1 = 10}
+	}
 }
 M[114]={}
 M[115]={}
@@ -1786,7 +1790,25 @@ M[238]={}
 M[239]={}
 M[240]={}
 M[241]={}
-M[242]={}
+moves = {
+	{level = 1, id = 1},
+	{level = 1, id = 74},
+	{level = 7, id = 46},
+	{level= 10, id = 61}
+}
+M[242] = {
+	name = "blissey",
+	rarity = 4,
+	hp = 255,
+	attack = 40,
+	defense = 40,
+	spattack = 85,
+	spdefense = 125,
+	speed = 90,
+	type1 = 1,
+	type2 = 1,
+	moves = moves
+}
 M[243]={}
 M[244]={}
 M[245]={}
