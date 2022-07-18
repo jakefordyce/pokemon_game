@@ -1312,14 +1312,20 @@ M[129]={}
 M[130]={}
 M[131]={}
 M[132]={}
+
+moves = {
+	{level = 1, id = 1},
+	{level = 1, id = 2},
+	{level = 1, id = 29}
+}
 M[133]={
 	name = "eevee",
 	rarity = 3,
 	hp = 90,
-	attack = 80,
-	defense = 80,
+	attack = 90,
+	defense = 90,
 	spattack = 90,
-	spdefense = 80,
+	spdefense = 90,
 	speed = 100,
 	type1 = 1,
 	type2 = 1,
@@ -1327,17 +1333,19 @@ M[133]={
 	evolutions = {
 		{target = 134, stone_type1 = 10, stone_cost1 = 30},
 		{target = 135, stone_type1 = 12, stone_cost1 = 30},
-		{target = 136, stone_type1 = 9, stone_cost1 = 30}
+		{target = 136, stone_type1 = 9, stone_cost1 = 30},
+		{target = 196, stone_type1 = 13, stone_cost1 = 30},
+		{target = 197, stone_type1 = 15, stone_cost1 = 30}
 	}
 }
 M[134]={
 	name = "vaporeon",
 	rarity = 4,
-	hp = 90,
-	attack = 80,
-	defense = 80,
-	spattack = 90,
-	spdefense = 80,
+	hp = 150,
+	attack = 100,
+	defense = 100,
+	spattack = 110,
+	spdefense = 100,
 	speed = 100,
 	type1 = 10,
 	type2 = 10,
@@ -1346,12 +1354,12 @@ M[134]={
 M[135]={
 	name = "jolteon",
 	rarity = 4,
-	hp = 90,
-	attack = 80,
-	defense = 80,
-	spattack = 90,
-	spdefense = 80,
-	speed = 100,
+	hp = 100,
+	attack = 100,
+	defense = 100,
+	spattack = 110,
+	spdefense = 100,
+	speed = 125,
 	type1 = 12,
 	type2 = 12,
 	moves = moves
@@ -1359,11 +1367,11 @@ M[135]={
 M[136]={
 	name = "flareon",
 	rarity = 4,
-	hp = 90,
-	attack = 80,
-	defense = 80,
-	spattack = 90,
-	spdefense = 80,
+	hp = 100,
+	attack = 150,
+	defense = 100,
+	spattack = 110,
+	spdefense = 100,
 	speed = 100,
 	type1 = 9,
 	type2 = 9,
@@ -1703,8 +1711,38 @@ M[192]={}
 M[193]={}
 M[194]={}
 M[195]={}
-M[196]={}
-M[197]={}
+
+moves = {
+	{level = 1, id = 1},
+	{level = 1, id = 2},
+	{level = 1, id = 29}
+}
+M[196]={
+	name = "espeon",
+	rarity = 4,
+	hp = 100,
+	attack = 110,
+	defense = 100,
+	spattack = 150,
+	spdefense = 100,
+	speed = 100,
+	type1 = 13,
+	type2 = 13,
+	moves = moves
+}
+M[197]={
+	name = "umbreon",
+	rarity = 4,
+	hp = 100,
+	attack = 100,
+	defense = 100,
+	spattack = 110,
+	spdefense = 150,
+	speed = 100,
+	type1 = 15,
+	type2 = 15,
+	moves = moves
+}
 M[198]={}
 M[199]={}
 M[200]={}
