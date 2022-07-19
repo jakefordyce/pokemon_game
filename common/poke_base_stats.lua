@@ -1897,8 +1897,42 @@ M[259]={}
 M[260]={}
 M[261]={}
 M[262]={}
-M[263]={}
-M[264]={}
+
+moves = {
+	{level = 1, id = 1},
+	{level = 1, id = 2},
+	{level = 3, id = 39},
+	{level = 6, id = 52}
+}
+M[263] = {
+	name = "zigzagoon",
+	rarity = 1,
+	hp = 75,
+	attack = 65,
+	defense = 80,
+	spattack = 65,
+	spdefense = 80,
+	speed = 112,
+	type1 = 1,
+	type2 = 1,
+	moves = moves,
+	evolutions = {
+		{target = 264, stone_type1 = 1, stone_cost1 = 10}
+	}
+}
+M[264]={
+	name = "linoone",
+	rarity = 1,
+	hp = 110,
+	attack = 95,
+	defense = 90,
+	spattack = 70,
+	spdefense = 90,
+	speed = 112,
+	type1 = 1,
+	type2 = 1,
+	moves = moves
+}
 M[265]={}
 M[266]={}
 M[267]={}
