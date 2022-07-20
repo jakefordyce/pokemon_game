@@ -825,9 +825,59 @@ M[42]={
 	}
 }
 
-M[43]={}
-M[44]={}
-M[45]={}
+moves = {
+	{level = 1, id = 1},
+	{level = 1, id = 9},
+	{level = 7, id = 27},
+	{level = 10, id = 4},
+	{level = 12, id = 121}
+}
+M[43] = {
+	name = "oddish",
+	rarity = 2,
+	hp = 70,
+	attack = 75,
+	defense = 80,
+	spattack = 110,
+	spdefense = 90,
+	speed = 90,
+	type1 = 11,
+	type2 = 4,
+	moves = moves,
+	evolutions = {
+		{target = 44, stone_type1 = 11, stone_cost1 = 5, stone_type2 = 4, stone_cost2 = 5}
+	}
+}
+M[44]={
+	name = "gloom",
+	rarity = 2,
+	hp = 80,
+	attack = 85,
+	defense = 95,
+	spattack = 125,
+	spdefense = 100,
+	speed = 90,
+	type1 = 11,
+	type2 = 4,
+	moves = moves,
+	evolutions = {
+		{target = 45, stone_type1 = 11, stone_cost1 = 5, stone_type2 = 4, stone_cost2 = 5},
+		{target = 182, stone_type1 = 11, stone_cost1 = 10}
+	}
+}
+M[45]={
+	name = "vileplume",
+	rarity = 2,
+	hp = 90,
+	attack = 95,
+	defense = 105,
+	spattack = 135,
+	spdefense = 110,
+	speed = 90,
+	type1 = 11,
+	type2 = 4,
+	moves = moves
+}
 M[46]={}
 M[47]={}
 
@@ -1697,7 +1747,27 @@ M[178]={}
 M[179]={}
 M[180]={}
 M[181]={}
-M[182]={}
+
+moves = {
+	{level = 1, id = 1},
+	{level = 1, id = 9},
+	{level = 7, id = 27},
+	{level = 10, id = 4},
+	{level = 12, id = 121}
+}
+M[182]={
+	name = "bellossom",
+	rarity = 2,
+	hp = 90,
+	attack = 95,
+	defense = 110,
+	spattack = 105,
+	spdefense = 135,
+	speed = 90,
+	type1 = 11,
+	type2 = 11,
+	moves = moves
+}
 M[183]={}
 M[184]={}
 M[185]={}

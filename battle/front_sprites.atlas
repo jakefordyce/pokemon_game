@@ -610,6 +610,18 @@ images {
   image: "/assets/battle_sprites/front/linoone_front_original.png"
   sprite_trim_mode: SPRITE_TRIM_MODE_OFF
 }
+images {
+  image: "/assets/battle_sprites/front/gloom_front_original.png"
+  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
+}
+images {
+  image: "/assets/battle_sprites/front/vileplume_front_original.png"
+  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
+}
+images {
+  image: "/assets/battle_sprites/front/bellossom_front_original.png"
+  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
+}
 margin: 0
 extrude_borders: 2
 inner_padding: 0
