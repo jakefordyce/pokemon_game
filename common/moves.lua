@@ -4291,4 +4291,41 @@ M[140] = {
 	end
 }
 
+meffects = {
+	{
+		id = 1,
+		target = 1,
+		param1 = function(moveLevel)
+			damage = 300 + (moveLevel * 18)
+			return damage
+		end,
+		param2 = "attack"
+	},
+	{
+		id = 38,
+		target = 1,
+		param1 = function(moveLevel)
+			chance = 75 + (moveLevel * 5)
+			return chance
+		end,
+		param2 = 1, param3 = -2
+	}
+}
+M[141] = {
+	name = "Covet",
+	effects = meffects,
+	cooldown = function(moveLevel)
+		return 4
+	end,
+	default = false,
+	type = 1,
+	targetting = 1,
+	max_level = 5,
+	description = function(moveLevel)
+		chance = 75 + (moveLevel * 5)
+		damage = 300 + (moveLevel * 18)
+		return "Attacks 1 enemy for "..damage.."% of Attack then has a "..chance.."% chance of stealing 1 buff from the target."
+	end
+}
+
 return M

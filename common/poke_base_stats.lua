@@ -1972,7 +1972,8 @@ moves = {
 	{level = 1, id = 1},
 	{level = 1, id = 2},
 	{level = 3, id = 39},
-	{level = 6, id = 52}
+	{level = 6, id = 52},
+	{level = 9, id = 141}
 }
 M[263] = {
 	name = "zigzagoon",
