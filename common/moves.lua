@@ -4328,4 +4328,109 @@ M[141] = {
 	end
 }
 
+meffects = {
+	{
+		id = 3,
+		target = 4,
+		param1 = function(moveLevel)
+			return 75 + (moveLevel * 5)
+		end,
+		param2 = 2
+	}
+}
+M[142] = {
+	name = "Growth",
+	effects = meffects,
+	cooldown = function(moveLevel)
+		return 3
+	end,
+	default = false,
+	type = 1,
+	targetting = 2,
+	max_level = 5,
+	description = function(moveLevel)
+		chance = 75 + (moveLevel * 5)
+		return "Has a "..chance.."% chance of increasing Attack of all allies."
+	end
+}
+
+meffects = {
+	{
+		id = 1,
+		target = 1,
+		param1 = function(moveLevel)
+			return 100 + (moveLevel * 5)
+		end,
+		param2 = "spattack", leech = 50
+	}
+}
+M[143] = {
+	name = "Absorb",
+	effects = meffects,
+	cooldown = function(moveLevel)
+		return 0
+	end,
+	default = true,
+	type = 11,
+	targetting = 1,
+	max_level = 5,
+	description = function(moveLevel)
+		damage = 100 + (moveLevel * 5)
+		return "Attacks 1 enemy for "..damage.."% of Special Attack. The user is healed for half of the damage dealt."
+	end
+}
+
+meffects = {
+	{
+		id = 14,
+		target = 3,
+		param1 = function(moveLevel)
+			return 37.5 + (moveLevel * 2.5)
+		end,
+		param2 = 1
+	}
+}
+M[144] = {
+	name = "Stun Spore",
+	effects = meffects,
+	cooldown = function(moveLevel)
+		return 3
+	end,
+	default = false,
+	type = 11,
+	targetting = 1,
+	max_level = 5,
+	description = function(moveLevel)
+		chance = 37.5 + (moveLevel * 2.5)
+		return "Has a "..chance.."% chance of stunning all enemies for 1 turn."
+	end
+}
+
+meffects = {
+	{
+		id = 11,
+		target = 3,
+		param1 = function(moveLevel)
+			return 50 + (moveLevel * 10)
+		end,
+		param2 = 1,
+		always_succeeds = true
+	}
+}
+M[145] = {
+	name = "Spore",
+	effects = meffects,
+	cooldown = function(moveLevel)
+		return 4
+	end,
+	default = false,
+	type = 11,
+	targetting = 1,
+	max_level = 5,
+	description = function(moveLevel)
+		chance = 50 + (moveLevel * 10)
+		return "Has a "..chance.."% chance of putting an enemy to sleep for 1 turn. This cannot be resisted and ignores block debuffs."
+	end
+}
+
 return M

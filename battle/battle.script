@@ -394,7 +394,7 @@ function handle_move_effects(level, effect, target, move_user, move_obj)
 		elseif effect.id == 12 then --decrease turn
 			local turn_amount = effect.param2 * -10
 			damage_text = "turn reduce"
-			if(should_apply_debuff(move_user, effectiveness, defender, effect.param1(level))) then
+			if(should_apply_debuff(move_user, effectiveness, defender, effect.param1(level), effect.always_succeeds)) then
 				modify_turn_meter(defender, effect.id, turn_amount)
 			else
 				text_color = "red"
@@ -498,7 +498,7 @@ function handle_move_effects(level, effect, target, move_user, move_obj)
 			if effect.target == 0 then
 				apply_status_effect(defender, effect, move_user)
 				damage_text = status_effects[effect.id].damage_text
-			elseif should_apply_debuff(move_user, effectiveness, defender, effect.param1(level)) then
+			elseif should_apply_debuff(move_user, effectiveness, defender, effect.param1(level), effect.always_succeeds) then
 				--bosses are not fully affected by loss of control effects. Instead they just lose some turn meter.
 				if string.match(defender.reference, 'boss') and status_effects[effect.id].category == 4 then
 					damage_text = "turn reduce"
@@ -570,7 +570,7 @@ function mon_protector(mon)
 	return protector
 end
 
-function should_apply_debuff(move_user, effectiveness, defender, debuff_chance)
+function should_apply_debuff(move_user, effectiveness, defender, debuff_chance, always_succeeds)
 	if mon_has_status_effect(defender, 13) then
 		return false
 	end
@@ -591,7 +591,7 @@ function should_apply_debuff(move_user, effectiveness, defender, debuff_chance)
 	move_chance_rng = math.random(1,100)
 
 	should_apply = false
-	if(accuracy_calc_rng <= chance_to_apply and move_chance_rng <= debuff_chance)then
+	if((accuracy_calc_rng <= chance_to_apply or always_succeeds) and move_chance_rng <= debuff_chance)then
 		should_apply = true
 	end
 	return should_apply

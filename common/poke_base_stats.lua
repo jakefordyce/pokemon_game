@@ -827,10 +827,10 @@ M[42]={
 
 moves = {
 	{level = 1, id = 1},
-	{level = 1, id = 9},
-	{level = 7, id = 27},
-	{level = 10, id = 4},
-	{level = 12, id = 121}
+	{level = 1, id = 142},
+	{level = 4, id = 38},
+	{level = 7, id = 143},
+	{level = 10, id = 118}
 }
 M[43] = {
 	name = "oddish",
@@ -878,8 +878,44 @@ M[45]={
 	type2 = 4,
 	moves = moves
 }
-M[46]={}
-M[47]={}
+
+moves = {
+	{level = 1, id = 1},
+	{level = 1, id = 144},
+	{level = 4, id = 145},
+	{level = 6, id = 3},
+	{level = 7, id = 68},
+	{level = 10, id = 28}
+}
+M[46]={
+	name = "paras",
+	rarity = 2,
+	hp = 65,
+	attack = 120,
+	defense = 95,
+	spattack = 80,
+	spdefense = 95,
+	speed = 85,
+	type1 = 6,
+	type2 = 11,
+	moves = moves,
+	evolutions = {
+		{target = 47, stone_type1 = 6, stone_cost1 = 5, stone_type2 = 11, stone_cost2 = 5}
+	}
+}
+M[47]={
+	name = "parasect",
+	rarity = 2,
+	hp = 80,
+	attack = 135,
+	defense = 115,
+	spattack = 95,
+	spdefense = 115,
+	speed = 85,
+	type1 = 6,
+	type2 = 11,
+	moves = moves
+}
 
 moves = {}
 moves[1] = {["level"] = 1, ["id"] = 1}
