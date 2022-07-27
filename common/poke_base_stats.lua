@@ -951,8 +951,45 @@ M[49]={
 	type2 = 4,
 	moves = moves
 }
-M[50]={}
-M[51]={}
+
+moves = {
+	{level = 1, id = 1},
+	{level = 1, id = 16},
+	{level = 3, id = 2},
+	{level = 6, id = 3},
+	{level = 9, id = 107},
+	{level = 11, id = 28},
+	{level = 14, id = 137}
+}
+M[50] = {
+	name = "diglett",
+	rarity = 2,
+	hp = 50,
+	attack = 100,
+	defense = 70,
+	spattack = 80,
+	spdefense = 85,
+	speed = 120,
+	type1 = 5,
+	type2 = 5,
+	moves = moves,
+	evolutions = {
+		{target = 51, stone_type1 = 5, stone_cost1 = 10}
+	}
+}
+M[51]={
+	name = "dugtrio",
+	rarity = 2,
+	hp = 75,
+	attack = 120,
+	defense = 85,
+	spattack = 95,
+	spdefense = 105,
+	speed = 120,
+	type1 = 5,
+	type2 = 5,
+	moves = moves
+}
 
 moves = {
 	{level = 1, id = 1},
