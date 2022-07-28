@@ -1029,8 +1029,44 @@ M[53]={
 	type2 = 1,
 	moves = moves
 }
-M[54]={}
-M[55]={}
+
+moves = {
+	{level = 1, id = 1},
+	{level = 1, id = 29},
+	{level = 4, id = 45},
+	{level = 7, id = 42},
+	{level = 10, id = 131}
+}
+M[54] = {
+	name = "psyduck",
+	rarity = 2,
+	hp = 85,
+	attack = 90,
+	defense = 75,
+	spattack = 95,
+	spdefense = 85,
+	speed = 100,
+	type1 = 10,
+	type2 = 13,
+	moves = moves,
+	evolutions = {
+		{target = 55, stone_type1 = 10, stone_cost1 = 10}
+	}
+}
+M[55]={
+	name = "golduck",
+	rarity = 3,
+	hp = 100,
+	attack = 105,
+	defense = 90,
+	spattack = 110,
+	spdefense = 100,
+	speed = 100,
+	type1 = 10,
+	type2 = 10,
+	moves = moves
+}
+
 M[56]={}
 M[57]={}
 M[58]={}
