@@ -1067,10 +1067,80 @@ M[55]={
 	moves = moves
 }
 
-M[56]={}
-M[57]={}
-M[58]={}
-M[59]={}
+moves = {
+	{level = 1, id = 1},
+	{level = 1, id = 125},
+	{level = 4, id = 45},
+	{level = 7, id = 57},
+	{level = 10, id = 33},
+	{level = 13, id = 88}
+}
+M[56] = {
+	name = "mankey",
+	rarity = 2,
+	hp = 75,
+	attack = 105,
+	defense = 70,
+	spattack = 70,
+	spdefense = 80,
+	speed = 110,
+	type1 = 2,
+	type2 = 2,
+	moves = moves,
+	evolutions = {
+		{target = 57, stone_type1 = 2, stone_cost1 = 10}
+	}
+}
+M[57]={
+	name = "primeape",
+	rarity = 2,
+	hp = 90,
+	attack = 125,
+	defense = 85,
+	spattack = 85,
+	spdefense = 95,
+	speed = 110,
+	type1 = 2,
+	type2 = 2,
+	moves = moves
+}
+
+moves = {
+	{level = 1, id = 1},
+	{level = 1, id = 69},
+	{level = 7, id = 132},
+	{level = 10, id = 6},
+	{level = 12, id = 106}
+}
+M[58] = {
+	name = "growlithe",
+	rarity = 4,
+	hp = 85,
+	attack = 100,
+	defense = 80,
+	spattack = 90,
+	spdefense = 80,
+	speed = 110,
+	type1 = 9,
+	type2 = 9,
+	moves = moves,
+	evolutions = {
+		{target = 59, stone_type1 = 9, stone_cost1 = 20}
+	}
+}
+M[59]={
+	name = "arcanine",
+	rarity = 4,
+	hp = 105,
+	attack = 135,
+	defense = 100,
+	spattack = 120,
+	spdefense = 100,
+	speed = 110,
+	type1 = 9,
+	type2 = 9,
+	moves = moves
+}
 M[60]={}
 M[61]={}
 M[62]={}
