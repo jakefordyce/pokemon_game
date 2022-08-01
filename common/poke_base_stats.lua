@@ -1141,9 +1141,59 @@ M[59]={
 	type2 = 9,
 	moves = moves
 }
-M[60]={}
-M[61]={}
-M[62]={}
+
+moves = {
+	{level = 1, id = 1},
+	{level = 1, id = 29},
+	{level = 4, id = 45},
+	{level = 7, id = 42},
+	{level = 10, id = 131}
+}
+M[60] = {
+	name = "poliwag",
+	rarity = 1,
+	hp = 75,
+	attack = 95,
+	defense = 75,
+	spattack = 75,
+	spdefense = 75,
+	speed = 108,
+	type1 = 10,
+	type2 = 10,
+	moves = moves,
+	evolutions = {
+		{target = 61, stone_type1 = 10, stone_cost1 = 10}
+	}
+}
+M[61]={
+	name = "poliwhirl",
+	rarity = 2,
+	hp = 95,
+	attack = 100,
+	defense = 100,
+	spattack = 85,
+	spdefense = 85,
+	speed = 108,
+	type1 = 10,
+	type2 = 10,
+	moves = moves,
+	evolutions = {
+		{target = 62, stone_type1 = 10, stone_cost1 = 5, stone_type2 = 2, stone_cost2 = 5}
+	}
+}
+M[62]={
+	name = "poliwrath",
+	rarity = 3,
+	hp = 110,
+	attack = 115,
+	defense = 120,
+	spattack = 90,
+	spdefense = 105,
+	speed = 95,
+	type1 = 10,
+	type2 = 2,
+	moves = moves
+}
 
 moves = {
 	{level = 1, id = 1},
@@ -1252,9 +1302,59 @@ M[68]={
 	type2 = 2,
 	moves = moves
 }
-M[69]={}
-M[70]={}
-M[71]={}
+
+moves = {
+	{level = 1, id = 1},
+	{level = 1, id = 142},
+	{level = 4, id = 38},
+	{level = 7, id = 143},
+	{level = 10, id = 118}
+}
+M[69] = {
+	name = "bellsprout",
+	rarity = 2,
+	hp = 80,
+	attack = 105,
+	defense = 60,
+	spattack = 100,
+	spdefense = 60,
+	speed = 95,
+	type1 = 11,
+	type2 = 4,
+	moves = moves,
+	evolutions = {
+		{target = 70, stone_type1 = 11, stone_cost1 = 5, stone_type2 = 4, stone_cost2 = 5}
+	}
+}
+M[70]={
+	name = "weepinbell",
+	rarity = 2,
+	hp = 90,
+	attack = 115,
+	defense = 75,
+	spattack = 110,
+	spdefense = 70,
+	speed = 95,
+	type1 = 11,
+	type2 = 4,
+	moves = moves,
+	evolutions = {
+		{target = 71, stone_type1 = 11, stone_cost1 = 5, stone_type2 = 4, stone_cost2 = 5}
+	}
+}
+M[71]={
+	name = "victreebel",
+	rarity = 2,
+	hp = 100,
+	attack = 125,
+	defense = 85,
+	spattack = 120,
+	spdefense = 90,
+	speed = 95,
+	type1 = 11,
+	type2 = 4,
+	moves = moves
+}
 M[72]={}
 M[73]={}
 
@@ -1950,7 +2050,23 @@ M[182]={
 M[183]={}
 M[184]={}
 M[185]={}
-M[186]={}
+
+moves = {
+	{level = 1, id = 1}
+}
+M[186]={
+	name = "politoad",
+	rarity = 3,
+	hp = 110,
+	attack = 90,
+	defense = 90,
+	spattack = 120,
+	spdefense = 130,
+	speed = 95,
+	type1 = 10,
+	type2 = 10,
+	moves = moves
+}
 M[187]={}
 M[188]={}
 M[189]={}
