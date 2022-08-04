@@ -1355,8 +1355,39 @@ M[71]={
 	type2 = 4,
 	moves = moves
 }
-M[72]={}
-M[73]={}
+
+moves = {
+	{level = 1, id = 1}
+}
+M[72] = {
+	name = "tentacool",
+	rarity = 1,
+	hp = 70,
+	attack = 70,
+	defense = 65,
+	spattack = 80,
+	spdefense = 110,
+	speed = 110,
+	type1 = 10,
+	type2 = 4,
+	moves = moves,
+	evolutions = {
+		{target = 73, stone_type1 = 10, stone_cost1 = 5, stone_type2 = 4, stone_cost2 = 5}
+	}
+}
+M[73]={
+	name = "tentacruel",
+	rarity = 2,
+	hp = 100,
+	attack = 85,
+	defense = 75,
+	spattack = 100,
+	spdefense = 130,
+	speed = 110,
+	type1 = 10,
+	type2 = 4,
+	moves = moves
+}
 
 moves = {
 	{level = 1, id = 1},
@@ -1410,10 +1441,76 @@ M[76]={
 	type2 = 5,
 	moves = moves
 }
-M[77]={}
-M[78]={}
-M[79]={}
-M[80]={}
+
+moves = {
+	{level = 1, id = 1},
+	{level = 1, id = 12}
+}
+M[77] = {
+	name = "ponyta",
+	rarity = 2,
+	hp = 70,
+	attack = 105,
+	defense = 75,
+	spattack = 90,
+	spdefense = 90,
+	speed = 105,
+	type1 = 9,
+	type2 = 9,
+	moves = moves,
+	evolutions = {
+		{target = 78, stone_type1 = 9, stone_cost1 = 10}
+	}
+}
+M[78]={
+	name = "rapidash",
+	rarity = 2,
+	hp = 80,
+	attack = 130,
+	defense = 85,
+	spattack = 105,
+	spdefense = 105,
+	speed = 112,
+	type1 = 9,
+	type2 = 9,
+	moves = moves
+}
+
+moves = {
+	{level = 1, id = 1}
+}
+M[79] = {
+	name = "slowpoke",
+	rarity = 2,
+	hp = 125,
+	attack = 90,
+	defense = 90,
+	spattack = 75,
+	spdefense = 75,
+	speed = 70,
+	type1 = 10,
+	type2 = 13,
+	moves = moves,
+	evolutions = {
+		{target = 80, stone_type1 = 11, stone_cost1 = 5, stone_type2 = 13, stone_cost2 = 5}
+	}
+}
+M[80]={
+	name = "slowbro",
+	rarity = 3,
+	hp = 130,
+	attack = 90,
+	defense = 110,
+	spattack = 95,
+	spdefense = 85,
+	speed = 75,
+	type1 = 10,
+	type2 = 13,
+	moves = moves,
+	evolutions = {
+		{target = 199, stone_type1 = 11, stone_cost1 = 5, stone_type2 = 13, stone_cost2 = 5}
+	}
+}
 
 moves = {}
 moves[1] = {["level"] = 1, ["id"] = 1}
@@ -2109,7 +2206,23 @@ M[197]={
 	moves = moves
 }
 M[198]={}
-M[199]={}
+
+moves = {
+	{level = 1, id = 1}
+}
+M[199] = {
+	name = "slowking",
+	rarity = 4,
+	hp = 130,
+	attack = 90,
+	defense = 110,
+	spattack = 120,
+	spdefense = 125,
+	speed = 75,
+	type1 = 10,
+	type2 = 13,
+	moves = moves
+}
 M[200]={}
 M[201]={}
 M[202]={}
