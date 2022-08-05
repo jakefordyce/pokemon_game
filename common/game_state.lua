@@ -59,8 +59,8 @@ M.player = {
 --]]
 
 
---M.stones = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0} -- PROD 1 for each of the types in common/poke_types
-M.stones = {50,50,50,50,50,50,50,50,50,50,50,50,50,50,50} -- TEST
+M.stones = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0} -- PROD 1 for each of the types in common/poke_types
+--M.stones = {50,50,50,50,50,50,50,50,50,50,50,50,50,50,50} -- TEST
 
 --List of all of the player's pokemon.
 M.pokemon = {}
